@@ -5,8 +5,15 @@ interface ServiceConfig {
   repo: Repo;
 }
 
-export default ({ repo }: ServiceConfig) => {
+export interface Service {
+  clearService: () => Promise<void>;
+  migrate: () => Promise<void>;
+  rollback: () => Promise<void>;
+}
+
+export default ({ repo }: ServiceConfig): Service => {
   return {
+    clearService: repo.clearRepo,
     migrate: repo.migrate,
     rollback: repo.rollback,
   };

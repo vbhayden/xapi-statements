@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import fetch from 'node-fetch';
-import Unauthorised from '../../errors/unauthorised';
+import Unauthorised from '../../errors/Unauthorised';
 
 export type Authenticator = (req: Request) => Promise<{ organisation: string, scopes: string[] }>;
 
