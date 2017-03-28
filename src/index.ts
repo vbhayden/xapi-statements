@@ -12,6 +12,11 @@ const app = express();
 
 const repoFacade = repo({
   repoName: config.production.repo,
+  memoryRepoConfig: {
+    state: {
+      statements: [],
+    },
+  },
 });
 const serviceFacade = service({
   defaultTimeout: 1000,

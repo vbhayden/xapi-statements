@@ -9,7 +9,7 @@ import VoidStatementsOptions from './VoidStatementsOptions';
 
 interface RepoConfig {
   repoName: string;
-  MemoryRepoConfig?: MemoryRepoConfig;
+  memoryRepoConfig: MemoryRepoConfig;
 }
 
 export interface Repo {
@@ -31,10 +31,6 @@ export interface Repo {
 export default (config: RepoConfig): Repo => {
   switch (config.repoName) {
     default: case 'memory':
-      return memoryRepo(config.MemoryRepoConfig || {
-        state: {
-          statements: [],
-        },
-      });
+      return memoryRepo(config.memoryRepoConfig);
   }
 };
