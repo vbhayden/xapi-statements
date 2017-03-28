@@ -15,10 +15,8 @@ interface RepoConfig {
 export interface Repo {
   // Statement functions.
   createStatements: (opts: CreateStatementsOptions) => Promise<StatementModel[]>;
-  getNonVoidedStatement: (opts: GetStatementOptions) => Promise<StatementModel>;
   getStatement: (opts: GetStatementOptions) => Promise<StatementModel>;
   getStatements: (opts: GetStatementsOptions) => Promise<StatementModel[]>;
-  getVoidedStatement: (opts: GetStatementOptions) => Promise<StatementModel>;
   getVoider: (opts: GetVoiderOptions) => Promise<StatementModel>;
   voidStatements: (opts: VoidStatementsOptions) => Promise<void>;
 
