@@ -10,4 +10,4 @@ min-lines: 5
 min-tokens: 38
 debug: false
 skip-comments: true
-skip-regex: import [\'\w\*\{\s\,\.\/\}]+\;[\n\r]*
+skip-regex: import [\'\w\*\{\s\,\.\/\}]+\;*
