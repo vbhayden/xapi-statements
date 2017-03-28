@@ -7,7 +7,7 @@ export default (config: Config) => {
   return async (opts: CreateStatementsOptions): Promise<StatementModel[]> => {
     const idModels: StatementModel[] = opts.models.map((model) => {
       return {
-        id: uuid(),
+        _id: uuid(),
         ...model,
       };
     });
