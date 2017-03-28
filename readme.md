@@ -1,4 +1,4 @@
-# xAPI Server
+# xAPI Server (Work In Progress)
 > A server for the xAPI
 
 [![Build Status](https://travis-ci.org/LearningLocker/xapi-server.svg?branch=master)](https://travis-ci.org/LearningLocker/xapi-server)
