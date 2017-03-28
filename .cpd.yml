@@ -1,0 +1,13 @@
+languages: typescript
+files:
+  - src/**/*
+exclude:
+  - src/models/**/*
+  - src/service/index.ts
+  - src/memoryRepo/index.ts
+  - src/mongoRepo/index.ts
+min-lines: 5
+min-tokens: 38
+debug: false
+skip-comments: true
+skip-regex: import [\'\w\*\{\s\,\.\/\}]+\;[\n\r]*
