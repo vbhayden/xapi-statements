@@ -1,16 +1,16 @@
-import StatementModel from '../models/StatementModel';
-import StoreStatementsOptions from './options/StoreStatementsOptions';
-import preValidationSetup from './utils/preValidationSetup';
-import validateStatements from './utils/validateStatements';
-import postValidationSetup from './utils/postValidationSetup';
-import getUnstoredModels from './utils/getUnstoredModels';
-import checkAttachments from './utils/checkAttachments';
-import checkVoiders from './utils/checkVoiders';
-import createAttachments from './utils/createAttachments';
-import createStatements from './utils/createStatements';
-import voidStatements from './utils/voidStatements';
-import updateReferences from './utils/updateReferences';
-import Config from './Config';
+import StatementModel from '../../models/StatementModel';
+import StoreStatementsOptions from '../options/StoreStatementsOptions';
+import Config from '../Config';
+import preValidationSetup from './preValidationSetup';
+import validateStatements from './validateStatements';
+import postValidationSetup from './postValidationSetup';
+import getUnstoredModels from './getUnstoredModels';
+import checkAttachments from './checkAttachments';
+import checkVoiders from './checkVoiders';
+import createAttachments from './createAttachments';
+import createStatements from './createStatements';
+import voidStatements from './voidStatements';
+import updateReferences from './updateReferences';
 
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<StatementModel[]> => {
