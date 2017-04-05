@@ -6,7 +6,10 @@ import postValidationSetup from './utils/postValidationSetup';
 import getUnstoredModels from './utils/getUnstoredModels';
 import checkAttachments from './utils/checkAttachments';
 import checkVoiders from './utils/checkVoiders';
+import createAttachments from './utils/createAttachments';
 import createStatements from './utils/createStatements';
+import voidStatements from './utils/voidStatements';
+import updateReferences from './utils/updateReferences';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -15,17 +18,14 @@ export default (config: Config) => {
     validateStatements(preValidatedModels);
     const postValidatedModels: StatementModel[] = postValidationSetup(preValidatedModels);
     const unstoredModels: StatementModel[] = await getUnstoredModels(config, postValidatedModels);
-
-    await Promise.all([
-      checkAttachments(config, unstoredModels, opts.attachments),
-      checkVoiders(config, unstoredModels),
-    ]);
+    const voidedObjectIds: string[] = await checkVoiders(config, unstoredModels);
+    await checkAttachments(config, unstoredModels, opts.attachments);
 
     await createStatements(config, unstoredModels);
 
     // Completes actions that do not need to be awaited.
     createAttachments(config, opts.attachments);
-    voidStatements(config, unstoredModels);
+    voidStatements(config, unstoredModels, voidedObjectIds);
     updateReferences(config, unstoredModels);
 
     return postValidatedModels;

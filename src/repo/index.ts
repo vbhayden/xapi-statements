@@ -1,7 +1,9 @@
 import MemoryRepoConfig from '../memoryRepo/Config';
 import memoryRepo from '../memoryRepo';
+import AttachmentModel from '../models/AttachmentModel';
 import StatementModel from '../models/StatementModel';
 import StatementHash from '../models/StatementHash';
+import CreateAttachmentsOptions from './CreateAttachmentsOptions';
 import CreateStatementsOptions from './CreateStatementsOptions';
 import GetHashesOptions from './GetHashesOptions';
 import GetStatementsOptions from './GetStatementsOptions';
@@ -23,6 +25,9 @@ export interface Repo {
   getVoidersByObjectIds: (opts: GetVoidersOptions) => Promise<string[]>;
   getVoidersByIds: (opts: GetVoidersOptions) => Promise<string[]>;
   voidStatements: (opts: VoidStatementsOptions) => Promise<void>;
+
+  // Attachment functions.
+  createAttachments: (opts: CreateAttachmentsOptions) => Promise<AttachmentModel[]>;
 
   // Repo-wide functions.
   clearRepo: () => Promise<void>;

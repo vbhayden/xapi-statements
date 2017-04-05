@@ -3,7 +3,11 @@ import VoidingError from '../../errors/VoidingError';
 import voidVerbId from '../../utils/voidVerbId';
 import Config from '../Config';
 
-type VoidResult = { voidingIds: string[], voidingModels: StatementModel[] };
+interface VoidResult {
+  voiderIds: string[];
+  voidedObjectIds: string[];
+  voidingModels: StatementModel[];
+}
 
 const isVoiding = (model: StatementModel): boolean => {
   return model.statement.verb.id === voidVerbId;
@@ -11,49 +15,59 @@ const isVoiding = (model: StatementModel): boolean => {
 
 const getVoiders = (statements: StatementModel[]): VoidResult => {
   return statements.reduce((result: VoidResult, model) => {
-    if (isVoiding(model)) {
+    if (isVoiding(model) && model.statement.object.objectType === 'StatementRef') {
       return {
-        voidingIds: [...result.voidingIds, model.statement.id],
+        voiderIds: [...result.voiderIds, model.statement.id],
+        voidedObjectIds: [...result.voidedObjectIds, model.statement.object.id],
         voidingModels: [...result.voidingModels, model],
       };
     }
     return result;
-  }, {voidingIds: [], voidingModels: []});
+  }, {voiderIds: [], voidedObjectIds: [], voidingModels: []});
 };
 
-const checkWithinStatements = (voidingIds: string[], voidingModels: StatementModel[]): void => {
+const checkWithinStatements = (voiderIds: string[], voidingModels: StatementModel[]): void => {
   voidingModels.forEach((model) => {
     if (model.statement.object.objectType !== 'StatementRef') {
       throw new Error('The `objectType` of a voider must be "StatementRef"');
     }
     const targetId = model.statement.object.id;
-    if (voidingIds.includes(targetId)) {
+    if (voiderIds.includes(targetId)) {
       throw new VoidingError([targetId]);
     }
   });
 };
 
-const checkWithinRepo = async (config: Config, voidingIds: string[]): Promise<void> => {
+const checkWithinRepo = async (
+  config: Config,
+  voiderIds: string[],
+  voidedObjectIds: string[],
+): Promise<void> => {
+  // Checks that a new voider doesn't reference an existing voider.
   const voidersByObjectIds: string[] = await config.repo.getVoidersByObjectIds({
-    ids: voidingIds,
+    ids: voidedObjectIds,
   });
   if (voidersByObjectIds.length > 0) {
     throw new VoidingError(voidersByObjectIds);
   }
+
+  // Checks that a voider doesn't void a new voider.
   const voidersByIds: string[] = await config.repo.getVoidersByIds({
-    ids: voidingIds,
+    ids: voiderIds,
   });
   if (voidersByIds.length > 0) {
     throw new VoidingError(voidersByIds);
   }
 };
 
-export default async (config: Config, statements: StatementModel[]): Promise<void> => {
-  if (!config.enableVoidingChecks) return;
-  const { voidingIds, voidingModels }: VoidResult = getVoiders(statements);
+export default async (config: Config, statements: StatementModel[]): Promise<string[]> => {
+  if (!config.enableVoidingChecks) return [];
+  const { voiderIds, voidedObjectIds, voidingModels }: VoidResult = getVoiders(statements);
 
-  if (voidingIds.length > 0) {
-    checkWithinStatements(voidingIds, voidingModels);
-    await checkWithinRepo(config, voidingIds);
+  if (voiderIds.length > 0) {
+    checkWithinStatements(voiderIds, voidingModels);
+    await checkWithinRepo(config, voiderIds, voidedObjectIds);
   }
+
+  return voidedObjectIds;
 };

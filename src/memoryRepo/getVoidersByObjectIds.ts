@@ -14,7 +14,10 @@ export default (config: Config) => {
       );
     });
     return filteredModels.map((model: StatementModel): string => {
-      return model.statement.id;
+      if (model.statement.object.objectType === 'StatementRef') {
+        return model.statement.object.id;
+      }
+      throw new Error('No longer a StatementRef.');
     });
   };
 };

@@ -15,6 +15,7 @@ const repoFacade = repo({
   memoryRepoConfig: {
     state: {
       statements: [],
+      attachments: [],
     },
   },
 });

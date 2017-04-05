@@ -1,6 +1,7 @@
 import { Repo } from '../repo';
 import Config from './Config';
 import clearRepo from './clearRepo';
+import createAttachments from './createAttachments';
 import createStatements from './createStatements';
 import getHashes from './getHashes';
 import getStatement from './getStatement';
@@ -11,6 +12,7 @@ import voidStatements from './voidStatements';
 
 export default (config: Config): Repo => {
   return {
+    // Statement functions.
     createStatements: createStatements(config),
     getHashes: getHashes(config),
     getStatement: getStatement(config),
@@ -19,6 +21,10 @@ export default (config: Config): Repo => {
     getVoidersByIds: getVoidersByIds(config),
     voidStatements: voidStatements(config),
 
+    // Attachment functions.
+    createAttachments: createAttachments(config),
+
+    // Repo-wide functions.
     clearRepo: clearRepo(config),
     migrate: () => Promise.resolve(),
     rollback: () => Promise.resolve(),
