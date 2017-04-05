@@ -21,6 +21,13 @@ const repoFacade = repo({
 const serviceFacade = service({
   defaultTimeout: 1000,
   repo: repoFacade,
+  enableConflictChecks: true,
+  enableAttachmentValidation: true,
+  enableVoidingChecks: true,
+  enableStatementCreation: true,
+  enableAttachmentCreation: true,
+  enableVoiding: true,
+  enableReferencing: true,
 });
 const faceFacade = expressFace({
   llClientInfoEndpoint: config.llClientInfoEndpoint,
