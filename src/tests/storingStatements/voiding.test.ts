@@ -37,10 +37,18 @@ describe('store statements voiding', () => {
     await assertVoided();
   });
 
-  it('should void a statement when it is voided in the same batch', async () => {
+  it('should void a statement when it is voided earlier in the same batch', async () => {
     await storeStatements([
       createVoidingStatement(TEST_ID),
       createStatement({ id: TEST_ID }),
+    ]);
+    await assertVoided();
+  });
+
+  it('should void a statement when it is voided later in the same batch', async () => {
+    await storeStatements([
+      createStatement({ id: TEST_ID }),
+      createVoidingStatement(TEST_ID),
     ]);
     await assertVoided();
   });

@@ -36,11 +36,34 @@ describe('store statements voiding validation', () => {
     }
   });
 
-  it('should throw an error when voiding a voider in the same batch', async () => {
+  it('should throw an error when voiding a earlier voider in the same batch', async () => {
+    try {
+      await storeStatements([
+        createVoidingStatement(TEST_ID, TEST_ID_2),
+        createVoidingStatement(TEST_ID_2),
+      ]);
+      assert(false);
+    } catch (err) {
+      assert.equal(err.constructor, VoidingError);
+    }
+  });
+
+  it('should throw an error when voiding a later voider in the same batch', async () => {
     try {
       await storeStatements([
         createVoidingStatement(TEST_ID_2),
         createVoidingStatement(TEST_ID, TEST_ID_2),
+      ]);
+      assert(false);
+    } catch (err) {
+      assert.equal(err.constructor, VoidingError);
+    }
+  });
+
+  it('should throw an error when voider is voiding itself', async () => {
+    try {
+      await storeStatements([
+        createVoidingStatement(TEST_ID, TEST_ID),
       ]);
       assert(false);
     } catch (err) {
