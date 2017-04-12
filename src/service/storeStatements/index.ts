@@ -24,9 +24,9 @@ export default (config: Config) => {
     await createStatements(config, unstoredModels);
 
     // Completes actions that do not need to be awaited.
-    createAttachments(config, opts.attachments);
-    voidStatements(config, unstoredModels, voidedObjectIds);
-    updateReferences(config, unstoredModels);
+    await createAttachments(config, opts.attachments);
+    await voidStatements(config, unstoredModels, voidedObjectIds);
+    await updateReferences(config, unstoredModels);
 
     return postValidatedModels.map((postValidatedModel: StatementModel) => {
       return postValidatedModel.statement.id;

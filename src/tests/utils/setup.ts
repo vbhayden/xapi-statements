@@ -1,7 +1,8 @@
 import 'mocha';
 import { Service } from '../../service';
+import service from '../../tester';
 
-export default (service: Service): void => {
+export default (): Service => {
   beforeEach(async () => {
     await service.rollback();
     await service.migrate();
@@ -10,4 +11,6 @@ export default (service: Service): void => {
   afterEach(async () => {
     await service.clearService();
   });
+
+  return service;
 };

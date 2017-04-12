@@ -7,7 +7,7 @@ export default (models: any[]) => {
   const storedTime = (new Date()).toISOString();
   return models.map((model: any): StatementModel => {
     const preHashStatement = setupPreHashStatement(model);
-    const postHashStatement = setupPostHashStatement(model, storedTime);
+    const postHashStatement = setupPostHashStatement(preHashStatement, storedTime);
     return {
       hasGeneratedId: model.id === undefined,
       organisation: 'organisation_123',

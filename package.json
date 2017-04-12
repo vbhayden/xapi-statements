@@ -12,7 +12,7 @@
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc",
     "start": "node dist/index.js",
-    "test": "./node_modules/mocha/bin/mocha dist/**/*.test.js --timeout 5000",
+    "test": "./node_modules/mocha/bin/mocha dist/**/**/*.test.js dist/**/*.test.js --timeout 6000",
     "migrate": "node dist/migrate.js",
     "rollback": "node dist/rollback.js",
     "cover": "npm run test -- --require blanket --reporter travis-cov",
