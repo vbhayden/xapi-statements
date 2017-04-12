@@ -1,3 +1,4 @@
+import { includes } from 'lodash';
 import StatementModel from '../../models/StatementModel';
 import VoidingError from '../../errors/VoidingError';
 import voidVerbId from '../../utils/voidVerbId';
@@ -32,7 +33,7 @@ const checkWithinStatements = (voiderIds: string[], voidingModels: StatementMode
       throw new Error('The `objectType` of a voider must be "StatementRef"');
     }
     const targetId = model.statement.object.id;
-    if (voiderIds.includes(targetId)) {
+    if (includes(voiderIds, targetId)) {
       throw new VoidingError([targetId]);
     }
   });
@@ -44,7 +45,7 @@ const checkWithinRepo = async (
   voidedObjectIds: string[],
 ): Promise<void> => {
   // Checks that a new voider doesn't reference an existing voider.
-  const voidersByObjectIds: string[] = await config.repo.getVoidersByObjectIds({
+  const voidersByObjectIds: string[] = await config.repo.getVoidersByIds({
     ids: voidedObjectIds,
   });
   if (voidersByObjectIds.length > 0) {
@@ -52,7 +53,7 @@ const checkWithinRepo = async (
   }
 
   // Checks that a voider doesn't void a new voider.
-  const voidersByIds: string[] = await config.repo.getVoidersByIds({
+  const voidersByIds: string[] = await config.repo.getVoidersByObjectIds({
     ids: voiderIds,
   });
   if (voidersByIds.length > 0) {
