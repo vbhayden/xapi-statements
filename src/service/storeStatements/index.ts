@@ -13,7 +13,7 @@ import voidStatements from './voidStatements';
 import updateReferences from './updateReferences';
 
 export default (config: Config) => {
-  return async (opts: StoreStatementsOptions): Promise<StatementModel[]> => {
+  return async (opts: StoreStatementsOptions): Promise<string[]> => {
     const preValidatedModels = preValidationSetup(opts.models);
     validateStatements(preValidatedModels);
     const postValidatedModels: StatementModel[] = postValidationSetup(preValidatedModels);
@@ -28,6 +28,8 @@ export default (config: Config) => {
     voidStatements(config, unstoredModels, voidedObjectIds);
     updateReferences(config, unstoredModels);
 
-    return postValidatedModels;
+    return postValidatedModels.map((postValidatedModel: StatementModel) => {
+      return postValidatedModel.statement.id;
+    });
   };
 };

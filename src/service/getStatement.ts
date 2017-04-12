@@ -1,9 +1,10 @@
-import StatementModel from '../models/StatementModel';
+import Statement from '../models/Statement';
 import GetStatementOptions from './options/GetStatementOptions';
 import Config from './Config';
 
-export default (_config: Config) => {
-  return async (_opts: GetStatementOptions): Promise<StatementModel> => {
-
+export default (config: Config) => {
+  return async (opts: GetStatementOptions): Promise<Statement> => {
+    const models = await config.repo.getStatement(opts);
+    return models.statement;
   };
 };

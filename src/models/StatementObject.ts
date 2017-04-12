@@ -1,8 +1,6 @@
 import SubStatement from './SubStatement';
-import StatementRef from './StatementRef';
-import Activity from './Activity';
-import Actor from './Actor';
+import SubStatementObject from './SubStatementObject';
 
-type StatementObject = (SubStatement|Activity|Actor|StatementRef);
+type StatementObject = (SubStatement|SubStatementObject);
 
 export default StatementObject;

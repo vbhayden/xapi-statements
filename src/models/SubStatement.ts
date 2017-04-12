@@ -1,9 +1,9 @@
 import StatementBase from './StatementBase';
-import StatementObject from './StatementObject';
+import SubStatementObject from './SubStatementObject';
 
 interface SubStatement extends StatementBase {
   objectType: 'SubStatement';
-  object: StatementObject;
+  object: SubStatementObject;
 }
 
 export default SubStatement;
