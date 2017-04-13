@@ -5,6 +5,8 @@ import createVoidingStatement from '../utils/createVoidingStatement';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
+const TEST_VOIDER_1 = createVoidingStatement(TEST_ID, TEST_ID_2);
+const TEST_VOIDER_2 = createVoidingStatement(TEST_ID_2);
 
 describe('store statements voiding validation', () => {
   const service = setup();
@@ -17,9 +19,9 @@ describe('store statements voiding validation', () => {
   };
 
   it('should throw an error when voiding a voider in a following batch', async () => {
-    await storeStatements([createVoidingStatement(TEST_ID, TEST_ID_2)]);
+    await storeStatements([TEST_VOIDER_1]);
     try {
-      await storeStatements([createVoidingStatement(TEST_ID_2)]);
+      await storeStatements([TEST_VOIDER_2]);
       assert(false);
     } catch (err) {
       assert.equal(err.constructor, VoidingError);
@@ -27,9 +29,9 @@ describe('store statements voiding validation', () => {
   });
 
   it('should throw an error when voiding a voider in a previous batch', async () => {
-    await storeStatements([createVoidingStatement(TEST_ID_2)]);
+    await storeStatements([TEST_VOIDER_2]);
     try {
-      await storeStatements([createVoidingStatement(TEST_ID, TEST_ID_2)]);
+      await storeStatements([TEST_VOIDER_1]);
       assert(false);
     } catch (err) {
       assert.equal(err.constructor, VoidingError);
@@ -38,10 +40,7 @@ describe('store statements voiding validation', () => {
 
   it('should throw an error when voiding a earlier voider in the same batch', async () => {
     try {
-      await storeStatements([
-        createVoidingStatement(TEST_ID, TEST_ID_2),
-        createVoidingStatement(TEST_ID_2),
-      ]);
+      await storeStatements([TEST_VOIDER_1, TEST_VOIDER_2]);
       assert(false);
     } catch (err) {
       assert.equal(err.constructor, VoidingError);
@@ -50,10 +49,7 @@ describe('store statements voiding validation', () => {
 
   it('should throw an error when voiding a later voider in the same batch', async () => {
     try {
-      await storeStatements([
-        createVoidingStatement(TEST_ID_2),
-        createVoidingStatement(TEST_ID, TEST_ID_2),
-      ]);
+      await storeStatements([TEST_VOIDER_2, TEST_VOIDER_1]);
       assert(false);
     } catch (err) {
       assert.equal(err.constructor, VoidingError);
