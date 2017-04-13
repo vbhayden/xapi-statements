@@ -27,6 +27,6 @@ describe('store statement timestamp', () => {
   it('should generate a timestamp when timestamp is not set', async () => {
     await storeStatements([createStatement({ id: TEST_ID })]);
     const statement = await service.getStatement({ id: TEST_ID, voided: false });
-    assert(statement.timestamp !== undefined);
+    assert.equal(statement.timestamp, statement.stored);
   });
 });
