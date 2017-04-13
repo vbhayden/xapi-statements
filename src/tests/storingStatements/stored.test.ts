@@ -15,19 +15,23 @@ describe('store statement stored', () => {
     });
   };
 
+  const getStatement = () => {
+    return service.getStatement({ id: TEST_ID, voided: false });
+  };
+
   it('should generate a stored timestamp when stored is set', async () => {
     await storeStatements([createStatement({
       id: TEST_ID,
       stored: TEST_TIMESTAMP,
     })]);
-    const statement = await service.getStatement({ id: TEST_ID, voided: false });
+    const statement = await getStatement();
     assert(statement.stored !== undefined);
     assert.notEqual(statement.stored, TEST_TIMESTAMP);
   });
 
   it('should generate a stored timestamp when stored is not set', async () => {
     await storeStatements([createStatement({ id: TEST_ID })]);
-    const statement = await service.getStatement({ id: TEST_ID, voided: false });
+    const statement = await getStatement();
     assert(statement.stored !== undefined);
   });
 });

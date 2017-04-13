@@ -15,19 +15,23 @@ describe('store statement authority', () => {
     });
   };
 
+  const getStatement = () => {
+    return service.getStatement({ id: TEST_ID, voided: false });
+  };
+
   it('should generate an authority when authority is set', async () => {
     await storeStatements([createStatement({
       id: TEST_ID,
       authority: TEST_AUTHORITY,
     })]);
-    const statement = await service.getStatement({ id: TEST_ID, voided: false });
+    const statement = await getStatement();
     assert(statement.authority !== undefined);
     assert.notEqual(statement.authority.mbox, TEST_AUTHORITY.mbox);
   });
 
   it('should generate an authority when authority is not set', async () => {
     await storeStatements([createStatement({ id: TEST_ID })]);
-    const statement = await service.getStatement({ id: TEST_ID, voided: false });
+    const statement = await getStatement();
     assert(statement.authority !== undefined);
   });
 });
