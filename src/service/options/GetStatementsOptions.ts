@@ -9,7 +9,7 @@ interface GetStatementsOptions {
   registration?: string;
   since?: Date;
   until?: Date;
-  ascending: boolean;
+  ascending?: boolean;
   limit?: number;
 }
 

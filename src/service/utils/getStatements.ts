@@ -13,7 +13,7 @@ export default (config: Config) => {
       registration: opts.registration,
       since: opts.since,
       until: opts.until,
-      ascending: opts.ascending,
+      ascending: opts.ascending || true,
       limit: opts.limit,
     });
   };
