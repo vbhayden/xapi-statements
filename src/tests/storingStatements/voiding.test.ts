@@ -5,6 +5,8 @@ import createStatement from '../utils/createStatement';
 import createVoidingStatement from '../utils/createVoidingStatement';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
+const TEST_STATEMENT = createStatement({ id: TEST_ID });
+const TEST_VOIDER = createVoidingStatement(TEST_ID);
 
 describe('store statements voiding', () => {
   const service = setup();
@@ -26,30 +28,24 @@ describe('store statements voiding', () => {
   };
 
   it('should void a statement when it is voided in a following batch', async () => {
-    await storeStatements([createStatement({ id: TEST_ID })]);
-    await storeStatements([createVoidingStatement(TEST_ID)]);
+    await storeStatements([TEST_STATEMENT]);
+    await storeStatements([TEST_VOIDER]);
     await assertVoided();
   });
 
   it('should void a statement when it is voided in a previous batch', async () => {
-    await storeStatements([createVoidingStatement(TEST_ID)]);
-    await storeStatements([createStatement({ id: TEST_ID })]);
+    await storeStatements([TEST_VOIDER]);
+    await storeStatements([TEST_STATEMENT]);
     await assertVoided();
   });
 
   it('should void a statement when it is voided earlier in the same batch', async () => {
-    await storeStatements([
-      createVoidingStatement(TEST_ID),
-      createStatement({ id: TEST_ID }),
-    ]);
+    await storeStatements([TEST_VOIDER, TEST_STATEMENT]);
     await assertVoided();
   });
 
   it('should void a statement when it is voided later in the same batch', async () => {
-    await storeStatements([
-      createStatement({ id: TEST_ID }),
-      createVoidingStatement(TEST_ID),
-    ]);
+    await storeStatements([TEST_STATEMENT, TEST_VOIDER]);
     await assertVoided();
   });
 });
