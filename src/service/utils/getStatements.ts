@@ -15,6 +15,7 @@ export default (config: Config) => {
       until: opts.until,
       ascending: opts.ascending === undefined ? true : opts.ascending,
       limit: opts.limit,
+      skip: opts.skip,
     });
   };
 };

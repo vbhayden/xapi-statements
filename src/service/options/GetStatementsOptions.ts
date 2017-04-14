@@ -11,6 +11,7 @@ interface GetStatementsOptions {
   until?: string;
   ascending?: boolean;
   limit?: number;
+  skip?: number;
 }
 
 export default GetStatementsOptions;
