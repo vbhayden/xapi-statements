@@ -24,6 +24,8 @@ describe('store statements voiding', () => {
       assert(false);
     } catch (err) {
       assert.equal(err.constructor, NoModel);
+      const voidedStatement = await service.getStatement({ id: TEST_ID, voided: true });
+      assert.equal(voidedStatement.id, TEST_ID);
     }
   };
 
