@@ -38,7 +38,7 @@ describe('get statement', () => {
     assert.equal(statements[0].verb.id, verbId1);
   });
 
-  it('should return statements when they match the verb', async () => {
+  it('should return statements when they match the registration', async () => {
     const reg1 = '1c86d8e9-f325-404f-b3d9-24c451035583';
     const reg2 = '1c86d8e9-f325-404f-b3d9-24c451035584';
     const statements = await filterStatements([

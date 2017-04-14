@@ -7,8 +7,8 @@ interface GetStatementsOptions {
   relatedAgents?: boolean;
   relatedActivities?: boolean;
   registration?: string;
-  since?: Date;
-  until?: Date;
+  since?: string;
+  until?: string;
   ascending?: boolean;
   limit?: number;
 }

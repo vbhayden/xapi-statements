@@ -4,6 +4,6 @@ import GetStatementsOptions from '../../repo/GetStatementsOptions';
 export default (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
     opts.since === undefined ? true :
-    statement.stored > opts.since.toISOString()
+    statement.timestamp > opts.since
   );
 };
