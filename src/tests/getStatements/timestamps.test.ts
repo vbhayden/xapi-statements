@@ -7,7 +7,7 @@ import createStatement from '../utils/createStatement';
 const TEST_TIMESTAMP_1 = '2017-04-12T15:37:35+00:00';
 const TEST_TIMESTAMP_2 = '2017-04-12T15:37:36+00:00';
 
-describe('get statement', () => {
+describe('get statement timestamps', () => {
   const service = setup();
 
   const storeStatements = (statements: any[]): Promise<string[]> => {

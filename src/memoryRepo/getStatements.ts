@@ -25,9 +25,9 @@ const filterModels = (models: StatementModel[], opts: GetStatementsOptions) => {
 const sortModels = (models: StatementModel[], ascending: boolean) => {
   const lower = ascending ? -1 : 1;
   const higher = ascending ? 1 : -1;
-  return models.sort((itemA, itemB) => {
-    const storedA = itemA.statement.stored;
-    const storedB = itemB.statement.stored;
+  return models.sort((modelA, modelB) => {
+    const storedA = modelA.statement.stored;
+    const storedB = modelB.statement.stored;
     if (storedA < storedB) return lower;
     if (storedA > storedB) return higher;
     return 0;

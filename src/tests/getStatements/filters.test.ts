@@ -4,7 +4,7 @@ import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 
-describe('get statement', () => {
+describe('get statement filters', () => {
   const service = setup();
 
   const storeStatements = (statements: any[]): Promise<string[]> => {
