@@ -4,6 +4,6 @@ sudo: false
 script:
   - npm run build
   - npm test
-  - npm run cover
+  - npm run cover -- --reporter travis-cov
   - npm run lint
   - npm run duplication -- --limit=1
