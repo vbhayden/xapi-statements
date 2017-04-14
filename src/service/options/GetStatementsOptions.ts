@@ -1,7 +1,7 @@
-import Actor from '../../models/Actor';
+import FilterAgent from '../../models/FilterAgent';
 
 interface GetStatementsOptions {
-  agent?: Actor;
+  agent?: FilterAgent;
   activity?: string;
   verb?: string;
   relatedAgents?: boolean;
