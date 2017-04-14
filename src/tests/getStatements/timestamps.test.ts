@@ -38,4 +38,11 @@ describe('get statement', () => {
     });
     assert.equal(statements[0].timestamp, TEST_TIMESTAMP_2);
   });
+
+  it('should return statements when they match the until', async () => {
+    const statements = await filterStatements({
+      until: TEST_TIMESTAMP_1,
+    });
+    assert.equal(statements[0].timestamp, TEST_TIMESTAMP_1);
+  });
 });
