@@ -1,7 +1,7 @@
 import Statement from '../../models/Statement';
 import GetStatementsOptions from '../../repo/GetStatementsOptions';
 import isMatchingRelatedAgent from './isMatchingRelatedAgent';
-import isMatchingAgent from './isMatchingAgent';
+import isMatchingUnrelatedAgent from './isMatchingUnrelatedAgent';
 
 export default (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
@@ -9,7 +9,7 @@ export default (statement: Statement, opts: GetStatementsOptions): boolean => {
     (
       opts.relatedAgents === true ?
       isMatchingRelatedAgent(statement, opts.agent) :
-      isMatchingAgent(statement.actor, opts.agent)
+      isMatchingUnrelatedAgent(statement, opts.agent)
     )
   );
 };

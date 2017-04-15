@@ -33,30 +33,30 @@ export default (createActor: (actor: any) => any) => {
   it('should return statements when they match the account name', async () => {
     const account1 = { name: '1', homePage: 'http://www.example.com' };
     const account2 = { name: '2', homePage: 'http://www.example.com' };
-    assertFilter({ account: account1 }, { account: account2 });
+    await assertFilter({ account: account1 }, { account: account2 });
   });
 
   it('should return statements when they match the account homepage', async () => {
     const account1 = { name: 'test', homePage: 'http://www.example.com/1' };
     const account2 = { name: 'test', homePage: 'http://www.example.com/2' };
-    assertFilter({ account: account1 }, { account: account2 });
+    await assertFilter({ account: account1 }, { account: account2 });
   });
 
   it('should return statements when they match the mbox', async () => {
     const mbox1 = 'mailto:test1@example.com';
     const mbox2 = 'mailto:test2@example.com';
-    assertFilter({ mbox: mbox1 }, { mbox: mbox2 });
+    await assertFilter({ mbox: mbox1 }, { mbox: mbox2 });
   });
 
   it('should return statements when they match the mbox_sha1sum', async () => {
     const mbox_sha1sum1 = 'e1f9bc64eefbdf3660690684c6184f594f9a5c17';
     const mbox_sha1sum2 = 'e1f9bc64eefbdf3660690684c6184f594f9a5c18';
-    assertFilter({ mbox_sha1sum: mbox_sha1sum1 }, { mbox_sha1sum: mbox_sha1sum2 });
+    await assertFilter({ mbox_sha1sum: mbox_sha1sum1 }, { mbox_sha1sum: mbox_sha1sum2 });
   });
 
   it('should return statements when they match the openid', async () => {
     const openid1 = 'http://www.example.com/1';
     const openid2 = 'http://www.example.com/2';
-    assertFilter({ openid: openid1 }, { openid: openid2 });
+    await assertFilter({ openid: openid1 }, { openid: openid2 });
   });
 };
