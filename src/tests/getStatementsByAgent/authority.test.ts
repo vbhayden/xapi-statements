@@ -1,5 +1,5 @@
-import agentFilterTest from './agentFilterTest';
-import agentTest from './agentTest';
+import agentFilterTest from './utils/agentFilterTest';
+import agentTest from './utils/agentTest';
 
 describe.skip('get statements by agent in authority', () => {
   agentTest((authority: any) => {
