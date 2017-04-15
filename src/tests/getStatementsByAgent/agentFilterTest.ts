@@ -6,7 +6,7 @@ import createStatement from '../utils/createStatement';
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 
-export default (createActor: (actor: any) => any) => {
+export default (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
   const service = setup();
 
   const storeStatements = (statements: any[]): Promise<string[]> => {
@@ -24,7 +24,10 @@ export default (createActor: (actor: any) => any) => {
     const statement1 = createActorStatement(TEST_ID_1, actor1);
     const statement2 = createActorStatement(TEST_ID_2, actor2);
     await storeStatements([statement1, statement2]);
-    const filteredStatements = await service.getExactStatements({ agent: actor1 });
+    const filteredStatements = await service.getExactStatements({
+      agent: actor1,
+      relatedAgents,
+    });
     assert(isArray(filteredStatements));
     assert.equal(filteredStatements.length, 1);
     assert.deepEqual(filteredStatements[0].id, TEST_ID_1);

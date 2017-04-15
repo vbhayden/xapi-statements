@@ -7,10 +7,18 @@ import isMatchingUnrelatedAgent from './isMatchingUnrelatedAgent';
 const isMatchingRelatedActor = (statement: StatementBase, filterAgent: FilterAgent): boolean => {
   return (
     isMatchingUnrelatedAgent(statement, filterAgent) ||
-    (statement.context && (
-      isMatchingAgent(statement.context.team, filterAgent) ||
-      isMatchingAgent(statement.context.instructor, filterAgent)
-    )) ||
+    (
+      statement.context === undefined ? false : (
+        (
+          statement.context.team === undefined ? false :
+          isMatchingAgent(statement.context.team, filterAgent)
+        ) ||
+        (
+          statement.context.instructor === undefined ? false :
+          isMatchingAgent(statement.context.instructor, filterAgent)
+        )
+      )
+    ) ||
     (
       statement.object.objectType === 'SubStatement' &&
       isMatchingRelatedActor(statement.object, filterAgent)
