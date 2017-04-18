@@ -4,8 +4,10 @@ import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 
-const TEST_TIMESTAMP_1 = '2017-04-12T15:37:35+00:00';
-const TEST_TIMESTAMP_2 = '2017-04-12T15:37:36+00:00';
+const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
+const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
+
+type TimestampFilter = (timestamp: string) => GetStatementsOptions;
 
 describe('get statement timestamps', () => {
   const service = setup();
@@ -21,28 +23,35 @@ describe('get statement timestamps', () => {
     return service.getExactStatements(opts);
   };
 
-  const filterStatements = async (opts: GetStatementsOptions) => {
-    await storeStatements([
-      createStatement({ timestamp: TEST_TIMESTAMP_1 }),
-      createStatement({ timestamp: TEST_TIMESTAMP_2 }),
-    ]);
-    const filteredStatements = await getStatements(opts);
+  const storeStatement = (id: string): Promise<string[]> => {
+    return storeStatements([ createStatement({
+      id,
+      timestamp: '2017-04-18T00:00Z',
+    }) ]);
+  };
+
+  const filterStatements = async (filter: TimestampFilter) => {
+    await storeStatement(TEST_ID_1);
+    await (new Promise((resolve) => setTimeout(resolve, 1)));
+    await storeStatement(TEST_ID_2);
+    const statement = await service.getStatement({ id: TEST_ID_1, voided: false });
+    const filteredStatements = await getStatements(filter(statement.stored));
     assert(isArray(filteredStatements));
     assert.equal(filteredStatements.length, 1);
     return filteredStatements;
   };
 
   it('should return statements when they match the since', async () => {
-    const statements = await filterStatements({
-      since: TEST_TIMESTAMP_1,
+    const statements = await filterStatements((since: string) => {
+      return { since };
     });
-    assert.equal(statements[0].timestamp, TEST_TIMESTAMP_2);
+    assert.equal(statements[0].id, TEST_ID_2);
   });
 
   it('should return statements when they match the until', async () => {
-    const statements = await filterStatements({
-      until: TEST_TIMESTAMP_1,
+    const statements = await filterStatements((until: string) => {
+      return { until };
     });
-    assert.equal(statements[0].timestamp, TEST_TIMESTAMP_1);
+    assert.equal(statements[0].id, TEST_ID_1);
   });
 });
