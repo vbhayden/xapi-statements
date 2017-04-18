@@ -19,7 +19,7 @@ describe('get statements by activity', () => {
   };
 
   const assertFilter = async (
-    createActivity: (actor: any) => any,
+    createActivity: (activity: any) => any,
     relatedActivities: boolean = false
   ) => {
     const statement1 = createStatement({
@@ -40,6 +40,36 @@ describe('get statements by activity', () => {
     assert.equal(filteredStatements[0].id, TEST_ID_1);
   };
 
+  const createContext = (contextActivities: any) => {
+    return {
+      context: {
+        contextActivities,
+      },
+    };
+  };
+
+  const createSubStatement = (overrides: any) => {
+    return {
+      object: {
+        objectType: 'SubStatement',
+        actor: {
+          mbox: 'mailto:test@example.com',
+        },
+        verb: {
+          id: 'http://www.example.com/verb',
+        },
+        object: {
+          id: 'http://www.example.com/object',
+        },
+        ...overrides,
+      },
+    };
+  };
+
+  const createSubStatementContext = (contextActivities: any) => {
+    return createSubStatement(createContext(contextActivities));
+  };
+
   it('should return statements when they match the activity in the object', async () => {
     await assertFilter((object: any) => {
       return { object };
@@ -48,122 +78,55 @@ describe('get statements by activity', () => {
 
   it('should return statements when they match the activity in the parent', async () => {
     await assertFilter((activity: any) => {
-      return { context: { contextActivities: { parent: [activity] } } };
+      return createContext({ parent: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the grouping', async () => {
     await assertFilter((activity: any) => {
-      return { context: { contextActivities: { grouping: [activity] } } };
+      return createContext({ grouping: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the category', async () => {
     await assertFilter((activity: any) => {
-      return { context: { contextActivities: { category: [activity] } } };
+      return createContext({ category: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the other', async () => {
     await assertFilter((activity: any) => {
-      return { context: { contextActivities: { other: [activity] } } };
+      return createContext({ other: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the sub statement object', async () => {
     await assertFilter((object: any) => {
-      return {
-        object: {
-          objectType: 'SubStatement',
-          actor: {
-            mbox: 'mailto:test@example.com',
-          },
-          verb: {
-            id: 'http://www.example.com/verb',
-          },
-          object,
-        },
-      };
+      return createSubStatement({ object });
     }, true);
   });
 
   it('should return statements when they match the activity in the sub statement parent', async () => {
     await assertFilter((activity: any) => {
-      return {
-        object: {
-          objectType: 'SubStatement',
-          actor: {
-            mbox: 'mailto:test@example.com',
-          },
-          verb: {
-            id: 'http://www.example.com/verb',
-          },
-          object: {
-            id: 'http://www.example.com/object',
-          },
-          context: { contextActivities: { parent: [activity] } },
-        },
-      };
+      return createSubStatementContext({ parent: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the sub statement grouping', async () => {
     await assertFilter((activity: any) => {
-      return {
-        object: {
-          objectType: 'SubStatement',
-          actor: {
-            mbox: 'mailto:test@example.com',
-          },
-          verb: {
-            id: 'http://www.example.com/verb',
-          },
-          object: {
-            id: 'http://www.example.com/object',
-          },
-          context: { contextActivities: { grouping: [activity] } },
-        },
-      };
+      return createSubStatementContext({ grouping: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the sub statement category', async () => {
     await assertFilter((activity: any) => {
-      return {
-        object: {
-          objectType: 'SubStatement',
-          actor: {
-            mbox: 'mailto:test@example.com',
-          },
-          verb: {
-            id: 'http://www.example.com/verb',
-          },
-          object: {
-            id: 'http://www.example.com/object',
-          },
-          context: { contextActivities: { category: [activity] } },
-        },
-      };
+      return createSubStatementContext({ category: [activity] });
     }, true);
   });
 
   it('should return statements when they match the activity in the sub statement other', async () => {
     await assertFilter((activity: any) => {
-      return {
-        object: {
-          objectType: 'SubStatement',
-          actor: {
-            mbox: 'mailto:test@example.com',
-          },
-          verb: {
-            id: 'http://www.example.com/verb',
-          },
-          object: {
-            id: 'http://www.example.com/object',
-          },
-          context: { contextActivities: { other: [activity] } },
-        },
-      };
+      return createSubStatementContext({ other: [activity] });
     }, true);
   });
 });
