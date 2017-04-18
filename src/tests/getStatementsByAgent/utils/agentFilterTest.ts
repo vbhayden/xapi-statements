@@ -30,7 +30,7 @@ export default (createActor: (actor: any) => any, relatedAgents: boolean = false
     });
     assert(isArray(filteredStatements));
     assert.equal(filteredStatements.length, 1);
-    assert.deepEqual(filteredStatements[0].id, TEST_ID_1);
+    assert.equal(filteredStatements[0].id, TEST_ID_1);
   };
 
   it('should return statements when they match the account name', async () => {
