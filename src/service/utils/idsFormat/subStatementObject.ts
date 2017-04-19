@@ -8,11 +8,10 @@ export default (statementObject: SubStatementObject): IdFormattedSubStatementObj
     case 'Agent':
     case 'Group':
       return formatActor(statementObject);
-    case 'Activity':
-      return formatActivity(statementObject);
     case 'StatementRef':
       return statementObject;
+    case 'Activity':
     default:
-      throw new Error('Invalid object type provided to formatter');
+      return formatActivity(statementObject);
   }
 };
