@@ -3,6 +3,7 @@ import NoModel from '../../errors/NoModel';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import createVoidingStatement from '../utils/createVoidingStatement';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
@@ -10,13 +11,7 @@ const TEST_VOIDER = createVoidingStatement(TEST_ID);
 
 describe('store statements voiding', () => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   const assertVoided = async () => {
     try {

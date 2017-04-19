@@ -5,6 +5,7 @@ import createStatement from '../utils/createStatement';
 import createContext from '../utils/createContext';
 import createSubStatement from '../utils/createSubStatement';
 import createSubStatementContext from '../utils/createSubStatementContext';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -13,13 +14,7 @@ const TEST_ACTIVITY_2 = 'http://www.example.com/object/2';
 
 describe('get statements by activity', () => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   const assertFilter = async (
     createActivity: (activity: any) => any,

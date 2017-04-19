@@ -3,16 +3,11 @@ import { isArray } from 'lodash';
 import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 describe('get statement filters', () => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   const getStatements = (opts: GetStatementsOptions) => {
     return service.getExactStatements(opts);

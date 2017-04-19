@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import { isArray, merge } from 'lodash';
 import setup from '../../utils/setup';
 import createStatement from '../../utils/createStatement';
+import storeStatementsInService from '../../utils/storeStatementsInService';
 
 const TEST_LANG_1 = 'en-GB';
 const TEST_LANG_2 = 'en-US';
@@ -11,13 +12,7 @@ const TEST_TEXT_2 = 'test2';
 
 export default (createLangMapStatement: (langMap: any) => any) => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   const assertCanonicalStatement = async (
     exactStatement: any,

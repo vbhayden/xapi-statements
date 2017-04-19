@@ -3,6 +3,7 @@ import { isArray } from 'lodash';
 import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -13,13 +14,7 @@ const TEST_STATEMENT_3 = createStatement({ id: TEST_ID_3 });
 
 describe('get statement slice', () => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   const getStatements = (opts: GetStatementsOptions) => {
     return service.getExactStatements(opts);

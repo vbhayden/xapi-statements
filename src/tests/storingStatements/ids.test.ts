@@ -2,18 +2,13 @@ import * as assert from 'assert';
 import { isArray } from 'lodash';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 
 describe('store statement ids', () => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   it('should use existing id when they have an id', async () => {
     const ids: string[] = await storeStatements([createStatement({ id: TEST_ID })]);

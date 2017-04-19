@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import VoidingError from '../../errors/VoidingError';
 import setup from '../utils/setup';
 import createVoidingStatement from '../utils/createVoidingStatement';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -10,13 +11,7 @@ const TEST_VOIDER_2 = createVoidingStatement(TEST_ID_2);
 
 describe('store statements voiding validation', () => {
   const service = setup();
-
-  const storeStatements = (statements: any[]): Promise<string[]> => {
-    return service.storeStatements({
-      models: statements,
-      attachments: []
-    });
-  };
+  const storeStatements = storeStatementsInService(service);
 
   it('should throw an error when voiding a voider in a following batch', async () => {
     await storeStatements([TEST_VOIDER_1]);
