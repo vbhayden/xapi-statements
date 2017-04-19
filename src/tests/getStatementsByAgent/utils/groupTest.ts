@@ -1,7 +1,7 @@
 import agentFilterTest from './agentFilterTest';
 
 export default (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
-  describe('group', () => {
+  describe('identified group', () => {
     agentFilterTest((actor: any) => {
       return createActor({
         ...actor,

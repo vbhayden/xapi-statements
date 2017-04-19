@@ -1,10 +1,10 @@
 import agentFormatTest from './agentFormatTest';
 
 export default (createActorStatement: (actor: any) => any) => {
-  describe('agent', () => {
+  describe('identified group', () => {
     agentFormatTest((ifi: any): any => {
       return {
-        objectType: 'Agent',
+        objectType: 'Group',
         ...ifi,
       };
     })(createActorStatement);
