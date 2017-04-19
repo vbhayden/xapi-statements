@@ -1,7 +1,7 @@
-import actorTest from './utils/actorTest';
+import objectTest from './utils/objectTest';
 
 describe('get ids statements in object', () => {
-  actorTest((object: any): any => {
+  objectTest((object: any): any => {
     return { object };
   });
 });

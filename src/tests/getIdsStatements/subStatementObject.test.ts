@@ -1,8 +1,8 @@
 import createSubStatement from '../utils/createSubStatement';
-import actorTest from './utils/actorTest';
+import objectTest from './utils/objectTest';
 
 describe('get ids statements in sub statement object', () => {
-  actorTest((object: any): any => {
+  objectTest((object: any): any => {
     return createSubStatement({ object });
   });
 });
