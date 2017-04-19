@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { isArray, merge } from 'lodash';
+import { isArray } from 'lodash';
 import setup from '../../utils/setup';
 import storeStatementsInService from '../../utils/storeStatementsInService';
 
