@@ -58,4 +58,109 @@ describe('store statement with objectType', () => {
     const statement = await getStatement();
     assert.equal(statement.object.member[0].objectType, 'Agent');
   });
+
+  it('should generate an objectType in instructor', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        instructor: TEST_AGENT,
+      },
+    })]);
+    const statement = await getStatement();
+    assert.equal(statement.context.instructor.objectType, 'Agent');
+  });
+
+  it('should generate an objectType in team', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        team: TEST_AGENT,
+      },
+    })]);
+    const statement = await getStatement();
+    assert.equal(statement.context.team.objectType, 'Group');
+  });
+
+  it('should generate an objectType in team member', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        team: {
+          objectType: 'Group',
+          ...TEST_AGENT,
+          member: [TEST_AGENT],
+        },
+      },
+    })]);
+    const statement = await getStatement();
+    assert.equal(statement.context.team.member[0].objectType, 'Agent');
+  });
+
+  it('should generate an objectType in parent', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        contextActivities: {
+          parent: [TEST_ACTIVITY],
+        },
+      },
+    })]);
+    const statement = await getStatement();
+    const actualObjectType = (
+      statement.context.contextActivities.parent[0].objectType
+    );
+    const expectedObjectType = 'Activity';
+    assert.equal(actualObjectType, expectedObjectType);
+  });
+
+  it('should generate an objectType in grouping', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        contextActivities: {
+          grouping: [TEST_ACTIVITY],
+        },
+      },
+    })]);
+    const statement = await getStatement();
+    const actualObjectType = (
+      statement.context.contextActivities.grouping[0].objectType
+    );
+    const expectedObjectType = 'Activity';
+    assert.equal(actualObjectType, expectedObjectType);
+  });
+
+  it('should generate an objectType in category', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        contextActivities: {
+          category: [TEST_ACTIVITY],
+        },
+      },
+    })]);
+    const statement = await getStatement();
+    const actualObjectType = (
+      statement.context.contextActivities.category[0].objectType
+    );
+    const expectedObjectType = 'Activity';
+    assert.equal(actualObjectType, expectedObjectType);
+  });
+
+  it('should generate an objectType in other', async () => {
+    await storeStatements([createStatement({
+      id: TEST_ID,
+      context: {
+        contextActivities: {
+          other: [TEST_ACTIVITY],
+        },
+      },
+    })]);
+    const statement = await getStatement();
+    const actualObjectType = (
+      statement.context.contextActivities.other[0].objectType
+    );
+    const expectedObjectType = 'Activity';
+    assert.equal(actualObjectType, expectedObjectType);
+  });
 });

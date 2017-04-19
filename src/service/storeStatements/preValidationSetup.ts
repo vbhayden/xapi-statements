@@ -40,19 +40,78 @@ const setupDefaultObjectType = (defaultObjectType: string, obj: any): any => {
   };
 };
 
-const setupMembersObjectTypes = (members: any): any => {
-  return isArray(members) ? members.map((member: any) => {
-    return setupDefaultObjectType('Agent', member);
-  }) : members;
+const setupArrayObjectTypes = (defaultObjectType: string, objs: any): any => {
+  return isArray(objs) ? objs.map((obj: any) => {
+    return setupDefaultObjectType(defaultObjectType, obj);
+  }) : objs;
 };
 
 const setupObjectObjectTypes = (defaultObjectType: string, obj: any) => {
-  const setupActor = setupDefaultObjectType(defaultObjectType, obj);
-  return {
-    ...setupActor,
+  return !isPlainObject(obj) ? obj : {
+    ...setupDefaultObjectType(defaultObjectType, obj),
     ...(
       obj.member === undefined ? {} :
-      { member: setupMembersObjectTypes(obj.member) }
+      { member: setupArrayObjectTypes('Agent', obj.member) }
+    ),
+  };
+};
+
+const setupContextActivitiesObjectTypes = (contextActivities: any) => {
+  return !isPlainObject(contextActivities) ? contextActivities : {
+    ...contextActivities,
+    ...(
+      contextActivities.parent === undefined ? {} :
+      {
+        parent: setupArrayObjectTypes(
+          'Activity', contextActivities.parent
+        )
+      }
+    ),
+    ...(
+      contextActivities.grouping === undefined ? {} :
+      {
+        grouping: setupArrayObjectTypes(
+          'Activity', contextActivities.grouping
+        )
+      }
+    ),
+    ...(
+      contextActivities.category === undefined ? {} :
+      {
+        category: setupArrayObjectTypes(
+          'Activity', contextActivities.category
+        )
+      }
+    ),
+    ...(
+      contextActivities.other === undefined ? {} :
+      {
+        other: setupArrayObjectTypes(
+          'Activity', contextActivities.other
+        )
+      }
+    ),
+  };
+};
+
+const setupContextObjectTypes = (context: any) => {
+  return !isPlainObject(context) ? context : {
+    ...context,
+    ...(
+      context.team === undefined ? {} :
+      { team: setupObjectObjectTypes('Group', context.team) }
+    ),
+    ...(
+      context.instructor === undefined ? {} :
+      { instructor: setupObjectObjectTypes('Agent', context.instructor) }
+    ),
+    ...(
+      context.contextActivities === undefined ? {} :
+      {
+        contextActivities: setupContextActivitiesObjectTypes(
+          context.contextActivities
+        )
+      }
     ),
   };
 };
@@ -60,8 +119,18 @@ const setupObjectObjectTypes = (defaultObjectType: string, obj: any) => {
 const setupObjectTypes = (model: any): any => {
   return {
     ...model,
-    actor: setupObjectObjectTypes('Agent', model.actor),
-    object: setupObjectObjectTypes('Activity', model.object),
+    ...(
+      model.actor === undefined ? {} :
+      { actor: setupObjectObjectTypes('Agent', model.actor) }
+    ),
+    ...(
+      model.object === undefined ? {} :
+      { object: setupObjectObjectTypes('Activity', model.object) }
+    ),
+    ...(
+      model.context === undefined ? {} :
+      { context: setupContextObjectTypes(model.context) }
+    ),
   };
 };
 
