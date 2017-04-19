@@ -13,11 +13,16 @@ export default (createActorStatement: (actor: any) => any) => {
   describe('identified group members', () => {
     agentFormatTest((ifi: any): any => {
       return {
-        mbox: 'mailto:test@example.com',
+        ...ifi,
+        objectType: 'Group',
+      };
+    }, (ifi: any): any => {
+      return {
+        ...ifi,
         objectType: 'Group',
         member: [{
           objectType: 'Agent',
-          ...ifi,
+          mbox: 'mailto:test@example.com',
         }]
       };
     })(createActorStatement);

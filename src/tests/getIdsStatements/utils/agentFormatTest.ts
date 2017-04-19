@@ -1,14 +1,21 @@
 import createStatement from '../../utils/createStatement';
 import setupIdsTest from './setupIdsTest';
 
-export default (createIdsActor: (ifi: any) => any) => {
-  const createExactActor = (ifi: any): any => {
+type ActorCreator = (ifi: any) => any;
+
+const defaultExactActorCreator = (createIdsActor: ActorCreator): ActorCreator => {
+  return (ifi: any): any => {
     return {
       name: 'Test1',
       ...createIdsActor(ifi),
     };
   };
+};
 
+export default (
+  createIdsActor: ActorCreator,
+  createExactActor = defaultExactActorCreator(createIdsActor)
+) => {
   return (createActorStatement: (actor: any) => any) => {
     const assertIdsStatements = setupIdsTest();
 

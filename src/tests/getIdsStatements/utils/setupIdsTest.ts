@@ -13,7 +13,7 @@ export default () => {
   ): Promise<void> => {
     await storeStatements([exactStatement]);
     const actualStatements = await service.getIdsStatements({});
-    const expectedStatement = merge(actualStatements[0], canonicalStatement);
+    const expectedStatement = {...actualStatements[0], ...canonicalStatement};
     assert(isArray(actualStatements));
     assert.equal(actualStatements.length, 1);
     assert.deepEqual(actualStatements[0], expectedStatement);
