@@ -3,13 +3,12 @@ import formatActivity from './activity';
 
 export default (statementObject: SubStatementObject, langs: string[]): SubStatementObject => {
   switch (statementObject.objectType) {
-    case 'Activity':
-      return formatActivity(statementObject, langs);
     case 'Agent':
     case 'Group':
     case 'StatementRef':
       return statementObject;
+    case 'Activity':
     default:
-      throw new Error('Invalid object type provided to formatter');
+      return formatActivity(statementObject, langs);
   }
 };

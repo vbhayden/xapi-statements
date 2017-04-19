@@ -2,6 +2,9 @@ import * as assert from 'assert';
 import { isArray } from 'lodash';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
+import createContext from '../utils/createContext';
+import createSubStatement from '../utils/createSubStatement';
+import createSubStatementContext from '../utils/createSubStatementContext';
 
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -38,36 +41,6 @@ describe('get statements by activity', () => {
     assert(isArray(filteredStatements));
     assert.equal(filteredStatements.length, 1);
     assert.equal(filteredStatements[0].id, TEST_ID_1);
-  };
-
-  const createContext = (contextActivities: any) => {
-    return {
-      context: {
-        contextActivities,
-      },
-    };
-  };
-
-  const createSubStatement = (overrides: any) => {
-    return {
-      object: {
-        objectType: 'SubStatement',
-        actor: {
-          mbox: 'mailto:test@example.com',
-        },
-        verb: {
-          id: 'http://www.example.com/verb',
-        },
-        object: {
-          id: 'http://www.example.com/object',
-        },
-        ...overrides,
-      },
-    };
-  };
-
-  const createSubStatementContext = (contextActivities: any) => {
-    return createSubStatement(createContext(contextActivities));
   };
 
   it('should return statements when they match the activity in the object', async () => {
