@@ -16,34 +16,33 @@ describe('store statement with objectType', () => {
     return service.getStatement({ id: TEST_ID, voided: false });
   };
 
-  it('should generate an objectType in actor', async () => {
+  const storeStatement = async (statement: any) => {
     await storeStatements([createStatement({
       id: TEST_ID,
-      actor: TEST_AGENT,
+      ...statement,
     })]);
-    const statement = await getStatement();
+    return getStatement();
+  };
+
+  it('should generate an objectType in actor', async () => {
+    const statement = await storeStatement({ actor: TEST_AGENT });
     assert.equal(statement.actor.objectType, 'Agent');
   });
 
   it('should generate an objectType in object', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      object: TEST_ACTIVITY,
-    })]);
+    await storeStatement({ object: TEST_ACTIVITY });
     const statement = await getStatement();
     assert.equal(statement.object.objectType, 'Activity');
   });
 
   it('should generate an objectType in actor member', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
+    const statement = await storeStatement({
       actor: {
         objectType: 'Group',
         ...TEST_AGENT,
         member: [TEST_AGENT],
       },
-    })]);
-    const statement = await getStatement();
+    });
     const expectedObjectType = 'Agent';
     const actualObjectType = (
       statement.actor.objectType === 'Group' &&
@@ -54,15 +53,13 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in object member', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
+    const statement = await storeStatement({
       object: {
         objectType: 'Group',
         ...TEST_AGENT,
         member: [TEST_AGENT],
       },
-    })]);
-    const statement = await getStatement();
+    });
     const expectedObjectType = 'Agent';
     const actualObjectType = (
       statement.object.objectType === 'Group' &&
@@ -73,13 +70,11 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in instructor', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
+    const statement = await storeStatement({
       context: {
         instructor: TEST_AGENT,
       },
-    })]);
-    const statement = await getStatement();
+    });
     const expectedObjectType = 'Agent';
     const actualObjectType = (
       statement.context !== undefined &&
@@ -89,13 +84,11 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in team', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
+    const statement = await storeStatement({
       context: {
         team: TEST_AGENT,
       },
-    })]);
-    const statement = await getStatement();
+    });
     const expectedObjectType = 'Group';
     const actualObjectType = (
       statement.context !== undefined &&
@@ -105,8 +98,7 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in team member', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
+    const statement = await storeStatement({
       context: {
         team: {
           objectType: 'Group',
@@ -114,8 +106,7 @@ describe('store statement with objectType', () => {
           member: [TEST_AGENT],
         },
       },
-    })]);
-    const statement = await getStatement();
+    });
     const expectedObjectType = 'Agent';
     const actualObjectType = (
       statement.context !== undefined &&
@@ -128,11 +119,7 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in parent', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      ...createContext({ parent: [TEST_ACTIVITY] }),
-    })]);
-    const statement = await getStatement();
+    const statement = await storeStatement(createContext({ parent: [TEST_ACTIVITY] }));
     const expectedObjectType = 'Activity';
     const actualObjectType = (
       statement.context !== undefined &&
@@ -144,11 +131,7 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in grouping', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      ...createContext({ grouping: [TEST_ACTIVITY] }),
-    })]);
-    const statement = await getStatement();
+    const statement = await storeStatement(createContext({ grouping: [TEST_ACTIVITY] }));
     const expectedObjectType = 'Activity';
     const actualObjectType = (
       statement.context !== undefined &&
@@ -160,11 +143,7 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in category', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      ...createContext({ category: [TEST_ACTIVITY] }),
-    })]);
-    const statement = await getStatement();
+    const statement = await storeStatement(createContext({ category: [TEST_ACTIVITY] }));
     const expectedObjectType = 'Activity';
     const actualObjectType = (
       statement.context !== undefined &&
@@ -176,11 +155,7 @@ describe('store statement with objectType', () => {
   });
 
   it('should generate an objectType in other', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      ...createContext({ other: [TEST_ACTIVITY] }),
-    })]);
-    const statement = await getStatement();
+    const statement = await storeStatement(createContext({ other: [TEST_ACTIVITY] }));
     const expectedObjectType = 'Activity';
     const actualObjectType = (
       statement.context !== undefined &&
