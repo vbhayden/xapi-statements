@@ -1,6 +1,7 @@
 import * as assert from 'assert';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
+import createContext from '../utils/createContext';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
@@ -129,11 +130,7 @@ describe('store statement with objectType', () => {
   it('should generate an objectType in parent', async () => {
     await storeStatements([createStatement({
       id: TEST_ID,
-      context: {
-        contextActivities: {
-          parent: [TEST_ACTIVITY],
-        },
-      },
+      ...createContext({ parent: [TEST_ACTIVITY] }),
     })]);
     const statement = await getStatement();
     const expectedObjectType = 'Activity';
@@ -149,11 +146,7 @@ describe('store statement with objectType', () => {
   it('should generate an objectType in grouping', async () => {
     await storeStatements([createStatement({
       id: TEST_ID,
-      context: {
-        contextActivities: {
-          grouping: [TEST_ACTIVITY],
-        },
-      },
+      ...createContext({ grouping: [TEST_ACTIVITY] }),
     })]);
     const statement = await getStatement();
     const expectedObjectType = 'Activity';
@@ -169,11 +162,7 @@ describe('store statement with objectType', () => {
   it('should generate an objectType in category', async () => {
     await storeStatements([createStatement({
       id: TEST_ID,
-      context: {
-        contextActivities: {
-          category: [TEST_ACTIVITY],
-        },
-      },
+      ...createContext({ category: [TEST_ACTIVITY] }),
     })]);
     const statement = await getStatement();
     const expectedObjectType = 'Activity';
@@ -189,11 +178,7 @@ describe('store statement with objectType', () => {
   it('should generate an objectType in other', async () => {
     await storeStatements([createStatement({
       id: TEST_ID,
-      context: {
-        contextActivities: {
-          other: [TEST_ACTIVITY],
-        },
-      },
+      ...createContext({ other: [TEST_ACTIVITY] }),
     })]);
     const statement = await getStatement();
     const expectedObjectType = 'Activity';
