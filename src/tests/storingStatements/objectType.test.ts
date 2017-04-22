@@ -43,7 +43,13 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    assert.equal(statement.actor.member[0].objectType, 'Agent');
+    const expectedObjectType = 'Agent';
+    const actualObjectType = (
+      statement.actor.objectType === 'Group' &&
+      statement.actor.member !== undefined &&
+      statement.actor.member.length === 1
+    ) ? statement.actor.member[0].objectType : undefined;
+    assert.equal(actualObjectType, expectedObjectType);
   });
 
   it('should generate an objectType in object member', async () => {
@@ -56,7 +62,13 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    assert.equal(statement.object.member[0].objectType, 'Agent');
+    const expectedObjectType = 'Agent';
+    const actualObjectType = (
+      statement.object.objectType === 'Group' &&
+      statement.object.member !== undefined &&
+      statement.object.member.length === 1
+    ) ? statement.object.member[0].objectType : undefined;
+    assert.equal(actualObjectType, expectedObjectType);
   });
 
   it('should generate an objectType in instructor', async () => {
@@ -67,7 +79,12 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    assert.equal(statement.context.instructor.objectType, 'Agent');
+    const expectedObjectType = 'Agent';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.instructor !== undefined
+    ) ? statement.context.instructor.objectType : undefined;
+    assert.equal(actualObjectType, expectedObjectType);
   });
 
   it('should generate an objectType in team', async () => {
@@ -78,7 +95,12 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    assert.equal(statement.context.team.objectType, 'Group');
+    const expectedObjectType = 'Group';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.team !== undefined
+    ) ? statement.context.team.objectType : undefined;
+    assert.equal(actualObjectType, expectedObjectType);
   });
 
   it('should generate an objectType in team member', async () => {
@@ -93,7 +115,15 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    assert.equal(statement.context.team.member[0].objectType, 'Agent');
+    const expectedObjectType = 'Agent';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.team !== undefined &&
+      statement.context.team.objectType === 'Group' &&
+      statement.context.team.member !== undefined &&
+      statement.context.team.member.length === 1
+    ) ? statement.context.team.member[0].objectType : undefined;
+    assert.equal(actualObjectType, expectedObjectType);
   });
 
   it('should generate an objectType in parent', async () => {
@@ -106,10 +136,13 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    const actualObjectType = (
-      statement.context.contextActivities.parent[0].objectType
-    );
     const expectedObjectType = 'Activity';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.contextActivities !== undefined &&
+      statement.context.contextActivities.parent !== undefined &&
+      statement.context.contextActivities.parent.length === 1
+    ) ? statement.context.contextActivities.parent[0].objectType : undefined;
     assert.equal(actualObjectType, expectedObjectType);
   });
 
@@ -123,10 +156,13 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    const actualObjectType = (
-      statement.context.contextActivities.grouping[0].objectType
-    );
     const expectedObjectType = 'Activity';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.contextActivities !== undefined &&
+      statement.context.contextActivities.grouping !== undefined &&
+      statement.context.contextActivities.grouping.length === 1
+    ) ? statement.context.contextActivities.grouping[0].objectType : undefined;
     assert.equal(actualObjectType, expectedObjectType);
   });
 
@@ -140,10 +176,13 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    const actualObjectType = (
-      statement.context.contextActivities.category[0].objectType
-    );
     const expectedObjectType = 'Activity';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.contextActivities !== undefined &&
+      statement.context.contextActivities.category !== undefined &&
+      statement.context.contextActivities.category.length === 1
+    ) ? statement.context.contextActivities.category[0].objectType : undefined;
     assert.equal(actualObjectType, expectedObjectType);
   });
 
@@ -157,10 +196,13 @@ describe('store statement with objectType', () => {
       },
     })]);
     const statement = await getStatement();
-    const actualObjectType = (
-      statement.context.contextActivities.other[0].objectType
-    );
     const expectedObjectType = 'Activity';
+    const actualObjectType = (
+      statement.context !== undefined &&
+      statement.context.contextActivities !== undefined &&
+      statement.context.contextActivities.other !== undefined &&
+      statement.context.contextActivities.other.length === 1
+    ) ? statement.context.contextActivities.other[0].objectType : undefined;
     assert.equal(actualObjectType, expectedObjectType);
   });
 });
