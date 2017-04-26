@@ -7,11 +7,23 @@ import logger from '../../logger';
 export default async (config: Config, models: StatementModel[]): Promise<void> => {
   if (!config.enableReferencing) return;
 
+  const getDownRefId = (id: string): Promise<string> => {
+    return config.repo.getDownRefId({ id });
+  };
+
+  const getUpRefIds = (id: string): Promise<string[]> => {
+    return config.repo.getUpRefIds({ id });
+  };
+
+  const setRefs = (id: string, refIds: string[]): Promise<void> => {
+    return config.repo.setRefs({ id, refIds });
+  };
+
   const traverseDown = async (modelId: string, visitedIds: string[]): Promise<string[]> => {
     logger.silly('traverseDown', modelId, visitedIds);
     try {
       const newVisitedIds = [modelId, ...visitedIds];
-      const downRefId = await config.repo.getDownRefId({ id: modelId });
+      const downRefId = await getDownRefId(modelId);
       return (
         includes(newVisitedIds, downRefId) ?
         traverseUp([], newVisitedIds, downRefId) :
@@ -32,11 +44,11 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
   ): Promise<string[]> => {
     logger.silly('traverseUp', visitedIds, refIds, modelId);
     if (includes(visitedIds, modelId)) return [];
-    if (refIds.length > 0) await config.repo.setRefs({ id: modelId, refIds });
+    if (refIds.length > 0) await setRefs(modelId, refIds);
 
     const newVisitedIds = [modelId, ...visitedIds];
     const newRefIds = [modelId, ...refIds];
-    const upRefIds = await config.repo.getUpRefIds({ id: modelId });
+    const upRefIds = await getUpRefIds(modelId);
     return traverseUpRefs(newVisitedIds, newRefIds, upRefIds)
   };
 
@@ -56,7 +68,12 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     const visitedIds = await results;
     const modelId = model.statement.id;
     if (includes(visitedIds, modelId)) return visitedIds;
+
     logger.debug('Updating references', modelId);
-    return traverseDown(modelId, []);
+    if (model.statement.object.objectType !== 'StatementRef') {
+      return traverseUp([], [], modelId);
+    } else {
+      return traverseDown(modelId, []);
+    }
   }, Promise.resolve([]));
 };
