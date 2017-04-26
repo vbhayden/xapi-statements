@@ -10,6 +10,9 @@ import GetStatementsOptions from './GetStatementsOptions';
 import GetStatementOptions from './GetStatementOptions';
 import GetVoidersOptions from './GetVoidersOptions';
 import VoidStatementsOptions from './VoidStatementsOptions';
+import GetDownRefIdOptions from './GetDownRefIdOptions';
+import GetUpRefIdsOptions from './GetUpRefIdsOptions';
+import SetRefsOptions from './SetRefsOptions';
 
 interface RepoConfig {
   repoName: string;
@@ -25,6 +28,9 @@ export interface Repo {
   getVoidersByObjectIds: (opts: GetVoidersOptions) => Promise<string[]>;
   getVoidersByIds: (opts: GetVoidersOptions) => Promise<string[]>;
   voidStatements: (opts: VoidStatementsOptions) => Promise<void>;
+  getDownRefId: (opts: GetDownRefIdOptions) => Promise<string>;
+  getUpRefIds: (opts: GetUpRefIdsOptions) => Promise<string[]>;
+  setRefs: (opts: SetRefsOptions) => Promise<void>;
 
   // Attachment functions.
   createAttachments: (opts: CreateAttachmentsOptions) => Promise<AttachmentModel[]>;

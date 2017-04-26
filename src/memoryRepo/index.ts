@@ -9,6 +9,9 @@ import getStatements from './getStatements';
 import getVoidersByObjectIds from './getVoidersByObjectIds';
 import getVoidersByIds from './getVoidersByIds';
 import voidStatements from './voidStatements';
+import getDownRefId from './getDownRefId';
+import getUpRefIds from './getUpRefIds';
+import setRefs from './setRefs';
 
 export default (config: Config): Repo => {
   return {
@@ -20,6 +23,9 @@ export default (config: Config): Repo => {
     getVoidersByObjectIds: getVoidersByObjectIds(config),
     getVoidersByIds: getVoidersByIds(config),
     voidStatements: voidStatements(config),
+    getDownRefId: getDownRefId(config),
+    getUpRefIds: getUpRefIds(config),
+    setRefs: setRefs(config),
 
     // Attachment functions.
     createAttachments: createAttachments(config),

@@ -6,7 +6,8 @@
     "rootDir": "src",
     "outDir": "dist",
     "lib": [
-      "es2016"
+      "ES2015",
+      "ES2016"
     ],
     "typeRoots": [
       "./@types",

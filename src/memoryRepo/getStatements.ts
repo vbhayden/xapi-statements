@@ -12,10 +12,10 @@ const filterModels = (models: StatementModel[], opts: GetStatementsOptions) => {
   return models.filter((model: StatementModel) => {
     const statement = model.statement;
     return (
-      matchesAgentOption(statement, opts) &&
-      matchesVerbOption(statement, opts) &&
-      matchesActivityOption(statement, opts) &&
-      matchesRegistrationOption(statement, opts) &&
+      matchesAgentOption(model, opts) &&
+      matchesVerbOption(model, opts) &&
+      matchesActivityOption(model, opts) &&
+      matchesRegistrationOption(model, opts) &&
       matchesUntilOption(statement, opts) &&
       matchesSinceOption(statement, opts)
     );

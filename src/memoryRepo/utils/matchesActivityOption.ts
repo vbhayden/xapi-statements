@@ -2,8 +2,9 @@ import Statement from '../../models/Statement';
 import GetStatementsOptions from '../../repo/GetStatementsOptions';
 import isMatchingRelatedActivity from './isMatchingRelatedActivity';
 import isMatchingActivity from './isMatchingActivity';
+import matchesModel from './matchesModel';
 
-export default (statement: Statement, opts: GetStatementsOptions): boolean => {
+const matcher = (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
     opts.activity === undefined ? true :
     (
@@ -16,3 +17,5 @@ export default (statement: Statement, opts: GetStatementsOptions): boolean => {
     )
   );
 };
+
+export default matchesModel(matcher);

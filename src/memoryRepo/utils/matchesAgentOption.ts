@@ -2,8 +2,9 @@ import Statement from '../../models/Statement';
 import GetStatementsOptions from '../../repo/GetStatementsOptions';
 import isMatchingRelatedAgent from './isMatchingRelatedAgent';
 import isMatchingUnrelatedAgent from './isMatchingUnrelatedAgent';
+import matchesModel from './matchesModel';
 
-export default (statement: Statement, opts: GetStatementsOptions): boolean => {
+const matcher = (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
     opts.agent === undefined ? true :
     (
@@ -13,3 +14,5 @@ export default (statement: Statement, opts: GetStatementsOptions): boolean => {
     )
   );
 };
+
+export default matchesModel(matcher);

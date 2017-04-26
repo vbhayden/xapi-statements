@@ -11,7 +11,7 @@ interface StatementModel {
   timestamp: string;
   stored: string;
   hash: string;
-  refs: any;
+  refs: Statement[];
   statement: Statement;
 }
 
