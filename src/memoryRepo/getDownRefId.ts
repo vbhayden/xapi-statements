@@ -1,9 +1,11 @@
 import GetDownRefIdOptions from '../repo/GetDownRefIdOptions';
 import NoModel from '../errors/NoModel';
+import logger from '../logger';
 import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: GetDownRefIdOptions): Promise<string> => {
+    logger.debug('getDownRefId', opts);
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.object.objectType === 'StatementRef' &&

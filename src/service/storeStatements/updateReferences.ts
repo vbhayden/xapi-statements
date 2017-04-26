@@ -8,7 +8,7 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
   if (!config.enableReferencing) return;
 
   const traverseDown = async (modelId: string, visitedIds: string[]): Promise<string[]> => {
-    logger.debug('traverseDown', modelId, visitedIds);
+    logger.silly('traverseDown', modelId, visitedIds);
     try {
       const newVisitedIds = [modelId, ...visitedIds];
       const downRefId = await config.repo.getDownRefId({ id: modelId });
@@ -30,7 +30,7 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     refIds: string[],
     modelId: string
   ): Promise<string[]> => {
-    logger.debug('traverseUp', visitedIds, refIds, modelId);
+    logger.silly('traverseUp', visitedIds, refIds, modelId);
     if (includes(visitedIds, modelId)) return [];
     if (refIds.length > 0) await config.repo.setRefs({ id: modelId, refIds });
 
@@ -45,7 +45,7 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     refIds: string[],
     upRefIds: string[]
   ): Promise<string[]> => {
-    logger.debug('traverseUpRefs', visitedIds, refIds, upRefIds);
+    logger.silly('traverseUpRefs', visitedIds, refIds, upRefIds);
     const traversedIds: string[][] = await Promise.all(upRefIds.map((upRefId) => {
       return traverseUp(visitedIds, refIds, upRefId);
     }));
@@ -55,6 +55,7 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
   await models.reduce(async (results, model): Promise<string[]> => {
     const visitedIds = await results;
     const modelId = model.statement.id;
+    if (model.statement.object.objectType !== 'StatementRef') return visitedIds;
     if (includes(visitedIds, modelId)) return visitedIds;
     logger.debug('Updating references', modelId);
     return traverseDown(modelId, []);
