@@ -21,5 +21,5 @@ export default (model: any): any => {
       objectType: 'Agent',
       mbox: 'authority@example.com',
     }),
-  })(model, ['statement']);
+  })(model);
 };

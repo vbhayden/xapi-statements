@@ -1,5 +1,4 @@
-export type Path = string[];
-export type Modifier = (data: any, path: Path) => any;
+export type Modifier = (data: any) => any;
 export type Schema = { [key: string]: Modifier };
 
 export const defaultValue = (value: any): Modifier => {
@@ -17,19 +16,19 @@ export const overrideValue = (value: any): Modifier => {
 export const keepValue: Modifier = (data) => data;
 
 export const modifyType = (type: any, modifier: Modifier): Modifier => {
-  return (data, path) => {
+  return (data) => {
     return (
       data !== undefined && data !== null && data.constructor === type ?
-      modifier(data, path) :
+      modifier(data) :
       data
     );
   };
 };
 
 export const modifySchema = (schema: Schema) => {
-  return modifyType(Object, (data, path) => {
+  return modifyType(Object, (data) => {
     return Object.keys(schema).reduce((newData, key) => {
-      const value = schema[key](data[key], [...path, key]);
+      const value = schema[key](data[key]);
       return {
         ...newData,
         ...(value === undefined ? {} : { [key]: value }),
@@ -39,9 +38,9 @@ export const modifySchema = (schema: Schema) => {
 };
 
 export const modifyStrictSchema = (schema: Schema) => {
-  return modifyType(Object, (data, path) => {
+  return modifyType(Object, (data) => {
     return Object.keys(schema).reduce((newData, key) => {
-      const value = schema[key](data[key], [...path, key]);
+      const value = schema[key](data[key]);
       return {
         ...newData,
         ...(value === undefined ? {} : { [key]: value }),
@@ -51,17 +50,17 @@ export const modifyStrictSchema = (schema: Schema) => {
 };
 
 export const modifyCollection = (modifier: (index: number) => Modifier) => {
-  return modifyType(Array, (data, path) => {
+  return modifyType(Array, (data) => {
     return data.map((elem: any, index: number) => {
-      return modifier(index)(elem, [...path, index.toString()]);
+      return modifier(index)(elem);
     });
   });
 };
 
 export const composeModifiers = (modifiers: Modifier[]): Modifier => {
-  return (data, path) => {
+  return (data) => {
     return modifiers.reduce((result: any, modifier: Modifier) => {
-      return modifier(result, path);
+      return modifier(result);
     }, data);
   };
 };

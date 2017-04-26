@@ -14,5 +14,5 @@ const context = modr.modifySchema({
 });
 
 export default (model: any) => {
-  return modr.modifySchema({ context })(model, ['statement']);
+  return modr.modifySchema({ context })(model);
 };

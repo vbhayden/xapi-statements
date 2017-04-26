@@ -35,10 +35,10 @@ const context = modr.modifySchema({
   contextActivities,
 });
 
-const subStatement: modr.Modifier = modr.modifyType(Object, (data, path) => {
+const subStatement: modr.Modifier = modr.modifyType(Object, (data) => {
   return (
     data.objectType === 'SubStatement' ?
-    statementBase(data, path) :
+    statementBase(data) :
     data
   );
 });
@@ -56,5 +56,5 @@ const statementBase = modr.modifySchema({
 });
 
 export default (model: any): any => {
-  return statementBase(model, ['statement']);
+  return statementBase(model);
 };
