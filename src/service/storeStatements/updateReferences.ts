@@ -55,7 +55,6 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
   await models.reduce(async (results, model): Promise<string[]> => {
     const visitedIds = await results;
     const modelId = model.statement.id;
-    if (model.statement.object.objectType !== 'StatementRef') return visitedIds;
     if (includes(visitedIds, modelId)) return visitedIds;
     logger.debug('Updating references', modelId);
     return traverseDown(modelId, []);
