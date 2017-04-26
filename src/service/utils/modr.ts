@@ -14,11 +14,7 @@ export const overrideValue = (value: any): Modifier => {
   };
 };
 
-export const keepValue = (): Modifier => {
-  return (data) => {
-    return data;
-  };
-};
+export const keepValue: Modifier = (data) => data;
 
 export const modifyType = (type: any, modifier: Modifier): Modifier => {
   return (data, path) => {
