@@ -16,11 +16,7 @@ const group = modr.composeModifiers([
   members,
 ]);
 const activity = obj('Activity');
-
-const actor = modr.composeModifiers([
-  agent,
-  group,
-]);
+const actor = modr.composeModifiers([agent, group]);
 
 const contextActivities = modr.modifySchema({
   parent: modr.modifyCollection(() => activity),
@@ -43,17 +39,8 @@ const subStatement: modr.Modifier = modr.modifyType(Object, (data) => {
   );
 });
 
-const object = modr.composeModifiers([
-  activity,
-  actor,
-  subStatement,
-]);
-
-const statementBase = modr.modifySchema({
-  actor,
-  object,
-  context,
-});
+const object = modr.composeModifiers([activity, actor, subStatement]);
+const statementBase = modr.modifySchema({ actor, object, context });
 
 export default (model: any): any => {
   return statementBase(model);
