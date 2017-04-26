@@ -14,6 +14,12 @@ export const overrideValue = (value: any): Modifier => {
   };
 };
 
+export const keepValue = (): Modifier => {
+  return (data) => {
+    return data;
+  };
+};
+
 export const modifyType = (type: any, modifier: Modifier): Modifier => {
   return (data, path) => {
     return (
@@ -33,6 +39,18 @@ export const modifySchema = (schema: Schema) => {
         ...(value === undefined ? {} : { [key]: value }),
       };
     }, data);
+  });
+};
+
+export const modifyStrictSchema = (schema: Schema) => {
+  return modifyType(Object, (data, path) => {
+    return Object.keys(schema).reduce((newData, key) => {
+      const value = schema[key](data[key], [...path, key]);
+      return {
+        ...newData,
+        ...(value === undefined ? {} : { [key]: value }),
+      };
+    }, {});
   });
 };
 

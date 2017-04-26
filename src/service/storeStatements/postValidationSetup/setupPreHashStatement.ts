@@ -1,34 +1,25 @@
 import { v4 as uuid } from 'uuid';
-
-const addOptionalProp = (model: any, propName: string): any => {
-  return model[propName] === undefined ? {} : { [propName]: model[propName] };
-};
+import * as modr from '../../utils/modr';
 
 export default (model: any): any => {
-  return {
+  return modr.modifyStrictSchema({
     // Adds the required properties from the model.
-    actor: model.actor,
-    verb: model.verb,
-    object: model.object,
+    id: modr.defaultValue(uuid()),
+    actor: modr.keepValue(),
+    verb: modr.keepValue(),
+    object: modr.keepValue(),
 
     // Adds the optional properties from the model.
-    ...addOptionalProp(model, 'context'),
-    ...addOptionalProp(model, 'result'),
-    ...addOptionalProp(model, 'attachments'),
-    ...addOptionalProp(model, 'timestamp'),
-
-    // Generates missing properties where required.
-    id: (
-      model.id === undefined ?
-      uuid() :
-      model.id
-    ),
+    context: modr.keepValue(),
+    result: modr.keepValue(),
+    attachments: modr.keepValue(),
+    timestamp: modr.keepValue(),
 
     // Adds LRS properties.
-    version: '1.0.0',
-    authority: {
+    version: modr.overrideValue('1.0.0'),
+    authority: modr.overrideValue({
       objectType: 'Agent',
       mbox: 'authority@example.com',
-    },
-  };
+    }),
+  })(model, ['statement']);
 };
