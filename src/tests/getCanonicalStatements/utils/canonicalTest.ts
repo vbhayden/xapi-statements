@@ -21,7 +21,7 @@ export default (createLangMapStatement: (langMap: any) => any) => {
   ): Promise<void> => {
     await storeStatements([exactStatement]);
     const canonicalStatements = await service.getCanonicalStatements({ langs });
-    const expectedStatement = merge(canonicalStatements[0], canonicalStatement);
+    const expectedStatement = merge({}, canonicalStatements[0], canonicalStatement);
     assert(isArray(canonicalStatements));
     assert.equal(canonicalStatements.length, 1);
     assert.deepEqual(canonicalStatements[0], expectedStatement);
