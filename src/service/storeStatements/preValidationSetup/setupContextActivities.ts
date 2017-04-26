@@ -1,32 +1,18 @@
-import { isPlainObject } from 'lodash';
+import * as modr from '../../utils/modr';
 
-const wrapObjectInArray = (value: any) => {
-  return isPlainObject(value) ? [value] : value;
-};
+const wrapObjectInArray = modr.modifyType(Object, (data) => {
+  return [data];
+});
+
+const context = modr.modifySchema({
+  contextActivities: modr.modifySchema({
+    parent: wrapObjectInArray,
+    grouping: wrapObjectInArray,
+    category: wrapObjectInArray,
+    other: wrapObjectInArray,
+  }),
+});
 
 export default (model: any) => {
-  const hasContextActivities = (
-    isPlainObject(model) &&
-    isPlainObject(model.context) &&
-    isPlainObject(model.context.contextActivities)
-  );
-  if (!hasContextActivities) return model;
-  const contextActivities = model.context.contextActivities;
-  const parent = wrapObjectInArray(contextActivities.parent);
-  const grouping = wrapObjectInArray(contextActivities.grouping);
-  const category = wrapObjectInArray(contextActivities.category);
-  const other = wrapObjectInArray(contextActivities.other);
-  return {
-    ...model,
-    context: {
-      ...model.context,
-      contextActivities: {
-        ...model.context.contextActivities,
-        parent,
-        grouping,
-        category,
-        other,
-      },
-    },
-  };
+  return modr.modifySchema({ context })(model, ['statement']);
 };
