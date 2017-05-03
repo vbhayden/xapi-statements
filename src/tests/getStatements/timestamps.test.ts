@@ -1,5 +1,3 @@
-import * as assert from 'assert';
-import { isArray } from 'lodash';
 import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
@@ -14,10 +12,6 @@ type TimestampFilter = (timestamp: string) => GetStatementsOptions;
 describe('get statements by timestamps', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
-
-  const getStatements = (opts: GetStatementsOptions) => {
-    return service.getExactStatements(opts);
-  };
 
   const storeStatement = (id: string): Promise<string[]> => {
     return storeStatements([ createStatement({

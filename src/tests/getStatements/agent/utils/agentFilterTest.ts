@@ -1,5 +1,3 @@
-import * as assert from 'assert';
-import { isArray } from 'lodash';
 import setup from '../../../utils/setup';
 import createStatement from '../../../utils/createStatement';
 import storeStatementsInService from '../../../utils/storeStatementsInService';
@@ -20,7 +18,7 @@ export default (createActor: (actor: any) => any, relatedAgents: boolean = false
     const statement1 = createActorStatement(TEST_TARGET_ID, actor1);
     const statement2 = createActorStatement(TEST_MISSING_ID, actor2);
     await storeStatements([statement1, statement2]);
-    await assertFilteredStatements({
+    await assertFilteredStatements(service)({
       agent: actor1,
       relatedAgents,
     }, [TEST_TARGET_ID]);
