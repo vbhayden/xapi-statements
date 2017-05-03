@@ -1,13 +1,14 @@
 import agentFilterTest from './utils/agentFilterTest';
 import agentTest from './utils/agentTest';
+import assertFilteredStatements from '../utils/assertFilteredStatements';
 
 describe.skip('get statements by agent in authority', () => {
-  agentTest((authority: any) => {
+  agentTest(assertFilteredStatements)((authority: any) => {
     return { authority };
   }, true);
 
   describe('identified group members', () => {
-    agentFilterTest((actor: any) => {
+    agentFilterTest(assertFilteredStatements)((actor: any) => {
       return {
         authority: {
           mbox: 'mailto:test@example.com',
@@ -25,7 +26,7 @@ describe.skip('get statements by agent in authority', () => {
   });
 
   describe('anonymous group members', () => {
-    agentFilterTest((actor: any) => {
+    agentFilterTest(assertFilteredStatements)((actor: any) => {
       return {
         authority: {
           objectType: 'Group',
