@@ -1,8 +1,8 @@
 import * as assert from 'assert';
-import setup from '../utils/setup';
-import NoModel from '../../errors/NoModel';
-import createStatement from '../utils/createStatement';
-import storeStatementsInService from '../utils/storeStatementsInService';
+import NoModel from '../errors/NoModel';
+import setup from './utils/setup';
+import createStatement from './utils/createStatement';
+import storeStatementsInService from './utils/storeStatementsInService';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 
