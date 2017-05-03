@@ -1,10 +1,9 @@
 import * as assert from 'assert';
 import { isArray } from 'lodash';
-import { Service } from '../../../service';
-import GetStatementsOptions from '../../../service/options/GetStatementsOptions';
+import FilteredStatementsAsserter from './FilteredStatementsAsserter';
 
-export default (service: Service) => {
-  return async (opts: GetStatementsOptions, expectedIds: string[]) => {
+const assertFilteredStatements: FilteredStatementsAsserter = (service) => {
+  return async (opts, expectedIds) => {
     const statements = await service.getExactStatements(opts);
     assert(isArray(statements));
     const actualIds = statements.map((statement) => {
@@ -13,3 +12,5 @@ export default (service: Service) => {
     assert.deepEqual(actualIds, expectedIds);
   };
 };
+
+export default assertFilteredStatements;
