@@ -10,7 +10,7 @@ const TEST_ID_C = '1c86d8e9-f325-404f-b3d9-24c45103558C';
 const TEST_ID_D = '1c86d8e9-f325-404f-b3d9-24c45103558D';
 // const TEST_ID_E = '1c86d8e9-f325-404f-b3d9-24c45103558E';
 
-describe('store statements references', () => {
+describe('get statements by references', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 

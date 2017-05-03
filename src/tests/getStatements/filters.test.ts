@@ -5,7 +5,7 @@ import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
-describe('get statement filters', () => {
+describe('get statements by filters', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 

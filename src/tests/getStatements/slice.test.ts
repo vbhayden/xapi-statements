@@ -12,7 +12,7 @@ const TEST_STATEMENT_1 = createStatement({ id: TEST_ID_1 });
 const TEST_STATEMENT_2 = createStatement({ id: TEST_ID_2 });
 const TEST_STATEMENT_3 = createStatement({ id: TEST_ID_3 });
 
-describe('get statement slice', () => {
+describe('get statements by slicing', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 

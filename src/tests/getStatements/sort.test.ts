@@ -8,7 +8,7 @@ import storeStatementsInService from '../utils/storeStatementsInService'
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 
-describe('get statement sort', () => {
+describe('get statements by sorting', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 

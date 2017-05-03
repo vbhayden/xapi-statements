@@ -10,7 +10,7 @@ const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 
 type TimestampFilter = (timestamp: string) => GetStatementsOptions;
 
-describe('get statement timestamps', () => {
+describe('get statements by timestamps', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
