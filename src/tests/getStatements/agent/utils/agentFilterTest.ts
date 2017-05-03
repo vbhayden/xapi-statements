@@ -4,8 +4,8 @@ import setup from '../../../utils/setup';
 import createStatement from '../../../utils/createStatement';
 import storeStatementsInService from '../../../utils/storeStatementsInService';
 
-const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
-const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
+const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
+const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 
 export default (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
   const service = setup();
@@ -16,8 +16,8 @@ export default (createActor: (actor: any) => any, relatedAgents: boolean = false
   };
 
   const assertFilter = async (actor1: any, actor2: any) => {
-    const statement1 = createActorStatement(TEST_ID_1, actor1);
-    const statement2 = createActorStatement(TEST_ID_2, actor2);
+    const statement1 = createActorStatement(TEST_TARGET_ID, actor1);
+    const statement2 = createActorStatement(TEST_MISSING_ID, actor2);
     await storeStatements([statement1, statement2]);
     const filteredStatements = await service.getExactStatements({
       agent: actor1,
@@ -25,7 +25,7 @@ export default (createActor: (actor: any) => any, relatedAgents: boolean = false
     });
     assert(isArray(filteredStatements));
     assert.equal(filteredStatements.length, 1);
-    assert.equal(filteredStatements[0].id, TEST_ID_1);
+    assert.equal(filteredStatements[0].id, TEST_TARGET_ID);
   };
 
   it('should return statements when they match the account name', async () => {

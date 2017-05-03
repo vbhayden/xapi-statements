@@ -7,10 +7,10 @@ import createSubStatement from '../utils/createSubStatement';
 import createSubStatementContext from '../utils/createSubStatementContext';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
-const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
-const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
-const TEST_ACTIVITY_1 = 'http://www.example.com/object/1';
-const TEST_ACTIVITY_2 = 'http://www.example.com/object/2';
+const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
+const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
+const TEST_TARGET_ACTIVITY = 'http://www.example.com/object/1';
+const TEST_MISSING_ACTIVITY = 'http://www.example.com/object/2';
 
 describe('get statements by activity', () => {
   const service = setup();
@@ -21,21 +21,21 @@ describe('get statements by activity', () => {
     relatedActivities: boolean = false
   ) => {
     const statement1 = createStatement({
-      id: TEST_ID_1,
-      ...createActivity({ objectType: 'Activity', id: TEST_ACTIVITY_1 }),
+      id: TEST_TARGET_ID,
+      ...createActivity({ objectType: 'Activity', id: TEST_TARGET_ACTIVITY }),
     });
     const statement2 = createStatement({
-      id: TEST_ID_2,
-      ...createActivity({ objectType: 'Activity', id: TEST_ACTIVITY_2 }),
+      id: TEST_MISSING_ID,
+      ...createActivity({ objectType: 'Activity', id: TEST_MISSING_ACTIVITY }),
     });
     await storeStatements([statement1, statement2]);
     const filteredStatements = await service.getExactStatements({
-      activity: TEST_ACTIVITY_1,
+      activity: TEST_TARGET_ACTIVITY,
       relatedActivities,
     });
     assert(isArray(filteredStatements));
     assert.equal(filteredStatements.length, 1);
-    assert.equal(filteredStatements[0].id, TEST_ID_1);
+    assert.equal(filteredStatements[0].id, TEST_TARGET_ID);
   };
 
   it('should return statements when they match the activity in the object', async () => {

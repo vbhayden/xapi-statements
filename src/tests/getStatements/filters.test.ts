@@ -22,29 +22,29 @@ describe('get statements by filters', () => {
   };
 
   it('should return statements when they match the verb', async () => {
-    const verbId1 = 'http://www.example.com/verb1';
-    const verbId2 = 'http://www.example.com/verb2';
+    const targetVerbId = 'http://www.example.com/verb1';
+    const missingVerbId = 'http://www.example.com/verb2';
     const statements = await filterStatements([
-      createStatement({ verb: { id: verbId1 }}),
-      createStatement({ verb: { id: verbId2 }}),
+      createStatement({ verb: { id: targetVerbId }}),
+      createStatement({ verb: { id: missingVerbId }}),
     ], {
-      verb: verbId1,
+      verb: targetVerbId,
     });
-    assert.equal(statements[0].verb.id, verbId1);
+    assert.equal(statements[0].verb.id, targetVerbId);
   });
 
   it('should return statements when they match the registration', async () => {
-    const reg1 = '1c86d8e9-f325-404f-b3d9-24c451035583';
-    const reg2 = '1c86d8e9-f325-404f-b3d9-24c451035584';
+    const targetReg = '1c86d8e9-f325-404f-b3d9-24c451035583';
+    const missingReg = '1c86d8e9-f325-404f-b3d9-24c451035584';
     const statements = await filterStatements([
-      createStatement({ context: { registration: reg1 }}),
-      createStatement({ context: { registration: reg2 }}),
+      createStatement({ context: { registration: targetReg }}),
+      createStatement({ context: { registration: missingReg }}),
     ], {
-      registration: reg1,
+      registration: targetReg,
     });
     const context = statements[0].context;
     if (context !== undefined) {
-      assert.equal(context.registration, reg1);
+      assert.equal(context.registration, targetReg);
     } else {
       assert(false, 'Expected context to be defined');
     }
