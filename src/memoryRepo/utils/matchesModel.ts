@@ -9,7 +9,7 @@ export default (matcher: Matcher) => {
     return (
       matcher(model.statement, opts) ||
       model.refs.filter((ref) => {
-        return matcher(ref, opts);
+        return matcher(ref.statement, opts);
       }).length > 0
     );
   };
