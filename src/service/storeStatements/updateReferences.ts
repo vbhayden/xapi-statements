@@ -4,8 +4,17 @@ import StatementModel from '../../models/StatementModel';
 import Config from '../Config';
 import logger from '../../logger';
 
-const shortId = (id: string) => id[id.length - 1];
-const shortIds = (ids: string[]) => `[${ids.map(shortId).join(',')}]`;
+const shortId = (id: string) => {
+  return id[id.length - 1];
+};
+
+const shortIds = (ids: string[]) => {
+  return `[${ids.map(shortId).join(',')}]`;
+};
+
+const stack = <T>(value: T, values: T[]): T[] => {
+  return union([value], values);
+};
 
 export default async (config: Config, models: StatementModel[]): Promise<void> => {
   if (!config.enableReferencing) return;
@@ -34,10 +43,6 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     });
     logger.debug('setRefs', shortId(id), shortIds(refIds));
     return config.repo.setRefs({ id, refs });
-  };
-
-  const stack = <T>(value: T, values: T[]): T[] => {
-    return union([value], values);
   };
 
   const traverseDown = async (modelId: string, visitedIds: string[]): Promise<string[]> => {
