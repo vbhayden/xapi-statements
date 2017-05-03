@@ -4,6 +4,10 @@ import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
+import assertFilteredStatements from './utils/assertFilteredStatements';
+
+const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
+const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 
 describe('get statements by filters', () => {
   const service = setup();
@@ -15,38 +19,28 @@ describe('get statements by filters', () => {
 
   const filterStatements = async (statements: any[], opts: GetStatementsOptions) => {
     await storeStatements(statements);
-    const filteredStatements = await getStatements(opts);
-    assert(isArray(filteredStatements));
-    assert.equal(filteredStatements.length, 1);
-    return filteredStatements;
+    await assertFilteredStatements(service)(opts, [TEST_TARGET_ID]);
   };
 
   it('should return statements when they match the verb', async () => {
     const targetVerbId = 'http://www.example.com/verb1';
     const missingVerbId = 'http://www.example.com/verb2';
     const statements = await filterStatements([
-      createStatement({ verb: { id: targetVerbId }}),
-      createStatement({ verb: { id: missingVerbId }}),
+      createStatement({ id: TEST_TARGET_ID, verb: { id: targetVerbId }}),
+      createStatement({ id: TEST_MISSING_ID, verb: { id: missingVerbId }}),
     ], {
       verb: targetVerbId,
     });
-    assert.equal(statements[0].verb.id, targetVerbId);
   });
 
   it('should return statements when they match the registration', async () => {
     const targetReg = '1c86d8e9-f325-404f-b3d9-24c451035583';
     const missingReg = '1c86d8e9-f325-404f-b3d9-24c451035584';
     const statements = await filterStatements([
-      createStatement({ context: { registration: targetReg }}),
-      createStatement({ context: { registration: missingReg }}),
+      createStatement({ id: TEST_TARGET_ID, context: { registration: targetReg }}),
+      createStatement({ id: TEST_MISSING_ID, context: { registration: missingReg }}),
     ], {
       registration: targetReg,
     });
-    const context = statements[0].context;
-    if (context !== undefined) {
-      assert.equal(context.registration, targetReg);
-    } else {
-      assert(false, 'Expected context to be defined');
-    }
   });
 });

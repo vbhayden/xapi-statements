@@ -1,11 +1,10 @@
-import * as assert from 'assert';
-import { isArray } from 'lodash';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import createContext from '../utils/createContext';
 import createSubStatement from '../utils/createSubStatement';
 import createSubStatementContext from '../utils/createSubStatementContext';
 import storeStatementsInService from '../utils/storeStatementsInService';
+import assertFilteredStatements from './utils/assertFilteredStatements';
 
 const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -29,13 +28,10 @@ describe('get statements by activity', () => {
       ...createActivity({ objectType: 'Activity', id: TEST_MISSING_ACTIVITY }),
     });
     await storeStatements([statement1, statement2]);
-    const filteredStatements = await service.getExactStatements({
+    await assertFilteredStatements(service)({
       activity: TEST_TARGET_ACTIVITY,
       relatedActivities,
-    });
-    assert(isArray(filteredStatements));
-    assert.equal(filteredStatements.length, 1);
-    assert.equal(filteredStatements[0].id, TEST_TARGET_ID);
+    }, [TEST_TARGET_ID]);
   };
 
   it('should return statements when they match the activity in the object', async () => {
