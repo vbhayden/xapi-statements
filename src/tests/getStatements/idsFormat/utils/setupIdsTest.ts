@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { isArray } from 'lodash';
-import setup from '../../utils/setup';
-import storeStatementsInService from '../../utils/storeStatementsInService';
+import setup from '../../../utils/setup';
+import storeStatementsInService from '../../../utils/storeStatementsInService';
 
 export default () => {
   const service = setup();

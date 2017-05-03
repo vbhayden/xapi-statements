@@ -1,4 +1,4 @@
-import createSubStatement from '../utils/createSubStatement';
+import createSubStatement from '../../utils/createSubStatement';
 import verbFormatTest from './utils/verbFormatTest';
 
 describe('get ids statements in verb', () => {

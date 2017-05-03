@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 import { isArray, merge } from 'lodash';
-import setup from '../../utils/setup';
-import createStatement from '../../utils/createStatement';
-import storeStatementsInService from '../../utils/storeStatementsInService';
+import setup from '../../../utils/setup';
+import createStatement from '../../../utils/createStatement';
+import storeStatementsInService from '../../../utils/storeStatementsInService';
 
 const TEST_LANG_1 = 'en-GB';
 const TEST_LANG_2 = 'en-US';

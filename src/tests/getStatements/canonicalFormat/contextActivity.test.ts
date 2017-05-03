@@ -1,11 +1,11 @@
-import createSubStatementContext from '../utils/createSubStatementContext';
+import createContext from '../../utils/createContext';
 import canonicalActivityTest from './utils/canonicalActivityTest';
 import createActivity from './utils/createActivity';
 
 const canonicalContextActivityTest = (contextActivityType: string) => {
-  describe(`get canonical statements sub statement ${contextActivityType}`, () => {
+  describe(`get canonical statements ${contextActivityType}`, () => {
     canonicalActivityTest((definition: any) => {
-      return createSubStatementContext({
+      return createContext({
         [contextActivityType]: [createActivity(definition)]
       });
     });

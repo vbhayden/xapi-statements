@@ -1,4 +1,4 @@
-import createSubStatement from '../utils/createSubStatement';
+import createSubStatement from '../../utils/createSubStatement';
 import canonicalActivityTest from './utils/canonicalActivityTest';
 import createActivity from './utils/createActivity';
 

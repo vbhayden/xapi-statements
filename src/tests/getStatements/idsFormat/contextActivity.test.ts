@@ -1,4 +1,4 @@
-import createContext from '../utils/createContext';
+import createContext from '../../utils/createContext';
 import activityFormatTest from './utils/activityFormatTest';
 
 describe('get ids statements in parent contextActivities', () => {

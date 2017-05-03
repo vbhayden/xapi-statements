@@ -1,4 +1,4 @@
-import createSubStatement from '../utils/createSubStatement';
+import createSubStatement from '../../utils/createSubStatement';
 import groupTest from './utils/groupTest';
 
 describe('get ids statements in sub statement team', () => {

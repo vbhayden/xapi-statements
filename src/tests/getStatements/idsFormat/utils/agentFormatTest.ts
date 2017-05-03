@@ -1,4 +1,4 @@
-import createStatement from '../../utils/createStatement';
+import createStatement from '../../../utils/createStatement';
 import setupIdsTest from './setupIdsTest';
 
 type ActorCreator = (ifi: any) => any;

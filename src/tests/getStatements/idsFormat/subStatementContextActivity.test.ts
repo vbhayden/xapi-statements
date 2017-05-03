@@ -1,4 +1,4 @@
-import createSubStatementContext from '../utils/createSubStatementContext';
+import createSubStatementContext from '../../utils/createSubStatementContext';
 import activityFormatTest from './utils/activityFormatTest';
 
 describe('get ids statements in sub statement parent contextActivities', () => {

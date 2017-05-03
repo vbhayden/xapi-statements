@@ -1,4 +1,4 @@
-import createSubStatement from '../utils/createSubStatement';
+import createSubStatement from '../../utils/createSubStatement';
 import canonicalTest from './utils/canonicalTest';
 
 const createVerb = (display: any): any => {
