@@ -1,54 +1,35 @@
 import * as assert from 'assert';
 import { isArray } from 'lodash';
+import FilterAgent from '../../models/FilterAgent';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
+import createReferenceStatement from './utils/createReferenceStatement';
+import assertFilteredStatements from './utils/assertFilteredStatements';
+import delay from './utils/delay';
 
 const TEST_ID_A = '1c86d8e9-f325-404f-b3d9-24c45103558A';
 const TEST_ID_B = '1c86d8e9-f325-404f-b3d9-24c45103558B';
 const TEST_ID_C = '1c86d8e9-f325-404f-b3d9-24c45103558C';
 const TEST_ID_D = '1c86d8e9-f325-404f-b3d9-24c45103558D';
-// const TEST_ID_E = '1c86d8e9-f325-404f-b3d9-24c45103558E';
 
 describe('get statements by references', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
-  const createReferenceStatement = (sourceId: string, targetId: string) => {
-    return createStatement({
-      id: sourceId,
-      actor: {
-        objectType: 'Agent',
-        account: {
-          homePage: 'http://www.example.com',
-          name: sourceId,
-        },
+  const createAgentFilter = (targetId: string): FilterAgent => {
+    return {
+      account: {
+        homePage: 'http://www.example.com',
+        name: targetId,
       },
-      object: {
-        objectType: 'StatementRef',
-        id: targetId,
-      },
-    });
+    };
   };
 
-  const getTargetingStatement = (targetId: string) => {
-    return service.getExactStatements({
-      agent: {
-        account: {
-          homePage: 'http://www.example.com',
-          name: targetId,
-        },
-      },
-    });
-  };
-
-  const assertTargetingStatement = async (targetId: string, expectedIds: string[]) => {
-    const statements = await getTargetingStatement(targetId);
-    assert(isArray(statements));
-    const actualIds = statements.map((statement) => {
-      return statement.id;
-    });
-    assert.deepEqual(actualIds, expectedIds);
+  const assertTargetingStatement = (targetId: string, expectedIds: string[]) => {
+    return assertFilteredStatements(service)({
+      agent: createAgentFilter(targetId),
+    }, expectedIds);
   };
 
   it('should return no statements when targeted statement is not stored', async () => {
@@ -99,5 +80,57 @@ describe('get statements by references', () => {
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
     await assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
+  });
+
+  it('should not return the source when the since option excludes it', async () => {
+    await storeStatements([
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
+    ]);
+    await delay(1);
+    await storeStatements([
+      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+    ]);
+    const statement = await service.getStatement({ id: TEST_ID_A });
+    await assertFilteredStatements(service)({
+      agent: createAgentFilter(TEST_ID_B),
+      since: statement.stored,
+    }, [TEST_ID_B]);
+  });
+
+  it('should not return the target when the until option excludes it', async () => {
+    await storeStatements([
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
+    ]);
+    await delay(1);
+    await storeStatements([
+      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+    ]);
+    const statement = await service.getStatement({ id: TEST_ID_A });
+    await assertFilteredStatements(service)({
+      agent: createAgentFilter(TEST_ID_B),
+      until: statement.stored,
+    }, [TEST_ID_A]);
+  });
+
+  it('should not return the target when the limit option excludes it', async () => {
+    await storeStatements([
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+    ]);
+    await assertFilteredStatements(service)({
+      agent: createAgentFilter(TEST_ID_B),
+      limit: 1,
+    }, [TEST_ID_A]);
+  });
+
+  it('should not return the source when the skip option excludes it', async () => {
+    await storeStatements([
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+    ]);
+    await assertFilteredStatements(service)({
+      agent: createAgentFilter(TEST_ID_B),
+      skip: 1,
+    }, [TEST_ID_B]);
   });
 });
