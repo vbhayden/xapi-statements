@@ -2,7 +2,7 @@ import * as modr from '../../utils/modr';
 
 const obj = (defaultObjectType: string) => {
   return modr.modifySchema({
-    objectType: modr.defaultValue(defaultObjectType),
+    objectType: modr.defaultValue(() => defaultObjectType),
   });
 };
 

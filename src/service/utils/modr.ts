@@ -1,9 +1,9 @@
 export type Modifier = (data: any) => any;
 export type Schema = { [key: string]: Modifier };
 
-export const defaultValue = (value: any): Modifier => {
+export const defaultValue = (value: () => any): Modifier => {
   return (data) => {
-    return data === undefined ? value : data;
+    return data === undefined ? value() : data;
   };
 };
 

@@ -1,8 +1,5 @@
-import * as assert from 'assert';
-import { isArray } from 'lodash';
 import FilterAgent from '../../models/FilterAgent';
 import setup from '../utils/setup';
-import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
 import createReferenceStatement from './utils/createReferenceStatement';
 import assertFilteredStatements from './utils/assertFilteredStatements';
@@ -90,7 +87,7 @@ describe('get statements by references', () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_B, TEST_ID_A),
     ]);
-    const statement = await service.getStatement({ id: TEST_ID_A });
+    const statement = await service.getStatement({ id: TEST_ID_A, voided: false });
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       since: statement.stored,
@@ -105,7 +102,7 @@ describe('get statements by references', () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_B, TEST_ID_A),
     ]);
-    const statement = await service.getStatement({ id: TEST_ID_A });
+    const statement = await service.getStatement({ id: TEST_ID_A, voided: false });
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       until: statement.stored,

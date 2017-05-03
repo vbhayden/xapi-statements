@@ -4,7 +4,7 @@ import * as modr from '../../utils/modr';
 export default (model: any): any => {
   return modr.modifyStrictSchema({
     // Adds the required properties from the model.
-    id: modr.defaultValue(uuid()),
+    id: modr.defaultValue(uuid),
     actor: modr.keepValue,
     verb: modr.keepValue,
     object: modr.keepValue,
