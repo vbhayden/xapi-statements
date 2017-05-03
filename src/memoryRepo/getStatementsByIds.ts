@@ -1,15 +1,18 @@
 import { includes } from 'lodash';
-import StatementModel from '../models/StatementModel';
+import Statement from '../models/Statement';
 import GetStatementsByIdsOptions from '../repo/GetStatementsByIdsOptions';
 import Config from './Config';
 
 export default (config: Config) => {
-  return async (opts: GetStatementsByIdsOptions): Promise<StatementModel[]> => {
+  return async (opts: GetStatementsByIdsOptions): Promise<Statement[]> => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         includes(opts.ids, model.statement.id)
       );
     });
-    return filteredModels;
+    const filteredStatements = filteredModels.map((model) => {
+      return model.statement;
+    });
+    return filteredStatements;
   };
 };

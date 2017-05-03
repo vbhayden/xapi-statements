@@ -1,9 +1,11 @@
-import { includes, union, pull, groupBy, has, get, mapValues, Dictionary, size } from 'lodash';
-import NoModel from '../../errors/NoModel';
-import StatementModel from '../../models/StatementModel';
-import UpRef from '../../models/UpRef';
-import Config from '../Config';
-import logger from '../../logger';
+import { includes, union, pull, has, get, size, keys, intersection, difference } from 'lodash';
+import NoModel from '../../../errors/NoModel';
+import StatementModel from '../../../models/StatementModel';
+import Statement from '../../../models/Statement';
+import Config from '../../Config';
+import logger from '../../../logger';
+import eagerLoadUpRefs from './eagerLoadUpRefs';
+import eagerLoadDownRefs from './eagerLoadDownRefs';
 
 const shortId = (id: string) => {
   return id[id.length - 1];
@@ -17,37 +19,14 @@ const stack = <T>(value: T, values: T[]): T[] => {
   return union([value], values);
 };
 
-const getDownRefs = (models: StatementModel[]): StatementModel[] => {
-  return models.filter((model) => {
-    return model.statement.object.objectType === 'StatementRef';
-  });
-};
-
-const eagerLoadUpRefs = async (
-  config: Config,
-  models: StatementModel[]
-): Promise<Dictionary<String[]>> => {
-  const statementIds = models.map((model) => {
-    return model.statement.id;
-  });
-  const eagerLoadedUpRefs = await config.repo.getUpRefsByIds({ targetIds: statementIds });
-  const groupedUpRefs = groupBy(eagerLoadedUpRefs, (upRef: UpRef) => {
-    return upRef.targetId;
-  });
-  const groupedUpRefIds = mapValues(groupedUpRefs, (upRefs: UpRef[]): string[] => {
-    return upRefs.map((upRef: UpRef) => {
-      return upRef.sourceId;
-    });
-  });
-  return groupedUpRefIds;
-};
-
 export default async (config: Config, models: StatementModel[]): Promise<void> => {
   if (!config.enableReferencing) return;
 
   const groupedUpRefIds = await eagerLoadUpRefs(config, models);
+  const groupedDownRefs = await eagerLoadDownRefs(config, models);
+  const groupedDownRefIds = keys(groupedDownRefs);
 
-  if (size(groupedUpRefIds) === 0 && getDownRefs(models).length === 0) return;
+  if (size(groupedUpRefIds) === 0 && size(groupedDownRefs) === 0) return;
 
   const getDownRefId = (id: string): Promise<string> => {
     logger.debug('getDownRefId', shortId(id));
@@ -63,18 +42,27 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     return config.repo.getUpRefIds({ id });
   };
 
-  const getRefs = (refIds: string[]): Promise<StatementModel[]> => {
-    return config.repo.getStatementsByIds({
-      ids: refIds,
+  const getDownRefs = async (targetIds: string[]): Promise<Statement[]> => {
+    const loadedTargetIds = intersection(targetIds, groupedDownRefIds);
+    const unloadedTargetIds = difference(targetIds, groupedDownRefIds);
+    const loadedDownRefs = loadedTargetIds.map((targetId) => {
+      if (has(groupedDownRefs, targetId)) {
+        return groupedDownRefs[targetId];
+      }
+      throw new Error('Eager loaded targetId is now missing');
     });
+    const unloadedDownRefs = await config.repo.getStatementsByIds({
+      ids: unloadedTargetIds,
+    });
+
+    logger.silly('getDownRefs cached', shortIds(loadedTargetIds));
+    logger.silly('getDownRefs uncached', shortIds(unloadedTargetIds));
+    return [...loadedDownRefs, ...unloadedDownRefs];
   };
 
   const setRefs = async (id: string, givenRefIds: string[]): Promise<void> => {
     const refIds = pull(givenRefIds, id);
-    const refModels = await getRefs(refIds);
-    const refs = refModels.map((ref) => {
-      return ref.statement;
-    });
+    const refs = await getDownRefs(refIds);
     logger.debug('setRefs', shortId(id), shortIds(refIds));
     return config.repo.setRefs({ id, refs });
   };
@@ -131,9 +119,9 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     if (includes(visitedIds, modelId)) return visitedIds;
 
     if (model.statement.object.objectType !== 'StatementRef') {
-      return traverseUp([], [], modelId);
+      return union(visitedIds, await traverseUp([], [], modelId));
     } else {
-      return traverseDown(modelId, []);
+      return union(visitedIds, await traverseDown(modelId, []));
     }
   }, Promise.resolve([]));
 };
