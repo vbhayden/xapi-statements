@@ -14,7 +14,7 @@ describe('get statements by references', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
-  const createTargetingStatement = (sourceId: string, targetId: string) => {
+  const createReferenceStatement = (sourceId: string, targetId: string) => {
     return createStatement({
       id: sourceId,
       actor: {
@@ -53,7 +53,7 @@ describe('get statements by references', () => {
 
   it('should return no statements when targeted statement is not stored', async () => {
     await storeStatements([
-      createTargetingStatement(TEST_ID_A, TEST_ID_B),
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
     ]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A]);
     await assertTargetingStatement(TEST_ID_B, []);
@@ -61,8 +61,8 @@ describe('get statements by references', () => {
 
   it('should return both statements when they reference each other in one batch', async () => {
     await storeStatements([
-      createTargetingStatement(TEST_ID_A, TEST_ID_B),
-      createTargetingStatement(TEST_ID_B, TEST_ID_A),
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A),
     ]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B]);
@@ -70,10 +70,10 @@ describe('get statements by references', () => {
 
   it('should return both statements when they reference each other in two batches', async () => {
     await storeStatements([
-      createTargetingStatement(TEST_ID_A, TEST_ID_B),
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
     ]);
     await storeStatements([
-      createTargetingStatement(TEST_ID_B, TEST_ID_A),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A),
     ]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B]);
@@ -81,9 +81,9 @@ describe('get statements by references', () => {
 
   it('should return three statements when two target one', async () => {
     await storeStatements([
-      createTargetingStatement(TEST_ID_A, TEST_ID_C),
-      createTargetingStatement(TEST_ID_B, TEST_ID_C),
-      createTargetingStatement(TEST_ID_C, TEST_ID_D),
+      createReferenceStatement(TEST_ID_A, TEST_ID_C),
+      createReferenceStatement(TEST_ID_B, TEST_ID_C),
+      createReferenceStatement(TEST_ID_C, TEST_ID_D),
     ]);
     await assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_B]);
@@ -92,9 +92,9 @@ describe('get statements by references', () => {
 
   it('should return all statements when the references cycle', async () => {
     await storeStatements([
-      createTargetingStatement(TEST_ID_A, TEST_ID_B),
-      createTargetingStatement(TEST_ID_B, TEST_ID_C),
-      createTargetingStatement(TEST_ID_C, TEST_ID_A),
+      createReferenceStatement(TEST_ID_A, TEST_ID_B),
+      createReferenceStatement(TEST_ID_B, TEST_ID_C),
+      createReferenceStatement(TEST_ID_C, TEST_ID_A),
     ]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
