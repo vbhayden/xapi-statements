@@ -13,6 +13,7 @@ import VoidStatementsOptions from './VoidStatementsOptions';
 import GetDownRefIdOptions from './GetDownRefIdOptions';
 import GetUpRefIdsOptions from './GetUpRefIdsOptions';
 import SetRefsOptions from './SetRefsOptions';
+import GetStatementsByIdsOptions from './GetStatementsByIdsOptions';
 
 interface RepoConfig {
   repoName: string;
@@ -31,6 +32,7 @@ export interface Repo {
   getDownRefId: (opts: GetDownRefIdOptions) => Promise<string>;
   getUpRefIds: (opts: GetUpRefIdsOptions) => Promise<string[]>;
   setRefs: (opts: SetRefsOptions) => Promise<void>;
+  getStatementsByIds: (opts: GetStatementsByIdsOptions) => Promise<StatementModel[]>;
 
   // Attachment functions.
   createAttachments: (opts: CreateAttachmentsOptions) => Promise<AttachmentModel[]>;

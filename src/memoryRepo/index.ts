@@ -12,6 +12,7 @@ import voidStatements from './voidStatements';
 import getDownRefId from './getDownRefId';
 import getUpRefIds from './getUpRefIds';
 import setRefs from './setRefs';
+import getStatementsByIds from './getStatementsByIds';
 
 export default (config: Config): Repo => {
   return {
@@ -26,6 +27,7 @@ export default (config: Config): Repo => {
     getDownRefId: getDownRefId(config),
     getUpRefIds: getUpRefIds(config),
     setRefs: setRefs(config),
+    getStatementsByIds: getStatementsByIds(config),
 
     // Attachment functions.
     createAttachments: createAttachments(config),

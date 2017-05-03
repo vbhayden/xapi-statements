@@ -1,6 +1,8 @@
+import Statement from '../models/Statement';
+
 interface SetRefsOptions {
   id: string;
-  refIds: string[];
+  refs: Statement[];
 }
 
 export default SetRefsOptions;

@@ -1,4 +1,4 @@
-import { includes, union, toArray, pull } from 'lodash';
+import { includes, union, pull } from 'lodash';
 import NoModel from '../../errors/NoModel';
 import StatementModel from '../../models/StatementModel';
 import Config from '../Config';
@@ -20,10 +20,20 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     return config.repo.getUpRefIds({ id });
   };
 
-  const setRefs = (id: string, givenRefIds: string[]): Promise<void> => {
+  const getRefs = (refIds: string[]): Promise<StatementModel[]> => {
+    return config.repo.getStatementsByIds({
+      ids: refIds,
+    });
+  };
+
+  const setRefs = async (id: string, givenRefIds: string[]): Promise<void> => {
     const refIds = pull(givenRefIds, id);
+    const refModels = await getRefs(refIds);
+    const refs = refModels.map((ref) => {
+      return ref.statement;
+    });
     logger.debug('setRefs', shortId(id), shortIds(refIds));
-    return config.repo.setRefs({ id, refIds });
+    return config.repo.setRefs({ id, refs });
   };
 
   const stack = <T>(value: T, values: T[]): T[] => {
@@ -60,7 +70,7 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     const newVisitedIds = stack(modelId, visitedIds);
     const newRefIds = stack(modelId, refIds);
     const upRefIds = await getUpRefIds(modelId);
-    return traverseUpRefs(newVisitedIds, newRefIds, upRefIds)
+    return traverseUpRefs(newVisitedIds, newRefIds, upRefIds);
   };
 
   const traverseUpRefs = async (
@@ -78,9 +88,9 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
   await models.reduce(async (results, model): Promise<string[]> => {
     const visitedIds = await results;
     const modelId = model.statement.id;
+    logger.debug('Updating references', shortId(modelId));
     if (includes(visitedIds, modelId)) return visitedIds;
 
-    logger.debug('Updating references', shortId(modelId));
     if (model.statement.object.objectType !== 'StatementRef') {
       return traverseUp([], [], modelId);
     } else {
