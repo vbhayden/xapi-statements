@@ -3,6 +3,7 @@ import memoryRepo from '../memoryRepo';
 import AttachmentModel from '../models/AttachmentModel';
 import StatementModel from '../models/StatementModel';
 import StatementHash from '../models/StatementHash';
+import UpRef from '../models/UpRef';
 import CreateAttachmentsOptions from './CreateAttachmentsOptions';
 import CreateStatementsOptions from './CreateStatementsOptions';
 import GetHashesOptions from './GetHashesOptions';
@@ -14,6 +15,7 @@ import GetDownRefIdOptions from './GetDownRefIdOptions';
 import GetUpRefIdsOptions from './GetUpRefIdsOptions';
 import SetRefsOptions from './SetRefsOptions';
 import GetStatementsByIdsOptions from './GetStatementsByIdsOptions';
+import GetUpRefsByIdsOptions from './GetUpRefsByIdsOptions';
 
 interface RepoConfig {
   repoName: string;
@@ -33,6 +35,7 @@ export interface Repo {
   getUpRefIds: (opts: GetUpRefIdsOptions) => Promise<string[]>;
   setRefs: (opts: SetRefsOptions) => Promise<void>;
   getStatementsByIds: (opts: GetStatementsByIdsOptions) => Promise<StatementModel[]>;
+  getUpRefsByIds: (opts: GetUpRefsByIdsOptions) => Promise<UpRef[]>;
 
   // Attachment functions.
   createAttachments: (opts: CreateAttachmentsOptions) => Promise<AttachmentModel[]>;
