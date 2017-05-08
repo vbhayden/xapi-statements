@@ -17,6 +17,7 @@ import GetUpRefIdsOptions from './GetUpRefIdsOptions';
 import SetRefsOptions from './SetRefsOptions';
 import GetStatementsByIdsOptions from './GetStatementsByIdsOptions';
 import GetUpRefsByIdsOptions from './GetUpRefsByIdsOptions';
+import GetAttachmentsOptions from './GetAttachmentsOptions';
 
 interface RepoConfig {
   repoName: string;
@@ -40,6 +41,7 @@ export interface Repo {
 
   // Attachment functions.
   createAttachments: (opts: CreateAttachmentsOptions) => Promise<AttachmentModel[]>;
+  getAttachments: (opts: GetAttachmentsOptions) => Promise<AttachmentModel[]>;
 
   // Repo-wide functions.
   clearRepo: () => Promise<void>;

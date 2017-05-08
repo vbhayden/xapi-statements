@@ -14,6 +14,7 @@ import getUpRefIds from './getUpRefIds';
 import setRefs from './setRefs';
 import getStatementsByIds from './getStatementsByIds';
 import getUpRefsByIds from './getUpRefsByIds';
+import getAttachments from './getAttachments';
 
 export default (config: Config): Repo => {
   return {
@@ -33,6 +34,7 @@ export default (config: Config): Repo => {
 
     // Attachment functions.
     createAttachments: createAttachments(config),
+    getAttachments: getAttachments(config),
 
     // Repo-wide functions.
     clearRepo: clearRepo(config),
