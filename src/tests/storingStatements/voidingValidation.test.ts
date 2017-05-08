@@ -1,4 +1,3 @@
-import * as assert from 'assert';
 import VoidingError from '../../errors/VoidingError';
 import setup from '../utils/setup';
 import createVoidingStatement from '../utils/createVoidingStatement';
