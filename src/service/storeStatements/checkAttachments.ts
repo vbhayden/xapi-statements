@@ -1,7 +1,7 @@
+import { union, difference } from 'lodash';
 import StatementModel from '../../models/StatementModel';
 import AttachmentModel from '../../models/AttachmentModel';
-import AttachmentError from '../../errors/AttachmentError';
-import AttachmentHashError from '../../errors/AttachmentHashError';
+import MissingAttachments from '../../errors/MissingAttachments';
 import Config from '../Config';
 
 export default async (
@@ -10,24 +10,25 @@ export default async (
   attachments: AttachmentModel[],
 ): Promise<void> => {
   if (!config.enableAttachmentValidation) return;
-  const hashes = attachments.map((attachment) => {
+  const attachmentHashes = attachments.map((attachment) => {
     return attachment.hash;
   });
-  const shas = statements.reduce((results: string[], model) => {
+  const statementHashes = statements.reduce((carriedHashes: string[], model) => {
     const attachments = model.statement.attachments;
-    if (attachments === undefined || attachments.length < 1) return results;
+    if (attachments === undefined) return carriedHashes;
 
-    return [...results, ...attachments.map((attachment) => {
-      const hasNoExistingHash = !hashes.includes(attachment.sha2);
-      const hasNoFileUrl = attachment.fileUrl === undefined;
-      if (hasNoExistingHash && hasNoFileUrl) {
-        throw new AttachmentError(attachment.sha2);
-      }
+    const statementShas = attachments.filter((attachment) => {
+      return attachment.fileUrl === undefined;
+    }).map((attachment) => {
       return attachment.sha2;
-    })];
-  }, []);
-  hashes.forEach((hash) => {
-    if (shas.includes(hash)) return;
-    throw new AttachmentHashError(hash);
-  });
+    });
+
+    return union(carriedHashes, statementShas);
+  }, [] as string[]);
+
+  const missingHashes = difference(statementHashes, attachmentHashes);
+
+  if (missingHashes.length > 0) {
+    throw new MissingAttachments(missingHashes);
+  }
 };

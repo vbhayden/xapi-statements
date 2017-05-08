@@ -4,6 +4,7 @@ import setup from './utils/setup';
 import createStatement from './utils/createStatement';
 import createVoidingStatement from './utils/createVoidingStatement';
 import storeStatementsInService from './utils/storeStatementsInService';
+import assertError from './utils/assertError';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
@@ -14,42 +15,30 @@ describe('get statement', () => {
   const storeStatements = storeStatementsInService(service);
 
   const assertVoided = async () => {
-    try {
-      await service.getStatement({ id: TEST_ID, voided: false });
-      assert(false);
-    } catch (err) {
-      assert.equal(err.constructor, NoModel);
-      const voidedStatement = await service.getStatement({ id: TEST_ID, voided: true });
-      assert.equal(voidedStatement.id, TEST_ID);
-    }
+    await assertError(NoModel)(
+      service.getStatement({ id: TEST_ID, voided: false })
+    );
+    const voidedStatement = await service.getStatement({ id: TEST_ID, voided: true });
+    assert.equal(voidedStatement.id, TEST_ID);
   };
 
   it('should throw an error when the statement does not exist', async () => {
-    try {
-      await service.getStatement({ id: TEST_ID, voided: false });
-      assert(false);
-    } catch (err) {
-      assert.equal(err.constructor, NoModel);
-    }
+    await assertError(NoModel)(
+      service.getStatement({ id: TEST_ID, voided: false })
+    );
   });
 
   it('should throw an error when the voider is not voided ', async () => {
-    try {
-      await storeStatements([createStatement({ id: TEST_ID })]);
-      await service.getStatement({ id: TEST_ID, voided: true });
-      assert(false);
-    } catch (err) {
-      assert.equal(err.constructor, NoModel);
-    }
+    await storeStatements([createStatement({ id: TEST_ID })]);
+    await assertError(NoModel)(
+      service.getStatement({ id: TEST_ID, voided: true })
+    );
   });
 
   it('should throw an error when the voider does not exist', async () => {
-    try {
-      await service.getStatement({ id: TEST_ID, voided: true });
-      assert(false);
-    } catch (err) {
-      assert.equal(err.constructor, NoModel);
-    }
+    await assertError(NoModel)(
+      service.getStatement({ id: TEST_ID, voided: true })
+    );
   });
 
   it('should void a statement when it is voided in a following batch', async () => {

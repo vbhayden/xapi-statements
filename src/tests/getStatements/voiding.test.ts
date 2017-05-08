@@ -1,5 +1,3 @@
-import * as assert from 'assert';
-import { isArray } from 'lodash';
 import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import createVoidingStatement from '../utils/createVoidingStatement';
