@@ -8,6 +8,7 @@ export default (model: any): any => {
     actor: modr.keepValue,
     verb: modr.keepValue,
     object: modr.keepValue,
+    authority: modr.keepValue,
 
     // Adds the optional properties from the model.
     context: modr.keepValue,
@@ -17,9 +18,5 @@ export default (model: any): any => {
 
     // Adds LRS properties.
     version: modr.overrideValue('1.0.0'),
-    authority: modr.overrideValue({
-      objectType: 'Agent',
-      mbox: 'authority@example.com',
-    }),
   })(model);
 };

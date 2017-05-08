@@ -1,15 +1,24 @@
 import setup from '../../../utils/setup';
 import createStatement from '../../../utils/createStatement';
-import storeStatementsInService from '../../../utils/storeStatementsInService';
 import FilteredStatementsAsserter from '../../utils/FilteredStatementsAsserter';
 
 const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
+const DEFAULT_AUTHORITY = {
+  objectType: 'Agent',
+  mbox: 'mailto:authority@example.com',
+};
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
   return (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
     const service = setup();
-    const storeStatements = storeStatementsInService(service);
+    const storeStatements = (statements: any[], authority: any = DEFAULT_AUTHORITY) => {
+      return service.storeStatements({
+        models: statements,
+        attachments: [],
+        authority,
+      });
+    };
 
     const createActorStatement = (id: string, actor: any): any => {
       return createStatement({ id, ...createActor(actor) });
@@ -18,7 +27,8 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
     const assertFilter = async (actor1: any, actor2: any) => {
       const statement1 = createActorStatement(TEST_TARGET_ID, actor1);
       const statement2 = createActorStatement(TEST_MISSING_ID, actor2);
-      await storeStatements([statement1, statement2]);
+      await storeStatements([statement1], statement1.authority);
+      await storeStatements([statement2], statement2.authority);
       await assertFilteredStatements(service)({
         agent: actor1,
         relatedAgents,

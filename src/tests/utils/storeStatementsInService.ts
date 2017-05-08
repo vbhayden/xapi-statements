@@ -4,7 +4,11 @@ export default (service: Service) => {
   return (statements: any[]): Promise<string[]> => {
     return service.storeStatements({
       models: statements,
-      attachments: []
+      attachments: [],
+      authority: {
+        objectType: 'Agent',
+        mbox: 'mailto:authority@example.com',
+      },
     });
   };
 };

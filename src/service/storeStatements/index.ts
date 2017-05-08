@@ -14,7 +14,7 @@ import updateReferences from './updateReferences';
 
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
-    const preValidatedModels = preValidationSetup(opts.models);
+    const preValidatedModels = preValidationSetup(opts.models, opts.authority);
     validateStatements(preValidatedModels);
     const postValidatedModels: StatementModel[] = postValidationSetup(preValidatedModels);
     const unstoredModels: StatementModel[] = await getUnstoredModels(config, postValidatedModels);

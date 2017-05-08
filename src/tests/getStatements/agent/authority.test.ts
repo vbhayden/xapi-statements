@@ -2,7 +2,7 @@ import agentFilterTest from './utils/agentFilterTest';
 import agentTest from './utils/agentTest';
 import assertFilteredStatements from '../utils/assertFilteredStatements';
 
-describe.skip('get statements by agent in authority', () => {
+describe('get statements by agent in authority', () => {
   agentTest(assertFilteredStatements)((authority: any) => {
     return { authority };
   }, true);
