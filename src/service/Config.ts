@@ -10,6 +10,7 @@ interface Config {
   enableAttachmentCreation: boolean;
   enableVoiding: boolean;
   enableReferencing: boolean;
+  awaitUpdates: boolean;
 }
 
 export default Config;

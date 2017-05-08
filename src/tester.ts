@@ -24,6 +24,7 @@ const serviceFacade = service({
   enableAttachmentCreation: true,
   enableVoiding: true,
   enableReferencing: true,
+  awaitUpdates: true,
 });
 
 export default serviceFacade;

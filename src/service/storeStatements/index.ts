@@ -24,9 +24,15 @@ export default (config: Config) => {
     await createStatements(config, unstoredModels);
 
     // Completes actions that do not need to be awaited.
-    await createAttachments(config, opts.attachments);
-    await voidStatements(config, unstoredModels, voidedObjectIds);
-    await updateReferences(config, unstoredModels);
+    const unawaitedUpdates: Promise<any[]> = Promise.all([
+      createAttachments(config, opts.attachments),
+      voidStatements(config, unstoredModels, voidedObjectIds),
+      updateReferences(config, unstoredModels)
+    ]);
+
+    if (config.awaitUpdates === true) {
+      await unawaitedUpdates;
+    }
 
     return postValidatedModels.map((postValidatedModel: StatementModel) => {
       return postValidatedModel.statement.id;

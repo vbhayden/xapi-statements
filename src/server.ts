@@ -29,6 +29,7 @@ const serviceFacade = service({
   enableAttachmentCreation: true,
   enableVoiding: true,
   enableReferencing: true,
+  awaitUpdates: true,
 });
 const faceFacade = expressFace({
   llClientInfoEndpoint: config.llClientInfoEndpoint,
