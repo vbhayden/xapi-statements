@@ -3,6 +3,7 @@ import setup from '../utils/setup';
 import createAttachment from '../utils/createAttachment';
 import createAttachmentModel from '../utils/createAttachmentModel';
 import createAttachmentStatement from '../utils/createAttachmentStatement';
+import createAttachmentSubStatement from '../utils/createAttachmentSubStatement';
 import assertError from '../utils/assertError';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
@@ -25,6 +26,20 @@ describe('store statements attachment validation', () => {
 
   it('should throw an error when there is a missing SHA from a statement', async () => {
     const testStatement = createAttachmentStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
+    await assertError(MissingAttachments)(
+      storeStatements([testStatement], [TEST_ATTACHMENT_MODEL])
+    );
+  });
+
+  it('should throw an error when there is a missing SHA from the sub statements', async () => {
+    const testStatement = createAttachmentSubStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
+    await assertError(MissingAttachments)(
+      storeStatements([testStatement], [TEST_ATTACHMENT_MODEL])
+    );
+  });
+
+  it('should throw an error when there is a missing SHA from a sub statement', async () => {
+    const testStatement = createAttachmentSubStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
     await assertError(MissingAttachments)(
       storeStatements([testStatement], [TEST_ATTACHMENT_MODEL])
     );

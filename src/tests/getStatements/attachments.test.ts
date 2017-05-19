@@ -1,7 +1,10 @@
 import * as assert from 'assert';
 import { isArray } from 'lodash';
+import { Service } from '../../service';
 import setup from '../utils/setup';
-import attachmentsTest from './utils/attachmentsTest';
+import attachmentsTest, { StatementCreator } from './utils/attachmentsTest';
+import createAttachmentStatement from '../utils/createAttachmentStatement';
+import createAttachmentSubStatement from '../utils/createAttachmentSubStatement';
 
 describe('get statements with attachments', () => {
   const service = setup();
@@ -18,20 +21,36 @@ describe('get statements with attachments', () => {
     assert.deepEqual(attachments, expectedAttachments);
   };
 
-  attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-    const result = await service.getExactStatementsWithAttachments({});
-    return assertResult(result, expectedIds, expectedAttachments);
-  });
-
-  attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-    const result = await service.getIdsStatementsWithAttachments({});
-    return assertResult(result, expectedIds, expectedAttachments);
-  });
-
-  attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-    const result = await service.getCanonicalStatementsWithAttachments({
-      langs: []
+  const testAttachments = (service: Service, createStatement: StatementCreator) => {
+    describe('with exact statements', () => {
+      attachmentsTest(service, async (expectedIds, expectedAttachments) => {
+        const result = await service.getExactStatementsWithAttachments({});
+        return assertResult(result, expectedIds, expectedAttachments);
+      }, createStatement);
     });
-    return assertResult(result, expectedIds, expectedAttachments);
+
+    describe('with id statements', () => {
+      attachmentsTest(service, async (expectedIds, expectedAttachments) => {
+        const result = await service.getIdsStatementsWithAttachments({});
+        return assertResult(result, expectedIds, expectedAttachments);
+      }, createStatement);
+    });
+
+    describe('with canonical statements', () => {
+      attachmentsTest(service, async (expectedIds, expectedAttachments) => {
+        const result = await service.getCanonicalStatementsWithAttachments({
+          langs: []
+        });
+        return assertResult(result, expectedIds, expectedAttachments);
+      }, createStatement);
+    });
+  };
+
+  describe('in the statement', () => {
+    testAttachments(service, createAttachmentStatement);
+  });
+
+  describe('in the sub statement', () => {
+    testAttachments(service, createAttachmentSubStatement);
   });
 });
