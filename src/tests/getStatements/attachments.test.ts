@@ -29,7 +29,9 @@ describe('get statements with attachments', () => {
   });
 
   attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-    const result = await service.getCanonicalStatementsWithAttachments({});
+    const result = await service.getCanonicalStatementsWithAttachments({
+      langs: []
+    });
     return assertResult(result, expectedIds, expectedAttachments);
   });
 });
