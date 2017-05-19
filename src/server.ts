@@ -3,7 +3,7 @@ sourceMapSupport.install();
 
 import * as express from 'express';
 import repo from './repo';
-import expressFace from './expressFace';
+import presenter from './expressPresenter';
 import service from './service';
 import config from './config';
 import logger from './logger';
@@ -31,7 +31,7 @@ const serviceFacade = service({
   enableReferencing: true,
   awaitUpdates: true,
 });
-const faceFacade = expressFace({
+const presenterFacade = presenter({
   llClientInfoEndpoint: config.llClientInfoEndpoint,
   customRoute: config.express.customRoute,
   customRouteText: config.express.customRouteText,
@@ -48,7 +48,7 @@ const handleExit = (event: string) => {
   });
 };
 
-app.use(faceFacade);
+app.use(presenterFacade);
 
 app.listen(config.express.port, () => {
   logger.info(`Listening on port ${config.express.port}`);
