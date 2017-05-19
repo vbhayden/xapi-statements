@@ -1,0 +1,33 @@
+import * as bluebird from 'bluebird';
+import * as promiseRetry from 'promise-retry';
+import { Service } from '../../service';
+import StoreStatementsOptions from '../../service/options/StoreStatementsOptions';
+
+export default (service: Service) => {
+  return async (opts: StoreStatementsOptions): Promise<string[]> => {
+    const ids = await service.storeStatements(opts);
+    await Promise.all(ids.map((id) => {
+      const promiser = () => {
+        return bluebird.any([
+          service.getStatement({
+            id,
+            voided: false
+          }),
+          service.getStatement({
+            id,
+            voided: true
+          })
+        ]);
+      };
+      const retryOptions = {
+        retries: 5,
+        factor: 2,
+        minTimeout: 1000,
+        maxTimeout: Infinity,
+        randomize: 2
+      };
+      return promiseRetry(promiser, retryOptions);
+    }));
+    return ids;
+  };
+};

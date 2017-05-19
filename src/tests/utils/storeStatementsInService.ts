@@ -1,8 +1,9 @@
 import { Service } from '../../service';
+import storeAwaitedStatements from './storeAwaitedStatements';
 
 export default (service: Service) => {
   return (statements: any[], attachments: any[] = []): Promise<string[]> => {
-    return service.storeStatements({
+    return storeAwaitedStatements(service)({
       models: statements,
       attachments,
       authority: {

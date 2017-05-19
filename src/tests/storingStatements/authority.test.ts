@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import setup from '../utils/setup';
+import storeAwaitedStatements from '../utils/storeAwaitedStatements';
 import createStatement from '../utils/createStatement';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
@@ -11,7 +12,7 @@ const TEST_AUTHORITY = {
 describe('store statement authority', () => {
   const service = setup();
   const storeStatements = (statements: any[], authority: any): Promise<string[]> => {
-    return service.storeStatements({
+    return storeAwaitedStatements(service)({
       models: statements,
       attachments: [],
       authority,

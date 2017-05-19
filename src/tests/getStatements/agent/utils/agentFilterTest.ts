@@ -1,4 +1,5 @@
 import setup from '../../../utils/setup';
+import storeAwaitedStatements from '../../../utils/storeAwaitedStatements';
 import createStatement from '../../../utils/createStatement';
 import FilteredStatementsAsserter from '../../utils/FilteredStatementsAsserter';
 
@@ -13,7 +14,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
   return (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
     const service = setup();
     const storeStatements = (statements: any[], authority: any = DEFAULT_AUTHORITY) => {
-      return service.storeStatements({
+      return storeAwaitedStatements(service)({
         models: statements,
         attachments: [],
         authority,
