@@ -10,6 +10,7 @@ const TEST_AUTHORITY: Actor = {
   objectType: 'Agent',
   mbox: 'mailto:test@example.com',
 };
+const TEST_CLIENT = createClientModel();
 
 describe('store statement authority', () => {
   const service = setup();
@@ -22,7 +23,7 @@ describe('store statement authority', () => {
   };
 
   const getStatement = () => {
-    return service.getStatement({ id: TEST_ID, voided: false });
+    return service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
   };
 
   it('should use the authority option when authority is set', async () => {

@@ -1,5 +1,6 @@
 import FilterAgent from '../../models/FilterAgent';
 import setup from '../utils/setup';
+import createClientModel from '../utils/createClientModel';
 import storeStatementsInService from '../utils/storeStatementsInService';
 import createReferenceStatement from './utils/createReferenceStatement';
 import assertFilteredStatements from './utils/assertFilteredStatements';
@@ -9,6 +10,7 @@ const TEST_ID_A = '1c86d8e9-f325-404f-b3d9-24c45103558A';
 const TEST_ID_B = '1c86d8e9-f325-404f-b3d9-24c45103558B';
 const TEST_ID_C = '1c86d8e9-f325-404f-b3d9-24c45103558C';
 const TEST_ID_D = '1c86d8e9-f325-404f-b3d9-24c45103558D';
+const TEST_CLIENT = createClientModel();
 
 describe('get statements by references', () => {
   const service = setup();
@@ -87,7 +89,11 @@ describe('get statements by references', () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_B, TEST_ID_A),
     ]);
-    const statement = await service.getStatement({ id: TEST_ID_A, voided: false });
+    const statement = await service.getStatement({
+      id: TEST_ID_A,
+      voided: false,
+      client: TEST_CLIENT,
+    });
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       since: statement.stored,
@@ -102,7 +108,11 @@ describe('get statements by references', () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_B, TEST_ID_A),
     ]);
-    const statement = await service.getStatement({ id: TEST_ID_A, voided: false });
+    const statement = await service.getStatement({
+      id: TEST_ID_A,
+      voided: false,
+      client: TEST_CLIENT,
+    });
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       until: statement.stored,

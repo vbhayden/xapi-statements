@@ -2,6 +2,9 @@ import * as bluebird from 'bluebird';
 import * as promiseRetry from 'promise-retry';
 import { Service } from '../../service';
 import StoreStatementsOptions from '../../service/options/StoreStatementsOptions';
+import createClientModel from '../utils/createClientModel';
+
+const TEST_CLIENT = createClientModel();
 
 export default (service: Service) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
@@ -11,11 +14,13 @@ export default (service: Service) => {
         return bluebird.any([
           service.getStatement({
             id,
-            voided: false
+            voided: false,
+            client: TEST_CLIENT,
           }),
           service.getStatement({
             id,
-            voided: true
+            voided: true,
+            client: TEST_CLIENT,
           })
         ]);
       };

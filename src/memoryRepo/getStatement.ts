@@ -8,6 +8,7 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.id === opts.id &&
+        model.client === opts.client._id &&
         (
           opts.voided === undefined ? true :
           model.voided === opts.voided

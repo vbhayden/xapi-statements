@@ -1,18 +1,20 @@
 import * as assert from 'assert';
 import { merge } from 'lodash';
 import setup from '../../utils/setup';
+import createClientModel from '../../utils/createClientModel';
 import createStatement from '../../utils/createStatement';
 import storeStatementsInService from '../../utils/storeStatementsInService';
 import StatementTypeAsserter from './StatementTypeAsserter';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
+const TEST_CLIENT = createClientModel();
 
 export default () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
   const getStatement = () => {
-    return service.getStatement({ id: TEST_ID, voided: false });
+    return service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
   };
 
   const storeStatement = async (statement: any) => {
