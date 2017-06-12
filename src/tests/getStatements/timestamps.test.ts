@@ -37,13 +37,19 @@ describe('get statements by timestamps', () => {
 
   it('should return statements when they match the since', async () => {
     await filterStatements((since: string) => {
-      return { since };
+      return {
+        since,
+        client: TEST_CLIENT,
+      };
     }, TEST_ID_2);
   });
 
   it('should return statements when they match the until', async () => {
     await filterStatements((until: string) => {
-      return { until };
+      return {
+        until,
+        client: TEST_CLIENT,
+      };
     }, TEST_ID_1);
   });
 });

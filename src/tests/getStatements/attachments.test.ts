@@ -2,9 +2,12 @@ import * as assert from 'assert';
 import { isArray } from 'lodash';
 import { Service } from '../../service';
 import setup from '../utils/setup';
+import createClientModel from '../utils/createClientModel';
 import attachmentsTest, { StatementCreator } from './utils/attachmentsTest';
 import createAttachmentStatement from '../utils/createAttachmentStatement';
 import createAttachmentSubStatement from '../utils/createAttachmentSubStatement';
+
+const TEST_CLIENT = createClientModel();
 
 describe('get statements with attachments', () => {
   const service = setup();
@@ -24,14 +27,18 @@ describe('get statements with attachments', () => {
   const testAttachments = (service: Service, createStatement: StatementCreator) => {
     describe('with exact statements', () => {
       attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-        const result = await service.getExactStatementsWithAttachments({});
+        const result = await service.getExactStatementsWithAttachments({
+          client: TEST_CLIENT,
+        });
         return assertResult(result, expectedIds, expectedAttachments);
       }, createStatement);
     });
 
     describe('with id statements', () => {
       attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-        const result = await service.getIdsStatementsWithAttachments({});
+        const result = await service.getIdsStatementsWithAttachments({
+          client: TEST_CLIENT,
+        });
         return assertResult(result, expectedIds, expectedAttachments);
       }, createStatement);
     });
@@ -39,7 +46,8 @@ describe('get statements with attachments', () => {
     describe('with canonical statements', () => {
       attachmentsTest(service, async (expectedIds, expectedAttachments) => {
         const result = await service.getCanonicalStatementsWithAttachments({
-          langs: []
+          langs: [],
+          client: TEST_CLIENT,
         });
         return assertResult(result, expectedIds, expectedAttachments);
       }, createStatement);

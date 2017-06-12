@@ -1,4 +1,5 @@
 import setup from '../utils/setup';
+import createClientModel from '../utils/createClientModel';
 import createStatement from '../utils/createStatement';
 import createVoidingStatement from '../utils/createVoidingStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
@@ -8,13 +9,17 @@ const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_VOIDER_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
 const TEST_VOIDER = createVoidingStatement(TEST_ID, TEST_VOIDER_ID);
+const TEST_CLIENT = createClientModel();
 
 describe('get statements', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
   const assertVoided = async () => {
-    await assertFilteredStatements(service)({ agent: TEST_STATEMENT.actor }, [TEST_VOIDER_ID]);
+    await assertFilteredStatements(service)({
+      agent: TEST_STATEMENT.actor,
+      client: TEST_CLIENT,
+    }, [TEST_VOIDER_ID]);
   };
 
   it('should return only the voider when it is voiding in a following batch', async () => {

@@ -1,5 +1,6 @@
 import setup from '../../utils/setup';
 import createStatement from '../../utils/createStatement';
+import createClientModel from '../../utils/createClientModel';
 import createContext from '../../utils/createContext';
 import createSubStatement from '../../utils/createSubStatement';
 import createSubStatementContext from '../../utils/createSubStatementContext';
@@ -10,6 +11,7 @@ const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 const TEST_TARGET_ACTIVITY = 'http://www.example.com/object/1';
 const TEST_MISSING_ACTIVITY = 'http://www.example.com/object/2';
+const TEST_CLIENT = createClientModel();
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
   const service = setup();
@@ -31,6 +33,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
     await assertFilteredStatements(service)({
       activity: TEST_TARGET_ACTIVITY,
       relatedActivities,
+      client: TEST_CLIENT,
     }, [TEST_TARGET_ID]);
   };
 

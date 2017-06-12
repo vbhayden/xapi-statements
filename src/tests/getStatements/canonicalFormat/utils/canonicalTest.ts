@@ -1,6 +1,7 @@
 import * as assert from 'assert';
 import { isArray, merge } from 'lodash';
 import setup from '../../../utils/setup';
+import createClientModel from '../../../utils/createClientModel';
 import createStatement from '../../../utils/createStatement';
 import storeStatementsInService from '../../../utils/storeStatementsInService';
 
@@ -9,6 +10,7 @@ const TEST_LANG_2 = 'en-US';
 const TEST_LANG_3 = 'en';
 const TEST_TEXT_1 = 'test1';
 const TEST_TEXT_2 = 'test2';
+const TEST_CLIENT = createClientModel();
 
 export default (createLangMapStatement: (langMap: any) => any) => {
   const service = setup();
@@ -20,7 +22,10 @@ export default (createLangMapStatement: (langMap: any) => any) => {
     langs: string[]
   ): Promise<void> => {
     await storeStatements([exactStatement]);
-    const canonicalStatements = await service.getCanonicalStatements({ langs });
+    const canonicalStatements = await service.getCanonicalStatements({
+      langs,
+      client: TEST_CLIENT,
+    });
     const expectedStatement = merge({}, canonicalStatements[0], canonicalStatement);
     assert(isArray(canonicalStatements));
     assert.equal(canonicalStatements.length, 1);

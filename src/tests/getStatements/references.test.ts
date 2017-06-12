@@ -28,6 +28,7 @@ describe('get statements by references', () => {
   const assertTargetingStatement = (targetId: string, expectedIds: string[]) => {
     return assertFilteredStatements(service)({
       agent: createAgentFilter(targetId),
+      client: TEST_CLIENT,
     }, expectedIds);
   };
 
@@ -97,6 +98,7 @@ describe('get statements by references', () => {
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       since: statement.stored,
+      client: TEST_CLIENT,
     }, [TEST_ID_B]);
   });
 
@@ -116,6 +118,7 @@ describe('get statements by references', () => {
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       until: statement.stored,
+      client: TEST_CLIENT,
     }, [TEST_ID_A]);
   });
 
@@ -127,6 +130,7 @@ describe('get statements by references', () => {
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       limit: 1,
+      client: TEST_CLIENT,
     }, [TEST_ID_A]);
   });
 
@@ -138,6 +142,7 @@ describe('get statements by references', () => {
     await assertFilteredStatements(service)({
       agent: createAgentFilter(TEST_ID_B),
       skip: 1,
+      client: TEST_CLIENT,
     }, [TEST_ID_B]);
   });
 });

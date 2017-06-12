@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import { isArray } from 'lodash';
 import GetStatementsOptions from '../../service/options/GetStatementsOptions';
 import setup from '../utils/setup';
+import createClientModel from '../utils/createClientModel';
 import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
@@ -11,6 +12,7 @@ const TEST_ID_3 = '1c86d8e9-f325-404f-b3d9-24c451035584';
 const TEST_STATEMENT_1 = createStatement({ id: TEST_ID_1 });
 const TEST_STATEMENT_2 = createStatement({ id: TEST_ID_2 });
 const TEST_STATEMENT_3 = createStatement({ id: TEST_ID_3 });
+const TEST_CLIENT = createClientModel();
 
 describe('get statements by slicing', () => {
   const service = setup();
@@ -28,19 +30,29 @@ describe('get statements by slicing', () => {
   };
 
   it('should return statements when they are inside the limit', async () => {
-    const statements = await sliceStatements({ limit: 1 });
+    const statements = await sliceStatements({
+      limit: 1,
+      client: TEST_CLIENT,
+    });
     assert.equal(statements.length, 1);
     assert.equal(statements[0].id, TEST_ID_1);
   });
 
   it('should return statements when they are not skipped', async () => {
-    const statements = await sliceStatements({ skip: 2 });
+    const statements = await sliceStatements({
+      skip: 2,
+      client: TEST_CLIENT,
+    });
     assert.equal(statements.length, 1);
     assert.equal(statements[0].id, TEST_ID_3);
   });
 
   it('should return statements when they are not sliced', async () => {
-    const statements = await sliceStatements({ skip: 1, limit: 1 });
+    const statements = await sliceStatements({
+      skip: 1,
+      limit: 1,
+      client: TEST_CLIENT,
+    });
     assert.equal(statements.length, 1);
     assert.equal(statements[0].id, TEST_ID_2);
   });

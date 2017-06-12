@@ -7,6 +7,7 @@ import FilteredStatementsAsserter from '../../utils/FilteredStatementsAsserter';
 
 const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
+const TEST_CLIENT = createClientModel();
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
   return (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
@@ -31,6 +32,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
       await assertFilteredStatements(service)({
         agent: actor1,
         relatedAgents,
+        client: TEST_CLIENT,
       }, [TEST_TARGET_ID]);
     };
 
