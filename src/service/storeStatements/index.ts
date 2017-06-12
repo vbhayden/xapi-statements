@@ -14,11 +14,11 @@ import updateReferences from './updateReferences';
 
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
-    const preValidatedModels = preValidationSetup(opts.models, opts.authority);
+    const preValidatedModels = preValidationSetup(opts.models);
     validateStatements(preValidatedModels);
-    const postValidatedModels: StatementModel[] = postValidationSetup(preValidatedModels);
-    const unstoredModels: StatementModel[] = await getUnstoredModels(config, postValidatedModels);
-    const voidedObjectIds: string[] = await checkVoiders(config, unstoredModels);
+    const postValidatedModels = postValidationSetup(preValidatedModels, opts.authority);
+    const unstoredModels = await getUnstoredModels(config, postValidatedModels);
+    const voidedObjectIds = await checkVoiders(config, unstoredModels);
     await checkAttachments(config, unstoredModels, opts.attachments);
 
     await createStatements(config, unstoredModels);

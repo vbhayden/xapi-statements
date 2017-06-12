@@ -4,11 +4,11 @@ import setupObjectTypes from './setupObjectTypes';
 import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
 
-export default (models: any[]) => {
+export default (models: any[], authority: any) => {
   const storedTime = (new Date()).toISOString();
   return models.map((model: any): StatementModel => {
     const objectTypesModel = setupObjectTypes(model);
-    const preHashStatement = setupPreHashStatement(objectTypesModel);
+    const preHashStatement = setupPreHashStatement(objectTypesModel, authority);
     const postHashStatement = setupPostHashStatement(preHashStatement, storedTime);
     return {
       hasGeneratedId: model.id === undefined,

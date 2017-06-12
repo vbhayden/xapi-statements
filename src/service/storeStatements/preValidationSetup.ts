@@ -4,10 +4,9 @@ const wrapObjectInArray = modr.modifyType(Object, (data) => {
   return [data];
 });
 
-export default (models: any[], authority: any): any[] => {
+export default (models: any[]): any[] => {
   return models.map((model) => {
     const setup = modr.modifySchema({
-      authority: modr.overrideValue(authority),
       context: modr.modifySchema({
         contextActivities: modr.modifySchema({
           parent: wrapObjectInArray,
