@@ -15,7 +15,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
       return storeAwaitedStatements(service)({
         models: statements,
         attachments: [],
-        client: createClientModel(authority),
+        client: createClientModel(authority ? { authority } : {}),
       });
     };
 

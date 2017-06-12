@@ -28,6 +28,12 @@ describe('get statement', () => {
     );
   });
 
+  it('should throw an error when the client does not match', async () => {
+    await assertError(NoModel)(
+      service.getStatement({ id: TEST_ID, voided: false })
+    );
+  });
+
   it('should throw an error when the voider is not voided ', async () => {
     await storeStatements([createStatement({ id: TEST_ID })]);
     await assertError(NoModel)(

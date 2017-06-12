@@ -7,7 +7,7 @@ const DEFAULT_AUTHORITY: Actor = {
   mbox: 'mailto:authority@example.com',
 };
 
-export default (authority: Actor = DEFAULT_AUTHORITY): ClientModel => {
+export default (overrides: Partial<ClientModel> = {}): ClientModel => {
   return {
     _id: 'test_id',
     title: 'test_title',
@@ -17,8 +17,9 @@ export default (authority: Actor = DEFAULT_AUTHORITY): ClientModel => {
       basic_key: 'test_basic_key',
       basic_secret: 'test_basic_secret',
     },
-    authority,
+    authority: DEFAULT_AUTHORITY,
     isTrusted: true,
     scopes: [ALL],
+    ...overrides
   };
 };
