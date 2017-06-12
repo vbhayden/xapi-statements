@@ -16,6 +16,7 @@ export default (config: Config) => {
       ascending: opts.ascending === undefined ? true : opts.ascending,
       limit: opts.limit,
       skip: opts.skip,
+      client: opts.client,
     });
   };
 };

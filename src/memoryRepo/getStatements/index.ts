@@ -1,17 +1,19 @@
-import StatementModel from '../models/StatementModel';
-import GetStatementsOptions from '../repo/GetStatementsOptions';
-import matchesAgentOption from './utils/matchesAgentOption';
-import matchesVerbOption from './utils/matchesVerbOption';
-import matchesActivityOption from './utils/matchesActivityOption';
-import matchesRegistrationOption from './utils/matchesRegistrationOption';
-import matchesUntilOption from './utils/matchesUntilOption';
-import matchesSinceOption from './utils/matchesSinceOption';
-import Config from './Config';
+import StatementModel from '../../models/StatementModel';
+import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import Config from '../Config';
+import matchesClientOption from './matchesClientOption';
+import matchesAgentOption from './matchesAgentOption';
+import matchesVerbOption from './matchesVerbOption';
+import matchesActivityOption from './matchesActivityOption';
+import matchesRegistrationOption from './matchesRegistrationOption';
+import matchesUntilOption from './matchesUntilOption';
+import matchesSinceOption from './matchesSinceOption';
 
 const filterModels = (models: StatementModel[], opts: GetStatementsOptions) => {
   return models.filter((model: StatementModel) => {
     const statement = model.statement;
     return (
+      matchesClientOption(model, opts) &&
       matchesAgentOption(model, opts) &&
       matchesVerbOption(model, opts) &&
       matchesActivityOption(model, opts) &&

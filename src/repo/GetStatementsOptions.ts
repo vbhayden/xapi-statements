@@ -1,3 +1,4 @@
+import ClientModel from '../models/ClientModel';
 import FilterAgent from '../models/FilterAgent';
 
 interface GetStatementsOptions {
@@ -12,6 +13,7 @@ interface GetStatementsOptions {
   ascending: boolean;
   limit?: number;
   skip?: number;
+  client: ClientModel;
 }
 
 export default GetStatementsOptions;
