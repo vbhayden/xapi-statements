@@ -1,4 +1,3 @@
-import StatementModel from '../../models/StatementModel';
 import StoreStatementsOptions from '../options/StoreStatementsOptions';
 import Config from '../Config';
 import preValidationSetup from './preValidationSetup';
@@ -23,7 +22,7 @@ export default (config: Config) => {
 
     await createStatements(config, unstoredModels);
 
-    const statementIds = postValidatedModels.map((postValidatedModel: StatementModel) => {
+    const statementIds = postValidatedModels.map((postValidatedModel) => {
       return postValidatedModel.statement.id;
     });
 
