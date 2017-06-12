@@ -39,7 +39,7 @@
     "node-fetch": "^1.6.3",
     "object-hash": "1.1.7",
     "promise-retry": "^1.1.1",
-    "rulr": "^2.0.0",
+    "rulr": "^3.0.0",
     "source-map-support": "^0.4.11",
     "uuid": "^3.0.1",
     "winston": "^2.3.1",
