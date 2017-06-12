@@ -4,6 +4,7 @@ import { ALL } from '../utils/scopes';
 
 export default async (_req: Request, res: Response): Promise<void> => {
   const client: ClientModel = {
+    _id: 'dummy_id',
     title: 'dummy_title',
     organisation: 'dummy_organisation',
     lrs_id: 'dummy_lrs_id',

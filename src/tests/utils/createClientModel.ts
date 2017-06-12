@@ -9,6 +9,7 @@ const DEFAULT_AUTHORITY: Actor = {
 
 export default (authority: Actor = DEFAULT_AUTHORITY): ClientModel => {
   return {
+    _id: 'test_id',
     title: 'test_title',
     organisation: 'test_organisation',
     lrs_id: 'test_lrs_id',

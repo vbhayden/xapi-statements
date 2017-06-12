@@ -6,7 +6,7 @@ interface Credentials {
 }
 
 interface ClientModel {
-  _id?: string;
+  _id: string;
   title: string;
   organisation: string;
   lrs_id: string;

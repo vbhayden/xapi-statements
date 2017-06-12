@@ -1,19 +1,21 @@
 import { sha1 } from 'object-hash';
+import ClientModel from '../../../models/ClientModel';
 import StatementModel from '../../../models/StatementModel';
 import setupObjectTypes from './setupObjectTypes';
 import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
 
-export default (models: any[], authority: any) => {
+export default (models: any[], client: ClientModel) => {
   const storedTime = (new Date()).toISOString();
   return models.map((model: any): StatementModel => {
     const objectTypesModel = setupObjectTypes(model);
-    const preHashStatement = setupPreHashStatement(objectTypesModel, authority);
+    const preHashStatement = setupPreHashStatement(objectTypesModel, client.authority);
     const postHashStatement = setupPostHashStatement(preHashStatement, storedTime);
     return {
       hasGeneratedId: model.id === undefined,
-      organisation: 'organisation_123',
-      lrs_id: 'lrs_123',
+      organisation: client.organisation,
+      lrs_id: client.lrs_id,
+      client: client._id,
       person: 'person',
       active: false,
       voided: false,

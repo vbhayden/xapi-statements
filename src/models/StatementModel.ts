@@ -6,6 +6,7 @@ interface StatementModel {
   _id?: string;
   hasGeneratedId: boolean;
   organisation: string;
+  client: string;
   lrs_id: string;
   person: string;
   active: boolean;
