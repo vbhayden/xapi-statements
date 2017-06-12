@@ -15,7 +15,7 @@ export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
     const preValidatedModels = preValidationSetup(opts.models);
     validateStatements(preValidatedModels);
-    const postValidatedModels = postValidationSetup(preValidatedModels, opts.authority);
+    const postValidatedModels = postValidationSetup(preValidatedModels, opts.client.authority);
     const unstoredModels = await getUnstoredModels(config, postValidatedModels);
     const voidedObjectIds = await checkVoiders(config, unstoredModels);
     await checkAttachments(config, unstoredModels, opts.attachments);

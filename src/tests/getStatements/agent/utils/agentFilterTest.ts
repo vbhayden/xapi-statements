@@ -1,23 +1,21 @@
+import Actor from '../../../../models/Actor';
 import setup from '../../../utils/setup';
 import storeAwaitedStatements from '../../../utils/storeAwaitedStatements';
 import createStatement from '../../../utils/createStatement';
+import createClientModel from '../../../utils/createClientModel';
 import FilteredStatementsAsserter from '../../utils/FilteredStatementsAsserter';
 
 const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
-const DEFAULT_AUTHORITY = {
-  objectType: 'Agent',
-  mbox: 'mailto:authority@example.com',
-};
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
   return (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
     const service = setup();
-    const storeStatements = (statements: any[], authority: any = DEFAULT_AUTHORITY) => {
+    const storeStatements = (statements: any[], authority?: Actor) => {
       return storeAwaitedStatements(service)({
         models: statements,
         attachments: [],
-        authority,
+        client: createClientModel(authority),
       });
     };
 

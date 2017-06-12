@@ -1,4 +1,5 @@
 import { Service } from '../../service';
+import createClientModel from './createClientModel';
 import storeAwaitedStatements from './storeAwaitedStatements';
 
 export default (service: Service) => {
@@ -6,10 +7,7 @@ export default (service: Service) => {
     return storeAwaitedStatements(service)({
       models: statements,
       attachments,
-      authority: {
-        objectType: 'Agent',
-        mbox: 'mailto:authority@example.com',
-      },
+      client: createClientModel(),
     });
   };
 };

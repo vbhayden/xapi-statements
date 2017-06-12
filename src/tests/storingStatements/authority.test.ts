@@ -1,21 +1,23 @@
 import * as assert from 'assert';
+import Actor from '../../models/Actor';
 import setup from '../utils/setup';
+import createClientModel from '../utils/createClientModel';
 import storeAwaitedStatements from '../utils/storeAwaitedStatements';
 import createStatement from '../utils/createStatement';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
-const TEST_AUTHORITY = {
+const TEST_AUTHORITY: Actor = {
   objectType: 'Agent',
   mbox: 'mailto:test@example.com',
 };
 
 describe('store statement authority', () => {
   const service = setup();
-  const storeStatements = (statements: any[], authority: any): Promise<string[]> => {
+  const storeStatements = (statements: any[], authority: Actor): Promise<string[]> => {
     return storeAwaitedStatements(service)({
       models: statements,
       attachments: [],
-      authority,
+      client: createClientModel(authority),
     });
   };
 
