@@ -1,5 +1,7 @@
 import * as assert from 'assert';
+import { difference } from 'lodash';
 import * as scopes from '../../../utils/scopes';
+import allScopes from '../../../utils/scopes';
 import Forbidden from '../../../errors/Forbidden';
 import ClientModel from '../../../models/ClientModel';
 import Statement from '../../../models/Statement';
@@ -14,11 +16,7 @@ type StatementGetter = (client: ClientModel) => Promise<(Statement|IdFormattedSt
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
-const TEST_FORBIDDEN_SCOPES = [
-  scopes.XAPI_STATEMENTS_WRITE,
-  scopes.XAPI_PROFILE_ALL,
-  scopes.XAPI_STATE_ALL,
-];
+const TEST_FORBIDDEN_SCOPES = difference(allScopes, scopes.STATEMENT_READ_SCOPES);
 
 export default (getStatements: StatementGetter) => {
   const service = setup();
