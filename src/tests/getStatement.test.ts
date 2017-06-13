@@ -34,16 +34,6 @@ describe('get statement', () => {
     );
   });
 
-  it('should throw an error when the lrs does not match', async () => {
-    const unknownClient = createClientModel({
-      lrs_id: 'unknown_lrs_id',
-    });
-    await storeStatements([createStatement({ id: TEST_ID })]);
-    await assertError(NoModel)(
-      service.getStatement({ id: TEST_ID, voided: false, client: unknownClient })
-    );
-  });
-
   it('should throw an error when the voider is not voided ', async () => {
     await storeStatements([createStatement({ id: TEST_ID })]);
     await assertError(NoModel)(
