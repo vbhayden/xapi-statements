@@ -9,6 +9,15 @@ export const XAPI_STATEMENTS_READ_MINE = 'statements/read/mine';
 export const XAPI_STATE_ALL = 'state';
 export const XAPI_PROFILE_ALL = 'profile';
 
+export const STATEMENT_READ_SCOPES = [
+  ALL,
+  ALL_READ,
+  XAPI_ALL,
+  XAPI_READ,
+  XAPI_STATEMENTS_READ,
+  XAPI_STATEMENTS_READ_MINE,
+];
+
 export default [
   ALL,
   ALL_READ,

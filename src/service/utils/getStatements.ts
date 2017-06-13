@@ -1,9 +1,13 @@
+import { STATEMENT_READ_SCOPES } from '../../utils/scopes';
 import StatementModel from '../../models/StatementModel';
 import GetStatementsOptions from '../options/GetStatementsOptions';
 import Config from '../Config';
+import checkScopes from './checkScopes';
 
 export default (config: Config) => {
   return (opts: GetStatementsOptions): Promise<StatementModel[]> => {
+    checkScopes(STATEMENT_READ_SCOPES, opts.client.scopes);
+
     return config.repo.getStatements({
       agent: opts.agent,
       activity: opts.activity,
