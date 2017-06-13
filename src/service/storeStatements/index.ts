@@ -1,4 +1,6 @@
+import { STATEMENT_WRITE_SCOPES } from '../../utils/scopes';
 import StoreStatementsOptions from '../options/StoreStatementsOptions';
+import checkScopes from '../utils/checkScopes';
 import Config from '../Config';
 import preValidationSetup from './preValidationSetup';
 import validateStatements from './validateStatements';
@@ -13,6 +15,7 @@ import updateReferences from './updateReferences';
 
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
+    checkScopes(STATEMENT_WRITE_SCOPES, opts.client.scopes);
     const preValidatedModels = preValidationSetup(opts.models);
     validateStatements(preValidatedModels);
     const postValidatedModels = postValidationSetup(preValidatedModels, opts.client);

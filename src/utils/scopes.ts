@@ -18,6 +18,12 @@ export const STATEMENT_READ_SCOPES = [
   XAPI_STATEMENTS_READ_MINE,
 ];
 
+export const STATEMENT_WRITE_SCOPES = [
+  ALL,
+  XAPI_ALL,
+  XAPI_STATEMENTS_WRITE,
+];
+
 export default [
   ALL,
   ALL_READ,
