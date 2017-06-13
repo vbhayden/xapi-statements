@@ -6,7 +6,7 @@ import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_STATEMENT = createStatement();
 const TEST_UNKNOWN_CLIENT = createClientModel({
-  _id: 'unknown_client_id',
+  lrs_id: 'unknown_client_id',
 });
 const TEST_OPTIONS = {
   client: TEST_UNKNOWN_CLIENT
@@ -20,13 +20,13 @@ describe('get statements', () => {
     assert.deepEqual(actualStatements, []);
   };
 
-  it('should return no statements when getting exact statements with unknown client', async () => {
+  it('should return no statements when getting exact statements with unknown lrs', async () => {
     await storeStatements([TEST_STATEMENT]);
     const statements = await service.getExactStatements(TEST_OPTIONS);
     assertNoStatements(statements);
   });
 
-  it('should return no statements when getting canonical statements with unknown client', async () => {
+  it('should return no statements when getting canonical statements with unknown lrs', async () => {
     await storeStatements([TEST_STATEMENT]);
     const statements = await service.getCanonicalStatements({
       ...TEST_OPTIONS,
@@ -35,20 +35,20 @@ describe('get statements', () => {
     assertNoStatements(statements);
   });
 
-  it('should return no statements when getting ids statements with unknown client', async () => {
+  it('should return no statements when getting ids statements with unknown lrs', async () => {
     await storeStatements([TEST_STATEMENT]);
     const statements = await service.getIdsStatements(TEST_OPTIONS);
     assertNoStatements(statements);
   });
 
-  it('should return no statements when getting exact statements and attachments with unknown client', async () => {
+  it('should return no statements when getting exact statements and attachments with unknown lrs', async () => {
     await storeStatements([TEST_STATEMENT]);
     const results = await service.getExactStatementsWithAttachments(TEST_OPTIONS);
     const statements = results.statements;
     assertNoStatements(statements);
   });
 
-  it('should return no statements when getting canonical statements and attachments with unknown client', async () => {
+  it('should return no statements when getting canonical statements and attachments with unknown lrs', async () => {
     await storeStatements([TEST_STATEMENT]);
     const results = await service.getCanonicalStatementsWithAttachments({
       ...TEST_OPTIONS,
@@ -58,7 +58,7 @@ describe('get statements', () => {
     assertNoStatements(statements);
   });
 
-  it('should return no statements when getting ids statements and attachments with unknown client', async () => {
+  it('should return no statements when getting ids statements and attachments with unknown lrs', async () => {
     await storeStatements([TEST_STATEMENT]);
     const results = await service.getIdsStatementsWithAttachments(TEST_OPTIONS);
     const statements = results.statements;

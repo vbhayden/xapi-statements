@@ -1,6 +1,7 @@
 import StatementModel from '../models/StatementModel';
 import GetStatementOptions from '../repo/GetStatementOptions';
 import NoModel from '../errors/NoModel';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -8,7 +9,7 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.id === opts.id &&
-        model.client === opts.client._id &&
+        matchesClientOption(model, opts.client) &&
         (
           opts.voided === undefined ? true :
           model.voided === opts.voided

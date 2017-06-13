@@ -34,9 +34,9 @@ describe('get statement', () => {
     );
   });
 
-  it('should throw an error when the client does not match', async () => {
+  it('should throw an error when the lrs does not match', async () => {
     const unknownClient = createClientModel({
-      _id: 'unknown_client_id',
+      lrs_id: 'unknown_lrs_id',
     });
     await storeStatements([createStatement({ id: TEST_ID })]);
     await assertError(NoModel)(

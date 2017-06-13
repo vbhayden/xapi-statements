@@ -1,7 +1,7 @@
 import StatementModel from '../../models/StatementModel';
 import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import matchesClientOption from '../utils/matchesClientOption';
 import Config from '../Config';
-import matchesClientOption from './matchesClientOption';
 import matchesAgentOption from './matchesAgentOption';
 import matchesVerbOption from './matchesVerbOption';
 import matchesActivityOption from './matchesActivityOption';
@@ -13,7 +13,7 @@ const filterModels = (models: StatementModel[], opts: GetStatementsOptions) => {
   return models.filter((model: StatementModel) => {
     const statement = model.statement;
     return (
-      matchesClientOption(model, opts) &&
+      matchesClientOption(model, opts.client) &&
       matchesAgentOption(model, opts) &&
       matchesVerbOption(model, opts) &&
       matchesActivityOption(model, opts) &&
