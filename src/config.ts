@@ -12,6 +12,9 @@ export default {
     morganDirectory: process.env.EXPRESS_MORGAN_DIRECTORY || `${process.cwd()}/logs/access`,
     bodyParserLimit: process.env.EXPRESS_BODY_PARSER_LIMIT || '5mb',
   },
+  mongo: {
+    url: process.env.MONGO_URL || 'mongodb://localhost:27017/xapiserver'
+  },
   testing: {
     repo: process.env.TESTING_REPO || 'memory',
   },

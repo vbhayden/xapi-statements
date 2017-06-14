@@ -3,7 +3,6 @@ import Statement from './Statement';
 type Ref = { statement: Statement };
 
 interface StatementModel {
-  _id?: string;
   hasGeneratedId: boolean;
   organisation: string;
   client: string;

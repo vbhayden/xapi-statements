@@ -3,9 +3,10 @@ import { Service } from '../../service';
 import service from '../../tester';
 
 export default (): Service => {
-  beforeEach(async () => {
+  before(async () => {
     await service.rollback();
     await service.migrate();
+    await service.clearService();
   });
 
   afterEach(async () => {

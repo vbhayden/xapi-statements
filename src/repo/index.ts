@@ -1,5 +1,7 @@
+import { MongoClient } from 'mongodb';
 import MemoryRepoConfig from '../memoryRepo/Config';
 import memoryRepo from '../memoryRepo';
+import mongoRepo from '../mongoRepo';
 import AttachmentModel from '../models/AttachmentModel';
 import StatementModel from '../models/StatementModel';
 import Statement from '../models/Statement';
@@ -19,9 +21,14 @@ import GetStatementsByIdsOptions from './GetStatementsByIdsOptions';
 import GetUpRefsByIdsOptions from './GetUpRefsByIdsOptions';
 import GetAttachmentsOptions from './GetAttachmentsOptions';
 
+interface MongoRepoConfig {
+  url: string;
+}
+
 interface RepoConfig {
   repoName: string;
   memoryRepoConfig: MemoryRepoConfig;
+  mongoRepoConfig: MongoRepoConfig;
 }
 
 export interface Repo {
@@ -51,6 +58,10 @@ export interface Repo {
 
 export default (config: RepoConfig): Repo => {
   switch (config.repoName) {
+    case 'mongo':
+      return mongoRepo({
+        db: MongoClient.connect(config.mongoRepoConfig.url),
+      })
     default: case 'memory':
       return memoryRepo(config.memoryRepoConfig);
   }

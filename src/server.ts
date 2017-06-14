@@ -18,6 +18,9 @@ const repoFacade = repo({
       attachments: [],
     },
   },
+  mongoRepoConfig: {
+    url: config.mongo.url,
+  },
 });
 const serviceFacade = service({
   defaultTimeout: 1000,
