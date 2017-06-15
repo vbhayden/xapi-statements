@@ -1,4 +1,3 @@
-import StatementModel from '../models/StatementModel';
 import GetDownRefIdOptions from '../repo/GetDownRefIdOptions';
 import NoModel from '../errors/NoModel';
 import Config from './Config';
@@ -6,19 +5,20 @@ import Config from './Config';
 export default (config: Config) => {
   return async (opts: GetDownRefIdOptions): Promise<string> => {
     const collection = (await config.db).collection('statements');
-    const filteredModel = await collection.findOne({
+    const result = await collection.findOne({
       'statement.object.objectType': 'StatementRef',
       'statement.id': opts.id,
-    }) as StatementModel|null;
+    }, {
+      fields: {
+        _id: 0,
+        'value': '$statement.object.id',
+      }
+    }) as { value: string }|null;
 
-    if (filteredModel === null) {
+    if (result === null) {
       throw new NoModel('Statement');
     }
 
-    const statementObject = filteredModel.statement.object;
-    if (statementObject.objectType === 'StatementRef') {
-      return statementObject.id;
-    }
-    throw new Error('No longer a StatementRef.');
+    return result.value;
   };
 };

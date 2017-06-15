@@ -1,4 +1,3 @@
-import StatementModel from '../models/StatementModel';
 import GetVoidersOptions from '../repo/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
 import Config from './Config';
@@ -6,14 +5,17 @@ import Config from './Config';
 export default (config: Config) => {
   return async (opts: GetVoidersOptions): Promise<string[]> => {
     const collection = (await config.db).collection('statements');
-    const filteredModels = await collection.find({
+    const results = await collection.find({
       'statement.verb.id': voidVerbId,
       'statement.object.objectType': 'StatementRef',
       'statement.id': { $in: opts.ids },
-    }).toArray() as StatementModel[];
+    }).project({
+      _id: 0,
+      value: '$statement.id',
+    }).toArray() as { value: string }[];
 
-    return filteredModels.map((model: StatementModel): string => {
-      return model.statement.id;
+    return results.map((result) => {
+      return result.value;
     });
   };
 };

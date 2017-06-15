@@ -1,17 +1,19 @@
-import StatementModel from '../models/StatementModel';
 import GetUpRefIdsOptions from '../repo/GetUpRefIdsOptions';
 import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: GetUpRefIdsOptions): Promise<string[]> => {
     const collection = (await config.db).collection('statements');
-    const filteredModels = await collection.find({
+    const results = await collection.find({
       'statement.object.objectType': 'StatementRef',
       'statement.object.id': opts.id,
-    }).toArray() as StatementModel[];
+    }).project({
+      _id: 0,
+      value: '$statement.id',
+    }).toArray() as { value: string }[];
 
-    return filteredModels.map((model) => {
-      return model.statement.id;
+    return results.map((result) => {
+      return result.value;
     });
   };
 };
