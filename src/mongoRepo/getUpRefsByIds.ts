@@ -2,6 +2,15 @@ import UpRef from '../models/UpRef';
 import GetUpRefsByIdsOptions from '../repo/GetUpRefsByIdsOptions';
 import Config from './Config';
 
+interface Result {
+  statement: {
+    id: string;
+    object: {
+      id: string;
+    }
+  }
+}
+
 export default (config: Config) => {
   return async (opts: GetUpRefsByIdsOptions): Promise<UpRef[]> => {
     const collection = (await config.db).collection('statements');
@@ -9,10 +18,16 @@ export default (config: Config) => {
       'statement.object.objectType': 'StatementRef',
       'statement.object.id': { $in: opts.targetIds },
     }).project({
-      sourceId: '$statement.id',
-      targetId: '$statement.object.id',
-    }).toArray() as UpRef[];
+      _id: 0,
+      'statement.id': 1,
+      'statement.object.id': 1,
+    }).toArray() as Result[];
 
-    return results;
+    return results.map((result) => {
+      return {
+        sourceId: result.statement.id,
+        targetId: result.statement.object.id,
+      }
+    });
   };
 };

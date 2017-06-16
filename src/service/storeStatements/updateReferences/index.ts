@@ -112,6 +112,7 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     return union(visitedIds, refIds, ...traversedIds);
   };
 
+  logger.debug('Updating references for storage');
   await models.reduce(async (results, model): Promise<string[]> => {
     const visitedIds = await results;
     const modelId = model.statement.id;
@@ -119,9 +120,11 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
     if (includes(visitedIds, modelId)) return visitedIds;
 
     if (model.statement.object.objectType !== 'StatementRef') {
-      return union(visitedIds, await traverseUp([], [], modelId));
+      const traversedIds = await traverseUp([], [], modelId);
+      return union(visitedIds, traversedIds);
     } else {
-      return union(visitedIds, await traverseDown(modelId, []));
+      const traversedIds = await traverseDown(modelId, []);
+      return union(visitedIds, traversedIds);
     }
   }, Promise.resolve([]));
 };

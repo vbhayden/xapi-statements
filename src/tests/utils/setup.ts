@@ -6,10 +6,9 @@ export default (): Service => {
   before(async () => {
     await service.rollback();
     await service.migrate();
-    await service.clearService();
   });
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await service.clearService();
   });
 

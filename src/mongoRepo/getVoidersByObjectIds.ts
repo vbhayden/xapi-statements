@@ -2,6 +2,14 @@ import GetVoidersOptions from '../repo/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
 import Config from './Config';
 
+interface Result {
+  statement: {
+    object: {
+      id: string;
+    }
+  }
+}
+
 export default (config: Config) => {
   return async (opts: GetVoidersOptions): Promise<string[]> => {
     const collection = (await config.db).collection('statements');
@@ -11,11 +19,11 @@ export default (config: Config) => {
       'statement.object.id': { $in: opts.ids },
     }).project({
       _id: 0,
-      value: '$statement.object.id',
-    }).toArray() as { value: string }[];
+      'statement.object.id': 1,
+    }).toArray() as Result[];
 
     return results.map((result) => {
-      return result.value;
+      return result.statement.object.id;
     });
   };
 };

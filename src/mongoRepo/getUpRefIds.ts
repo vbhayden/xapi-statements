@@ -1,6 +1,12 @@
 import GetUpRefIdsOptions from '../repo/GetUpRefIdsOptions';
 import Config from './Config';
 
+interface Result {
+  statement: {
+    id: string;
+  }
+}
+
 export default (config: Config) => {
   return async (opts: GetUpRefIdsOptions): Promise<string[]> => {
     const collection = (await config.db).collection('statements');
@@ -9,11 +15,11 @@ export default (config: Config) => {
       'statement.object.id': opts.id,
     }).project({
       _id: 0,
-      value: '$statement.id',
-    }).toArray() as { value: string }[];
+      'statement.id': 1,
+    }).toArray() as Result[];
 
     return results.map((result) => {
-      return result.value;
+      return result.statement.id;
     });
   };
 };
