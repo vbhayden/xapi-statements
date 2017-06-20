@@ -5,7 +5,18 @@ import repo from './repo';
 import config from './config';
 import logger from './logger';
 
-const repoFacade = repo(config.production.repo);
+const repoFacade = repo({
+  repoName: config.production.repo,
+  memoryRepoConfig: {
+    state: {
+      statements: [],
+      attachments: [],
+    },
+  },
+  mongoRepoConfig: {
+    url: config.mongo.url,
+  },
+});
 
 repoFacade.migrate().then(() => {
   logger.info('Completed migrations');
