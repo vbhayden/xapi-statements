@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import * as winston from 'winston';
+import * as CloudWatchTransport from 'winston-aws-cloudwatch';
 import config from './config';
 
 const getTime = () => moment().format('YYYY-MM-DD HH:mm:ss:SSS');
@@ -14,8 +15,16 @@ export default new winston.Logger({
       timestamp: getTime,
       prettyPrint: true,
       humanReadableUnhandledException: true,
-      level: config.logLevel,
+      level: config.winston.level,
       stderrLevels: ['error']
-    })
+    }),
+    ...(
+      config.winston.enableAws === false ? [] : [
+        new CloudWatchTransport({
+          level: config.winston.level,
+          ...config.winston.aws,
+        }),
+      ]
+    )
   ]
 });

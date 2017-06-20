@@ -13,9 +13,12 @@
     "build": "./node_modules/typescript/bin/tsc",
     "start": "node dist/index.js",
     "test": "./node_modules/mocha/bin/mocha $(find dist -name '*.test.js') --timeout 6000",
+    "test-mongo": "TESTING_REPO=mongo npm run test",
+    "test-memory": "TESTING_REPO=memory npm run test",
     "migrate": "node dist/migrate.js",
     "rollback": "node dist/rollback.js",
-    "cover": "nyc npm run test",
+    "cover-memory": "nyc --lines 100 --check-coverage --exclude '(dist/mongoRepo|dist/config.js)' npm run test-memory",
+    "cover-mongo": "nyc --lines 100 --check-coverage --exclude '(dist/memoryRepo|dist/config.js)' npm run test-mongo",
     "clean": "rm -rf dist",
     "lint": "./node_modules/tslint/bin/tslint --project ./tsconfig.json -c ./tslint.json",
     "duplication": "./node_modules/jscpd/bin/jscpd"
@@ -43,6 +46,7 @@
     "source-map-support": "^0.4.11",
     "uuid": "^3.0.1",
     "winston": "^2.3.1",
+    "winston-aws-cloudwatch": "^1.5.0",
     "xapi-validation": "^2.0.0"
   },
   "devDependencies": {

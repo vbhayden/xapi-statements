@@ -1,9 +1,11 @@
 language: node_js
 node_js: node
 sudo: false
+services:
+  - mongodb
 script:
   - npm run build
-  - npm test
-  - npm run cover -- --reporter travis-cov
+  - npm run cover-memory
+  - npm run cover-mongo
   - npm run lint
-  - npm run duplication -- --limit=1
+  - npm run duplication -- --limit=0.01
