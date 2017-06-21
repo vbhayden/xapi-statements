@@ -10,18 +10,7 @@ import logger from './logger';
 
 const app = express();
 
-const repoFacade = repoFactory({
-  repoName: config.production.repo,
-  memoryRepoConfig: {
-    state: {
-      statements: [],
-      attachments: [],
-    },
-  },
-  mongoRepoConfig: {
-    url: config.mongo.url,
-  },
-});
+const repoFacade = repoFactory();
 const serviceFacade = service({
   defaultTimeout: 1000,
   repo: repoFacade,

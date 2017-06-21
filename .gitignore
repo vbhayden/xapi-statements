@@ -3,6 +3,6 @@ node_modules
 npm-debug.log
 notes.md
 .env
-logs
+storage
 dist
 .nyc_output

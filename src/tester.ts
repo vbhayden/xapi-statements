@@ -3,20 +3,8 @@ sourceMapSupport.install();
 
 import repoFactory from './repoFactory';
 import service from './service';
-import config from './config';
 
-const repoFacade = repoFactory({
-  repoName: config.testing.repo,
-  memoryRepoConfig: {
-    state: {
-      statements: [],
-      attachments: [],
-    },
-  },
-  mongoRepoConfig: {
-    url: config.mongo.url,
-  },
-});
+const repoFacade = repoFactory();
 const serviceFacade = service({
   defaultTimeout: 1000,
   repo: repoFacade,
