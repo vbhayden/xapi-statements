@@ -1,11 +1,11 @@
 import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
-import repo from './repo';
+import repoFactory from './repoFactory';
 import config from './config';
 import logger from './logger';
 
-const repoFacade = repo({
+const repoFacade = repoFactory({
   repoName: config.production.repo,
   memoryRepoConfig: {
     state: {

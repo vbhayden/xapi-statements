@@ -1,4 +1,4 @@
-import { Repo } from '../repo';
+import Repo from '../repo';
 import Config from './Config';
 import clearRepo from './clearRepo';
 import createAttachments from './createAttachments';

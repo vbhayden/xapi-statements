@@ -13,9 +13,14 @@ const TEST_ATTACHMENT_MODEL = createAttachmentModel(TEST_CONTENT_A);
 const TEST_ATTACHMENT_A = createAttachment(TEST_CONTENT_A);
 const TEST_ATTACHMENT_B = createAttachment(TEST_CONTENT_B);
 
-describe('store statements attachment validation', () => {
+describe('store statements with attachments', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
+
+  it('should store the attachment when it is valid', async () => {
+    const testStatement = createAttachmentStatement([TEST_ATTACHMENT_A]);
+    await storeStatements([testStatement], [TEST_ATTACHMENT_MODEL]);
+  });
 
   it('should throw an error when there is a missing SHA from the statements', async () => {
     const testStatement = createAttachmentStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);

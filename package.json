@@ -44,6 +44,7 @@
     "promise-retry": "^1.1.1",
     "rulr": "^3.0.0",
     "source-map-support": "^0.4.11",
+    "string-to-stream": "^1.1.0",
     "uuid": "^3.0.1",
     "winston": "^2.3.1",
     "winston-aws-cloudwatch": "^1.5.0",

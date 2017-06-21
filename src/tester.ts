@@ -1,11 +1,11 @@
 import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
-import repo from './repo';
+import repoFactory from './repoFactory';
 import service from './service';
 import config from './config';
 
-const repoFacade = repo({
+const repoFacade = repoFactory({
   repoName: config.testing.repo,
   memoryRepoConfig: {
     state: {
