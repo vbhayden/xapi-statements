@@ -1,4 +1,4 @@
-import { Service } from '../../../Service';
+import { Service } from '../../../service';
 import createAttachment from '../../utils/createAttachment';
 import createAttachmentModel from '../../utils/createAttachmentModel';
 import storeStatementsInService from '../../utils/storeStatementsInService';
