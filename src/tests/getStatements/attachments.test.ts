@@ -14,7 +14,7 @@ describe('get statements with attachments', () => {
 
   const assertResult = async (result: any, expectedIds: string[], expectedAttachments: any[]) => {
     const statements: any[] = result.statements;
-    const attachments: any[] = result.attachments.map(({ stream, hash }: any) => {
+    const attachments: any[] = result.attachments.map(({ hash }: any) => {
       return { hash };
     });
     assert(isArray(attachments));
