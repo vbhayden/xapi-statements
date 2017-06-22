@@ -1,8 +1,9 @@
 import { MongoClient } from 'mongodb';
-import memoryStorageRepo from './memoryStorageRepo';
+import { S3 } from 'aws-sdk';
 import memoryModelsRepo from './memoryModelsRepo';
 import mongoModelsRepo from './mongoModelsRepo';
 import localStorageRepo from './localStorageRepo';
+import s3StorageRepo from './s3StorageRepo';
 import Repo from './repo';
 import StorageRepo from './repo/StorageRepo';
 import ModelsRepo from './repo/ModelsRepo';
@@ -23,12 +24,15 @@ const getModelsRepo = (): ModelsRepo => {
 
 const getStorageRepo = (): StorageRepo => {
   switch (config.storageRepoName) {
+    case 's3':
+      return s3StorageRepo({
+        client: new S3(config.storage.s3.awsConfig),
+        bucketName: config.storage.s3.bucketName,
+        subFolder: config.storage.s3.subFolder,
+      });
+    default:
     case 'local':
       return localStorageRepo(config.storage.local);
-    default: case 'memory':
-      return memoryStorageRepo({
-        state: { attachments: [] }
-      });
   }
 };
 

@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 config();
 
+import { S3 } from 'aws-sdk';
 const storageDir = `${process.cwd()}/storage/`;
 
 export default {
@@ -33,7 +34,19 @@ export default {
   },
   storage: {
     local: {
-      attachmentsDirectory: process.env.FS_LOCAL_ATTACHMENTS_DIR || `${storageDir}/attachments`,
+      storageDir: process.env.FS_LOCAL_STORAGE_DIR || storageDir,
+    },
+    s3: {
+      bucketName: process.env.FS_S3_BUCKET || 'xapi-server',
+      subFolder: process.env.FS_S3_BUCKET_SUBFOLDER || '/storage',
+      awsConfig: {
+        accessKeyId: String(process.env.FS_S3_ACCESS_KEY_ID),
+        secretAccessKey: String(process.env.FS_S3_SECRET_ACCESS_KEY),
+        region: String(process.env.FS_S3_REGION),
+        sslEnabled: true,
+        apiVersion: '2006-03-01',
+        signatureVersion: 'v4',
+      } as S3.ClientConfiguration,
     },
   },
   mongo: {

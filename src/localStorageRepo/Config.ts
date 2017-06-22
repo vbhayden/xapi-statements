@@ -1,5 +1,5 @@
 interface Config {
-  attachmentsDirectory: string;
+  storageDir: string;
 }
 
 export default Config;

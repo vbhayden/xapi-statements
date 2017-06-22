@@ -5,10 +5,11 @@ import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: CreateAttachmentsOptions): Promise<AttachmentModel[]> => {
-    await fs.ensureDir(config.attachmentsDirectory);
+    const attachmentsDirectory = `${config.storageDir}/attachments`;
+    await fs.ensureDir(attachmentsDirectory);
     const promises = opts.models.map((model) => {
       return new Promise((resolve, reject) => {
-        const filePath = `${config.attachmentsDirectory}/${model.hash}`;
+        const filePath = `${attachmentsDirectory}/${model.hash}`;
         const writeStream = fs.createWriteStream(filePath);
         model.stream.pipe(writeStream);
         model.stream.on('end', () => {

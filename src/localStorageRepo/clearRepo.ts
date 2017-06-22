@@ -3,6 +3,7 @@ import Config from './Config';
 
 export default (config: Config) => {
   return async (): Promise<void> => {
-    await fs.emptyDir(config.attachmentsDirectory);
+    const attachmentsDirectory = `${config.storageDir}/attachments`;
+    await fs.emptyDir(attachmentsDirectory);
   };
 };
