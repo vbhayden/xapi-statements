@@ -1,7 +1,6 @@
-import { Repo } from '../repo';
+import ModelsRepo from '../repo/ModelsRepo';
 import Config from './Config';
 import clearRepo from './clearRepo';
-import createAttachments from './createAttachments';
 import createStatements from './createStatements';
 import getHashes from './getHashes';
 import getStatement from './getStatement';
@@ -14,9 +13,8 @@ import getUpRefIds from './getUpRefIds';
 import setRefs from './setRefs';
 import getStatementsByIds from './getStatementsByIds';
 import getUpRefsByIds from './getUpRefsByIds';
-import getAttachments from './getAttachments';
 
-export default (config: Config): Repo => {
+export default (config: Config): ModelsRepo => {
   return {
     // Statement functions.
     createStatements: createStatements(config),
@@ -31,10 +29,6 @@ export default (config: Config): Repo => {
     setRefs: setRefs(config),
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
-
-    // Attachment functions.
-    createAttachments: createAttachments(config),
-    getAttachments: getAttachments(config),
 
     // Repo-wide functions.
     clearRepo: clearRepo(config),

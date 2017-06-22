@@ -1,22 +1,10 @@
 import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
-import repo from './repo';
-import config from './config';
+import repoFactory from './repoFactory';
 import logger from './logger';
 
-const repoFacade = repo({
-  repoName: config.production.repo,
-  memoryRepoConfig: {
-    state: {
-      statements: [],
-      attachments: [],
-    },
-  },
-  mongoRepoConfig: {
-    url: config.mongo.url,
-  },
-});
+const repoFacade = repoFactory();
 
 repoFacade.rollback().then(() => {
   logger.info('Completed rollback');
