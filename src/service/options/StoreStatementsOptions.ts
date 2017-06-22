@@ -1,8 +1,9 @@
+import AttachmentModel from '../../models/AttachmentModel';
 import ClientModel from '../../models/ClientModel';
 
 interface StoreStatementsOptions {
   models: any[];
-  attachments: any[];
+  attachments: AttachmentModel[];
   client: ClientModel;
 }
 

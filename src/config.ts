@@ -1,10 +1,15 @@
 import { config } from 'dotenv';
 config();
 
+import { S3 } from 'aws-sdk';
+const storageDir = `${process.cwd()}/storage/`;
+
 export default {
   llClientInfoEndpoint: process.env.LL_CLIENT_INFO_ENDPOINT,
   lang: process.env.LANG || 'en',
   defaultTimeout: process.env.DEFAULT_TIMEOUT_MS || 300000,
+  modelsRepoName: process.env.MODELS_REPO || 'memory',
+  storageRepoName: process.env.STORAGE_REPO || 'memory',
   winston: {
     level: process.env.WINSTON_LEVEL || 'info',
     enableAws: Boolean(Number(process.env.WINSTON_AWS_ENABLED)) || false,
@@ -24,16 +29,27 @@ export default {
     port: Number(process.env.EXPRESS_PORT) || 80,
     customRoute: process.env.EXPRESS_CUSTOM_ROUTE || 'status',
     customRouteText: process.env.EXPRESS_CUSTOM_ROUTE_TEXT || 'ok',
-    morganDirectory: process.env.EXPRESS_MORGAN_DIRECTORY || `${process.cwd()}/logs/access`,
+    morganDirectory: process.env.EXPRESS_MORGAN_DIRECTORY || `${storageDir}/accessLogs`,
     bodyParserLimit: process.env.EXPRESS_BODY_PARSER_LIMIT || '5mb',
+  },
+  storage: {
+    local: {
+      storageDir: process.env.FS_LOCAL_STORAGE_DIR || storageDir,
+    },
+    s3: {
+      bucketName: process.env.FS_S3_BUCKET || 'xapi-server',
+      subFolder: process.env.FS_S3_BUCKET_SUBFOLDER || '/storage',
+      awsConfig: {
+        accessKeyId: String(process.env.FS_S3_ACCESS_KEY_ID),
+        secretAccessKey: String(process.env.FS_S3_SECRET_ACCESS_KEY),
+        region: String(process.env.FS_S3_REGION),
+        sslEnabled: true,
+        apiVersion: '2006-03-01',
+        signatureVersion: 'v4',
+      } as S3.ClientConfiguration,
+    },
   },
   mongo: {
     url: process.env.MONGO_URL || 'mongodb://localhost:27017/xapiserver'
-  },
-  testing: {
-    repo: process.env.TESTING_REPO || 'memory',
-  },
-  production: {
-    repo: process.env.PRODUCTION_REPO || 'mongo',
   },
 };

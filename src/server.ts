@@ -2,7 +2,7 @@ import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
 import * as express from 'express';
-import repo from './repo';
+import repoFactory from './repoFactory';
 import presenter from './expressPresenter';
 import service from './service';
 import config from './config';
@@ -10,18 +10,7 @@ import logger from './logger';
 
 const app = express();
 
-const repoFacade = repo({
-  repoName: config.production.repo,
-  memoryRepoConfig: {
-    state: {
-      statements: [],
-      attachments: [],
-    },
-  },
-  mongoRepoConfig: {
-    url: config.mongo.url,
-  },
-});
+const repoFacade = repoFactory();
 const serviceFacade = service({
   defaultTimeout: 1000,
   repo: repoFacade,

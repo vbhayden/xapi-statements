@@ -8,7 +8,7 @@ export default (llClientInfoEndpoint: string): Authenticator =>
   async (req) =>
     fetch(llClientInfoEndpoint, {
       headers: {
-        Authorization: req.header('Authorization'),
+        Authorization: req.header('Authorization') || '',
       }
     }).then((res) =>
       res.json()

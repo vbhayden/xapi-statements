@@ -18,14 +18,18 @@ describe('get statements with attachments', () => {
     expectedAttachments: any[]
   ) => {
     const statements: any[] = result.statements;
-    const attachments: any[] = result.attachments;
+    const attachments: any[] = result.attachments.map(({ hash }: any) => {
+      return { hash };
+    });
     assert(isArray(attachments));
     assert(isArray(statements));
     const actualIds = statements.map(statement => {
       return statement.id;
     });
     assert.deepEqual(actualIds, expectedIds);
-    assert.deepEqual(attachments, expectedAttachments);
+    assert.deepEqual(attachments, expectedAttachments.map(({ hash }: any) => {
+      return { hash };
+    }));
   };
 
   const testAttachments = (

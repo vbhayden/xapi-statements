@@ -1,6 +1,5 @@
 interface AttachmentModel {
-  content: string;
-  contentType: string;
+  stream: NodeJS.ReadableStream;
   hash: string;
 }
 
