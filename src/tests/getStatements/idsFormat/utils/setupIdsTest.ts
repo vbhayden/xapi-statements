@@ -10,15 +10,14 @@ export default () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
-  return async (
-    exactStatement: any,
-    canonicalStatement: any
-  ): Promise<void> => {
+  return async (exactStatement: any, canonicalStatement: any): Promise<void> => {
     await storeStatements([exactStatement]);
-    const actualStatements = await service.getIdsStatements({
+    const result = await service.getStatements({
       client: TEST_CLIENT,
+      format: 'ids'
     });
-    const expectedStatement = {...actualStatements[0], ...canonicalStatement};
+    const actualStatements = result.statements;
+    const expectedStatement = { ...actualStatements[0], ...canonicalStatement };
     assert(isArray(actualStatements));
     assert.equal(actualStatements.length, 1);
     assert.deepEqual(actualStatements[0], expectedStatement);

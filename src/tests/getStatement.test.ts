@@ -20,11 +20,12 @@ describe('get statement', () => {
     await assertError(NoModel)(
       service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT })
     );
-    const voidedStatement = await service.getStatement({
+    const result = await service.getStatement({
       id: TEST_ID,
       voided: true,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
+    const voidedStatement = result.statements[0];
     assert.equal(voidedStatement.id, TEST_ID);
   };
 

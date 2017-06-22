@@ -22,10 +22,12 @@ export default (createLangMapStatement: (langMap: any) => any) => {
     langs: string[]
   ): Promise<void> => {
     await storeStatements([exactStatement]);
-    const canonicalStatements = await service.getCanonicalStatements({
+    const result = await service.getStatements({
       langs,
-      client: TEST_CLIENT,
+      format: 'canonical',
+      client: TEST_CLIENT
     });
+    const canonicalStatements = result.statements;
     const expectedStatement = merge({}, canonicalStatements[0], canonicalStatement);
     assert(isArray(canonicalStatements));
     assert.equal(canonicalStatements.length, 1);
@@ -43,18 +45,22 @@ export default (createLangMapStatement: (langMap: any) => any) => {
   };
 
   it('should return the canonical lang map when langs match', async () => {
-    await assertCanonicalLangMap({
-      [TEST_LANG_1]: TEST_TEXT_1,
-      [TEST_LANG_2]: TEST_TEXT_2,
-    }, {
-      [TEST_LANG_1]: TEST_TEXT_1,
-    }, [TEST_LANG_2, TEST_LANG_1]);
+    await assertCanonicalLangMap(
+      {
+        [TEST_LANG_1]: TEST_TEXT_1,
+        [TEST_LANG_2]: TEST_TEXT_2
+      },
+      {
+        [TEST_LANG_1]: TEST_TEXT_1
+      },
+      [TEST_LANG_2, TEST_LANG_1]
+    );
   });
 
   it('should return the original lang map when langs are not matching', async () => {
     const langMap = {
       [TEST_LANG_1]: TEST_TEXT_1,
-      [TEST_LANG_2]: TEST_TEXT_2,
+      [TEST_LANG_2]: TEST_TEXT_2
     };
     await assertCanonicalLangMap(langMap, langMap, [TEST_LANG_3]);
   });

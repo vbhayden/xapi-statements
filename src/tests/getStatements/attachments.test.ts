@@ -12,45 +12,38 @@ const TEST_CLIENT = createClientModel();
 describe('get statements with attachments', () => {
   const service = setup();
 
-  const assertResult = async (result: any, expectedIds: string[], expectedAttachments: any[]) => {
+  const assertResult = async (
+    result: any,
+    expectedIds: string[],
+    expectedAttachments: any[]
+  ) => {
     const statements: any[] = result.statements;
     const attachments: any[] = result.attachments;
     assert(isArray(attachments));
     assert(isArray(statements));
-    const actualIds = statements.map((statement) => {
+    const actualIds = statements.map(statement => {
       return statement.id;
     });
     assert.deepEqual(actualIds, expectedIds);
     assert.deepEqual(attachments, expectedAttachments);
   };
 
-  const testAttachments = (service: Service, createStatement: StatementCreator) => {
+  const testAttachments = (
+    service: Service,
+    createStatement: StatementCreator
+  ) => {
     describe('with exact statements', () => {
-      attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-        const result = await service.getExactStatementsWithAttachments({
-          client: TEST_CLIENT,
-        });
-        return assertResult(result, expectedIds, expectedAttachments);
-      }, createStatement);
-    });
-
-    describe('with id statements', () => {
-      attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-        const result = await service.getIdsStatementsWithAttachments({
-          client: TEST_CLIENT,
-        });
-        return assertResult(result, expectedIds, expectedAttachments);
-      }, createStatement);
-    });
-
-    describe('with canonical statements', () => {
-      attachmentsTest(service, async (expectedIds, expectedAttachments) => {
-        const result = await service.getCanonicalStatementsWithAttachments({
-          langs: [],
-          client: TEST_CLIENT,
-        });
-        return assertResult(result, expectedIds, expectedAttachments);
-      }, createStatement);
+      attachmentsTest(
+        service,
+        async (expectedIds, expectedAttachments) => {
+          const result = await service.getStatements({
+            client: TEST_CLIENT,
+            attachments: true
+          });
+          return assertResult(result, expectedIds, expectedAttachments);
+        },
+        createStatement
+      );
     });
   };
 

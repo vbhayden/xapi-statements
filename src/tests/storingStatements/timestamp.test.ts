@@ -12,15 +12,18 @@ describe('store statement timestamp', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
-  const getStatement = () => {
-    return service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
+  const getStatement = async () => {
+    const result = await service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
+    return result.statements[0];
   };
 
   it('should use existing timestamp when timestamp is set', async () => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      timestamp: TEST_TIMESTAMP,
-    })]);
+    await storeStatements([
+      createStatement({
+        id: TEST_ID,
+        timestamp: TEST_TIMESTAMP
+      })
+    ]);
     const statement = await getStatement();
     assert.equal(statement.timestamp, TEST_TIMESTAMP);
   });

@@ -17,21 +17,24 @@ describe('get statements by timestamps', () => {
   const storeStatements = storeStatementsInService(service);
 
   const storeStatement = (id: string): Promise<string[]> => {
-    return storeStatements([ createStatement({
-      id,
-      timestamp: '2017-04-18T00:00Z',
-    }) ]);
+    return storeStatements([
+      createStatement({
+        id,
+        timestamp: '2017-04-18T00:00Z'
+      })
+    ]);
   };
 
   const filterStatements = async (filter: TimestampFilter, targetId: string) => {
     await storeStatement(TEST_ID_1);
     await delay(1);
     await storeStatement(TEST_ID_2);
-    const statement = await service.getStatement({
+    const result = await service.getStatement({
       id: TEST_ID_1,
       voided: false,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
+    const statement = result.statements[0];
     await assertFilteredStatements(service)(filter(statement.stored), [targetId]);
   };
 
@@ -39,7 +42,7 @@ describe('get statements by timestamps', () => {
     await filterStatements((since: string) => {
       return {
         since,
-        client: TEST_CLIENT,
+        client: TEST_CLIENT
       };
     }, TEST_ID_2);
   });
@@ -48,7 +51,7 @@ describe('get statements by timestamps', () => {
     await filterStatements((until: string) => {
       return {
         until,
-        client: TEST_CLIENT,
+        client: TEST_CLIENT
       };
     }, TEST_ID_1);
   });
