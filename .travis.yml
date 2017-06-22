@@ -6,7 +6,7 @@ services:
 script:
   - npm run build
   - npm run cover-memory
-  - npm run cover-local
+  #- npm run cover-s3
   - npm run cover-mongo
   - npm run lint
   - npm run duplication -- --limit=0.01
