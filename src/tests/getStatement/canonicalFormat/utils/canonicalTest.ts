@@ -21,11 +21,13 @@ export default (createLangMapStatement: (langMap: any) => any) => {
     canonicalStatement: any,
     langs: string[]
   ): Promise<void> => {
-    await storeStatements([exactStatement]);
-    const result = await service.getStatements({
+    const ids = await storeStatements([exactStatement]);
+    const result = await service.getStatement({
       langs,
       format: 'canonical',
-      client: TEST_CLIENT
+      client: TEST_CLIENT,
+      id: ids[0],
+      voided: false
     });
     const canonicalStatements = result.statements;
     const expectedStatement = merge({}, canonicalStatements[0], canonicalStatement);

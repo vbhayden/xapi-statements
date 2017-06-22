@@ -18,8 +18,8 @@ describe('get statements by slicing', () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
-  const getStatements = (opts: GetStatementsOptions) => {
-    return service.getExactStatements(opts);
+  const getStatements = async (opts: GetStatementsOptions) => {
+    return (await service.getStatements(opts)).statements;
   };
 
   const sliceStatements = async (opts: GetStatementsOptions) => {
@@ -32,7 +32,7 @@ describe('get statements by slicing', () => {
   it('should return statements when they are inside the limit', async () => {
     const statements = await sliceStatements({
       limit: 1,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
     assert.equal(statements.length, 1);
     assert.equal(statements[0].id, TEST_ID_1);
@@ -41,7 +41,7 @@ describe('get statements by slicing', () => {
   it('should return statements when they are not skipped', async () => {
     const statements = await sliceStatements({
       skip: 2,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
     assert.equal(statements.length, 1);
     assert.equal(statements[0].id, TEST_ID_3);
@@ -51,7 +51,7 @@ describe('get statements by slicing', () => {
     const statements = await sliceStatements({
       skip: 1,
       limit: 1,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
     assert.equal(statements.length, 1);
     assert.equal(statements[0].id, TEST_ID_2);

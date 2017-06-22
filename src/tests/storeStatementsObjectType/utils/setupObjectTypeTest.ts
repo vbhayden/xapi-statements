@@ -13,15 +13,18 @@ export default () => {
   const service = setup();
   const storeStatements = storeStatementsInService(service);
 
-  const getStatement = () => {
-    return service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
+  const getStatement = async () => {
+    const result = await service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
+    return result.statements[0];
   };
 
   const storeStatement = async (statement: any) => {
-    await storeStatements([createStatement({
-      id: TEST_ID,
-      ...statement,
-    })]);
+    await storeStatements([
+      createStatement({
+        id: TEST_ID,
+        ...statement
+      })
+    ]);
     return getStatement();
   };
 
@@ -31,8 +34,8 @@ export default () => {
       id: TEST_ID,
       ...objCreator({
         ...obj,
-        objectType,
-      }),
+        objectType
+      })
     });
     const expectedStatement = merge({}, actualStatement, typedStatement);
     assert.deepEqual(actualStatement, expectedStatement);

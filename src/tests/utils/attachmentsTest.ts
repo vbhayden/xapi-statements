@@ -1,7 +1,7 @@
-import { Service } from '../../../service';
-import createAttachment from '../../utils/createAttachment';
-import createAttachmentModel from '../../utils/createAttachmentModel';
-import storeStatementsInService from '../../utils/storeStatementsInService';
+import { Service } from '../../service';
+import createAttachment from '../utils/createAttachment';
+import createAttachmentModel from '../utils/createAttachmentModel';
+import storeStatementsInService from '../utils/storeStatementsInService';
 
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -11,7 +11,8 @@ const TEST_ATTACHMENT_A = createAttachment(TEST_CONTENT_A);
 const TEST_FILE_URL_ATTACHMENT = createAttachment(TEST_CONTENT_A, 'http://www.example.com');
 
 export type AttachmentAsserter = (
-  expectedIds: string[], expectedAttachments: any[]
+  expectedIds: string[],
+  expectedAttachments: any[]
 ) => Promise<void>;
 
 export type StatementCreator = (attachments: any[], id?: string) => any;
@@ -53,10 +54,7 @@ export default (
 
   it('should return an attachment once when it is referenced twice in one statement', async () => {
     const testAttachmentModelA = createAttachmentModel(TEST_CONTENT_A);
-    const testStatement = createStatement([
-      TEST_ATTACHMENT_A,
-      TEST_ATTACHMENT_A,
-    ], TEST_ID_1);
+    const testStatement = createStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_A], TEST_ID_1);
     await storeStatements([testStatement], [testAttachmentModelA]);
     await assertAttachments([TEST_ID_1], [testAttachmentModelA]);
   });

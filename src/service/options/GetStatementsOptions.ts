@@ -1,7 +1,8 @@
 import ClientModel from '../../models/ClientModel';
 import FilterAgent from '../../models/FilterAgent';
+import StatementsResultOptions from './StatementsResultOptions';
 
-interface GetStatementsOptions {
+interface GetStatementsOptions extends StatementsResultOptions {
   agent?: FilterAgent;
   activity?: string;
   verb?: string;

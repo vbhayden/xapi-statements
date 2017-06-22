@@ -20,22 +20,23 @@ describe('get statements by references', () => {
     return {
       account: {
         homePage: 'http://www.example.com',
-        name: targetId,
-      },
+        name: targetId
+      }
     };
   };
 
   const assertTargetingStatement = (targetId: string, expectedIds: string[]) => {
-    return assertFilteredStatements(service)({
-      agent: createAgentFilter(targetId),
-      client: TEST_CLIENT,
-    }, expectedIds);
+    return assertFilteredStatements(service)(
+      {
+        agent: createAgentFilter(targetId),
+        client: TEST_CLIENT
+      },
+      expectedIds
+    );
   };
 
   it('should return no statements when targeted statement is not stored', async () => {
-    await storeStatements([
-      createReferenceStatement(TEST_ID_A, TEST_ID_B),
-    ]);
+    await storeStatements([createReferenceStatement(TEST_ID_A, TEST_ID_B)]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A]);
     await assertTargetingStatement(TEST_ID_B, []);
   });
@@ -43,19 +44,15 @@ describe('get statements by references', () => {
   it('should return both statements when they reference each other in one batch', async () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_A, TEST_ID_B),
-      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A)
     ]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B]);
   });
 
   it('should return both statements when they reference each other in two batches', async () => {
-    await storeStatements([
-      createReferenceStatement(TEST_ID_A, TEST_ID_B),
-    ]);
-    await storeStatements([
-      createReferenceStatement(TEST_ID_B, TEST_ID_A),
-    ]);
+    await storeStatements([createReferenceStatement(TEST_ID_A, TEST_ID_B)]);
+    await storeStatements([createReferenceStatement(TEST_ID_B, TEST_ID_A)]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B]);
   });
@@ -64,7 +61,7 @@ describe('get statements by references', () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_A, TEST_ID_C),
       createReferenceStatement(TEST_ID_B, TEST_ID_C),
-      createReferenceStatement(TEST_ID_C, TEST_ID_D),
+      createReferenceStatement(TEST_ID_C, TEST_ID_D)
     ]);
     await assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_B]);
@@ -75,7 +72,7 @@ describe('get statements by references', () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_A, TEST_ID_B),
       createReferenceStatement(TEST_ID_B, TEST_ID_C),
-      createReferenceStatement(TEST_ID_C, TEST_ID_A),
+      createReferenceStatement(TEST_ID_C, TEST_ID_A)
     ]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
@@ -83,66 +80,72 @@ describe('get statements by references', () => {
   });
 
   it('should not return the source when the since option excludes it', async () => {
-    await storeStatements([
-      createReferenceStatement(TEST_ID_A, TEST_ID_B),
-    ]);
+    await storeStatements([createReferenceStatement(TEST_ID_A, TEST_ID_B)]);
     await delay(1);
-    await storeStatements([
-      createReferenceStatement(TEST_ID_B, TEST_ID_A),
-    ]);
-    const statement = await service.getStatement({
+    await storeStatements([createReferenceStatement(TEST_ID_B, TEST_ID_A)]);
+    const result = await service.getStatement({
       id: TEST_ID_A,
       voided: false,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
-    await assertFilteredStatements(service)({
-      agent: createAgentFilter(TEST_ID_B),
-      since: statement.stored,
-      client: TEST_CLIENT,
-    }, [TEST_ID_B]);
+    const statement = result.statements[0];
+    await assertFilteredStatements(service)(
+      {
+        agent: createAgentFilter(TEST_ID_B),
+        since: statement.stored,
+        client: TEST_CLIENT
+      },
+      [TEST_ID_B]
+    );
   });
 
   it('should not return the target when the until option excludes it', async () => {
-    await storeStatements([
-      createReferenceStatement(TEST_ID_A, TEST_ID_B),
-    ]);
+    await storeStatements([createReferenceStatement(TEST_ID_A, TEST_ID_B)]);
     await delay(1);
-    await storeStatements([
-      createReferenceStatement(TEST_ID_B, TEST_ID_A),
-    ]);
-    const statement = await service.getStatement({
+    await storeStatements([createReferenceStatement(TEST_ID_B, TEST_ID_A)]);
+    const result = await service.getStatement({
       id: TEST_ID_A,
       voided: false,
-      client: TEST_CLIENT,
+      client: TEST_CLIENT
     });
-    await assertFilteredStatements(service)({
-      agent: createAgentFilter(TEST_ID_B),
-      until: statement.stored,
-      client: TEST_CLIENT,
-    }, [TEST_ID_A]);
+    const statement = result.statements[0];
+    await assertFilteredStatements(service)(
+      {
+        agent: createAgentFilter(TEST_ID_B),
+        until: statement.stored,
+        client: TEST_CLIENT
+      },
+      [TEST_ID_A]
+    );
   });
 
   it('should not return the target when the limit option excludes it', async () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_A, TEST_ID_B),
-      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A)
     ]);
-    await assertFilteredStatements(service)({
-      agent: createAgentFilter(TEST_ID_B),
-      limit: 1,
-      client: TEST_CLIENT,
-    }, [TEST_ID_A]);
+    await assertFilteredStatements(service)(
+      {
+        agent: createAgentFilter(TEST_ID_B),
+        limit: 1,
+        client: TEST_CLIENT
+      },
+      [TEST_ID_A]
+    );
   });
 
   it('should not return the source when the skip option excludes it', async () => {
     await storeStatements([
       createReferenceStatement(TEST_ID_A, TEST_ID_B),
-      createReferenceStatement(TEST_ID_B, TEST_ID_A),
+      createReferenceStatement(TEST_ID_B, TEST_ID_A)
     ]);
-    await assertFilteredStatements(service)({
-      agent: createAgentFilter(TEST_ID_B),
-      skip: 1,
-      client: TEST_CLIENT,
-    }, [TEST_ID_B]);
+    await assertFilteredStatements(service)(
+      {
+        agent: createAgentFilter(TEST_ID_B),
+        skip: 1,
+        client: TEST_CLIENT
+      },
+      [TEST_ID_B]
+    );
   });
 });
