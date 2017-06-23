@@ -4,19 +4,11 @@ import mixinBodyParser from './mixins/bodyParser';
 import mixinHelmet from './mixins/helmet';
 import mixinMorgan from './mixins/morgan';
 import mixinAttachments from './mixins/attachments';
-import catchErrors from './utils/catchErrors';
-import customHandler from './utils/customHandler';
-// import defaultAuthenticator from './utils/authenticator';
-import demoAuth from './auth';
-
-interface Config {
-  llClientInfoEndpoint: string;
-  customRoute: string;
-  customRouteText: string;
-  morganDirectory: string;
-  bodyParserLimit: string;
-  service: any;
-}
+import handleCustomRoute from './handleCustomRoute';
+import getAbout from './getAbout';
+import getDemoAuth from './getDemoAuth';
+import getStatements from './getStatements';
+import Config from './Config';
 
 export default (config: Config): Router => {
   const router = Router();
@@ -27,9 +19,10 @@ export default (config: Config): Router => {
   router.use(mixinMorgan(config.morganDirectory));
   router.use(mixinAttachments());
 
-  router.get('/auth', catchErrors(demoAuth));
-  router.get(`/${config.customRoute}`, catchErrors(customHandler(config.customRouteText)));
-  router.get('/xAPI/statements', () => {});
+  router.get('/auth', getDemoAuth(config));
+  router.get(`/${config.customRoute}`, handleCustomRoute(config));
+  router.get('/xAPI/about', getAbout(config));
+  router.get('/xAPI/statements', getStatements(config));
   router.put('/xAPI/statements', () => {});
   router.post('/xAPI/statements', () => {});
   return router;

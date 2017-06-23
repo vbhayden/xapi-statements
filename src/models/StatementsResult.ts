@@ -2,9 +2,9 @@ import AttachmentModel from './AttachmentModel';
 import IdFormattedStatement from './IdFormattedStatement';
 import Statement from './Statement';
 
-interface AttachmentResult {
+interface StatementsResult {
   attachments: AttachmentModel[];
   statements: (Statement | IdFormattedStatement)[];
 }
 
-export default AttachmentResult;
+export default StatementsResult;

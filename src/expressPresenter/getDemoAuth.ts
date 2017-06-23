@@ -1,0 +1,24 @@
+import { Request, Response } from 'express';
+import ClientModel from '../models/ClientModel';
+import { ALL } from '../utils/scopes';
+import catchErrors from './utils/catchErrors';
+import Config from './Config';
+
+export default (_config: Config) => {
+  return catchErrors(async (_req: Request, res: Response): Promise<void> => {
+    const client: ClientModel = {
+      _id: 'dummy_id',
+      title: 'dummy_title',
+      organisation: 'dummy_organisation',
+      lrs_id: 'dummy_lrs_id',
+      authority: {
+        objectType: 'Agent',
+        mbox: 'mailto:dummy@example.com'
+      },
+      isTrusted: true,
+      scopes: [ALL]
+    };
+    console.log('client', client);
+    res.status(200).json(client);
+  });
+};

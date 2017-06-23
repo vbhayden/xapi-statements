@@ -1,5 +1,5 @@
 interface StatementsResultOptions {
-  format?: 'ids' | 'exact' | 'canonical';
+  format?: string;
   attachments?: boolean;
   langs?: string[];
 }
