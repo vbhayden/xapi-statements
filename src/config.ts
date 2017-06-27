@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 config();
 
 import { S3 } from 'aws-sdk';
-const storageDir = `${process.cwd()}/storage/`;
+const storageDir = `${process.cwd()}/storage`;
 
 export default {
   llClientInfoEndpoint: process.env.LL_CLIENT_INFO_ENDPOINT,
