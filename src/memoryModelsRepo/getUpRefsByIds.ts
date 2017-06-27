@@ -1,10 +1,10 @@
 import { includes } from 'lodash';
-import StatementModel from '../models/StatementModel';
+import StoredStatementModel from '../models/StoredStatementModel';
 import UpRef from '../models/UpRef';
 import GetUpRefsByIdsOptions from '../repo/GetUpRefsByIdsOptions';
 import Config from './Config';
 
-const getTargetId = (model: StatementModel) => {
+const getTargetId = (model: StoredStatementModel) => {
   if (model.statement.object.objectType === 'StatementRef') {
     return model.statement.object.id;
   }

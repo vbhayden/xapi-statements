@@ -1,18 +1,20 @@
-import StatementModel from '../../models/StatementModel';
+import StoredStatementModel from '../../models/StoredStatementModel';
 import GetStatementsOptions from '../../repo/GetStatementsOptions';
 import matchesClientOption from '../utils/matchesClientOption';
 import Config from '../Config';
 import matchesAgentOption from './matchesAgentOption';
+import matchesCursorOption from './matchesCursorOption';
 import matchesVerbOption from './matchesVerbOption';
 import matchesActivityOption from './matchesActivityOption';
 import matchesRegistrationOption from './matchesRegistrationOption';
 import matchesUntilOption from './matchesUntilOption';
 import matchesSinceOption from './matchesSinceOption';
 
-const filterModels = (models: StatementModel[], opts: GetStatementsOptions) => {
-  return models.filter((model: StatementModel) => {
+const filterModels = (models: StoredStatementModel[], opts: GetStatementsOptions) => {
+  return models.filter((model: StoredStatementModel) => {
     const statement = model.statement;
     return (
+      matchesCursorOption(model, opts) &&
       matchesClientOption(model, opts.client) &&
       matchesAgentOption(model, opts) &&
       matchesVerbOption(model, opts) &&
@@ -24,7 +26,7 @@ const filterModels = (models: StatementModel[], opts: GetStatementsOptions) => {
   });
 };
 
-const sortModels = (models: StatementModel[], ascending: boolean) => {
+const sortModels = (models: StoredStatementModel[], ascending: boolean) => {
   const lower = ascending ? -1 : 1;
   const higher = ascending ? 1 : -1;
   return models.sort((modelA, modelB) => {
@@ -37,7 +39,7 @@ const sortModels = (models: StatementModel[], ascending: boolean) => {
 };
 
 const limitModels = (
-  models: StatementModel[],
+  models: StoredStatementModel[],
   skip: number = 0,
   limit: number = models.length
 ) => {
@@ -45,7 +47,7 @@ const limitModels = (
 };
 
 export default (config: Config) => {
-  return async (opts: GetStatementsOptions): Promise<StatementModel[]> => {
+  return async (opts: GetStatementsOptions): Promise<StoredStatementModel[]> => {
     const filteredItems = filterModels(config.state.statements, opts);
     const sortedItems = sortModels(filteredItems, opts.ascending);
     const limitedItems = limitModels(sortedItems, opts.skip, opts.limit);

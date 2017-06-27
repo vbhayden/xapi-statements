@@ -15,6 +15,7 @@ interface GetStatementsOptions extends StatementsResultOptions {
   limit?: number;
   skip?: number;
   client: ClientModel;
+  cursor?: string;
 }
 
 export default GetStatementsOptions;

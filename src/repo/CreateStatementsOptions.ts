@@ -1,7 +1,7 @@
-import StatementModel from '../models/StatementModel';
+import UnstoredStatementModel from '../models/UnstoredStatementModel';
 
 interface CreateStatementsOptions {
-  models: StatementModel[];
+  models: UnstoredStatementModel[];
 }
 
 export default CreateStatementsOptions;

@@ -1,6 +1,6 @@
 import { includes } from 'lodash';
 import StatementHash from '../models/StatementHash';
-import StatementModel from '../models/StatementModel';
+import StoredStatementModel from '../models/StoredStatementModel';
 import GetHashesOptions from '../repo/GetHashesOptions';
 import Config from './Config';
 
@@ -11,7 +11,7 @@ export default (config: Config) => {
         includes(opts.ids, model.statement.id)
       );
     });
-    return filteredModels.map((model: StatementModel): StatementHash => {
+    return filteredModels.map((model: StoredStatementModel): StatementHash => {
       return {
         statementId: model.statement.id,
         hash: model.hash,

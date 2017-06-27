@@ -5,6 +5,7 @@ import Statement from './Statement';
 interface StatementsResult {
   attachments: AttachmentModel[];
   statements: (Statement | IdFormattedStatement)[];
+  cursor?: string;
 }
 
 export default StatementsResult;

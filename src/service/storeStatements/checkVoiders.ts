@@ -1,5 +1,5 @@
 import { includes } from 'lodash';
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import VoidingError from '../../errors/VoidingError';
 import voidVerbId from '../../utils/voidVerbId';
 import Config from '../Config';
@@ -7,14 +7,14 @@ import Config from '../Config';
 interface VoidResult {
   voiderIds: string[];
   voidedObjectIds: string[];
-  voidingModels: StatementModel[];
+  voidingModels: UnstoredStatementModel[];
 }
 
-const isVoiding = (model: StatementModel): boolean => {
+const isVoiding = (model: UnstoredStatementModel): boolean => {
   return model.statement.verb.id === voidVerbId;
 };
 
-const getVoiders = (statements: StatementModel[]): VoidResult => {
+const getVoiders = (statements: UnstoredStatementModel[]): VoidResult => {
   return statements.reduce((result: VoidResult, model) => {
     if (isVoiding(model) && model.statement.object.objectType === 'StatementRef') {
       return {
@@ -24,10 +24,10 @@ const getVoiders = (statements: StatementModel[]): VoidResult => {
       };
     }
     return result;
-  }, {voiderIds: [], voidedObjectIds: [], voidingModels: []});
+  }, { voiderIds: [], voidedObjectIds: [], voidingModels: [] });
 };
 
-const checkWithinStatements = (voiderIds: string[], voidingModels: StatementModel[]): void => {
+const checkWithinStatements = (voiderIds: string[], voidingModels: UnstoredStatementModel[]): void => {
   voidingModels.forEach((model) => {
     if (model.statement.object.objectType !== 'StatementRef') {
       throw new Error('The `objectType` of a voider must be "StatementRef"');
@@ -61,7 +61,7 @@ const checkWithinRepo = async (
   }
 };
 
-export default async (config: Config, statements: StatementModel[]): Promise<string[]> => {
+export default async (config: Config, statements: UnstoredStatementModel[]): Promise<string[]> => {
   if (!config.enableVoidingChecks) return [];
   const { voiderIds, voidedObjectIds, voidingModels }: VoidResult = getVoiders(statements);
 

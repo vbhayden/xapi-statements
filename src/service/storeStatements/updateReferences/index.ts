@@ -1,6 +1,6 @@
 import { includes, union, pull, has, get, size, keys, intersection, difference } from 'lodash';
 import NoModel from '../../../errors/NoModel';
-import StatementModel from '../../../models/StatementModel';
+import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
 import Statement from '../../../models/Statement';
 import Config from '../../Config';
 import logger from '../../../logger';
@@ -19,7 +19,7 @@ const stack = <T>(value: T, values: T[]): T[] => {
   return union([value], values);
 };
 
-export default async (config: Config, models: StatementModel[]): Promise<void> => {
+export default async (config: Config, models: UnstoredStatementModel[]): Promise<void> => {
   if (!config.enableReferencing) return;
 
   const groupedUpRefIds = await eagerLoadUpRefs(config, models);
@@ -74,8 +74,8 @@ export default async (config: Config, models: StatementModel[]): Promise<void> =
       const downRefId = await getDownRefId(modelId);
       return (
         includes(newVisitedIds, downRefId) ?
-        traverseUp([], newVisitedIds, downRefId) :
-        traverseDown(downRefId, newVisitedIds)
+          traverseUp([], newVisitedIds, downRefId) :
+          traverseDown(downRefId, newVisitedIds)
       );
     } catch (err) {
       if (err.constructor === NoModel) {

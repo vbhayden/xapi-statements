@@ -1,5 +1,5 @@
 import { includes } from 'lodash';
-import StatementModel from '../models/StatementModel';
+import StoredStatementModel from '../models/StoredStatementModel';
 import GetVoidersOptions from '../repo/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
 import Config from './Config';
@@ -13,7 +13,7 @@ export default (config: Config) => {
         includes(opts.ids, model.statement.id)
       );
     });
-    return filteredModels.map((model: StatementModel): string => {
+    return filteredModels.map((model: StoredStatementModel): string => {
       return model.statement.id;
     });
   };

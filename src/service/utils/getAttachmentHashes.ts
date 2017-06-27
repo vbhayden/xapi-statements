@@ -1,5 +1,5 @@
 import { union } from 'lodash';
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import StatementBase from '../../models/StatementBase';
 
 const getStatementBaseHashes = (statement: StatementBase): string[] => {
@@ -15,13 +15,13 @@ const getStatementBaseHashes = (statement: StatementBase): string[] => {
   return statementShas;
 };
 
-export default (models: StatementModel[]): string[] => {
+export default (models: UnstoredStatementModel[]): string[] => {
   const statementHashes = models.reduce((carriedHashes: string[], model) => {
     const statementShas = getStatementBaseHashes(model.statement);
     const subStatementShas = (
       model.statement.object.objectType === 'SubStatement' ?
-      getStatementBaseHashes(model.statement.object) :
-      []
+        getStatementBaseHashes(model.statement.object) :
+        []
     );
 
     return union(carriedHashes, statementShas, subStatementShas);

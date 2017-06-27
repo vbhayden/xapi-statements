@@ -1,5 +1,5 @@
 import { difference } from 'lodash';
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import AttachmentModel from '../../models/AttachmentModel';
 import MissingAttachments from '../../errors/MissingAttachments';
 import getAttachmentHashes from '../utils/getAttachmentHashes';
@@ -7,7 +7,7 @@ import Config from '../Config';
 
 export default async (
   config: Config,
-  statements: StatementModel[],
+  statements: UnstoredStatementModel[],
   attachments: AttachmentModel[],
 ): Promise<void> => {
   if (!config.enableAttachmentValidation) return;

@@ -1,14 +1,14 @@
 import { has, keys, values, groupBy, Dictionary } from 'lodash';
 import StatementHash from '../../models/StatementHash';
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import Conflict from '../../errors/Conflict';
 import Config from '../Config';
 
-type ModelsMap = { [statementId: string]: StatementModel };
-type ConflictRes = { modelsMap: ModelsMap, generatedIdModels: StatementModel[] };
+type ModelsMap = { [statementId: string]: UnstoredStatementModel };
+type ConflictRes = { modelsMap: ModelsMap, generatedIdModels: UnstoredStatementModel[] };
 
-const modelsConflicts = (models: StatementModel[]): ConflictRes => {
-  return models.reduce(({ modelsMap, generatedIdModels }: ConflictRes, model: StatementModel) => {
+const modelsConflicts = (models: UnstoredStatementModel[]): ConflictRes => {
+  return models.reduce(({ modelsMap, generatedIdModels }: ConflictRes, model: UnstoredStatementModel) => {
     if (model.hasGeneratedId) {
       return {
         modelsMap,
@@ -32,11 +32,11 @@ const modelsConflicts = (models: StatementModel[]): ConflictRes => {
   }, { modelsMap: {}, generatedIdModels: [] });
 };
 
-const repoConflicts = async (config: Config, modelsMap: ModelsMap): Promise<StatementModel[]> => {
+const repoConflicts = async (config: Config, modelsMap: ModelsMap): Promise<UnstoredStatementModel[]> => {
   const hashesMap: Dictionary<StatementHash[]> = groupBy(await config.repo.getHashes({
     ids: keys(modelsMap),
   }), 'statementId');
-  return values(modelsMap).filter((model: StatementModel) => {
+  return values(modelsMap).filter((model: UnstoredStatementModel) => {
     const statementId = model.statement.id;
     if (has(hashesMap, statementId)) {
       if (model.hash !== hashesMap[statementId][0].hash) {
@@ -48,7 +48,7 @@ const repoConflicts = async (config: Config, modelsMap: ModelsMap): Promise<Stat
   });
 };
 
-export default async (config: Config, models: StatementModel[]): Promise<StatementModel[]> => {
+export default async (config: Config, models: UnstoredStatementModel[]): Promise<UnstoredStatementModel[]> => {
   if (!config.enableConflictChecks) return models;
   const conflictRes = modelsConflicts(models);
   const ungeneratedIdModels = await repoConflicts(config, conflictRes.modelsMap);

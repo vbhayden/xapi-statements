@@ -2,7 +2,7 @@ import Statement from './Statement';
 
 type Ref = { statement: Statement };
 
-interface StatementModel {
+interface UnstoredStatementModel {
   hasGeneratedId: boolean;
   organisation: string;
   client: string;
@@ -17,4 +17,4 @@ interface StatementModel {
   statement: Statement;
 }
 
-export default StatementModel;
+export default UnstoredStatementModel;

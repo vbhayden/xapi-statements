@@ -1,8 +1,9 @@
-import StatementModel from '../../models/StatementModel';
+import StoredStatementModel from '../../models/StoredStatementModel';
 import GetStatementsOptions from '../../repo/GetStatementsOptions';
 import matchesClientOption from '../utils/matchesClientOption';
 import Config from '../Config';
 import matchesAgentOption from './matchesAgentOption';
+import matchesCursorOption from './matchesCursorOption';
 import matchesVerbOption from './matchesVerbOption';
 import matchesActivityOption from './matchesActivityOption';
 import matchesRegistrationOption from './matchesRegistrationOption';
@@ -12,6 +13,7 @@ import matchesSinceOption from './matchesSinceOption';
 const filterModels = (opts: GetStatementsOptions): Object => {
   return {
     voided: false,
+    ...matchesCursorOption(opts),
     ...matchesClientOption(opts.client),
     ...matchesAgentOption(opts),
     ...matchesVerbOption(opts),
@@ -29,7 +31,7 @@ const sortModels = (ascending: boolean) => {
 };
 
 export default (config: Config) => {
-  return async (opts: GetStatementsOptions): Promise<StatementModel[]> => {
+  return async (opts: GetStatementsOptions): Promise<StoredStatementModel[]> => {
     const collection = (await config.db).collection('statements');
     const query = filterModels(opts);
     const sort = sortModels(opts.ascending);
@@ -41,7 +43,7 @@ export default (config: Config) => {
       .sort(sort)
       .skip(skip)
       .limit(limit)
-      .toArray() as StatementModel[];
+      .toArray() as StoredStatementModel[];
 
     return models;
   };

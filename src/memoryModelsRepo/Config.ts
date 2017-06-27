@@ -1,7 +1,7 @@
-import StatementModel from '../models/StatementModel';
+import StoredStatementModel from '../models/StoredStatementModel';
 
 interface State {
-  statements: StatementModel[];
+  statements: StoredStatementModel[];
 }
 
 interface Config {

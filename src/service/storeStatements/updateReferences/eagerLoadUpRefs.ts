@@ -1,11 +1,11 @@
 import { groupBy, Dictionary, mapValues } from 'lodash';
-import StatementModel from '../../../models/StatementModel';
+import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
 import UpRef from '../../../models/UpRef';
 import Config from '../../Config';
 
 export default async (
   config: Config,
-  models: StatementModel[]
+  models: UnstoredStatementModel[]
 ): Promise<Dictionary<String[]>> => {
   const statementIds = models.map((model) => {
     return model.statement.id;

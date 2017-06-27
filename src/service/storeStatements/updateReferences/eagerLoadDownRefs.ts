@@ -1,12 +1,12 @@
 import { Dictionary, includes } from 'lodash';
-import StatementModel from '../../../models/StatementModel';
+import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
 import Statement from '../../../models/Statement';
 import Config from '../../Config';
 import groupStatementsById from './groupStatementsById';
 
 const getGroupedDownRefs = async (
   config: Config,
-  models: StatementModel[]
+  models: UnstoredStatementModel[]
 ): Promise<Dictionary<Statement>> => {
   const allIds: string[] = models.map((model) => {
     return model.statement.id;
@@ -25,7 +25,7 @@ const getGroupedDownRefs = async (
   return groupedStatements;
 };
 
-const getGroupedModels = (models: StatementModel[]) => {
+const getGroupedModels = (models: UnstoredStatementModel[]) => {
   const statements = models.map((model) => {
     return model.statement;
   });
@@ -35,7 +35,7 @@ const getGroupedModels = (models: StatementModel[]) => {
 
 export default async (
   config: Config,
-  models: StatementModel[]
+  models: UnstoredStatementModel[]
 ): Promise<Dictionary<Statement>> => {
   const groupedDownRefs = await getGroupedDownRefs(config, models);
   const groupedModels = getGroupedModels(models);

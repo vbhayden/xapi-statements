@@ -1,4 +1,4 @@
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import StatementsResult from '../../models/StatementsResult';
 import StatementsResultOptions from '../options/StatementsResultOptions';
 import getAttachments from '../utils/getAttachments';
@@ -8,7 +8,7 @@ import Config from '../Config';
 export default async (
   config: Config,
   opts: StatementsResultOptions,
-  models: StatementModel[]
+  models: UnstoredStatementModel[]
 ): Promise<StatementsResult> => {
   const attachmentsOpt = opts.attachments || false;
   const formatOpt = opts.format || 'exact';

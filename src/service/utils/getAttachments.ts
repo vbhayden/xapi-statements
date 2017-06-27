@@ -1,10 +1,10 @@
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import getAttachmentHashes from '../utils/getAttachmentHashes';
 import Config from '../Config';
 
 export default async (
   config: Config,
-  models: StatementModel[],
+  models: UnstoredStatementModel[],
   hasAttachments: boolean
 ) => {
   if (hasAttachments) {

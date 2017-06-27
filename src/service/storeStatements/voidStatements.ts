@@ -1,9 +1,9 @@
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import Config from '../Config';
 
 export default async (
   config: Config,
-  statements: StatementModel[],
+  statements: UnstoredStatementModel[],
   voidedObjectIds: string[]
 ): Promise<void> => {
   if (!config.enableVoiding) return;

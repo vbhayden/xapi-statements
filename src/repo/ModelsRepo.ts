@@ -1,4 +1,5 @@
-import StatementModel from '../models/StatementModel';
+import UnstoredStatementModel from '../models/UnstoredStatementModel';
+import StoredStatementModel from '../models/StoredStatementModel';
 import Statement from '../models/Statement';
 import StatementHash from '../models/StatementHash';
 import UpRef from '../models/UpRef';
@@ -16,9 +17,9 @@ import GetUpRefsByIdsOptions from './GetUpRefsByIdsOptions';
 
 interface ModelsRepo {
   // Statement functions.
-  createStatements: (opts: CreateStatementsOptions) => Promise<StatementModel[]>;
-  getStatement: (opts: GetStatementOptions) => Promise<StatementModel>;
-  getStatements: (opts: GetStatementsOptions) => Promise<StatementModel[]>;
+  createStatements: (opts: CreateStatementsOptions) => Promise<UnstoredStatementModel[]>;
+  getStatement: (opts: GetStatementOptions) => Promise<StoredStatementModel>;
+  getStatements: (opts: GetStatementsOptions) => Promise<StoredStatementModel[]>;
   getHashes: (opts: GetHashesOptions) => Promise<StatementHash[]>;
   getVoidersByObjectIds: (opts: GetVoidersOptions) => Promise<string[]>;
   getVoidersByIds: (opts: GetVoidersOptions) => Promise<string[]>;

@@ -1,6 +1,6 @@
 import { includes, intersection } from 'lodash';
 import ClientModel from '../../models/ClientModel';
-import StatementModel from '../../models/StatementModel';
+import StoredStatementModel from '../../models/StoredStatementModel';
 import * as scopes from '../../utils/scopes';
 
 const READ_ALL_SCOPES = [
@@ -11,7 +11,7 @@ const READ_ALL_SCOPES = [
   scopes.XAPI_STATEMENTS_READ,
 ];
 
-export default (model: StatementModel, client: ClientModel): boolean => {
+export default (model: StoredStatementModel, client: ClientModel): boolean => {
   return (
     model.lrs_id === client.lrs_id &&
     (

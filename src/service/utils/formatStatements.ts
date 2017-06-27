@@ -1,8 +1,8 @@
-import StatementModel from '../../models/StatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import formatCanonically from './canonicalFormat/statement';
 import formatIds from './idsFormat/statement';
 
-export default (models: StatementModel[], format: string, langs: string[]) => {
+export default (models: UnstoredStatementModel[], format: string, langs: string[]) => {
   switch (format) {
     case 'ids':
       return models.map(model => {

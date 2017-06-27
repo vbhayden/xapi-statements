@@ -14,6 +14,7 @@ interface GetStatementsOptions {
   limit?: number;
   skip?: number;
   client: ClientModel;
+  cursor?: string;
 }
 
 export default GetStatementsOptions;
