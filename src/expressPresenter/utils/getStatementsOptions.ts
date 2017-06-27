@@ -13,6 +13,7 @@ export default (req: Request): Partial<GetStatementsOptions> => {
     since: getQueryParam(req, 'since'),
     until: getQueryParam(req, 'until'),
     limit: getQueryParam(req, 'limit'),
-    ascending: getQueryParam(req, 'ascending')
+    ascending: getQueryParam(req, 'ascending'),
+    cursor: getQueryParam(req, 'cursor'),
   };
 };

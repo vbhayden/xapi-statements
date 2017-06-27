@@ -1,23 +1,13 @@
 import { Request, Response } from 'express';
 import QueryIds from '../errors/QueryIds';
-import QueryOptions from '../errors/QueryOptions';
+import checkStatementsOpts from './utils/checkStatementsOpts';
+import getMoreLink from './utils/getMoreLink';
 import catchErrors from './utils/catchErrors';
 import getClient from './utils/getClient';
 import getQueryParam from './utils/getQueryParam';
 import getStatementsOptions from './utils/getStatementsOptions';
 import getStatementsResultOptions from './utils/getStatementsResultOptions';
 import Config from './Config';
-
-const checkStatementsOpts = (opts: { [key: string]: any }): void => {
-  const setOpts = Object.keys(opts).filter((opt: string) => {
-    return opts[opt] !== undefined;
-  });
-  const hasOpts = setOpts.length !== 0;
-
-  if (hasOpts) {
-    throw new QueryOptions(setOpts);
-  }
-};
 
 export default (config: Config) => {
   return catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -70,10 +60,14 @@ export default (config: Config) => {
       ...statementsOpts,
       ...resultOpts
     });
+    const moreLink = getMoreLink({ results, resultOpts, statementsOpts });
     res
       .set('X-Experience-API-Consistent-Through', timestamp)
       .set('X-Experience-API-Version', xapiVersion)
       .status(200)
-      .json(results.statements);
+      .json({
+        more: moreLink,
+        statements: results.statements,
+      });
   });
 };

@@ -15,7 +15,6 @@ export default async (config: Config, req: Request): Promise<ClientModel> => {
     }).then(res => {
       return res.json();
     });
-    console.log('json', json);
 
     return {
       _id: json._id as string,

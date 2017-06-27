@@ -18,7 +18,6 @@ export default (_config: Config) => {
       isTrusted: true,
       scopes: [ALL]
     };
-    console.log('client', client);
     res.status(200).json(client);
   });
 };
