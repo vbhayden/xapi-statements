@@ -10,8 +10,8 @@ interface UnstoredStatementModel {
   person: string;
   active: boolean;
   voided: boolean;
-  timestamp: string;
-  stored: string;
+  timestamp: Date;
+  stored: Date;
   hash: string;
   refs: Ref[];
   statement: Statement;

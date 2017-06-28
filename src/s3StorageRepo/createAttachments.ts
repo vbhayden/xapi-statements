@@ -1,5 +1,4 @@
 import { S3 } from 'aws-sdk';
-import AttachmentModel from '../models/AttachmentModel';
 import CreateAttachmentsOptions from '../repo/CreateAttachmentsOptions';
 import Config from './Config';
 
@@ -12,7 +11,7 @@ export default (config: Config) => {
     });
   };
 
-  return async (opts: CreateAttachmentsOptions): Promise<AttachmentModel[]> => {
+  return async (opts: CreateAttachmentsOptions): Promise<void> => {
     const attachmentsDirectory = `${config.subFolder}/attachments`;
     const promises = opts.models.map((model) => {
       const filePath = `${attachmentsDirectory}/${model.hash}`;
@@ -23,6 +22,5 @@ export default (config: Config) => {
       });
     });
     await Promise.all(promises);
-    return opts.models;
   };
 };

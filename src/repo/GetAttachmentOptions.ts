@@ -1,5 +1,5 @@
 interface GetAttachmentsOptions {
-  hashes: string[];
+  hash: string;
 }
 
 export default GetAttachmentsOptions;

@@ -1,4 +1,4 @@
-import { difference } from 'lodash';
+import { map, difference } from 'lodash';
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import AttachmentModel from '../../models/AttachmentModel';
 import MissingAttachments from '../../errors/MissingAttachments';
@@ -14,7 +14,9 @@ export default async (
   const attachmentHashes = attachments.map((attachment) => {
     return attachment.hash;
   });
-  const statementHashes = getAttachmentHashes(statements);
+  const statementHashes = map(getAttachmentHashes(statements), (attachment) => {
+    return attachment.sha2;
+  });
   const missingHashes = difference(statementHashes, attachmentHashes);
 
   if (missingHashes.length > 0) {

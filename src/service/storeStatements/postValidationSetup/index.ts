@@ -6,11 +6,13 @@ import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
 
 export default (models: any[], client: ClientModel) => {
-  const storedTime = (new Date()).toISOString();
+  const storedTime = new Date();
+  const storedTimeString = storedTime.toISOString();
   return models.map((model: any): UnstoredStatementModel => {
     const objectTypesModel = setupObjectTypes(model);
     const preHashStatement = setupPreHashStatement(objectTypesModel, client.authority);
-    const postHashStatement = setupPostHashStatement(preHashStatement, storedTime);
+    const postHashStatement = setupPostHashStatement(preHashStatement, storedTimeString);
+    const timestampTime = new Date(postHashStatement.timestamp);
     return {
       hasGeneratedId: model.id === undefined,
       organisation: client.organisation,
@@ -19,7 +21,7 @@ export default (models: any[], client: ClientModel) => {
       person: 'person',
       active: false,
       voided: false,
-      timestamp: storedTime,
+      timestamp: timestampTime,
       stored: storedTime,
       refs: [],
       hash: sha1(preHashStatement),

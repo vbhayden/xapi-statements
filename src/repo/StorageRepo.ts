@@ -1,11 +1,10 @@
-import AttachmentModel from '../models/AttachmentModel';
 import CreateAttachmentsOptions from './CreateAttachmentsOptions';
-import GetAttachmentsOptions from './GetAttachmentsOptions';
+import GetAttachmentOptions from './GetAttachmentOptions';
 
 interface StorageRepo {
   // Attachment functions.
-  createAttachments: (opts: CreateAttachmentsOptions) => Promise<AttachmentModel[]>;
-  getAttachments: (opts: GetAttachmentsOptions) => Promise<AttachmentModel[]>;
+  createAttachments: (opts: CreateAttachmentsOptions) => Promise<void>;
+  getAttachment: (opts: GetAttachmentOptions) => Promise<NodeJS.ReadableStream>;
 
   // Repo-wide functions.
   clearRepo: () => Promise<void>;

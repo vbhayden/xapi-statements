@@ -1,30 +1,33 @@
-import { union } from 'lodash';
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import StatementBase from '../../models/StatementBase';
+import Attachment from '../../models/Attachment';
 
-const getStatementBaseHashes = (statement: StatementBase): string[] => {
+export type AttachmentsMap = { [hash: string]: Attachment };
+
+const getStatementBaseAttachments = (statement: StatementBase): AttachmentsMap[] => {
   const attachments = statement.attachments;
   if (attachments === undefined) return [];
 
-  const statementShas = attachments.filter((attachment) => {
+  const storedAttachments = attachments.filter((attachment) => {
     return attachment.fileUrl === undefined;
   }).map((attachment) => {
-    return attachment.sha2;
+    return { [attachment.sha2]: attachment };
   });
 
-  return statementShas;
+  return storedAttachments;
 };
 
-export default (models: UnstoredStatementModel[]): string[] => {
-  const statementHashes = models.reduce((carriedHashes: string[], model) => {
-    const statementShas = getStatementBaseHashes(model.statement);
-    const subStatementShas = (
-      model.statement.object.objectType === 'SubStatement' ?
-        getStatementBaseHashes(model.statement.object) :
-        []
+export default (models: UnstoredStatementModel[]): AttachmentsMap => {
+  const attachmentMaps = models.reduce((maps: AttachmentsMap[], model) => {
+    const statementAttachments = getStatementBaseAttachments(model.statement);
+    const subStatementAttachments = (
+      model.statement.object.objectType === 'SubStatement'
+        ? getStatementBaseAttachments(model.statement.object)
+        : []
     );
 
-    return union(carriedHashes, statementShas, subStatementShas);
-  }, [] as string[]);
-  return statementHashes;
+    return [...maps, ...statementAttachments, ...subStatementAttachments];
+  }, [] as AttachmentsMap[]);
+
+  return Object.assign({}, ...attachmentMaps);
 };

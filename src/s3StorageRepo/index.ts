@@ -2,13 +2,13 @@ import StorageRepo from '../repo/StorageRepo';
 import Config from './Config';
 import clearRepo from './clearRepo';
 import createAttachments from './createAttachments';
-import getAttachments from './getAttachments';
+import getAttachment from './getAttachment';
 
 export default (config: Config): StorageRepo => {
   return {
     // Attachment functions.
     createAttachments: createAttachments(config),
-    getAttachments: getAttachments(config),
+    getAttachment: getAttachment(config),
 
     // Repo-wide functions.
     clearRepo: clearRepo(config),
