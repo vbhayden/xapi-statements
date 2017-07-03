@@ -1,0 +1,14 @@
+POST http://localhost:1338/xAPI/statements HTTP/1.1
+Content-Type: application/json
+
+{
+  "actor": {
+    "mbox": "mailto:dummy@example.org"
+  },
+  "verb": {
+    "id": "http://example.org/dummy_verb"
+  },
+  "object": {
+    "id": "http://example.org/dummy_activity"
+  }
+}

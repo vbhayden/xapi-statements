@@ -33,11 +33,11 @@ const presenterFacade = presenter({
 });
 
 const handleExit = (event: string) => {
-  process.on(event, function (error?: any) {
+  return (error?: any) => {
     if (error) logger.error(error.stack);
     logger.info(event);
     process.exit();
-  });
+  };
 };
 
 app.use(presenterFacade);
@@ -49,9 +49,9 @@ app.listen(config.express.port, () => {
     process.send('ready');
   }
   if (process.on) {
-    handleExit('exit');
-    handleExit('SIGINT');
-    handleExit('SIGTERM');
-    handleExit('uncaughtException');
+    process.on('exit', handleExit('exit'));
+    process.on('SIGINT', handleExit('SIGINT'));
+    process.on('SIGTERM', handleExit('SIGTERM'));
+    process.on('uncaughtException', handleExit('uncaughtException'));
   }
 });

@@ -32,12 +32,11 @@ export default (config: Config) => {
         voided: false,
         ...resultOpts
       });
-      res
-        .set('X-Experience-API-Consistent-Through', timestamp)
-        .set('X-Experience-API-Version', xapiVersion)
-        .set('Last-Modified', results.statements[0].stored)
-        .status(200)
-        .json(results.statements[0]);
+      res.setHeader('X-Experience-API-Consistent-Through', timestamp);
+      res.setHeader('X-Experience-API-Version', xapiVersion);
+      res.setHeader('Last-Modified', results.statements[0].stored);
+      res.status(200);
+      res.json(results.statements[0]);
       return;
     }
 
@@ -49,12 +48,11 @@ export default (config: Config) => {
         voided: true,
         ...resultOpts
       });
-      res
-        .set('X-Experience-API-Consistent-Through', timestamp)
-        .set('X-Experience-API-Version', xapiVersion)
-        .set('Last-Modified', results.statements[0].stored)
-        .status(200)
-        .json(results.statements[0]);
+      res.setHeader('X-Experience-API-Consistent-Through', timestamp);
+      res.setHeader('X-Experience-API-Version', xapiVersion);
+      res.setHeader('Last-Modified', results.statements[0].stored);
+      res.status(200);
+      res.json(results.statements[0]);
       return;
     }
 
@@ -71,7 +69,7 @@ export default (config: Config) => {
     if (resultOpts.attachments) {
       const boundary = 'abcABC0123\'()+_,-./:=?';
       const crlf = '\r\n';
-      const fullBoundary = `--${boundary}${crlf}`;
+      const fullBoundary = `${crlf}--${boundary}${crlf}`;
       res.setHeader('X-Experience-API-Consistent-Through', timestamp);
       res.setHeader('X-Experience-API-Version', xapiVersion);
       res.setHeader('Content-Type', `multipart/mixed; charset=UTF-8; boundary="${boundary}"`);
@@ -83,9 +81,10 @@ export default (config: Config) => {
       await reduce(results.attachments, (_result, attachment) => {
         return new Promise((resolve, reject) => {
           res.write(fullBoundary);
-          res.write(`Content-Type:${attachment.contentType}`);
-          res.write(`Content-Transfer-Encoding:binary`);
-          res.write(`X-Experience-API-Hash:${attachment.hash}`);
+          res.write(`Content-Type:${attachment.contentType}${crlf}`);
+          res.write(`Content-Transfer-Encoding:binary${crlf}`);
+          res.write(`X-Experience-API-Hash:${attachment.hash}${crlf}`);
+          res.write(crlf);
           attachment.stream.on('data', (data: any) => {
             res.write(data);
           });
@@ -97,7 +96,7 @@ export default (config: Config) => {
             reject(err);
           });
         });
-      });
+      }, Promise.resolve());
       res.write(`--${boundary}--`);
       res.end();
       return;

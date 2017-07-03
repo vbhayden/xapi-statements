@@ -3,9 +3,13 @@ config();
 
 import { S3 } from 'aws-sdk';
 const storageDir = `${process.cwd()}/storage`;
+const expressPort = Number(process.env.EXPRESS_PORT) || 80;
 
 export default {
-  llClientInfoEndpoint: process.env.LL_CLIENT_INFO_ENDPOINT,
+  llClientInfoEndpoint: (
+    process.env.LL_CLIENT_INFO_ENDPOINT ||
+    `http://localhost:${expressPort}/auth` // Defaults to the demo auth.
+  ),
   lang: process.env.LANG || 'en',
   defaultTimeout: process.env.DEFAULT_TIMEOUT_MS || 300000,
   modelsRepoName: process.env.MODELS_REPO || 'memory',

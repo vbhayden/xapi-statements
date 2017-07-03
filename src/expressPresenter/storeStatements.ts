@@ -1,79 +1,68 @@
 import { Request, Response } from 'express';
-import QueryIds from '../errors/QueryIds';
-import QueryOptions from '../errors/QueryOptions';
+import { isArray, get } from 'lodash';
+import * as streamToString from 'stream-to-string';
+import InvalidBoundary from '../errors/InvalidBoundary';
 import catchErrors from './utils/catchErrors';
 import getClient from './utils/getClient';
 import getQueryParam from './utils/getQueryParam';
-import getStatementsOptions from './utils/getStatementsOptions';
-import getStatementsResultOptions from './utils/getStatementsResultOptions';
+import getParts from './utils/getParts';
 import Config from './Config';
+const xapiVersion = '1.0.0';
 
-const checkStatementsOpts = (opts: { [key: string]: any }): void => {
-  const setOpts = Object.keys(opts).filter((opt: string) => {
-    return opts[opt] !== undefined;
-  });
-  const hasOpts = setOpts.length !== 0;
-
-  if (hasOpts) {
-    throw new QueryOptions(setOpts);
+const boundaryRegexp = /boundary\=\"([A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\"/;
+const getBoundaryFromContentType = (contentType: string): string => {
+  const result = boundaryRegexp.exec(contentType);
+  if (result === null || result.length < 1 || result.length > 2) {
+    throw new InvalidBoundary(contentType);
   }
+  return result[1];
 };
 
 export default (config: Config) => {
-  return catchErrors(async (req: Request, res: Response): Promise<void> => {
-    const timestamp = new Date().toISOString();
-    const xapiVersion = '1.0.0';
-    const statementId = getQueryParam(req, 'statementId');
-    const voidedStatementId = getQueryParam(req, 'voidedStatementId');
-    const resultOpts = getStatementsResultOptions(req);
-    const statementsOpts = getStatementsOptions(req);
+  const storeStatements = async (req: Request, body: any, attachments: any[], res: Response) => {
     const client = await getClient(config, req);
+    const models = isArray(body) ? body : [body];
+    const ids = await config.service.storeStatements({ models, attachments, client });
+    res.setHeader('X-Experience-API-Version', xapiVersion);
+    res.status(200);
+    res.json(ids);
+  };
 
-    if (statementId !== undefined && voidedStatementId !== undefined) {
-      throw new QueryIds();
+  return catchErrors(async (req: Request, res: Response): Promise<void> => {
+    const method = getQueryParam(req, 'method');
+    const contentType = req.header('Content-Type') || '';
+
+    if (method === undefined) {
+      if (contentType === 'application/json') {
+        const body = req.body;
+        await storeStatements(req, body, [], res);
+        return;
+      }
+      if (/multipart\/mixed/.test(contentType)) {
+        const boundary = getBoundaryFromContentType(contentType);
+        const parts = await getParts(req, boundary);
+        const hasStatements = (
+          parts.length >= 1 &&
+          get(parts[0].headers, 'content-type') === 'application/json'
+        );
+
+        if (!hasStatements) {
+          throw new Error('Does not have statements');
+        }
+
+        const body = await streamToString(parts[0].stream);
+        const parsedBody = JSON.parse(body);
+        const attachments = parts.slice(1).map((part) => {
+          return {
+            stream: part.stream,
+            hash: get(part.headers, 'x-experience-api-hash'),
+            contentType: get(part.headers, 'content-type'),
+          };
+        });
+        await storeStatements(req, parsedBody, attachments, res);
+        return;
+      }
     }
-
-    if (statementId !== undefined && voidedStatementId === undefined) {
-      checkStatementsOpts(statementsOpts);
-      const results = await config.service.getStatement({
-        client,
-        id: statementId,
-        voided: false,
-        ...resultOpts
-      });
-      res
-        .set('X-Experience-API-Consistent-Through', timestamp)
-        .set('X-Experience-API-Version', xapiVersion)
-        .status(200)
-        .json(results.statements[0]);
-      return;
-    }
-
-    if (statementId === undefined && voidedStatementId !== undefined) {
-      checkStatementsOpts(statementsOpts);
-      const results = await config.service.getStatement({
-        client,
-        id: voidedStatementId,
-        voided: true,
-        ...resultOpts
-      });
-      res
-        .set('X-Experience-API-Consistent-Through', timestamp)
-        .set('X-Experience-API-Version', xapiVersion)
-        .status(200)
-        .json(results.statements[0]);
-      return;
-    }
-
-    const results = await config.service.getStatements({
-      client,
-      ...statementsOpts,
-      ...resultOpts
-    });
-    res
-      .set('X-Experience-API-Consistent-Through', timestamp)
-      .set('X-Experience-API-Version', xapiVersion)
-      .status(200)
-      .json(results.statements);
+    throw new Error('Invalid content type');
   });
 };
