@@ -39,6 +39,7 @@
     "file-stream-rotator": "^0.1.0",
     "fs-extra": "^3.0.1",
     "helmet": "^3.5.0",
+    "jscommons": "git+https://git@github.com/HT2-Labs/jscommons.git",
     "lodash": "^4.17.4",
     "moment": "^2.18.0",
     "mongodb": "^2.2.26",
