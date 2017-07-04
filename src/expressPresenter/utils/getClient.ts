@@ -1,13 +1,11 @@
 import fetch from 'node-fetch';
-import { Request } from 'express';
 import ClientModel from '../../models/ClientModel';
 import Actor from '../../models/Actor';
 import Unauthorised from '../../errors/Unauthorised';
 import Config from '../Config';
 
-export default async (config: Config, req: Request): Promise<ClientModel> => {
+export default async (config: Config, authHeader: string): Promise<ClientModel> => {
   try {
-    const authHeader = req.get('Authorization') || '';
     const json = await fetch(config.llClientInfoEndpoint, {
       headers: {
         Authorization: authHeader

@@ -1,4 +1,4 @@
-import QueryOptions from '../../errors/QueryOptions';
+import QueryOptions from '../../../errors/QueryOptions';
 
 export default (opts: { [key: string]: any }): void => {
   const setOpts = Object.keys(opts).filter((opt: string) => {

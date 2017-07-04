@@ -1,0 +1,4 @@
+POST http://localhost:1338/xAPI/statements?method=GET HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+limit=1

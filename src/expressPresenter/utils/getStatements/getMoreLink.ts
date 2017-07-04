@@ -1,7 +1,7 @@
 import { map } from 'lodash';
-import StatementsResult from '../../models/StatementsResult';
-import GetStatementsOptions from '../../service/options/GetStatementsOptions';
-import StatementsResultOptions from '../../service/options/StatementsResultOptions';
+import StatementsResult from '../../../models/StatementsResult';
+import GetStatementsOptions from '../../../service/options/GetStatementsOptions';
+import StatementsResultOptions from '../../../service/options/StatementsResultOptions';
 
 interface MoreLinkOptions {
   results: StatementsResult;
@@ -21,7 +21,9 @@ export default (opts: MoreLinkOptions) => {
   };
 
   const moreLinkParams = map(moreLinkOpts, (value, key) => {
-    return `${key}=${value}`;
+    return value === undefined ? '' : `${key}=${value}`;
+  }).filter((param) => {
+    return param !== '';
   }).join('&');
 
   return `/statements?${moreLinkParams}`;
