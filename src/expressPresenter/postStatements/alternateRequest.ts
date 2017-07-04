@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
+import InvalidContentType from '../../errors/InvalidContentType';
+import InvalidMethod from '../../errors/InvalidMethod';
 import getClient from '../utils/getClient';
 import getStatements from '../utils/getStatements';
+import storeStatement from '../utils/storeStatement';
 import Config from '../Config';
 import storeStatements from './storeStatements';
 
@@ -14,6 +17,10 @@ interface Options {
 export default async ({ config, method, req, res }: Options) => {
   switch (method) {
     case 'POST': {
+      if (req.body['Content-Type'] !== 'application/json') {
+        throw new InvalidContentType(req.body['Content-Type']);
+      }
+
       const client = await getClient(config, req.body.Authorization || '');
       const unparsedBody = req.body.content;
       const body = JSON.parse(unparsedBody);
@@ -21,12 +28,24 @@ export default async ({ config, method, req, res }: Options) => {
       return storeStatements({ config, client, body, attachments, res });
     }
     case 'GET': {
-      const headerParams = req.body;
+      const client = await getClient(config, req.body.Authorization || '');
       const queryParams = req.body;
-      return getStatements({ config, res, headerParams, queryParams });
+      return getStatements({ config, res, client, queryParams });
+    }
+    case 'PUT': {
+      if (req.body['Content-Type'] !== 'application/json') {
+        throw new InvalidContentType(req.body['Content-Type']);
+      }
+
+      const client = await getClient(config, req.body.Authorization || '');
+      const unparsedBody = req.body.content;
+      const body = JSON.parse(unparsedBody);
+      const attachments: any[] = [];
+      const queryParams = req.body;
+      return storeStatement({ config, client, body, attachments, queryParams, res });
     }
     default: {
-      throw new Error('Invalid method for alternate request syntax');
+      throw new InvalidMethod(method);
     }
   }
 };

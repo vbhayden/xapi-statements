@@ -1,0 +1,4 @@
+PUT http://localhost:1338/xAPI/statements?statementId=3eaaa54c-eccb-40ac-b62b-7659334e67a2 HTTP/1.1
+Content-Type: multipart/mixed; boundary="1234567890qwertyuiop"
+
+< ./multipart

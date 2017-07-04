@@ -9,6 +9,7 @@ import getAbout from './getAbout';
 import getDemoAuth from './getDemoAuth';
 import getStatements from './getStatements';
 import postStatements from './postStatements';
+import putStatement from './putStatement';
 import Config from './Config';
 
 export default (config: Config): Router => {
@@ -24,7 +25,7 @@ export default (config: Config): Router => {
   router.get(`/${config.customRoute}`, handleCustomRoute(config));
   router.get('/xAPI/about', getAbout(config));
   router.get('/xAPI/statements', getStatements(config));
-  router.put('/xAPI/statements', () => { });
+  router.put('/xAPI/statements', putStatement(config));
   router.post('/xAPI/statements', postStatements(config));
   return router;
 };

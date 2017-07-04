@@ -1,0 +1,28 @@
+
+--1234567890qwertyuiop
+content-type:application/json
+
+{
+  "actor": {
+    "mbox": "mailto:dummy@example.org"
+  },
+  "verb": {
+    "id": "http://example.org/dummy_verb"
+  },
+  "object": {
+    "id": "http://example.org/dummy_activity"
+  },
+  "attachments": [{
+    "usageType": "http://www.example.com",
+    "display": {},
+    "contentType": "text/plain",
+    "length": 6,
+    "sha2": "c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2"
+  }]
+}
+--1234567890qwertyuiop
+content-type:text/plain
+x-experience-api-hash:c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2
+
+foobar
+--1234567890qwertyuiop--

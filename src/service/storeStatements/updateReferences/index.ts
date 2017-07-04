@@ -1,5 +1,6 @@
 import { includes, union, pull, has, get, size, keys, intersection, difference } from 'lodash';
 import NoModel from '../../../errors/NoModel';
+import MissingLoadedId from '../../../errors/MissingLoadedId';
 import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
 import Statement from '../../../models/Statement';
 import Config from '../../Config';
@@ -49,7 +50,7 @@ export default async (config: Config, models: UnstoredStatementModel[]): Promise
       if (has(groupedDownRefs, targetId)) {
         return groupedDownRefs[targetId];
       }
-      throw new Error('Eager loaded targetId is now missing');
+      throw new MissingLoadedId(targetId);
     });
     const unloadedDownRefs = await config.repo.getStatementsByIds({
       ids: unloadedTargetIds,

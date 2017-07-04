@@ -1,4 +1,5 @@
 import { includes } from 'lodash';
+import ChangedStatementRef from '../errors/ChangedStatementRef';
 import StoredStatementModel from '../models/StoredStatementModel';
 import UpRef from '../models/UpRef';
 import GetUpRefsByIdsOptions from '../repo/GetUpRefsByIdsOptions';
@@ -8,7 +9,7 @@ const getTargetId = (model: StoredStatementModel) => {
   if (model.statement.object.objectType === 'StatementRef') {
     return model.statement.object.id;
   }
-  throw new Error('No longer a statement reference');
+  throw new ChangedStatementRef(model.statement.id);
 };
 
 export default (config: Config) => {

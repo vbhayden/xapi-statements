@@ -1,4 +1,5 @@
 import { includes } from 'lodash';
+import ChangedStatementRef from '../errors/ChangedStatementRef';
 import StoredStatementModel from '../models/StoredStatementModel';
 import GetVoidersOptions from '../repo/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
@@ -17,7 +18,7 @@ export default (config: Config) => {
       if (model.statement.object.objectType === 'StatementRef') {
         return model.statement.object.id;
       }
-      throw new Error('No longer a StatementRef.');
+      throw new ChangedStatementRef(model.statement.id);
     });
   };
 };

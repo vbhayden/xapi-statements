@@ -1,6 +1,7 @@
 import { includes } from 'lodash';
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import VoidingError from '../../errors/VoidingError';
+import InvalidVoidType from '../../errors/InvalidVoidType';
 import voidVerbId from '../../utils/voidVerbId';
 import Config from '../Config';
 
@@ -30,7 +31,7 @@ const getVoiders = (statements: UnstoredStatementModel[]): VoidResult => {
 const checkWithinStatements = (voiderIds: string[], voidingModels: UnstoredStatementModel[]): void => {
   voidingModels.forEach((model) => {
     if (model.statement.object.objectType !== 'StatementRef') {
-      throw new Error('The `objectType` of a voider must be "StatementRef"');
+      throw new InvalidVoidType(model.statement.object.objectType);
     }
     const targetId = model.statement.object.id;
     if (includes(voiderIds, targetId)) {

@@ -1,5 +1,6 @@
 import GetDownRefIdOptions from '../repo/GetDownRefIdOptions';
 import NoModel from '../errors/NoModel';
+import ChangedStatementRef from '../errors/ChangedStatementRef';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -17,6 +18,6 @@ export default (config: Config) => {
     if (statementObject.objectType === 'StatementRef') {
       return statementObject.id;
     }
-    throw new Error('No longer a StatementRef.');
+    throw new ChangedStatementRef(opts.id);
   };
 };

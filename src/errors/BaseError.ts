@@ -3,7 +3,7 @@ export default class implements Error {
   public message: string;
   public stack?: string;
 
-  constructor(message: string) {
+  constructor(message: string = 'Error') {
     this.message = message;
     this.name = this.constructor.name;
     this.stack = (new Error(message)).stack;

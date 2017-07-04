@@ -1,0 +1,15 @@
+PUT http://localhost:1338/xAPI/statements?statementId=3eaaa54c-eccb-40ac-b62b-7659334e67a2 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "3eaaa54c-eccb-40ac-b62b-7659334e67a2",
+  "actor": {
+    "mbox": "mailto:dummy@example.org"
+  },
+  "verb": {
+    "id": "http://example.org/dummy_verb"
+  },
+  "object": {
+    "id": "http://example.org/dummy_activity"
+  }
+}

@@ -21,7 +21,9 @@ export default async (opts: Options) => {
   const timestamp = new Date().toISOString();
   const resultOpts = getStatementsResultOptions(queryParams);
   const statementsOpts = getStatementsOptions(queryParams);
+
   checkStatementsOpts(statementsOpts);
+
   const results = await config.service.getStatement({ client, id, voided, ...resultOpts });
   res.setHeader('X-Experience-API-Consistent-Through', timestamp);
   res.setHeader('X-Experience-API-Version', XAPI_VERSION);

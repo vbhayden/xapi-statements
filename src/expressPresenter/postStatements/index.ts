@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import InvalidContentType from '../../errors/InvalidContentType';
 import catchErrors from '../utils/catchErrors';
 import getClient from '../utils/getClient';
 import Config from '../Config';
@@ -26,6 +27,6 @@ export default (config: Config) => {
       return alternateRequest({ config, method, req, res });
     }
 
-    throw new Error('Invalid content type');
+    throw new InvalidContentType(contentType);
   });
 };
