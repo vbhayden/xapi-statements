@@ -1,12 +1,11 @@
+import CommonExpressConfig from 'jscommons/dist/expressPresenter/Config';
 import { Service } from '../service';
+import Translator from '../translator';
 
-interface Config {
+interface Config extends CommonExpressConfig {
   llClientInfoEndpoint: string;
-  customRoute: string;
-  customRouteText: string;
-  morganDirectory: string;
-  bodyParserLimit: string;
   service: Service;
+  translator: Translator;
 }
 
 export default Config;

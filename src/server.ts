@@ -2,6 +2,7 @@ import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
 import * as express from 'express';
+import translatorFactory from './translatorFactory';
 import repoFactory from './repoFactory';
 import presenter from './expressPresenter';
 import service from './service';
@@ -10,6 +11,7 @@ import logger from './logger';
 
 const app = express();
 
+const translator = translatorFactory();
 const repoFacade = repoFactory();
 const serviceFacade = service({
   defaultTimeout: 1000,
@@ -30,6 +32,8 @@ const presenterFacade = presenter({
   morganDirectory: config.express.morganDirectory,
   bodyParserLimit: config.express.bodyParserLimit,
   service: serviceFacade,
+  translator,
+  logger,
 });
 
 const handleExit = (event: string) => {

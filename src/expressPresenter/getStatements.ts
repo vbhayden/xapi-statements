@@ -5,7 +5,7 @@ import getStatements from './utils/getStatements';
 import Config from './Config';
 
 export default (config: Config) => {
-  return catchErrors(async (req: Request, res: Response): Promise<void> => {
+  return catchErrors(config, async (req: Request, res: Response): Promise<void> => {
     const client = await getClient(config, req.header('Authorization') || '');
     const queryParams = req.query;
 

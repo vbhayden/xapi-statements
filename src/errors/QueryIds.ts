@@ -1,7 +1,8 @@
-import BaseError from './BaseError';
+import BaseError from 'jscommons/dist/errors/BaseError';
 
 export default class extends BaseError {
   constructor() {
-    super('Cannot use \'statementId\' and \'voidedStatementId\'');
+    super();
+    // 'Cannot use \'statementId\' and \'voidedStatementId\''
   }
 }

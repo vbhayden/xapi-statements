@@ -4,8 +4,8 @@ import { ALL } from '../utils/scopes';
 import catchErrors from './utils/catchErrors';
 import Config from './Config';
 
-export default (_config: Config) => {
-  return catchErrors(async (_req: Request, res: Response): Promise<void> => {
+export default (config: Config) => {
+  return catchErrors(config, async (_req: Request, res: Response): Promise<void> => {
     const client: ClientModel = {
       _id: 'dummy_id',
       title: 'dummy_title',

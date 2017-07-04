@@ -8,7 +8,7 @@ import storeStatements from './storeStatements';
 import storeWithAttachments from './storeWithAttachments';
 
 export default (config: Config) => {
-  return catchErrors(async (req: Request, res: Response): Promise<void> => {
+  return catchErrors(config, async (req: Request, res: Response): Promise<void> => {
     const method = req.query.method;
     const contentType = req.header('Content-Type') || '';
 
