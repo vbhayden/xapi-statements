@@ -1,7 +1,7 @@
-import winston from 'jscommons/dist/winston';
+import commonWinston from 'jscommons/dist/winston';
 import config from './config';
 
-export default winston({
+export default commonWinston({
   console: {
     level: config.winston.level,
   },

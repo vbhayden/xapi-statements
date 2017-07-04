@@ -1,6 +1,6 @@
+import commonMemoryRepo from 'jscommons/dist/memoryRepo';
 import ModelsRepo from '../repo/ModelsRepo';
 import Config from './Config';
-import clearRepo from './clearRepo';
 import createStatements from './createStatements';
 import getHashes from './getHashes';
 import getStatement from './getStatement';
@@ -29,10 +29,6 @@ export default (config: Config): ModelsRepo => {
     setRefs: setRefs(config),
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
-
-    // Repo-wide functions.
-    clearRepo: clearRepo(config),
-    migrate: () => Promise.resolve(),
-    rollback: () => Promise.resolve(),
+    ...commonMemoryRepo(config),
   };
 };

@@ -1,3 +1,4 @@
+import commonService from 'jscommons/dist/service';
 import StatementsResult from '../models/StatementsResult';
 import StoreStatementsOptions from './options/StoreStatementsOptions';
 import GetStatementOptions from './options/GetStatementOptions';
@@ -24,9 +25,6 @@ export default (config: Config): Service => {
     storeStatements: storeStatements(config),
     getStatement: getStatement(config),
     getStatements: getStatements(config),
-
-    clearService: config.repo.clearRepo,
-    migrate: config.repo.migrate,
-    rollback: config.repo.rollback
+    ...commonService(config),
   };
 };
