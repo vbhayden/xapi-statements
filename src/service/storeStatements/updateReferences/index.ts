@@ -1,5 +1,5 @@
 import { includes, union, pull, has, get, size, keys, intersection, difference } from 'lodash';
-import NoModel from '../../../errors/NoModel';
+import NoModel from 'jscommons/dist/errors/NoModel';
 import MissingLoadedId from '../../../errors/MissingLoadedId';
 import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
 import Statement from '../../../models/Statement';

@@ -1,6 +1,6 @@
 import { difference } from 'lodash';
-import Forbidden from '../../errors/Forbidden';
-import NoModel from '../../errors/NoModel';
+import Forbidden from 'jscommons/dist/errors/Forbidden';
+import NoModel from 'jscommons/dist/errors/NoModel';
 import * as scopes from '../../utils/scopes';
 import allScopes from '../../utils/scopes';
 import setup from '../utils/setup';

@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 import { difference } from 'lodash';
+import Forbidden from 'jscommons/dist/errors/Forbidden';
 import * as scopes from '../../utils/scopes';
 import allScopes from '../../utils/scopes';
-import Forbidden from '../../errors/Forbidden';
 import setup from '../utils/setup';
 import assertError from '../utils/assertError';
 import createStatement from '../utils/createStatement';

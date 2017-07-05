@@ -1,5 +1,5 @@
+import NoModel from 'jscommons/dist/errors/NoModel';
 import GetDownRefIdOptions from '../repo/GetDownRefIdOptions';
-import NoModel from '../errors/NoModel';
 import ChangedStatementRef from '../errors/ChangedStatementRef';
 import Config from './Config';
 

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
+import Unauthorised from 'jscommons/dist/errors/Unauthorised';
 import ClientModel from '../../models/ClientModel';
 import Actor from '../../models/Actor';
-import Unauthorised from '../../errors/Unauthorised';
 import Config from '../Config';
 
 export default async (config: Config, authHeader: string): Promise<ClientModel> => {

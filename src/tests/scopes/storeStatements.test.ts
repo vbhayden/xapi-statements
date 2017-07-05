@@ -1,5 +1,5 @@
 import { difference } from 'lodash';
-import Forbidden from '../../errors/Forbidden';
+import Forbidden from 'jscommons/dist/errors/Forbidden';
 import * as scopes from '../../utils/scopes';
 import allScopes from '../../utils/scopes';
 import setup from '../utils/setup';

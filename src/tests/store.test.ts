@@ -1,6 +1,6 @@
 import * as assert from 'assert';
+import NoModel from 'jscommons/dist/errors/NoModel';
 import Statement from '../models/Statement';
-import NoModel from '../errors/NoModel';
 import setup from './utils/setup';
 import createStatement from './utils/createStatement';
 import createClientModel from './utils/createClientModel';

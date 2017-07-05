@@ -1,5 +1,5 @@
 import { intersection } from 'lodash';
-import Forbidden from '../../errors/Forbidden';
+import Forbidden from 'jscommons/dist/errors/Forbidden';
 
 export default (expectedScopes: string[], actualScopes: string[]): void => {
   const allowedScopes = intersection(expectedScopes, actualScopes);
