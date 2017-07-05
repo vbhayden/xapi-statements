@@ -1,5 +1,5 @@
 import StoredStatementModel from '../../models/StoredStatementModel';
-import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 import matchesClientOption from '../utils/matchesClientOption';
 import Config from '../Config';
 import matchesAgentOption from './matchesAgentOption';

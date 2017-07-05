@@ -1,5 +1,5 @@
 import commonTranslator from 'jscommons/dist/translator/en';
-import Translator from './index';
+import Translator from './Translator';
 
 const translator: Translator = {
   changedStatementRefError: (err) => `${err.statementId} is no longer a statement reference`,

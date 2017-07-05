@@ -1,5 +1,5 @@
 import commonMemoryRepo from 'jscommons/dist/memoryRepo';
-import ModelsRepo from '../repo/ModelsRepo';
+import ModelsRepo from '../repoFactory/ModelsRepo';
 import Config from './Config';
 import createStatements from './createStatements';
 import getHashes from './getHashes';

@@ -2,7 +2,7 @@ import { includes } from 'lodash';
 import ChangedStatementRef from '../errors/ChangedStatementRef';
 import StoredStatementModel from '../models/StoredStatementModel';
 import UpRef from '../models/UpRef';
-import GetUpRefsByIdsOptions from '../repo/GetUpRefsByIdsOptions';
+import GetUpRefsByIdsOptions from '../repoFactory/options/GetUpRefsByIdsOptions';
 import Config from './Config';
 
 const getTargetId = (model: StoredStatementModel) => {

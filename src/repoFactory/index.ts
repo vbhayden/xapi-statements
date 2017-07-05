@@ -1,13 +1,13 @@
 import { MongoClient } from 'mongodb';
 import { S3 } from 'aws-sdk';
-import memoryModelsRepo from './memoryModelsRepo';
-import mongoModelsRepo from './mongoModelsRepo';
-import localStorageRepo from './localStorageRepo';
-import s3StorageRepo from './s3StorageRepo';
-import Repo from './repo';
-import StorageRepo from './repo/StorageRepo';
-import ModelsRepo from './repo/ModelsRepo';
-import config from './config';
+import memoryModelsRepo from '../memoryModelsRepo';
+import mongoModelsRepo from '../mongoModelsRepo';
+import localStorageRepo from '../localStorageRepo';
+import s3StorageRepo from '../s3StorageRepo';
+import Repo from './Repo';
+import StorageRepo from './StorageRepo';
+import ModelsRepo from './ModelsRepo';
+import config from '../config';
 
 const getModelsRepo = (): ModelsRepo => {
   switch (config.modelsRepoName) {

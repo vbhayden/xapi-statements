@@ -1,4 +1,4 @@
-import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 
 export default (opts: GetStatementsOptions): object => {
   if (opts.cursor === undefined) {

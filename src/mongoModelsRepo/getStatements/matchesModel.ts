@@ -1,11 +1,11 @@
-import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 
 export type Matcher<Option> = (
   statementKey: string,
   opt: Option,
   opts: GetStatementsOptions
 ) => Object;
-export type Getter<Option> = (opts: GetStatementsOptions) => Option|undefined;
+export type Getter<Option> = (opts: GetStatementsOptions) => Option | undefined;
 
 export default <Option>(matcher: Matcher<Option>, getter: Getter<Option>) => {
   return (opts: GetStatementsOptions): Object => {

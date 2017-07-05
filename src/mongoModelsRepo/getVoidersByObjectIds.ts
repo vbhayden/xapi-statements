@@ -1,4 +1,4 @@
-import GetVoidersOptions from '../repo/GetVoidersOptions';
+import GetVoidersOptions from '../repoFactory/options/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
 import Config from './Config';
 
@@ -7,7 +7,7 @@ interface Result {
     object: {
       id: string;
     }
-  }
+  };
 }
 
 export default (config: Config) => {

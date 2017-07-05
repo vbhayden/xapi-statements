@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import CreateAttachmentsOptions from '../repo/CreateAttachmentsOptions';
+import CreateAttachmentsOptions from '../repoFactory/options/CreateAttachmentsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

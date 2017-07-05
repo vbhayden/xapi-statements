@@ -1,4 +1,4 @@
-import Statement from '../models/Statement';
+import Statement from '../../models/Statement';
 
 interface SetRefsOptions {
   id: string;

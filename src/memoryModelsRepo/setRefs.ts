@@ -1,4 +1,4 @@
-import SetRefsOptions from '../repo/SetRefsOptions';
+import SetRefsOptions from '../repoFactory/options/SetRefsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

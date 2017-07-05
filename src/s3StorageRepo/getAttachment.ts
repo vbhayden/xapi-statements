@@ -1,5 +1,5 @@
 import download from 'jscommons/dist/s3Repo/utils/download';
-import GetAttachmentOptions from '../repo/GetAttachmentOptions';
+import GetAttachmentOptions from '../repoFactory/options/GetAttachmentOptions';
 import Config from './Config';
 
 export default (config: Config) => {

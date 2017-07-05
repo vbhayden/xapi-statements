@@ -1,5 +1,5 @@
-import ClientModel from '../models/ClientModel';
-import FilterAgent from '../models/FilterAgent';
+import ClientModel from '../../models/ClientModel';
+import FilterAgent from '../../models/FilterAgent';
 
 interface GetStatementsOptions {
   agent?: FilterAgent;

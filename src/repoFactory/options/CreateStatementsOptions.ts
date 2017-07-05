@@ -1,4 +1,4 @@
-import UnstoredStatementModel from '../models/UnstoredStatementModel';
+import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 
 interface CreateStatementsOptions {
   models: UnstoredStatementModel[];

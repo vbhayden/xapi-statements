@@ -1,5 +1,5 @@
 import NoModel from 'jscommons/dist/errors/NoModel';
-import GetDownRefIdOptions from '../repo/GetDownRefIdOptions';
+import GetDownRefIdOptions from '../repoFactory/options/GetDownRefIdOptions';
 import Config from './Config';
 
 interface Result {
@@ -7,7 +7,7 @@ interface Result {
     object: {
       id: string;
     }
-  }
+  };
 };
 
 export default (config: Config) => {

@@ -1,7 +1,7 @@
 import { includes } from 'lodash';
 import StatementHash from '../models/StatementHash';
 import StoredStatementModel from '../models/StoredStatementModel';
-import GetHashesOptions from '../repo/GetHashesOptions';
+import GetHashesOptions from '../repoFactory/options/GetHashesOptions';
 import Config from './Config';
 
 export default (config: Config) => {

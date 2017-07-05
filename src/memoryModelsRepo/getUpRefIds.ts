@@ -1,4 +1,4 @@
-import GetUpRefIdsOptions from '../repo/GetUpRefIdsOptions';
+import GetUpRefIdsOptions from '../repoFactory/options/GetUpRefIdsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

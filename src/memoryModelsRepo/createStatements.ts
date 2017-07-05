@@ -1,6 +1,6 @@
 import { v1 as uuid } from 'uuid';
 import UnstoredStatementModel from '../models/UnstoredStatementModel';
-import CreateStatementsOptions from '../repo/CreateStatementsOptions';
+import CreateStatementsOptions from '../repoFactory/options/CreateStatementsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

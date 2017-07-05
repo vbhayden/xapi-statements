@@ -1,5 +1,5 @@
 import UnStoredStatementModel from '../models/UnStoredStatementModel';
-import CreateStatementsOptions from '../repo/CreateStatementsOptions';
+import CreateStatementsOptions from '../repoFactory/options/CreateStatementsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

@@ -20,7 +20,7 @@ import QueryIds from '../../errors/QueryIds';
 import QueryOptions from '../../errors/QueryOptions';
 import UnequalStatementId from '../../errors/UnequalStatementId';
 import VoidingError from '../../errors/VoidingError';
-import Translator from '../../translator';
+import Translator from '../../translatorFactory/Translator';
 
 interface Options extends CommonOptions {
   translator: Translator;

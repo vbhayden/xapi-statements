@@ -1,4 +1,4 @@
-import VoidStatementsOptions from '../repo/VoidStatementsOptions';
+import VoidStatementsOptions from '../repoFactory/options/VoidStatementsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

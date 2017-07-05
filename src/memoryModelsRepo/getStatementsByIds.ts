@@ -1,6 +1,6 @@
 import { includes } from 'lodash';
 import Statement from '../models/Statement';
-import GetStatementsByIdsOptions from '../repo/GetStatementsByIdsOptions';
+import GetStatementsByIdsOptions from '../repoFactory/options/GetStatementsByIdsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

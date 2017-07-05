@@ -1,5 +1,5 @@
-import CreateAttachmentsOptions from './CreateAttachmentsOptions';
-import GetAttachmentOptions from './GetAttachmentOptions';
+import CreateAttachmentsOptions from './options/CreateAttachmentsOptions';
+import GetAttachmentOptions from './options/GetAttachmentOptions';
 
 interface StorageRepo {
   // Attachment functions.

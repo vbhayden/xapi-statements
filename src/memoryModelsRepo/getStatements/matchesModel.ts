@@ -1,6 +1,6 @@
 import Statement from '../../models/Statement';
 import StoredStatementModel from '../../models/StoredStatementModel';
-import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 
 export type Matcher = (statement: Statement, opts: GetStatementsOptions) => boolean;
 

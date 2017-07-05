@@ -1,5 +1,5 @@
 import StoredStatementModel from '../../models/StoredStatementModel';
-import GetStatementsOptions from '../../repo/GetStatementsOptions';
+import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 
 export default (model: StoredStatementModel, opts: GetStatementsOptions): boolean => {
   if (opts.cursor === undefined) {

@@ -1,6 +1,6 @@
 import NoModel from 'jscommons/dist/errors/NoModel';
 import StoredStatementModel from '../models/StoredStatementModel';
-import GetStatementOptions from '../repo/GetStatementOptions';
+import GetStatementOptions from '../repoFactory/options/GetStatementOptions';
 import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 

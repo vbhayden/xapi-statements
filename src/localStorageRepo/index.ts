@@ -1,5 +1,5 @@
 import commonFsRepo from 'jscommons/dist/fsRepo';
-import StorageRepo from '../repo/StorageRepo';
+import StorageRepo from '../repoFactory/StorageRepo';
 import Config from './Config';
 import createAttachments from './createAttachments';
 import getAttachment from './getAttachment';

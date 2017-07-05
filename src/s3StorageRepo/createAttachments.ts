@@ -1,5 +1,5 @@
 import upload from 'jscommons/dist/s3Repo/utils/upload';
-import CreateAttachmentsOptions from '../repo/CreateAttachmentsOptions';
+import CreateAttachmentsOptions from '../repoFactory/options/CreateAttachmentsOptions';
 import Config from './Config';
 
 export default (config: Config) => {

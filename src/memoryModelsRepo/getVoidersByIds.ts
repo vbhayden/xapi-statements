@@ -1,6 +1,6 @@
 import { includes } from 'lodash';
 import StoredStatementModel from '../models/StoredStatementModel';
-import GetVoidersOptions from '../repo/GetVoidersOptions';
+import GetVoidersOptions from '../repoFactory/options/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
 import Config from './Config';
 

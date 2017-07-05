@@ -1,6 +1,6 @@
 import CommonExpressConfig from 'jscommons/dist/expressPresenter/Config';
 import { Service } from '../service';
-import Translator from '../translator';
+import Translator from '../translatorFactory/Translator';
 
 interface Config extends CommonExpressConfig {
   llClientInfoEndpoint: string;

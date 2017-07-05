@@ -1,4 +1,4 @@
-import AttachmentModel from '../models/AttachmentModel';
+import AttachmentModel from '../../models/AttachmentModel';
 
 interface CreateAttachmentsOptions {
   models: AttachmentModel[];

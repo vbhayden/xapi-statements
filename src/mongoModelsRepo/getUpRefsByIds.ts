@@ -1,5 +1,5 @@
 import UpRef from '../models/UpRef';
-import GetUpRefsByIdsOptions from '../repo/GetUpRefsByIdsOptions';
+import GetUpRefsByIdsOptions from '../repoFactory/options/GetUpRefsByIdsOptions';
 import Config from './Config';
 
 interface Result {
@@ -8,7 +8,7 @@ interface Result {
     object: {
       id: string;
     }
-  }
+  };
 }
 
 export default (config: Config) => {
@@ -27,7 +27,7 @@ export default (config: Config) => {
       return {
         sourceId: result.statement.id,
         targetId: result.statement.object.id,
-      }
+      };
     });
   };
 };
