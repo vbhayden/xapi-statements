@@ -1,9 +1,9 @@
-import UnStoredStatementModel from '../models/UnStoredStatementModel';
+import UnstoredStatementModel from '../models/UnstoredStatementModel';
 import CreateStatementsOptions from '../repoFactory/options/CreateStatementsOptions';
 import Config from './Config';
 
 export default (config: Config) => {
-  return async (opts: CreateStatementsOptions): Promise<UnStoredStatementModel[]> => {
+  return async (opts: CreateStatementsOptions): Promise<UnstoredStatementModel[]> => {
     if (opts.models.length === 0) {
       return [];
     }

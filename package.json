@@ -33,6 +33,7 @@
     "aws-sdk": "^2.74.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
+    "boolean": "^0.1.2",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
     "express": "^4.14.1",

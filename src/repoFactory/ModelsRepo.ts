@@ -1,3 +1,4 @@
+import CommonRepo from 'jscommons/dist/repoFactory/Repo';
 import UnstoredStatementModel from '../models/UnstoredStatementModel';
 import StoredStatementModel from '../models/StoredStatementModel';
 import Statement from '../models/Statement';
@@ -15,7 +16,7 @@ import SetRefsOptions from './options/SetRefsOptions';
 import GetStatementsByIdsOptions from './options/GetStatementsByIdsOptions';
 import GetUpRefsByIdsOptions from './options/GetUpRefsByIdsOptions';
 
-interface ModelsRepo {
+interface ModelsRepo extends CommonRepo {
   // Statement functions.
   createStatements: (opts: CreateStatementsOptions) => Promise<UnstoredStatementModel[]>;
   getStatement: (opts: GetStatementOptions) => Promise<StoredStatementModel>;
@@ -29,11 +30,6 @@ interface ModelsRepo {
   setRefs: (opts: SetRefsOptions) => Promise<void>;
   getStatementsByIds: (opts: GetStatementsByIdsOptions) => Promise<Statement[]>;
   getUpRefsByIds: (opts: GetUpRefsByIdsOptions) => Promise<UpRef[]>;
-
-  // Repo-wide functions.
-  clearRepo: () => Promise<void>;
-  migrate: () => Promise<void>;
-  rollback: () => Promise<void>;
 }
 
 export default ModelsRepo;

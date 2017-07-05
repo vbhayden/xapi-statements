@@ -1,4 +1,4 @@
-import CommonTranslator from 'jscommons/dist/translator';
+import CommonTranslator from 'jscommons/dist/translatorFactory/Translator';
 import ChangedStatementRef from '../errors/ChangedStatementRef';
 import Conflict from '../errors/Conflict';
 import DataBeforeFirstBoundary from '../errors/DataBeforeFirstBoundary';

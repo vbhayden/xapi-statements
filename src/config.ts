@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 config();
 
 import { S3 } from 'aws-sdk';
+import * as boolean from 'boolean';
 const storageDir = `${process.cwd()}/storage`;
 const expressPort = Number(process.env.EXPRESS_PORT) || 80;
 
@@ -15,17 +16,18 @@ export default {
   modelsRepoName: process.env.MODELS_REPO || 'memory',
   storageRepoName: process.env.STORAGE_REPO || 'memory',
   winston: {
-    level: process.env.WINSTON_LEVEL || 'info',
-    enableAws: Boolean(Number(process.env.WINSTON_AWS_ENABLED)) || false,
-    aws: {
-      logGroupName: process.env.WINSTON_AWS_LOG_GROUP_NAME || 'xapi-server',
-      logStreamName: process.env.WINSTON_AWS_LOG_STREAM_NAME || 'xapi-server',
-      createLogGroup: true,
-      createLogStream: true,
+    console: {
+      level: process.env.WINSTON_CONSOLE_LEVEL || 'info',
+    },
+    cloudWatch: {
+      enabled: boolean(process.env.WINSTON_CLOUDWATCH_ENABLED) || false,
+      level: process.env.WINSTON_CLOUDWATCH_LEVEL || 'info',
+      logGroupName: process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME || 'xapi-server',
+      logStreamName: process.env.WINSTON_CLOUDWATCH_LOG_STREAM_NAME,
       awsConfig: {
-        accessKeyId: process.env.WINSTON_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.WINSTON_AWS_SECRET_ACCESS_KEY,
-        region: process.env.WINSTON_AWS_REGION,
+        accessKeyId: process.env.WINSTON_CLOUDWATCH_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.WINSTON_CLOUDWATCH_SECRET_ACCESS_KEY || '',
+        region: process.env.WINSTON_CLOUDWATCH_REGION || '',
       },
     },
   },

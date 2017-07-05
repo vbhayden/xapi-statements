@@ -3,16 +3,16 @@ import config from './config';
 
 export default commonWinston({
   console: {
-    level: config.winston.level,
+    level: config.winston.console.level,
   },
   cloudWatch: {
-    level: config.winston.level,
-    enabled: config.winston.enableAws,
-    logGroupName: config.winston.aws.logGroupName,
+    level: config.winston.cloudWatch.level,
+    enabled: config.winston.cloudWatch.enabled,
+    logGroupName: config.winston.cloudWatch.logGroupName,
     awsConfig: {
-      accessKeyId: config.winston.aws.awsConfig.accessKeyId || '',
-      secretAccessKey: config.winston.aws.awsConfig.secretAccessKey || '',
-      region: config.winston.aws.awsConfig.region || '',
+      accessKeyId: config.winston.cloudWatch.awsConfig.accessKeyId || '',
+      secretAccessKey: config.winston.cloudWatch.awsConfig.secretAccessKey || '',
+      region: config.winston.cloudWatch.awsConfig.region || '',
     },
   }
 });

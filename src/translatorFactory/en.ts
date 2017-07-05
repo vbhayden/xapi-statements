@@ -1,4 +1,4 @@
-import commonTranslator from 'jscommons/dist/translator/en';
+import commonTranslator from 'jscommons/dist/translatorFactory/en';
 import Translator from './Translator';
 
 const translator: Translator = {
