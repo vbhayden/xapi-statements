@@ -1,9 +1,5 @@
-import { S3 } from 'aws-sdk';
+import CommonConfig from 'jscommons/dist/s3Repo/Config';
 
-interface Config {
-  client: S3;
-  bucketName: string,
-  subFolder: string,
-}
+interface Config extends CommonConfig { }
 
 export default Config;
