@@ -19,6 +19,6 @@ export default (createObjectStatement: (object: any) => any) => {
         id: TEST_REF_ID,
       }));
       await assertIdsStatements(statement, statement);
-    })
-  })
+    });
+  });
 };
