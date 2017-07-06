@@ -1,5 +1,5 @@
 import CommonExpressConfig from 'jscommons/dist/expressPresenter/Config';
-import { Service } from '../service';
+import Service from '../serviceFactory/Service';
 import Translator from '../translatorFactory/Translator';
 
 interface Config extends CommonExpressConfig {

@@ -1,4 +1,4 @@
-import GetStatementsOptions from '../../../service/options/GetStatementsOptions';
+import GetStatementsOptions from '../../../serviceFactory/options/GetStatementsOptions';
 
 export default (queryParams: any): Partial<GetStatementsOptions> => {
   return {

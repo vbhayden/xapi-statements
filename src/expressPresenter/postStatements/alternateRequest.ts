@@ -14,18 +14,25 @@ interface Options {
   res: Response;
 }
 
+const checkContentType = (req: Request) => {
+  if (req.body['Content-Type'] !== 'application/json') {
+    throw new InvalidContentType(req.body['Content-Type']);
+  }
+};
+
+const getBodyContent = (req: Request) => {
+  const unparsedBody = req.body.content;
+  const body = JSON.parse(unparsedBody);
+  return body;
+};
+
 export default async ({ config, method, req, res }: Options) => {
   switch (method) {
     case 'POST': {
-      if (req.body['Content-Type'] !== 'application/json') {
-        throw new InvalidContentType(req.body['Content-Type']);
-      }
-
+      checkContentType(req);
       const client = await getClient(config, req.body.Authorization || '');
-      const unparsedBody = req.body.content;
-      const body = JSON.parse(unparsedBody);
-      const attachments: any[] = [];
-      return storeStatements({ config, client, body, attachments, res });
+      const body = getBodyContent(req);
+      return storeStatements({ config, client, body, attachments: [], res });
     }
     case 'GET': {
       const client = await getClient(config, req.body.Authorization || '');
@@ -33,16 +40,11 @@ export default async ({ config, method, req, res }: Options) => {
       return getStatements({ config, res, client, queryParams });
     }
     case 'PUT': {
-      if (req.body['Content-Type'] !== 'application/json') {
-        throw new InvalidContentType(req.body['Content-Type']);
-      }
-
+      checkContentType(req);
       const client = await getClient(config, req.body.Authorization || '');
-      const unparsedBody = req.body.content;
-      const body = JSON.parse(unparsedBody);
-      const attachments: any[] = [];
+      const body = getBodyContent(req);
       const queryParams = req.body;
-      return storeStatement({ config, client, body, attachments, queryParams, res });
+      return storeStatement({ config, client, body, attachments: [], queryParams, res });
     }
     default: {
       throw new InvalidMethod(method);

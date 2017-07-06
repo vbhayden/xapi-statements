@@ -1,4 +1,4 @@
-import { Service } from '../../service';
+import Service from '../../serviceFactory/Service';
 import createClientModel from './createClientModel';
 import storeAwaitedStatements from './storeAwaitedStatements';
 

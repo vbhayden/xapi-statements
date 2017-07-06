@@ -1,5 +1,5 @@
 import GetVoidersOptions from '../repoFactory/options/GetVoidersOptions';
-import voidVerbId from '../utils/voidVerbId';
+import getVoidersByIds from './utils/getVoidersByIds';
 import Config from './Config';
 
 interface Result {
@@ -10,16 +10,8 @@ interface Result {
 
 export default (config: Config) => {
   return async (opts: GetVoidersOptions): Promise<string[]> => {
-    const collection = (await config.db).collection('statements');
-    const results = await collection.find({
-      'statement.verb.id': voidVerbId,
-      'statement.object.objectType': 'StatementRef',
-      'statement.id': { $in: opts.ids },
-    }).project({
-      _id: 0,
-      'statement.id': 1,
-    }).toArray() as Result[];
-
+    const searchKey = 'statement.id';
+    const results = await getVoidersByIds({ config, searchKey, ...opts }) as Result[];
     return results.map((result) => {
       return result.statement.id;
     });

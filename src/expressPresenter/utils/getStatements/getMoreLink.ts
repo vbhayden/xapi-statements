@@ -1,7 +1,7 @@
 import { map } from 'lodash';
 import StatementsResult from '../../../models/StatementsResult';
-import GetStatementsOptions from '../../../service/options/GetStatementsOptions';
-import StatementsResultOptions from '../../../service/options/StatementsResultOptions';
+import GetStatementsOptions from '../../../serviceFactory/options/GetStatementsOptions';
+import StatementsResultOptions from '../../../serviceFactory/options/StatementsResultOptions';
 
 interface MoreLinkOptions {
   results: StatementsResult;

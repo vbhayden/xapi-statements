@@ -1,5 +1,5 @@
 import assertStatementsResult from '../utils/assertStatementsResult';
-import { Service } from '../../service';
+import Service from '../../serviceFactory/Service';
 import setup from '../utils/setup';
 import createClientModel from '../utils/createClientModel';
 import attachmentsTest, { StatementCreator } from '../utils/attachmentsTest';

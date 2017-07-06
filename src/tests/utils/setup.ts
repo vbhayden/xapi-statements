@@ -1,5 +1,5 @@
 import 'mocha';
-import { Service } from '../../service';
+import Service from '../../serviceFactory/Service';
 import service from '../../tester';
 
 export default (): Service => {

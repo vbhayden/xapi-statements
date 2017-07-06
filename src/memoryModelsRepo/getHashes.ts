@@ -7,9 +7,7 @@ import Config from './Config';
 export default (config: Config) => {
   return async (opts: GetHashesOptions): Promise<StatementHash[]> => {
     const filteredModels = config.state.statements.filter((model) => {
-      return (
-        includes(opts.ids, model.statement.id)
-      );
+      return includes(opts.ids, model.statement.id);
     });
     return filteredModels.map((model: StoredStatementModel): StatementHash => {
       return {

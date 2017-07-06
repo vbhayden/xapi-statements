@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { isArray } from 'lodash';
-import GetStatementsOptions from '../../service/options/GetStatementsOptions';
+import GetStatementsOptions from '../../serviceFactory/options/GetStatementsOptions';
 import setup from '../utils/setup';
 import createClientModel from '../utils/createClientModel';
 import createStatement from '../utils/createStatement';

@@ -1,6 +1,6 @@
 import StatementsResult from '../models/StatementsResult';
+import GetStatementOptions from '../serviceFactory/options/GetStatementOptions';
 import { STATEMENT_READ_SCOPES } from '../utils/scopes';
-import GetStatementOptions from './options/GetStatementOptions';
 import checkScopes from './utils/checkScopes';
 import getStatementsResult from './utils/getStatementsResult';
 import Config from './Config';

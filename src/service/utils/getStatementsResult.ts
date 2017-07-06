@@ -1,6 +1,6 @@
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import StatementsResult from '../../models/StatementsResult';
-import StatementsResultOptions from '../options/StatementsResultOptions';
+import StatementsResultOptions from '../../serviceFactory/options/StatementsResultOptions';
 import getAttachments from '../utils/getAttachments';
 import formatStatements from '../utils/formatStatements';
 import Config from '../Config';

@@ -1,4 +1,4 @@
-import StatementsResultOptions from '../../../service/options/StatementsResultOptions';
+import StatementsResultOptions from '../../../serviceFactory/options/StatementsResultOptions';
 
 export default (queryParams: any): StatementsResultOptions => {
   return {

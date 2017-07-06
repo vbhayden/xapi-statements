@@ -1,5 +1,5 @@
 import { STATEMENT_WRITE_SCOPES } from '../../utils/scopes';
-import StoreStatementsOptions from '../options/StoreStatementsOptions';
+import StoreStatementsOptions from '../../serviceFactory/options/StoreStatementsOptions';
 import checkScopes from '../utils/checkScopes';
 import Config from '../Config';
 import preValidationSetup from './preValidationSetup';

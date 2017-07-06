@@ -3,28 +3,15 @@ sourceMapSupport.install();
 
 import * as express from 'express';
 import translatorFactory from './translatorFactory';
-import repoFactory from './repoFactory';
+import serviceFactory from './serviceFactory';
 import presenter from './expressPresenter';
-import service from './service';
 import config from './config';
 import logger from './logger';
 
 const app = express();
 
 const translator = translatorFactory();
-const repoFacade = repoFactory();
-const serviceFacade = service({
-  defaultTimeout: 1000,
-  repo: repoFacade,
-  enableConflictChecks: true,
-  enableAttachmentValidation: true,
-  enableVoidingChecks: true,
-  enableStatementCreation: true,
-  enableAttachmentCreation: true,
-  enableVoiding: true,
-  enableReferencing: true,
-  awaitUpdates: true,
-});
+const serviceFacade = serviceFactory();
 const presenterFacade = presenter({
   llClientInfoEndpoint: config.llClientInfoEndpoint,
   customRoute: config.express.customRoute,

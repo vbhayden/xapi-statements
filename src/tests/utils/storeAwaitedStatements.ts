@@ -1,7 +1,7 @@
 // import * as bluebird from 'bluebird';
 // import * as promiseRetry from 'promise-retry';
-import { Service } from '../../service';
-import StoreStatementsOptions from '../../service/options/StoreStatementsOptions';
+import Service from '../../serviceFactory/Service';
+import StoreStatementsOptions from '../../serviceFactory/options/StoreStatementsOptions';
 // import createClientModel from '../utils/createClientModel';
 
 // const TEST_CLIENT = createClientModel();

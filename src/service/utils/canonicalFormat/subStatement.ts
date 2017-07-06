@@ -5,13 +5,7 @@ import formatSubStatementObject from './subStatementObject';
 export default (statement: SubStatement, langs: string[]): SubStatement => {
   return {
     ...statement,
-    ...formatStatementBase({
-      actor: statement.actor,
-      verb: statement.verb,
-      object: statement.object,
-      context: statement.context,
-      attachments: statement.attachments,
-    }, langs),
+    ...formatStatementBase(statement, langs),
     object: formatSubStatementObject(statement.object, langs),
   };
 };

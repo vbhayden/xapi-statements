@@ -2,10 +2,15 @@ languages: typescript
 files:
   - src/**/*
 exclude:
-  - src/models/**/*
+  - src/*.ts
+  - src/models/*.ts
   - src/service/index.ts
-  - src/memoryRepo/index.ts
-  - src/mongoRepo/index.ts
+  - src/memoryModelsRepo/index.ts
+  - src/mongoModelsRepo/index.ts
+  - src/s3StorageRepo/index.ts
+  - src/localStorageRepo/index.ts
+  - src/serviceFactory/**/*.ts
+  - src/repoFactory/**/*.ts
 min-lines: 5
 min-tokens: 38
 debug: false
