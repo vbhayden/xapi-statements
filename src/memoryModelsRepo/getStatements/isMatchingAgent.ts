@@ -16,6 +16,8 @@ const isMatchingIfi = (actor: Actor, filterAgent: FilterAgent): boolean => {
   } else if (filterAgent.mbox_sha1sum !== undefined) {
     return filterAgent.mbox_sha1sum === actor.mbox_sha1sum;
   }
+
+  /* istanbul ignore next */
   return false;
 };
 

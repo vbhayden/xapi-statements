@@ -9,6 +9,8 @@ const getTargetId = (model: StoredStatementModel) => {
   if (model.statement.object.objectType === 'StatementRef') {
     return model.statement.object.id;
   }
+
+  /* istanbul ignore next */
   throw new ChangedStatementRef(model.statement.id);
 };
 

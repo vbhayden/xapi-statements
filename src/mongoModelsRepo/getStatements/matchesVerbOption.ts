@@ -1,7 +1,7 @@
 import matchesModel from './matchesModel';
 
 const matcher = (statementKey: string, verb: string): Object => {
-  return verb === undefined ? {} : {
+  return {
     [`${statementKey}.verb.id`]: verb,
   };
 };

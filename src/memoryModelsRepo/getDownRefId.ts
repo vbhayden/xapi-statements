@@ -18,6 +18,8 @@ export default (config: Config) => {
     if (statementObject.objectType === 'StatementRef') {
       return statementObject.id;
     }
+
+    /* istanbul ignore next */
     throw new ChangedStatementRef(opts.id);
   };
 };

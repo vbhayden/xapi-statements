@@ -2,7 +2,7 @@ import ClientModel from '../../models/ClientModel';
 
 interface GetStatementOptions {
   id: string;
-  voided?: boolean;
+  voided: boolean;
   client: ClientModel;
 }
 

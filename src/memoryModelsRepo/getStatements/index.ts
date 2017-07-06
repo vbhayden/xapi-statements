@@ -33,6 +33,8 @@ const sortModels = (models: StoredStatementModel[], ascending: boolean) => {
     const storedA = modelA.statement.stored;
     const storedB = modelB.statement.stored;
     if (storedA < storedB) return lower;
+
+    /* istanbul ignore next */
     if (storedA > storedB) return higher;
     return 0;
   });
@@ -41,7 +43,7 @@ const sortModels = (models: StoredStatementModel[], ascending: boolean) => {
 const limitModels = (
   models: StoredStatementModel[],
   skip: number = 0,
-  limit: number = models.length
+  limit: number
 ) => {
   return models.slice(skip, limit + skip);
 };

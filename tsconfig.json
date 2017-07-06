@@ -5,16 +5,10 @@
     "target": "es5",
     "rootDir": "src",
     "outDir": "dist",
-    "lib": [
-      "ES2015",
-      "ES2016"
-    ],
-    "typeRoots": [
-      "./@types",
-      "./node_modules/@types"
-    ],
+    "lib": ["ES2015", "ES2016"],
+    "typeRoots": ["./@types", "./node_modules/@types"],
     "sourceMap": true,
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
     "declaration": false,
     "strictNullChecks": true,
@@ -25,12 +19,7 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true
   },
-  "includes": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist/**/*"
-  ],
+  "includes": ["src/**/*"],
+  "exclude": ["node_modules", "dist/**/*"],
   "compileOnSave": false
 }

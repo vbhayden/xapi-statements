@@ -10,9 +10,18 @@ export default commonWinston({
     enabled: config.winston.cloudWatch.enabled,
     logGroupName: config.winston.cloudWatch.logGroupName,
     awsConfig: {
-      accessKeyId: config.winston.cloudWatch.awsConfig.accessKeyId || '',
-      secretAccessKey: config.winston.cloudWatch.awsConfig.secretAccessKey || '',
-      region: config.winston.cloudWatch.awsConfig.region || '',
+      accessKeyId: (
+        /* istanbul ignore next */
+        config.winston.cloudWatch.awsConfig.accessKeyId || ''
+      ),
+      secretAccessKey: (
+        /* istanbul ignore next */
+        config.winston.cloudWatch.awsConfig.secretAccessKey || ''
+      ),
+      region: (
+        /* istanbul ignore next */
+        config.winston.cloudWatch.awsConfig.region || ''
+      ),
     },
   }
 });

@@ -18,6 +18,8 @@ export default (config: Config) => {
       if (model.statement.object.objectType === 'StatementRef') {
         return model.statement.object.id;
       }
+
+      /* istanbul ignore next */
       throw new ChangedStatementRef(model.statement.id);
     });
   };

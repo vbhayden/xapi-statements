@@ -36,7 +36,7 @@ export default (config: Config) => {
     const query = filterModels(opts);
     const sort = sortModels(opts.ascending);
     const skip = opts.skip || 0;
-    const limit = opts.limit || 0;
+    const limit = opts.limit;
 
     const models = await collection
       .find(query)

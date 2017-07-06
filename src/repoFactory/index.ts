@@ -9,6 +9,7 @@ import StorageRepo from './StorageRepo';
 import ModelsRepo from './ModelsRepo';
 import config from '../config';
 
+/* istanbul ignore next */
 const getModelsRepo = (): ModelsRepo => {
   switch (config.modelsRepoName) {
     case 'mongo':
@@ -22,6 +23,7 @@ const getModelsRepo = (): ModelsRepo => {
   }
 };
 
+/* istanbul ignore next */
 const getStorageRepo = (): StorageRepo => {
   switch (config.storageRepoName) {
     case 's3':

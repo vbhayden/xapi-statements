@@ -6,7 +6,9 @@ export default async (
   config: Config,
   attachments: AttachmentModel[]
 ): Promise<void> => {
+  /* istanbul ignore next */
   if (!config.enableAttachmentCreation) return;
+
   const uniqueAttachments = removeDuplicates(attachments, (attachment) => {
     return attachment.hash;
   });

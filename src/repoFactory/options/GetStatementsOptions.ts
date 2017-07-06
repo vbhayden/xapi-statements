@@ -11,7 +11,7 @@ interface GetStatementsOptions {
   since?: string;
   until?: string;
   ascending: boolean;
-  limit?: number;
+  limit: number;
   skip?: number;
   client: ClientModel;
   cursor?: string;

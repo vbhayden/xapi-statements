@@ -19,6 +19,8 @@ const isMatchingIfi = (actorKey: string, filterAgent: FilterAgent): Object => {
   if (filterAgent.mbox_sha1sum !== undefined) {
     return { [`${actorKey}.mbox_sha1sum`]: filterAgent.mbox_sha1sum };
   }
+
+  /* istanbul ignore next */
   return {};
 };
 

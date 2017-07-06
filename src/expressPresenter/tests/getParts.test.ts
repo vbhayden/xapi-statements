@@ -65,6 +65,16 @@ describe('expressPresenter/utils/getParts', () => {
     assert.deepEqual(actualParts, expectedParts);
   });
 
+  it('should return one part when there is one part without content in one chunk', async () => {
+    const testHeaders = `${crlf}${headersToString(TEST_HEADERS)}`;
+    const stream = new ReadableStream();
+    stream.push(`${TEST_PART_BOUNDARY}${testHeaders}${TEST_PART_BOUNDARY}--`);
+    stream.push(null);
+    const actualParts = await getTestParts(stream, TEST_BOUNDARY);
+    const expectedParts = [{ content: '', headers: TEST_HEADERS }];
+    assert.deepEqual(actualParts, expectedParts);
+  });
+
   it('should return one part when there is one part with headers in one chunk', async () => {
     const testHeaders = `${crlf}${headersToString(TEST_HEADERS)}`;
     const testContent = `${crlf}${crlf}${TEST_CONTENT}`;
@@ -166,6 +176,17 @@ describe('expressPresenter/utils/getParts', () => {
     stream.push(`:application/json${testContent}${TEST_PART_BOUNDARY}--invalid_content`);
     stream.push(null);
     await assertError(DataBeyondFinalBoundary)(
+      getTestParts(stream, TEST_BOUNDARY)
+    );
+  });
+
+  it('should throw error when there is an error in the stream', async () => {
+    const stream = new ReadableStream();
+    const error = new Error();
+    try {
+      stream.emit('error', error);
+    } catch (err) { }
+    await assertError(Error)(
       getTestParts(stream, TEST_BOUNDARY)
     );
   });

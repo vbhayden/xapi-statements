@@ -6,7 +6,9 @@ export default async (
   statements: UnstoredStatementModel[],
   voidedObjectIds: string[]
 ): Promise<void> => {
+  /* istanbul ignore next */
   if (!config.enableVoiding) return;
+
   const statementIds = statements.map((model) => {
     return model.statement.id;
   });

@@ -10,7 +10,7 @@ const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 const TEST_CLIENT = createClientModel();
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
-  return (createActor: (actor: any) => any, relatedAgents: boolean = false) => {
+  return (createActor: (actor: any) => any, relatedAgents: boolean) => {
     const service = setup();
     const storeStatements = (statements: any[], authority?: Actor) => {
       return storeAwaitedStatements(service)({

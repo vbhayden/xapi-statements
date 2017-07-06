@@ -15,6 +15,7 @@ export default (config: Config) => {
           resolve(filePath);
         });
         model.stream.on('error', (err: any) => {
+          /* istanbul ignore next */
           reject(err);
         });
       });

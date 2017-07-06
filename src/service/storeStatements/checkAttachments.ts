@@ -10,7 +10,9 @@ export default async (
   statements: UnstoredStatementModel[],
   attachments: AttachmentModel[],
 ): Promise<void> => {
+  /* istanbul ignore next */
   if (!config.enableAttachmentValidation) return;
+
   const attachmentHashes = attachments.map((attachment) => {
     return attachment.hash;
   });

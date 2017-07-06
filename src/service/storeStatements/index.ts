@@ -36,6 +36,7 @@ export default (config: Config) => {
       updateReferences(config, unstoredModels),
     ]);
 
+    /* istanbul ignore next */
     if (config.awaitUpdates === true) {
       await unawaitedUpdates;
     }

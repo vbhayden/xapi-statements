@@ -10,10 +10,7 @@ export default (config: Config) => {
       return (
         model.statement.id === opts.id &&
         matchesClientOption(model, opts.client) &&
-        (
-          opts.voided === undefined ? true :
-            model.voided === opts.voided
-        )
+        model.voided === opts.voided
       );
     });
     if (filteredModels.length === 0) {

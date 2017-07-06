@@ -21,6 +21,7 @@ const stack = <T>(value: T, values: T[]): T[] => {
 };
 
 export default async (config: Config, models: UnstoredStatementModel[]): Promise<void> => {
+  /* istanbul ignore next */
   if (!config.enableReferencing) return;
 
   const groupedUpRefIds = await eagerLoadUpRefs(config, models);
@@ -50,6 +51,7 @@ export default async (config: Config, models: UnstoredStatementModel[]): Promise
       if (has(groupedDownRefs, targetId)) {
         return groupedDownRefs[targetId];
       }
+      /* istanbul ignore next */
       throw new MissingLoadedId(targetId);
     });
     const unloadedDownRefs = await config.repo.getStatementsByIds({
@@ -82,6 +84,7 @@ export default async (config: Config, models: UnstoredStatementModel[]): Promise
       if (err.constructor === NoModel) {
         return traverseUp([], [], modelId);
       }
+      /* istanbul ignore next */
       throw err;
     }
   };

@@ -53,7 +53,9 @@ const repoConflicts = async (config: Config, modelsMap: ModelsMap): Promise<Unst
 };
 
 export default async (config: Config, models: UnstoredStatementModel[]): Promise<UnstoredStatementModel[]> => {
+  /* istanbul ignore next */
   if (!config.enableConflictChecks) return models;
+
   const conflictRes = modelsConflicts(models);
   const ungeneratedIdModels = await repoConflicts(config, conflictRes.modelsMap);
   return [...ungeneratedIdModels, ...conflictRes.generatedIdModels];
