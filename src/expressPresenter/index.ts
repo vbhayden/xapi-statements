@@ -1,4 +1,4 @@
-import commonExpressPresenter from 'jscommons/dist/expressPresenter'
+import commonExpressPresenter from 'jscommons/dist/expressPresenter';
 import { Router } from 'express';
 import getAbout from './getAbout';
 import getDemoAuth from './getDemoAuth';
