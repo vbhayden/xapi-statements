@@ -13,6 +13,13 @@ import createStatements from './createStatements';
 import voidStatements from './voidStatements';
 import updateReferences from './updateReferences';
 
+/* istanbul ignore next */
+const awaitUpdates = async (config: Config, updates: Promise<any>) => {
+  if (config.awaitUpdates === true) {
+    await updates;
+  }
+};
+
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
     checkScopes(STATEMENT_WRITE_SCOPES, opts.client.scopes);
@@ -36,10 +43,7 @@ export default (config: Config) => {
       updateReferences(config, unstoredModels),
     ]);
 
-    /* istanbul ignore next */
-    if (config.awaitUpdates === true) {
-      await unawaitedUpdates;
-    }
+    await awaitUpdates(config, unawaitedUpdates);
 
     return statementIds;
   };

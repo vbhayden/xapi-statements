@@ -1,10 +1,7 @@
-import canonicalActivityTest from './utils/canonicalActivityTest';
-import createActivity from './utils/createActivity';
+import canonicalObjectTest from './utils/canonicalObjectTest';
 
 describe('get canonical statements object', () => {
-  canonicalActivityTest((definition: any) => {
-    return {
-      object: createActivity(definition),
-    };
+  canonicalObjectTest((object: any) => {
+    return { object };
   });
 });

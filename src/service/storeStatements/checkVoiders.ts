@@ -31,6 +31,7 @@ const getVoiders = (statements: UnstoredStatementModel[]): VoidResult => {
 const checkWithinStatements = (voiderIds: string[], voidingModels: UnstoredStatementModel[]): void => {
   voidingModels.forEach((model) => {
     if (model.statement.object.objectType !== 'StatementRef') {
+      /* istanbul ignore next - Should already be caught in validation. */
       throw new InvalidVoidType(model.statement.object.objectType);
     }
     const targetId = model.statement.object.id;

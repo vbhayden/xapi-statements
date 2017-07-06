@@ -1,11 +1,8 @@
 import createSubStatement from '../../utils/createSubStatement';
-import canonicalActivityTest from './utils/canonicalActivityTest';
-import createActivity from './utils/createActivity';
+import canonicalObjectTest from './utils/canonicalObjectTest';
 
 describe('get canonical statements sub statement object', () => {
-  canonicalActivityTest((definition: any) => {
-    return createSubStatement({
-      object: createActivity(definition),
-    });
+  canonicalObjectTest((object: any) => {
+    return createSubStatement({ object });
   });
 });
