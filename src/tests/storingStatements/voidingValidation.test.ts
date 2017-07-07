@@ -1,8 +1,8 @@
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import VoidingError from '../../errors/VoidingError';
 import setup from '../utils/setup';
 import createVoidingStatement from '../utils/createVoidingStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
-import assertError from '../utils/assertError';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
@@ -14,7 +14,8 @@ describe('store statements voiding validation', () => {
   const storeStatements = storeStatementsInService(service);
 
   const assertVoidingError = (statements: any[]): Promise<void> => {
-    return assertError(VoidingError)(storeStatements(statements));
+    const promise = storeStatements(statements);
+    return assertError(VoidingError, promise);
   };
 
   it('should throw an error when voiding a voider in a following batch', async () => {

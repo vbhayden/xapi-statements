@@ -6,10 +6,10 @@ import * as assert from 'assert';
 import { Readable as ReadableStream } from 'stream';
 import { map } from 'lodash';
 import * as streamToString from 'stream-to-string';
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import DataBeforeFirstBoundary from '../../errors/DataBeforeFirstBoundary';
 import DataBeyondFinalBoundary from '../../errors/DataBeyondFinalBoundary';
 import Part from '../../models/Part';
-import assertError from '../../tests/utils/assertError';
 import getParts from '../utils/getParts';
 
 const TEST_BOUNDARY = 'test_boundary';
@@ -164,9 +164,8 @@ describe('expressPresenter/utils/getParts', () => {
     stream.push(`invalid_content${TEST_PART_BOUNDARY}${crlf}Content-Type`);
     stream.push(`:application/json${testContent}${TEST_PART_BOUNDARY}--`);
     stream.push(null);
-    await assertError(DataBeforeFirstBoundary)(
-      getTestParts(stream, TEST_BOUNDARY)
-    );
+    const promise = getTestParts(stream, TEST_BOUNDARY);
+    await assertError(DataBeforeFirstBoundary, promise);
   });
 
   it('should throw error when there is content after the final boundary', async () => {
@@ -175,9 +174,8 @@ describe('expressPresenter/utils/getParts', () => {
     stream.push(`${TEST_PART_BOUNDARY}${crlf}Content-Type`);
     stream.push(`:application/json${testContent}${TEST_PART_BOUNDARY}--invalid_content`);
     stream.push(null);
-    await assertError(DataBeyondFinalBoundary)(
-      getTestParts(stream, TEST_BOUNDARY)
-    );
+    const promise = getTestParts(stream, TEST_BOUNDARY);
+    await assertError(DataBeyondFinalBoundary, promise);
   });
 
   it('should throw error when there is an error in the stream', async () => {
@@ -186,8 +184,7 @@ describe('expressPresenter/utils/getParts', () => {
     try {
       stream.emit('error', error);
     } catch (err) { }
-    await assertError(Error)(
-      getTestParts(stream, TEST_BOUNDARY)
-    );
+    const promise = getTestParts(stream, TEST_BOUNDARY);
+    await assertError(Error, promise);
   });
 });

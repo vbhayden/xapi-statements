@@ -1,10 +1,10 @@
 import { difference } from 'lodash';
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import Forbidden from 'jscommons/dist/errors/Forbidden';
 import * as scopes from '../../utils/scopes';
 import allScopes from '../../utils/scopes';
 import setup from '../utils/setup';
 import createClientModel from '../utils/createClientModel';
-import assertError from '../utils/assertError';
 
 const TEST_FORBIDDEN_SCOPES = difference(allScopes, scopes.STATEMENT_WRITE_SCOPES);
 
@@ -38,6 +38,6 @@ describe('store statements with scopes', () => {
       attachments: [],
       client,
     });
-    await assertError(Forbidden)(promise);
+    await assertError(Forbidden, promise);
   });
 });

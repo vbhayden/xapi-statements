@@ -1,11 +1,11 @@
 import * as assert from 'assert';
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import Statement from '../models/Statement';
 import setup from './utils/setup';
 import createStatement from './utils/createStatement';
 import createClientModel from './utils/createClientModel';
 import storeStatementsInService from './utils/storeStatementsInService';
-import assertError from './utils/assertError';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
@@ -35,12 +35,7 @@ describe('get statement', () => {
       lrs_id: 'unknown_lrs_id'
     });
     await storeStatements([TEST_STATEMENT]);
-    await assertError(NoModel)(
-      service.getStatement({
-        id: TEST_ID,
-        voided: false,
-        client: unknownClient
-      })
-    );
+    const promise = service.getStatement({ id: TEST_ID, voided: false, client: unknownClient });
+    await assertError(NoModel, promise);
   });
 });

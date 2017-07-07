@@ -1,10 +1,10 @@
 import * as assert from 'assert';
 import { difference } from 'lodash';
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import Forbidden from 'jscommons/dist/errors/Forbidden';
 import * as scopes from '../../utils/scopes';
 import allScopes from '../../utils/scopes';
 import setup from '../utils/setup';
-import assertError from '../utils/assertError';
 import createStatement from '../utils/createStatement';
 import createClientModel from '../utils/createClientModel';
 import storeStatementsInService from '../utils/storeStatementsInService';
@@ -61,6 +61,6 @@ describe('get statements with scopes', () => {
     });
     await storeStatements([TEST_STATEMENT]);
     const promise = service.getStatements({ client });
-    await assertError(Forbidden)(promise);
+    await assertError(Forbidden, promise);
   });
 });

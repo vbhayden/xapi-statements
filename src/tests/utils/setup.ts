@@ -1,16 +1,9 @@
-import 'mocha';
+import setupService from 'jscommons/dist/tests/utils/setupService';
 import Service from '../../serviceFactory/Service';
 import service from '../../tester';
 
+const setup = setupService(service);
+
 export default (): Service => {
-  before(async () => {
-    await service.rollback();
-    await service.migrate();
-  });
-
-  beforeEach(async () => {
-    await service.clearService();
-  });
-
-  return service;
+  return setup();
 };

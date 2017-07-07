@@ -1,4 +1,5 @@
 import { difference } from 'lodash';
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import Forbidden from 'jscommons/dist/errors/Forbidden';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import * as scopes from '../../utils/scopes';
@@ -7,7 +8,6 @@ import setup from '../utils/setup';
 import createStatement from '../utils/createStatement';
 import createClientModel from '../utils/createClientModel';
 import storeStatementsInService from '../utils/storeStatementsInService';
-import assertError from '../utils/assertError';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
@@ -29,9 +29,8 @@ describe('get statement with scopes', () => {
       scopes: [scopes.XAPI_STATEMENTS_READ_MINE],
     });
     await storeStatements([TEST_STATEMENT]);
-    await assertError(NoModel)(
-      service.getStatement({ id: TEST_ID, voided: false, client })
-    );
+    const promise = service.getStatement({ id: TEST_ID, voided: false, client });
+    await assertError(NoModel, promise);
   });
 
   it('should return a statement when using a different client with xAPI all scope', async () => {
@@ -57,6 +56,6 @@ describe('get statement with scopes', () => {
     });
     await storeStatements([TEST_STATEMENT]);
     const promise = service.getStatement({ id: TEST_ID, voided: false, client });
-    await assertError(Forbidden)(promise);
+    await assertError(Forbidden, promise);
   });
 });
