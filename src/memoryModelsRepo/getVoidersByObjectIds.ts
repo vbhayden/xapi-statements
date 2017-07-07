@@ -1,26 +1,28 @@
 import { includes } from 'lodash';
 import ChangedStatementRef from '../errors/ChangedStatementRef';
-import StoredStatementModel from '../models/StoredStatementModel';
+import Statement from '../models/Statement';
 import GetVoidersOptions from '../repoFactory/options/GetVoidersOptions';
 import voidVerbId from '../utils/voidVerbId';
+import getStatements from './utils/getStatements';
 import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: GetVoidersOptions): Promise<string[]> => {
-    const filteredModels = config.state.statements.filter((model) => {
+    const query = (statement: Statement) => {
       return (
-        model.statement.verb.id === voidVerbId &&
-        model.statement.object.objectType === 'StatementRef' &&
-        includes(opts.ids, model.statement.object.id)
+        statement.verb.id === voidVerbId &&
+        statement.object.objectType === 'StatementRef' &&
+        includes(opts.ids, statement.object.id)
       );
-    });
-    return filteredModels.map((model: StoredStatementModel): string => {
-      if (model.statement.object.objectType === 'StatementRef') {
-        return model.statement.object.id;
+    };
+    const project = (statement: Statement): string => {
+      if (statement.object.objectType === 'StatementRef') {
+        return statement.object.id;
       }
 
       /* istanbul ignore next */
-      throw new ChangedStatementRef(model.statement.id);
-    });
+      throw new ChangedStatementRef(statement.id);
+    };
+    return getStatements({ config, query, project });
   };
 };

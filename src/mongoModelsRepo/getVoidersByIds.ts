@@ -1,17 +1,15 @@
 import GetVoidersOptions from '../repoFactory/options/GetVoidersOptions';
-import getVoidersByIds from './utils/getVoidersByIds';
+import voidQuery from './utils/voidQuery';
+import getStatements from './utils/getStatements';
 import Config from './Config';
 
-interface Result {
-  statement: {
-    id: string;
-  };
-}
+interface Result { statement: { id: string; }; }
 
 export default (config: Config) => {
   return async (opts: GetVoidersOptions): Promise<string[]> => {
-    const searchKey = 'statement.id';
-    const results = await getVoidersByIds({ config, searchKey, ...opts }) as Result[];
+    const query = { 'statement.id': { $in: opts.ids }, ...voidQuery };
+    const project = { 'statement.id': 1 };
+    const results = await getStatements({ config, query, project }) as Result[];
     return results.map((result) => {
       return result.statement.id;
     });

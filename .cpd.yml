@@ -2,6 +2,7 @@ languages: typescript
 files:
   - src/**/*
 exclude:
+  - src/**/tests/**/*.ts
   - src/*.ts
   - src/models/*.ts
   - src/service/index.ts
@@ -15,4 +16,4 @@ min-lines: 5
 min-tokens: 38
 debug: false
 skip-comments: true
-skip-regex: import [\'\w\*\{\s\,\.\/\}]+\;*
+skip-regex: (import [\'\w\*\{\s\,\.\/\}]+\;*)|(export\sdefault\s\(config:\sConfig\)\s=>\s{)|( +return\sasync\s\(opts:\s\w+\):\sPromise<[^>]+>\s=>\s{)
