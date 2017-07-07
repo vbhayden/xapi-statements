@@ -1,5 +1,5 @@
 import repoFactory from '../repoFactory';
-import service from '../Service';
+import service from '../service';
 import Service from './Service';
 
 export default (): Service => {
