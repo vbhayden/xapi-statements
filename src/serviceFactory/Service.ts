@@ -1,4 +1,4 @@
-import { Service as CommonService} from 'jscommons/dist/service';
+import CommonService from 'jscommons/dist/serviceFactory/Service';
 import StatementsResult from '../models/StatementsResult';
 import StoreStatementsOptions from './options/StoreStatementsOptions';
 import GetStatementOptions from './options/GetStatementOptions';
