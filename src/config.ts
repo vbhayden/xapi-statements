@@ -40,29 +40,29 @@ export default {
     bodyParserLimit: process.env.EXPRESS_BODY_PARSER_LIMIT || '5mb',
   },
   service: {
-    enableConflictChecks: defaultTo<boolean>(
-      boolean(process.env.SERVICE_CHECK_CONFLICTS), true
+    enableConflictChecks: boolean(
+      defaultTo<any>(process.env.SERVICE_CHECK_CONFLICTS, true)
     ),
-    enableAttachmentValidation: defaultTo<boolean>(
-      boolean(process.env.SERVICE_CHECK_ATTACHMENTS), true
+    enableAttachmentValidation: boolean(
+      defaultTo<any>(process.env.SERVICE_CHECK_ATTACHMENTS, true)
     ),
-    enableVoidingChecks: defaultTo<boolean>(
-      boolean(process.env.SERVICE_CHECK_VOIDS), true
+    enableVoidingChecks: boolean(
+      defaultTo<any>(process.env.SERVICE_CHECK_VOIDS, true)
     ),
-    enableStatementCreation: defaultTo<boolean>(
-      boolean(process.env.SERVICE_CREATE_STATEMENTS), true
+    enableStatementCreation: boolean(
+      defaultTo<any>(process.env.SERVICE_CREATE_STATEMENTS, true)
     ),
-    enableAttachmentCreation: defaultTo<boolean>(
-      boolean(process.env.SERVICE_CREATE_ATTACHMENTS), true
+    enableAttachmentCreation: boolean(
+      defaultTo<any>(process.env.SERVICE_CREATE_ATTACHMENTS, true)
     ),
-    enableVoiding: defaultTo<boolean>(
-      boolean(process.env.SERVICE_UPDATE_VOIDS), true
+    enableVoiding: boolean(
+      defaultTo<any>(process.env.SERVICE_UPDATE_VOIDS, true)
     ),
-    enableReferencing: defaultTo<boolean>(
-      boolean(process.env.SERVICE_UPDATE_REFS), true
+    enableReferencing: boolean(
+      defaultTo<any>(process.env.SERVICE_UPDATE_REFS, true)
     ),
-    awaitUpdates: defaultTo<boolean>(
-      boolean(process.env.SERVICE_AWAIT_UODATES), true
+    awaitUpdates: boolean(
+      defaultTo<any>(process.env.SERVICE_AWAIT_UODATES, true)
     ),
   },
   storage: {
