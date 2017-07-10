@@ -3,6 +3,7 @@ config();
 
 import { S3 } from 'aws-sdk';
 import * as boolean from 'boolean';
+import { defaultTo } from 'lodash';
 const storageDir = `${process.cwd()}/storage`;
 const expressPort = Number(process.env.EXPRESS_PORT) || 80;
 
@@ -37,6 +38,32 @@ export default {
     customRouteText: process.env.EXPRESS_CUSTOM_ROUTE_TEXT || 'ok',
     morganDirectory: process.env.EXPRESS_MORGAN_DIRECTORY || `${storageDir}/accessLogs`,
     bodyParserLimit: process.env.EXPRESS_BODY_PARSER_LIMIT || '5mb',
+  },
+  service: {
+    enableConflictChecks: defaultTo<boolean>(
+      boolean(process.env.SERVICE_CHECK_CONFLICTS), true
+    ),
+    enableAttachmentValidation: defaultTo<boolean>(
+      boolean(process.env.SERVICE_CHECK_ATTACHMENTS), true
+    ),
+    enableVoidingChecks: defaultTo<boolean>(
+      boolean(process.env.SERVICE_CHECK_VOIDS), true
+    ),
+    enableStatementCreation: defaultTo<boolean>(
+      boolean(process.env.SERVICE_CREATE_STATEMENTS), true
+    ),
+    enableAttachmentCreation: defaultTo<boolean>(
+      boolean(process.env.SERVICE_CREATE_ATTACHMENTS), true
+    ),
+    enableVoiding: defaultTo<boolean>(
+      boolean(process.env.SERVICE_UPDATE_VOIDS), true
+    ),
+    enableReferencing: defaultTo<boolean>(
+      boolean(process.env.SERVICE_UPDATE_REFS), true
+    ),
+    awaitUpdates: defaultTo<boolean>(
+      boolean(process.env.SERVICE_AWAIT_UODATES), true
+    ),
   },
   storage: {
     local: {
