@@ -1,4 +1,3 @@
-import upload from 'jscommons/dist/s3Repo/utils/upload';
 import CreateAttachmentsOptions from '../repoFactory/options/CreateAttachmentsOptions';
 import Config from './Config';
 
@@ -7,11 +6,11 @@ export default (config: Config) => {
     const attachmentsDirectory = `${config.subFolder}/attachments`;
     const promises = opts.models.map((model) => {
       const filePath = `${attachmentsDirectory}/${model.hash}`;
-      return upload(config.client, {
+      return config.client.upload({
         Bucket: config.bucketName,
         Body: model.stream,
         Key: filePath,
-      });
+      }).promise();
     });
     await Promise.all(promises);
   };
