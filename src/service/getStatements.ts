@@ -1,7 +1,7 @@
+import checkScopes from 'jscommons/dist/service/utils/checkScopes';
 import { STATEMENT_READ_SCOPES } from '../utils/scopes';
 import GetStatementsOptions from '../serviceFactory/options/GetStatementsOptions';
 import StatementsResult from '../models/StatementsResult';
-import checkScopes from './utils/checkScopes';
 import getStatementsResult from './utils/getStatementsResult';
 import Config from './Config';
 

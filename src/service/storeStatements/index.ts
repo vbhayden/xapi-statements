@@ -1,6 +1,6 @@
+import checkScopes from 'jscommons/dist/service/utils/checkScopes';
 import { STATEMENT_WRITE_SCOPES } from '../../utils/scopes';
 import StoreStatementsOptions from '../../serviceFactory/options/StoreStatementsOptions';
-import checkScopes from '../utils/checkScopes';
 import Config from '../Config';
 import preValidationSetup from './preValidationSetup';
 import validateStatements from './validateStatements';
