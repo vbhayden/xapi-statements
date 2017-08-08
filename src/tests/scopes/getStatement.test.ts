@@ -25,7 +25,7 @@ describe('get statement with scopes', () => {
 
   it('should throw an error when using a different client with read mine scope', async () => {
     const client = createClientModel({
-      _id: 'test_client_b',
+      _id: '59890d100000000000000000',
       scopes: [scopes.XAPI_STATEMENTS_READ_MINE],
     });
     await storeStatements([TEST_STATEMENT]);
@@ -51,7 +51,7 @@ describe('get statement with scopes', () => {
 
   it('should throw an error when using a forbidden read scope', async () => {
     const client = createClientModel({
-      _id: 'test_client_b',
+      _id: '59890d100000000000000000',
       scopes: TEST_FORBIDDEN_SCOPES,
     });
     await storeStatements([TEST_STATEMENT]);
