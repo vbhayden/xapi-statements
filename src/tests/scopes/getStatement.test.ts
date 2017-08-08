@@ -18,7 +18,7 @@ describe('get statement with scopes', () => {
   const storeStatements = storeStatementsInService(service);
 
   const testReadAllScope = async (scopes: string[]) => {
-    const client = createClientModel({ _id: 'test_client_b', scopes });
+    const client = createClientModel({ _id: '59890d100000000000000000', scopes });
     await storeStatements([TEST_STATEMENT]);
     await service.getStatement({ id: TEST_ID, voided: false, client });
   };
