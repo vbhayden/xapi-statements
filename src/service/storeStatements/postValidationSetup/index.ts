@@ -18,7 +18,7 @@ export default (models: any[], client: ClientModel) => {
       organisation: client.organisation,
       lrs_id: client.lrs_id,
       client: client._id,
-      person: 'person',
+      person: null,
       active: true,
       voided: false,
       timestamp: timestampTime,
