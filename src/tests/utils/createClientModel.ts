@@ -9,10 +9,10 @@ const DEFAULT_AUTHORITY: Actor = {
 
 export default (overrides: Partial<ClientModel> = {}): ClientModel => {
   return {
-    _id: 'test_id',
+    _id: '5988f0f00000000000000002',
     title: 'test_title',
-    organisation: 'test_organisation',
-    lrs_id: 'test_lrs_id',
+    organisation: '5988f0f00000000000000000',
+    lrs_id: '5988f0f00000000000000001',
     api: {
       basic_key: 'test_basic_key',
       basic_secret: 'test_basic_secret',
