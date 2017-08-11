@@ -7,7 +7,7 @@ interface UnstoredStatementModel {
   organisation: string;
   client: string;
   lrs_id: string;
-  person: string;
+  person: string | null;
   active: boolean;
   voided: boolean;
   timestamp: Date;
