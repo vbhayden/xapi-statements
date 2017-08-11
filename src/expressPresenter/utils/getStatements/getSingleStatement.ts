@@ -7,7 +7,7 @@ import getStatementsResultOptions from './getStatementsResultOptions';
 
 const XAPI_VERSION = '1.0.0';
 
-interface Options {
+export interface Options {
   config: Config;
   res: Response;
   queryParams: any;

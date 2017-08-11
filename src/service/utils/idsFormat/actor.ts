@@ -1,14 +1,16 @@
+import Agent from '../../../models/Agent'; /* tslint:disable-line:no-unused-variable */
+import Group from '../../../models/Group'; /* tslint:disable-line:no-unused-variable */
 import Actor from '../../../models/Actor';
 import IdFormattedActor from '../../../models/IdFormattedActor';
 
-interface ActorWithId {
+export interface ActorWithId {
   account?: any;
   mbox?: any;
   mbox_sha1sum?: any;
   openid?: any;
 }
 
-interface ActorWithMembers {
+export interface ActorWithMembers {
   member?: any[];
 }
 

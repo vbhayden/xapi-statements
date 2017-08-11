@@ -1,6 +1,6 @@
 import StoredStatementModel from '../models/StoredStatementModel';
 
-interface State {
+export interface State {
   statements: StoredStatementModel[];
 }
 

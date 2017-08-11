@@ -1,13 +1,13 @@
 {
-  "name": "xapi-server",
+  "name": "xapi-statements",
   "version": "1.0.0",
-  "description": "A server for the xAPI",
+  "description": "A service for xAPI statements",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LearningLocker/xapi-server.git"
+    "url": "https://github.com/LearningLocker/xapi-statements.git"
   },
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc",

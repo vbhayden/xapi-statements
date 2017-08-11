@@ -8,6 +8,7 @@
     "max-classes-per-file": [true, 0],
     "max-line-length": [true, 120],
     "max-file-line-count": [true, 300],
+    "no-unused-variable": true,
     "no-unused-expression": true,
     "no-unused-new": true,
     "no-duplicate-variable": true,

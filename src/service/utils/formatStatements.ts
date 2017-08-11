@@ -1,3 +1,6 @@
+/* tslint:disable-next-line:no-unused-variable */
+import IdFormattedStatement from '../../models/IdFormattedStatement';
+import Statement from '../../models/Statement'; /* tslint:disable-line:no-unused-variable */
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import formatCanonically from './canonicalFormat/statement';
 import formatIds from './idsFormat/statement';

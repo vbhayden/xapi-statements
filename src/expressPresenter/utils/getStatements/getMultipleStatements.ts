@@ -6,7 +6,7 @@ import getMoreLink from './getMoreLink';
 import getStatementsOptions from './getStatementsOptions';
 import getStatementsResultOptions from './getStatementsResultOptions';
 
-interface Options {
+export interface Options {
   config: Config;
   res: Response;
   queryParams: any;

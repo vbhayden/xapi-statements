@@ -3,9 +3,10 @@ import StoredStatementModel from '../../models/StoredStatementModel';
 import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 
 export type Matcher = (statement: Statement, opts: GetStatementsOptions) => boolean;
+export type ModelMatcher = (model: StoredStatementModel, opts: GetStatementsOptions) => boolean;
 
-export default (matcher: Matcher) => {
-  return (model: StoredStatementModel, opts: GetStatementsOptions): boolean => {
+export default (matcher: Matcher): ModelMatcher => {
+  return (model, opts) => {
     return (
       model.voided === false &&
       (

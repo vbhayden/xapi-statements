@@ -1,6 +1,6 @@
 import Statement from '../../models/Statement';
 import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
-import matchesModel from './matchesModel';
+import matchesModel, { ModelMatcher } from './matchesModel';
 
 const matcher = (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
@@ -12,4 +12,4 @@ const matcher = (statement: Statement, opts: GetStatementsOptions): boolean => {
   );
 };
 
-export default matchesModel(matcher);
+export default matchesModel(matcher) as ModelMatcher;

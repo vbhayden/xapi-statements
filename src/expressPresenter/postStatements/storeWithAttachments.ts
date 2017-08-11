@@ -4,7 +4,7 @@ import getMultipartStatements from '../utils/getMultipartStatements';
 import Config from '../Config';
 import storeStatements from './storeStatements';
 
-interface Options {
+export interface Options {
   config: Config;
   req: Request;
   res: Response;

@@ -1,3 +1,7 @@
+import Activity from '../../../models/Activity'; /* tslint:disable-line:no-unused-variable */
+import Agent from '../../../models/Agent'; /* tslint:disable-line:no-unused-variable */
+import Group from '../../../models/Group'; /* tslint:disable-line:no-unused-variable */
+import StatementRef from '../../../models/StatementRef'; /* tslint:disable-line:no-unused-variable */
 import SubStatementObject from '../../../models/SubStatementObject';
 import formatActivity from './activity';
 

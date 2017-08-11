@@ -7,7 +7,7 @@ import Config from '../Config';
 
 const XAPI_VERSION = '1.0.0';
 
-interface Options {
+export interface Options {
   config: Config;
   body: any;
   attachments: AttachmentModel[];

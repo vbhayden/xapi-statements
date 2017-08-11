@@ -1,4 +1,6 @@
 import { find } from 'lodash';
+import Agent from '../../models/Agent'; /* tslint:disable-line:no-unused-variable */
+import Group from '../../models/Group'; /* tslint:disable-line:no-unused-variable */
 import Actor from '../../models/Actor';
 import FilterAgent from '../../models/FilterAgent';
 
@@ -31,7 +33,8 @@ const isMatchingActor = (actor: Actor, filterAgent: FilterAgent): boolean => {
   return (
     isMatchingIfi(actor, filterAgent) ||
     (
-      actor.objectType !== 'Group' || actor.member === undefined ? false : isMatchingMembers(actor.member, filterAgent)
+      actor.objectType !== 'Group' ||
+      actor.member === undefined ? false : isMatchingMembers(actor.member, filterAgent)
     )
   );
 };
