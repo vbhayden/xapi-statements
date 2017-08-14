@@ -10,6 +10,7 @@ exports.default = winston_1.default({
         level: config_1.default.winston.cloudWatch.level,
         enabled: config_1.default.winston.cloudWatch.enabled,
         logGroupName: config_1.default.winston.cloudWatch.logGroupName,
+        logStreamName: config_1.default.winston.cloudWatch.logStreamName,
         awsConfig: {
             accessKeyId: (
             /* istanbul ignore next */

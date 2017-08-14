@@ -2,7 +2,7 @@ import { S3 } from 'aws-sdk';
 declare const _default: {
     llClientInfoEndpoint: string;
     lang: string;
-    defaultTimeout: string | number;
+    defaultTimeout: number;
     modelsRepoName: string;
     storageRepoName: string;
     winston: {
@@ -13,7 +13,7 @@ declare const _default: {
             enabled: boolean;
             level: string;
             logGroupName: string;
-            logStreamName: string | undefined;
+            logStreamName: string;
             awsConfig: {
                 accessKeyId: string;
                 secretAccessKey: string;

@@ -45,7 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongodb_1 = require("mongodb");
-var aws_sdk_1 = require("aws-sdk");
+var S3 = require("aws-sdk/clients/s3");
 var memoryModelsRepo_1 = require("../memoryModelsRepo");
 var mongoModelsRepo_1 = require("../mongoModelsRepo");
 var localStorageRepo_1 = require("../localStorageRepo");
@@ -70,7 +70,7 @@ var getStorageRepo = function () {
     switch (config_1.default.storageRepoName) {
         case 's3':
             return s3StorageRepo_1.default({
-                client: new aws_sdk_1.S3(config_1.default.storage.s3.awsConfig),
+                client: new S3(config_1.default.storage.s3.awsConfig),
                 bucketName: config_1.default.storage.s3.bucketName,
                 subFolder: config_1.default.storage.s3.subFolder,
             });

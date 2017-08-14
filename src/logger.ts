@@ -10,6 +10,7 @@ export default commonWinston({
     level: config.winston.cloudWatch.level,
     enabled: config.winston.cloudWatch.enabled,
     logGroupName: config.winston.cloudWatch.logGroupName,
+    logStreamName: config.winston.cloudWatch.logStreamName,
     awsConfig: {
       accessKeyId: (
         /* istanbul ignore next */
