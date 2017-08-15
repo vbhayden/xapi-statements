@@ -1,5 +1,6 @@
 import Statement from '../models/Statement';
 import GetStatementsByIdsOptions from '../repoFactory/options/GetStatementsByIdsOptions';
+import { decodeDotsInStatement } from './utils/replaceDotsInStatement';
 import Config from './Config';
 
 interface Result {
@@ -17,7 +18,7 @@ export default (config: Config) => {
     }).toArray() as Result[];
 
     const filteredStatements = filteredModels.map((model) => {
-      return model.statement;
+      return decodeDotsInStatement(model.statement);
     });
     return filteredStatements;
   };

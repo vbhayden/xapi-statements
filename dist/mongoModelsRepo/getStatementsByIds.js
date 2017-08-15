@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var collection, filteredModels, filteredStatements;
@@ -53,7 +54,7 @@ exports.default = function (config) {
                 case 2:
                     filteredModels = _a.sent();
                     filteredStatements = filteredModels.map(function (model) {
-                        return model.statement;
+                        return replaceDotsInStatement_1.decodeDotsInStatement(model.statement);
                     });
                     return [2 /*return*/, filteredStatements];
             }

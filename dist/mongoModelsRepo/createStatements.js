@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -36,9 +44,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection;
+        var collection, documents;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -48,7 +57,11 @@ exports.default = function (config) {
                     return [4 /*yield*/, config.db];
                 case 1:
                     collection = (_a.sent()).collection('statements');
-                    return [4 /*yield*/, collection.insertMany(opts.models)];
+                    documents = opts.models.map(function (model) {
+                        var statement = replaceDotsInStatement_1.encodeDotsInStatement(model.statement);
+                        return __assign({}, model, { statement: statement });
+                    });
+                    return [4 /*yield*/, collection.insertMany(documents)];
                 case 2:
                     _a.sent();
                     return [2 /*return*/, opts.models];

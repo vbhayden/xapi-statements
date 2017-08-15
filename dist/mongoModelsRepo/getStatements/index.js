@@ -45,6 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var matchesClientOption_1 = require("../utils/matchesClientOption");
+var replaceDotsInStatement_1 = require("../utils/replaceDotsInStatement");
 var matchesAgentOption_1 = require("./matchesAgentOption");
 var matchesCursorOption_1 = require("./matchesCursorOption");
 var matchesVerbOption_1 = require("./matchesVerbOption");
@@ -62,7 +63,7 @@ var sortModels = function (ascending) {
 };
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection, query, sort, skip, limit, models;
+        var collection, query, sort, skip, limit, models, decodedModels;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
@@ -80,7 +81,11 @@ exports.default = function (config) {
                             .toArray()];
                 case 2:
                     models = _a.sent();
-                    return [2 /*return*/, models];
+                    decodedModels = models.map(function (model) {
+                        var statement = replaceDotsInStatement_1.decodeDotsInStatement(model.statement);
+                        return __assign({}, model, { statement: statement });
+                    });
+                    return [2 /*return*/, decodedModels];
             }
         });
     }); };

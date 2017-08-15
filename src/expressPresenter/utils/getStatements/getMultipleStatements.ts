@@ -5,6 +5,7 @@ import Config from '../../Config';
 import getMoreLink from './getMoreLink';
 import getStatementsOptions from './getStatementsOptions';
 import getStatementsResultOptions from './getStatementsResultOptions';
+import xapiVersion from '../../../utils/xapiVersion';
 
 export interface Options {
   config: Config;
@@ -16,7 +17,6 @@ export interface Options {
 export default async (opts: Options) => {
   const { queryParams, config, res, client } = opts;
   const timestamp = new Date().toISOString();
-  const xapiVersion = '1.0.0';
   const resultOpts = getStatementsResultOptions(queryParams);
   const statementsOpts = getStatementsOptions(queryParams);
 

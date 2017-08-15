@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var modr = require("../../utils/modr");
+var modr = require("../../../utils/modr");
 var obj = function (defaultObjectType) {
     return modr.modifySchema({
         objectType: modr.defaultValue(function () { return defaultObjectType; }),

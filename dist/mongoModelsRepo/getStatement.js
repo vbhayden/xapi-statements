@@ -46,9 +46,10 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var NoModel_1 = require("jscommons/dist/errors/NoModel");
 var matchesClientOption_1 = require("./utils/matchesClientOption");
+var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection, filteredModel;
+        var collection, filteredModel, decodedModel;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
@@ -61,7 +62,8 @@ exports.default = function (config) {
                     if (filteredModel === null) {
                         throw new NoModel_1.default('Statement');
                     }
-                    return [2 /*return*/, filteredModel];
+                    decodedModel = __assign({}, filteredModel, { statement: replaceDotsInStatement_1.decodeDotsInStatement(filteredModel.statement) });
+                    return [2 /*return*/, decodedModel];
             }
         });
     }); };

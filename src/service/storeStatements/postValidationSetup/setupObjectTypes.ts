@@ -1,4 +1,4 @@
-import * as modr from '../../utils/modr';
+import * as modr from '../../../utils/modr';
 
 const obj = (defaultObjectType: string) => {
   return modr.modifySchema({

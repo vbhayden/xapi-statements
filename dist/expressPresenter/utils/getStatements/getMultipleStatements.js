@@ -48,14 +48,14 @@ var bluebird_1 = require("bluebird");
 var getMoreLink_1 = require("./getMoreLink");
 var getStatementsOptions_1 = require("./getStatementsOptions");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
+var xapiVersion_1 = require("../../../utils/xapiVersion");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
-    var queryParams, config, res, client, timestamp, xapiVersion, resultOpts, statementsOpts, results, moreLink, statementResult, boundary, crlf_1, fullBoundary_1;
+    var queryParams, config, res, client, timestamp, resultOpts, statementsOpts, results, moreLink, statementResult, boundary, crlf_1, fullBoundary_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 queryParams = opts.queryParams, config = opts.config, res = opts.res, client = opts.client;
                 timestamp = new Date().toISOString();
-                xapiVersion = '1.0.0';
                 resultOpts = getStatementsResultOptions_1.default(queryParams);
                 statementsOpts = getStatementsOptions_1.default(queryParams);
                 return [4 /*yield*/, config.service.getStatements(__assign({ client: client }, statementsOpts, resultOpts))];
@@ -71,7 +71,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
                 crlf_1 = '\r\n';
                 fullBoundary_1 = crlf_1 + "--" + boundary + crlf_1;
                 res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-                res.setHeader('X-Experience-API-Version', xapiVersion);
+                res.setHeader('X-Experience-API-Version', xapiVersion_1.default);
                 res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=\"" + boundary + "\"");
                 res.status(200);
                 res.write(fullBoundary_1);
@@ -105,7 +105,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
             case 3:
                 res
                     .set('X-Experience-API-Consistent-Through', timestamp)
-                    .set('X-Experience-API-Version', xapiVersion)
+                    .set('X-Experience-API-Version', xapiVersion_1.default)
                     .status(200)
                     .json(statementResult);
                 return [2 /*return*/];

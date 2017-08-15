@@ -1,5 +1,6 @@
 import UnstoredStatementModel from '../models/UnstoredStatementModel';
 import CreateStatementsOptions from '../repoFactory/options/CreateStatementsOptions';
+import { encodeDotsInStatement } from './utils/replaceDotsInStatement';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -9,7 +10,11 @@ export default (config: Config) => {
     }
 
     const collection = (await config.db).collection('statements');
-    await collection.insertMany(opts.models);
+    const documents = opts.models.map((model) => {
+      const statement = encodeDotsInStatement(model.statement);
+      return { ...model, statement };
+    });
+    await collection.insertMany(documents);
     return opts.models;
   };
 };

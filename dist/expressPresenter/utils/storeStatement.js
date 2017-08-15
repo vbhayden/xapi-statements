@@ -46,7 +46,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var MissingStatementId_1 = require("../../errors/MissingStatementId");
 var UnequalStatementId_1 = require("../../errors/UnequalStatementId");
-var XAPI_VERSION = '1.0.0';
+var xapiVersion_1 = require("../../utils/xapiVersion");
 exports.default = function (_a) {
     var config = _a.config, body = _a.body, attachments = _a.attachments, client = _a.client, queryParams = _a.queryParams, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
@@ -65,7 +65,7 @@ exports.default = function (_a) {
                     return [4 /*yield*/, config.service.storeStatements({ models: models, attachments: attachments, client: client })];
                 case 1:
                     _a.sent();
-                    res.setHeader('X-Experience-API-Version', XAPI_VERSION);
+                    res.setHeader('X-Experience-API-Version', xapiVersion_1.default);
                     res.status(204);
                     res.send();
                     return [2 /*return*/];

@@ -1,4 +1,5 @@
 import ContextActivities from './ContextActivities';
+import Extensions from './Extensions';
 import Group from './Group';
 import Agent from './Agent';
 
@@ -7,6 +8,7 @@ interface Context {
   team?: Group;
   instructor?: Agent;
   registration?: string;
+  extensions: Extensions;
 }
 
 export default Context;

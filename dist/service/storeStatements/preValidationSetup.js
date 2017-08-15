@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var modr = require("../utils/modr");
+var modr = require("../../utils/modr");
 var wrapObjectInArray = modr.modifyType(Object, function (data) {
     return [data];
 });

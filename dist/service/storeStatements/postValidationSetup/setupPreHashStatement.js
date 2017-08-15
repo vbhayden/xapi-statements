@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid_1 = require("uuid");
-var modr = require("../../utils/modr");
+var modr = require("../../../utils/modr");
+var xapiVersion_1 = require("../../../utils/xapiVersion");
 exports.default = function (model, authority) {
     return modr.modifySchema({
         // Adds the required properties from the model.
@@ -16,7 +17,7 @@ exports.default = function (model, authority) {
         timestamp: modr.keepValue,
         // Adds LRS properties.
         authority: modr.overrideValue(authority),
-        version: modr.overrideValue('1.0.0'),
+        version: modr.overrideValue(xapiVersion_1.default),
     })(model);
 };
 //# sourceMappingURL=setupPreHashStatement.js.map

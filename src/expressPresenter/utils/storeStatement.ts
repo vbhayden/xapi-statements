@@ -4,8 +4,7 @@ import UnequalStatementId from '../../errors/UnequalStatementId';
 import AttachmentModel from '../../models/AttachmentModel';
 import ClientModel from '../../models/ClientModel';
 import Config from '../Config';
-
-const XAPI_VERSION = '1.0.0';
+import xapiVersion from '../../utils/xapiVersion';
 
 export interface Options {
   config: Config;
@@ -29,7 +28,7 @@ export default async ({ config, body, attachments, client, queryParams, res }: O
     id: statementId, // Ensures the id is set to the given id.
   }];
   await config.service.storeStatements({ models, attachments, client });
-  res.setHeader('X-Experience-API-Version', XAPI_VERSION);
+  res.setHeader('X-Experience-API-Version', xapiVersion);
   res.status(204);
   res.send();
 };
