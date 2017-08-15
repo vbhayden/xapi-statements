@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import * as modr from '../../../utils/modr';
-import xapiVersion from '../../../utils/xapiVersion';
+import { xapiStatementVersion } from '../../../utils/constants';
 
 export default (model: any, authority: any): any => {
   return modr.modifySchema({
@@ -18,6 +18,6 @@ export default (model: any, authority: any): any => {
 
     // Adds LRS properties.
     authority: modr.overrideValue(authority),
-    version: modr.overrideValue(xapiVersion),
+    version: modr.defaultValue(() => xapiStatementVersion),
   })(model);
 };

@@ -5,7 +5,7 @@ import Config from '../../Config';
 import getMoreLink from './getMoreLink';
 import getStatementsOptions from './getStatementsOptions';
 import getStatementsResultOptions from './getStatementsResultOptions';
-import xapiVersion from '../../../utils/xapiVersion';
+import { xapiHeaderVersion } from '../../../utils/constants';
 
 export interface Options {
   config: Config;
@@ -35,7 +35,7 @@ export default async (opts: Options) => {
     const crlf = '\r\n';
     const fullBoundary = `${crlf}--${boundary}${crlf}`;
     res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-    res.setHeader('X-Experience-API-Version', xapiVersion);
+    res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
     res.setHeader('Content-Type', `multipart/mixed; charset=UTF-8; boundary="${boundary}"`);
     res.status(200);
     res.write(fullBoundary);
@@ -67,7 +67,7 @@ export default async (opts: Options) => {
   }
   res
     .set('X-Experience-API-Consistent-Through', timestamp)
-    .set('X-Experience-API-Version', xapiVersion)
+    .set('X-Experience-API-Version', xapiHeaderVersion)
     .status(200)
     .json(statementResult);
 };

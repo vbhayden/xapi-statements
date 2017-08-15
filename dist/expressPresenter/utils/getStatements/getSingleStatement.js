@@ -47,7 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var checkStatementsOpts_1 = require("./checkStatementsOpts");
 var getStatementsOptions_1 = require("./getStatementsOptions");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
-var xapiVersion_1 = require("../../../utils/xapiVersion");
+var constants_1 = require("../../../utils/constants");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
     var queryParams, config, id, voided, res, client, timestamp, resultOpts, statementsOpts, results;
     return __generator(this, function (_a) {
@@ -62,7 +62,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
             case 1:
                 results = _a.sent();
                 res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-                res.setHeader('X-Experience-API-Version', xapiVersion_1.default);
+                res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                 res.setHeader('Last-Modified', results.statements[0].stored);
                 res.status(200);
                 res.json(results.statements[0]);

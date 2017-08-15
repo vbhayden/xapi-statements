@@ -48,7 +48,7 @@ var bluebird_1 = require("bluebird");
 var getMoreLink_1 = require("./getMoreLink");
 var getStatementsOptions_1 = require("./getStatementsOptions");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
-var xapiVersion_1 = require("../../../utils/xapiVersion");
+var constants_1 = require("../../../utils/constants");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
     var queryParams, config, res, client, timestamp, resultOpts, statementsOpts, results, moreLink, statementResult, boundary, crlf_1, fullBoundary_1;
     return __generator(this, function (_a) {
@@ -71,7 +71,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
                 crlf_1 = '\r\n';
                 fullBoundary_1 = crlf_1 + "--" + boundary + crlf_1;
                 res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-                res.setHeader('X-Experience-API-Version', xapiVersion_1.default);
+                res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                 res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=\"" + boundary + "\"");
                 res.status(200);
                 res.write(fullBoundary_1);
@@ -105,7 +105,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
             case 3:
                 res
                     .set('X-Experience-API-Consistent-Through', timestamp)
-                    .set('X-Experience-API-Version', xapiVersion_1.default)
+                    .set('X-Experience-API-Version', constants_1.xapiHeaderVersion)
                     .status(200)
                     .json(statementResult);
                 return [2 /*return*/];

@@ -37,13 +37,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var catchErrors_1 = require("./utils/catchErrors");
-var xapiVersion_1 = require("../utils/xapiVersion");
+var constants_1 = require("../utils/constants");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (_req, res) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             res.status(200).json({
-                'X-Experience-API-Version': xapiVersion_1.default,
-                version: [xapiVersion_1.default]
+                'X-Experience-API-Version': constants_1.xapiHeaderVersion,
+                version: [constants_1.xapiHeaderVersion]
             });
             return [2 /*return*/];
         });

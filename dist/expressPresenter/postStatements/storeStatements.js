@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
-var xapiVersion_1 = require("../../utils/xapiVersion");
+var constants_1 = require("../../utils/constants");
 exports.default = function (_a) {
     var config = _a.config, client = _a.client, body = _a.body, attachments = _a.attachments, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
@@ -49,7 +49,7 @@ exports.default = function (_a) {
                     return [4 /*yield*/, config.service.storeStatements({ models: models, attachments: attachments, client: client })];
                 case 1:
                     ids = _a.sent();
-                    res.setHeader('X-Experience-API-Version', xapiVersion_1.default);
+                    res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                     res.status(200);
                     res.json(ids);
                     return [2 /*return*/];
