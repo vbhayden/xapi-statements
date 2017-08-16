@@ -35,7 +35,7 @@ describe('insert across 2 different stores with the same id', () => {
     assert.equal(LRS1_STATEMENT.statements[0].authority.mbox, TEST_CLIENT.authority.mbox);
     assert.equal(LRS2_STATEMENT.statements[0].authority.mbox, LRS2_CLIENT.authority.mbox);
   });
-  
+
   it('should return the correct statement when calling getStatements', async () => {
     const LRS2_STATEMENT_INSERT = createStatement({
       id: TEST_ID
