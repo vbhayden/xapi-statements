@@ -12,8 +12,8 @@ export default (config: Config) => {
     
     const documents = opts.models.map( (model) => {
       const statement = encodeDotsInStatement(model.statement);
-      return { 
-        ...model, 
+      return {
+        ...model,
         organisation: new ObjectID(model.organisation),
         lrs_id: new ObjectID(model.lrs_id),
         client: new ObjectID(model.client),
