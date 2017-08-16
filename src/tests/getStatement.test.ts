@@ -6,7 +6,6 @@ import createStatement from './utils/createStatement';
 import createClientModel from './utils/createClientModel';
 import createVoidingStatement from './utils/createVoidingStatement';
 import storeStatementsInService from './utils/storeStatementsInService';
-import Actor from '../models/Actor';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
