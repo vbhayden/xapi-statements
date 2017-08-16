@@ -9,7 +9,7 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.id === opts.id &&
-        matchesClientOption(model, opts.client) &&
+        matchesClientOption(model, opts.client, true) &&
         model.voided === opts.voided
       );
     });

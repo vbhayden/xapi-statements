@@ -44,7 +44,7 @@ exports.default = function (config) {
         return __generator(this, function (_a) {
             filteredModels = config.state.statements.filter(function (model) {
                 return (model.statement.id === opts.id &&
-                    matchesClientOption_1.default(model, opts.client) &&
+                    matchesClientOption_1.default(model, opts.client, true) &&
                     model.voided === opts.voided);
             });
             if (filteredModels.length === 0) {

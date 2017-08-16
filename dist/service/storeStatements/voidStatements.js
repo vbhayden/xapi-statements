@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = function (config, statements, voidedObjectIds) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, statements, voidedObjectIds, client) { return __awaiter(_this, void 0, void 0, function () {
     var statementIds, voidersForStatementIds, idsToBeVoided;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -49,12 +49,14 @@ exports.default = function (config, statements, voidedObjectIds) { return __awai
                 });
                 return [4 /*yield*/, config.repo.getVoidersByObjectIds({
                         ids: statementIds,
+                        client: client
                     })];
             case 1:
                 voidersForStatementIds = _a.sent();
                 idsToBeVoided = voidedObjectIds.concat(voidersForStatementIds);
                 return [4 /*yield*/, config.repo.voidStatements({
                         ids: idsToBeVoided,
+                        client: client
                     })];
             case 2:
                 _a.sent();

@@ -23,6 +23,7 @@ export default (config: Config) => {
       /* istanbul ignore next */
       throw new ChangedStatementRef(statement.id);
     };
-    return getStatements({ config, query, project });
+    const client = opts.client;
+    return getStatements({ config, query, project, client });
   };
 };

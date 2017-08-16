@@ -48,7 +48,7 @@ var filterModels = function (models, opts) {
     return models.filter(function (model) {
         var statement = model.statement;
         return (matchesCursorOption_1.default(model, opts) &&
-            matchesClientOption_1.default(model, opts.client) &&
+            matchesClientOption_1.default(model, opts.client, true) &&
             matchesAgentOption_1.default(model, opts) &&
             matchesVerbOption_1.default(model, opts) &&
             matchesActivityOption_1.default(model, opts) &&

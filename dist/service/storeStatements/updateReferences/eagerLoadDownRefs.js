@@ -46,7 +46,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var groupStatementsById_1 = require("./groupStatementsById");
-var getGroupedDownRefs = function (config, models) { return __awaiter(_this, void 0, void 0, function () {
+var getGroupedDownRefs = function (config, models, client) { return __awaiter(_this, void 0, void 0, function () {
     var allIds, targetIds, targetStatements, groupedStatements;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -62,7 +62,7 @@ var getGroupedDownRefs = function (config, models) { return __awaiter(_this, voi
                     }
                     return results;
                 }, []);
-                return [4 /*yield*/, config.repo.getStatementsByIds({ ids: targetIds })];
+                return [4 /*yield*/, config.repo.getStatementsByIds({ ids: targetIds, client: client })];
             case 1:
                 targetStatements = _a.sent();
                 groupedStatements = groupStatementsById_1.default(targetStatements);
@@ -77,11 +77,11 @@ var getGroupedModels = function (models) {
     var groupedStatements = groupStatementsById_1.default(statements);
     return groupedStatements;
 };
-exports.default = function (config, models) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, models, client) { return __awaiter(_this, void 0, void 0, function () {
     var groupedDownRefs, groupedModels;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, getGroupedDownRefs(config, models)];
+            case 0: return [4 /*yield*/, getGroupedDownRefs(config, models, client)];
             case 1:
                 groupedDownRefs = _a.sent();
                 groupedModels = getGroupedModels(models);

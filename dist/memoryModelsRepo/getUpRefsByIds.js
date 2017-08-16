@@ -38,6 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var ChangedStatementRef_1 = require("../errors/ChangedStatementRef");
+var matchesClientOption_1 = require("./utils/matchesClientOption");
 var getTargetId = function (model) {
     if (model.statement.object.objectType === 'StatementRef') {
         return model.statement.object.id;
@@ -51,7 +52,8 @@ exports.default = function (config) {
         return __generator(this, function (_a) {
             filteredModels = config.state.statements.filter(function (model) {
                 return (model.statement.object.objectType === 'StatementRef' &&
-                    lodash_1.includes(opts.targetIds, model.statement.object.id));
+                    lodash_1.includes(opts.targetIds, model.statement.object.id) &&
+                    matchesClientOption_1.default(model, opts.client));
             });
             return [2 /*return*/, filteredModels.map(function (model) {
                     var sourceId = model.statement.id;

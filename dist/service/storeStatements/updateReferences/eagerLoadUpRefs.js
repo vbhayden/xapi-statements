@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
-exports.default = function (config, models) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, models, client) { return __awaiter(_this, void 0, void 0, function () {
     var statementIds, eagerLoadedUpRefs, groupedUpRefs, groupedUpRefIds;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -45,7 +45,7 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                 statementIds = models.map(function (model) {
                     return model.statement.id;
                 });
-                return [4 /*yield*/, config.repo.getUpRefsByIds({ targetIds: statementIds })];
+                return [4 /*yield*/, config.repo.getUpRefsByIds({ targetIds: statementIds, client: client })];
             case 1:
                 eagerLoadedUpRefs = _a.sent();
                 groupedUpRefs = lodash_1.groupBy(eagerLoadedUpRefs, function (upRef) {

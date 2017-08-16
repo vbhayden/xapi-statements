@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var matchesClientOption_1 = require("./utils/matchesClientOption");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var refs;
@@ -52,7 +53,8 @@ exports.default = function (config) {
                 return { statement: statement };
             });
             config.state.statements = config.state.statements.map(function (model) {
-                if (model.statement.id === opts.id) {
+                if (model.statement.id === opts.id &&
+                    matchesClientOption_1.default(model, opts.client)) {
                     return __assign({}, model, { refs: refs });
                 }
                 return model;

@@ -72,7 +72,7 @@ var modelsConflicts = function (models) {
         var _b;
     }, { modelsMap: {}, generatedIdModels: [] });
 };
-var repoConflicts = function (config, modelsMap) { return __awaiter(_this, void 0, void 0, function () {
+var repoConflicts = function (config, modelsMap, client) { return __awaiter(_this, void 0, void 0, function () {
     var hashesMap, _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -80,6 +80,7 @@ var repoConflicts = function (config, modelsMap) { return __awaiter(_this, void 
                 _a = lodash_1.groupBy;
                 return [4 /*yield*/, config.repo.getHashes({
                         ids: lodash_1.keys(modelsMap),
+                        client: client
                     })];
             case 1:
                 hashesMap = _a.apply(void 0, [_b.sent(), 'statementId']);
@@ -96,7 +97,7 @@ var repoConflicts = function (config, modelsMap) { return __awaiter(_this, void 
         }
     });
 }); };
-exports.default = function (config, models) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, models, client) { return __awaiter(_this, void 0, void 0, function () {
     var conflictRes, ungeneratedIdModels;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -105,7 +106,7 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                 if (!config.enableConflictChecks)
                     return [2 /*return*/, models];
                 conflictRes = modelsConflicts(models);
-                return [4 /*yield*/, repoConflicts(config, conflictRes.modelsMap)];
+                return [4 /*yield*/, repoConflicts(config, conflictRes.modelsMap, client)];
             case 1:
                 ungeneratedIdModels = _a.sent();
                 return [2 /*return*/, ungeneratedIdModels.concat(conflictRes.generatedIdModels)];

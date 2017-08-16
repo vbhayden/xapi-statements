@@ -17,6 +17,7 @@ export default (config: Config) => {
     const project = (statement: Statement): string => {
       return statement.id;
     };
-    return getStatements({ config, query, project });
+    const client = opts.client;
+    return getStatements({ config, query, project, client });
   };
 };

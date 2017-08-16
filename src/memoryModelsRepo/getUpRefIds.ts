@@ -1,4 +1,5 @@
 import GetUpRefIdsOptions from '../repoFactory/options/GetUpRefIdsOptions';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -6,7 +7,8 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.object.objectType === 'StatementRef' &&
-        model.statement.object.id === opts.id
+        model.statement.object.id === opts.id &&
+        matchesClientOption(model, opts.client)
       );
     });
     return filteredModels.map((model) => {

@@ -72,10 +72,10 @@ exports.default = function (config) {
                     preValidatedModels = preValidationSetup_1.default(opts.models);
                     validateStatements_1.default(preValidatedModels);
                     postValidatedModels = postValidationSetup_1.default(preValidatedModels, opts.client);
-                    return [4 /*yield*/, getUnstoredModels_1.default(config, postValidatedModels)];
+                    return [4 /*yield*/, getUnstoredModels_1.default(config, postValidatedModels, opts.client)];
                 case 1:
                     unstoredModels = _a.sent();
-                    return [4 /*yield*/, checkVoiders_1.default(config, unstoredModels)];
+                    return [4 /*yield*/, checkVoiders_1.default(config, unstoredModels, opts.client)];
                 case 2:
                     voidedObjectIds = _a.sent();
                     return [4 /*yield*/, checkAttachments_1.default(config, unstoredModels, opts.attachments)];
@@ -89,8 +89,8 @@ exports.default = function (config) {
                     });
                     unawaitedUpdates = Promise.all([
                         createAttachments_1.default(config, opts.attachments),
-                        voidStatements_1.default(config, unstoredModels, voidedObjectIds),
-                        updateReferences_1.default(config, unstoredModels),
+                        voidStatements_1.default(config, unstoredModels, voidedObjectIds, opts.client),
+                        updateReferences_1.default(config, unstoredModels, opts.client),
                     ]);
                     return [4 /*yield*/, awaitUpdates(config, unawaitedUpdates)];
                 case 5:

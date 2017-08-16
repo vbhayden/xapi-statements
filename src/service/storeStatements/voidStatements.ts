@@ -1,10 +1,12 @@
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
+import ClientModel from '../../models/ClientModel';
 import Config from '../Config';
 
 export default async (
   config: Config,
   statements: UnstoredStatementModel[],
-  voidedObjectIds: string[]
+  voidedObjectIds: string[],
+  client: ClientModel
 ): Promise<void> => {
   /* istanbul ignore next */
   if (!config.enableVoiding) return;
@@ -14,6 +16,7 @@ export default async (
   });
   const voidersForStatementIds = await config.repo.getVoidersByObjectIds({
     ids: statementIds,
+    client
   });
   const idsToBeVoided: string[] = [
     ...voidedObjectIds,
@@ -21,5 +24,6 @@ export default async (
   ];
   await config.repo.voidStatements({
     ids: idsToBeVoided,
+    client
   });
 };
