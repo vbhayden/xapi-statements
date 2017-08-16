@@ -9,7 +9,7 @@ export default (config: Config) => {
       return { statement };
     });
 
-    const query = { 
+    const query = {
       'statement.id': opts.id,
       ...matchesClientOption(opts.client)
     };

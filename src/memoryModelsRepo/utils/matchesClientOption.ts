@@ -17,7 +17,7 @@ export default (model: StoredStatementModel, client: ClientModel, enableReadMine
     intersection(READ_ALL_SCOPES, client.scopes).length === 0 &&
     includes(client.scopes, scopes.XAPI_STATEMENTS_READ_MINE)
   );
-  
+
   return (
     model.organisation === client.organisation &&
     model.lrs_id === client.lrs_id &&

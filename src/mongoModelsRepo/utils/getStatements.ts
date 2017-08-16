@@ -15,6 +15,6 @@ export default async ({ config, query, project, client }: Options) => {
     ...query,
     ...matchesClientOption(client)
   };
-  const results = await collection.find(query).project(project).toArray();
+  const results = await collection.find(orgQuery).project(project).toArray();
   return results;
 };

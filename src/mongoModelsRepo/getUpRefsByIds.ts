@@ -15,7 +15,7 @@ interface Result {
 export default (config: Config) => {
   return async (opts: GetUpRefsByIdsOptions): Promise<UpRef[]> => {
     const collection = (await config.db).collection('statements');
-    
+
     const query = {
       'statement.object.objectType': 'StatementRef',
       'statement.object.id': { $in: opts.targetIds },
@@ -26,7 +26,7 @@ export default (config: Config) => {
       _id: 0,
       'statement.id': 1,
       'statement.object.id': 1,
-    }
+    };
 
     const results = await collection.find(query).project(project).toArray() as Result[];
 

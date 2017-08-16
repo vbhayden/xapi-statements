@@ -7,10 +7,10 @@ interface Result { statement: { object: { id: string; }; }; }
 
 export default (config: Config) => {
   return async (opts: GetVoidersOptions): Promise<string[]> => {
-    
-    const query = { 
-      'statement.object.id': { $in: opts.ids }, 
-      ...voidQuery 
+
+    const query = {
+      'statement.object.id': { $in: opts.ids },
+      ...voidQuery
     };
 
     const project = { 'statement.object.id': 1 };

@@ -9,7 +9,7 @@ export default (config: Config) => {
   return async (opts: GetHashesOptions): Promise<StatementHash[]> => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
-        includes(opts.ids, model.statement.id) && 
+        includes(opts.ids, model.statement.id) &&
         matchesClientOption(model, opts.client, true)
       );
     });

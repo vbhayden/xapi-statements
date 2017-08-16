@@ -55,7 +55,7 @@ exports.default = function (_a) {
                 case 1:
                     collection = (_a.sent()).collection('statements');
                     orgQuery = __assign({}, query, matchesClientOption_1.default(client));
-                    return [4 /*yield*/, collection.find(query).project(project).toArray()];
+                    return [4 /*yield*/, collection.find(orgQuery).project(project).toArray()];
                 case 2:
                     results = _a.sent();
                     return [2 /*return*/, results];
