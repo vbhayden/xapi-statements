@@ -9,7 +9,7 @@ export default (config: Config) => {
     if (opts.models.length === 0) {
       return [];
     }
-    
+
     const documents = opts.models.map( (model) => {
       const statement = encodeDotsInStatement(model.statement);
       return {
