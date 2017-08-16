@@ -42,14 +42,10 @@ var setup_1 = require("../utils/setup");
 var createStatement_1 = require("../utils/createStatement");
 var createClientModel_1 = require("../utils/createClientModel");
 var storeStatementsInService_1 = require("../utils/storeStatementsInService");
-var lrs2_id = '5988f0f00000000000000002';
-var lrs2_client = createClientModel_1.default({ lrs_id: lrs2_id });
+var LRS2_ID = '5988f0f00000000000000002';
+var LRS2_CLIENT = createClientModel_1.default({ lrs_id: LRS2_ID });
 var TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 var TEST_STATEMENT = createStatement_1.default({ id: TEST_ID });
-var TEST_CONFLICT = createStatement_1.default({
-    id: TEST_ID,
-    actor: { mbox: 'mailto:test2@example.com' },
-});
 describe('store lrs statements with same ids', function () {
     var service = setup_1.default();
     var storeStatements = storeStatementsInService_1.default(service);
@@ -60,7 +56,7 @@ describe('store lrs statements with same ids', function () {
                 case 0: return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, storeStatements([TEST_STATEMENT], [], lrs2_client)];
+                    return [4 /*yield*/, storeStatements([TEST_STATEMENT], [], LRS2_CLIENT)];
                 case 2:
                     _a.sent();
                     return [4 /*yield*/, storeStatements([TEST_STATEMENT])];

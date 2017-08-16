@@ -78,15 +78,15 @@ describe('get statement', () => {
   });
 
   it('should return the correct statement when the ids are the same across 2 different stores', async () => {
-    const LRS2_STATEMENT_INSERT = createStatement({ 
+    const LRS2_STATEMENT_INSERT = createStatement({
       id: TEST_ID
     });
-    const LRS1_RESULT = await storeStatements([TEST_STATEMENT], [], TEST_CLIENT);
-    const LRS2_RESULT = await storeStatements([LRS2_STATEMENT_INSERT], [], LRS2_CLIENT);
+    await storeStatements([TEST_STATEMENT], [], TEST_CLIENT);
+    await storeStatements([LRS2_STATEMENT_INSERT], [], LRS2_CLIENT);
     const LRS1_STATEMENT = await service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT });
     const LRS2_STATEMENT = await service.getStatement({ id: TEST_ID, voided: false, client: LRS2_CLIENT });
 
     assert.equal(LRS1_STATEMENT.statements[0].authority.mbox, TEST_CLIENT.authority.mbox);
     assert.equal(LRS2_STATEMENT.statements[0].authority.mbox, LRS2_CLIENT.authority.mbox);
-  })
+  });
 });
