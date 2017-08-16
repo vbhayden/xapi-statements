@@ -10,7 +10,7 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         includes(opts.ids, model.statement.id) &&
-        matchesClientOption(model, opts.client, true)
+        matchesClientOption(model, opts.client)
       );
     });
     return filteredModels.map((model: StoredStatementModel): StatementHash => {
