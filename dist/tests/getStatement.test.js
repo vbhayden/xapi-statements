@@ -181,31 +181,5 @@ describe('get statement', function () {
             }
         });
     }); });
-    it('should return the correct statement when the ids are the same across 2 different stores', function () { return __awaiter(_this, void 0, void 0, function () {
-        var LRS2_STATEMENT_INSERT, LRS1_STATEMENT, LRS2_STATEMENT;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    LRS2_STATEMENT_INSERT = createStatement_1.default({
-                        id: TEST_ID
-                    });
-                    return [4 /*yield*/, storeStatements([TEST_STATEMENT], [], TEST_CLIENT)];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, storeStatements([LRS2_STATEMENT_INSERT], [], LRS2_CLIENT)];
-                case 2:
-                    _a.sent();
-                    return [4 /*yield*/, service.getStatement({ id: TEST_ID, voided: false, client: TEST_CLIENT })];
-                case 3:
-                    LRS1_STATEMENT = _a.sent();
-                    return [4 /*yield*/, service.getStatement({ id: TEST_ID, voided: false, client: LRS2_CLIENT })];
-                case 4:
-                    LRS2_STATEMENT = _a.sent();
-                    assert.equal(LRS1_STATEMENT.statements[0].authority.mbox, TEST_CLIENT.authority.mbox);
-                    assert.equal(LRS2_STATEMENT.statements[0].authority.mbox, LRS2_CLIENT.authority.mbox);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
 });
 //# sourceMappingURL=getStatement.test.js.map
