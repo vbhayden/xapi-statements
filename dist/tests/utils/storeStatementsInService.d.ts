@@ -1,3 +1,4 @@
 import Service from '../../serviceFactory/Service';
-declare const _default: (service: Service) => (statements: any[], attachments?: any[]) => Promise<string[]>;
+import ClientModel from '../../models/ClientModel';
+declare const _default: (service: Service) => (statements: any[], attachments?: any[], client?: ClientModel) => Promise<string[]>;
 export default _default;
