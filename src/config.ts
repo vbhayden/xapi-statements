@@ -16,7 +16,7 @@ export default {
   ),
   lang: getStringOption(process.env.LANG, 'en'),
   defaultTimeout: getNumberOption(process.env.DEFAULT_TIMEOUT_MS, 300000),
-  
+
   repoFactory: {
     authRepoName: getStringOption(process.env.AUTH_REPO, 'mongo'),
     modelsRepoName: getStringOption(process.env.MODELS_REPO, 'memory'),

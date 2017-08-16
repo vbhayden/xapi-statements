@@ -6,7 +6,6 @@ import StoreStatementsOptions from './options/StoreStatementsOptions';
 import GetStatementOptions from './options/GetStatementOptions';
 import GetStatementsOptions from './options/GetStatementsOptions';
 
-
 interface Service extends CommonService {
   // Statement functions.
   readonly getClient: (opts: GetClientOptions) => Promise<GetClientResult>;
