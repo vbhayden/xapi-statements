@@ -1,4 +1,5 @@
 import ClientModel from '../../models/ClientModel';
-export default interface Result {
+interface Result {
     readonly client: ClientModel;
 }
+export default Result;
