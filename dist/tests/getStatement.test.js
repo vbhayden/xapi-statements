@@ -44,15 +44,6 @@ var createStatement_1 = require("./utils/createStatement");
 var createClientModel_1 = require("./utils/createClientModel");
 var createVoidingStatement_1 = require("./utils/createVoidingStatement");
 var storeStatementsInService_1 = require("./utils/storeStatementsInService");
-var LRS2_ID = '5988f0f00000000000000002';
-var LRS2_AUTHORITY = {
-    objectType: 'Agent',
-    mbox: 'mailto:lrs2@test.com'
-};
-var LRS2_CLIENT = createClientModel_1.default({
-    lrs_id: LRS2_ID,
-    authority: LRS2_AUTHORITY
-});
 var TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 var TEST_STATEMENT = createStatement_1.default({ id: TEST_ID });
 var TEST_VOIDER = createVoidingStatement_1.default(TEST_ID);

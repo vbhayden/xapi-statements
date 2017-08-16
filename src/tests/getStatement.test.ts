@@ -8,16 +8,6 @@ import createVoidingStatement from './utils/createVoidingStatement';
 import storeStatementsInService from './utils/storeStatementsInService';
 import Actor from '../models/Actor';
 
-const LRS2_ID = '5988f0f00000000000000002';
-const LRS2_AUTHORITY: Actor = {
-  objectType: 'Agent',
-  mbox: 'mailto:lrs2@test.com'
-};
-const LRS2_CLIENT = createClientModel({
-  lrs_id: LRS2_ID,
-  authority: LRS2_AUTHORITY
-});
-
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
 const TEST_VOIDER = createVoidingStatement(TEST_ID);
