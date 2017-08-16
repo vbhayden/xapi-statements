@@ -13,10 +13,6 @@ export default (overrides: Partial<ClientModel> = {}): ClientModel => {
     title: 'test_title',
     organisation: '5988f0f00000000000000000',
     lrs_id: '5988f0f00000000000000001',
-    api: {
-      basic_key: 'test_basic_key',
-      basic_secret: 'test_basic_secret',
-    },
     authority: DEFAULT_AUTHORITY,
     isTrusted: true,
     scopes: [ALL],

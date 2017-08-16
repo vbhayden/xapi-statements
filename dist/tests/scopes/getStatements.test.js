@@ -57,7 +57,7 @@ describe('get statements with scopes', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    client = createClientModel_1.default({ _id: 'test_client_b', scopes: scopes });
+                    client = createClientModel_1.default({ _id: '59891b200000000000000000', scopes: scopes });
                     return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
                 case 1:
                     _a.sent();
@@ -79,7 +79,7 @@ describe('get statements with scopes', function () {
             switch (_a.label) {
                 case 0:
                     client = createClientModel_1.default({
-                        _id: 'test_client_b',
+                        _id: '59891b200000000000000000',
                         scopes: [scopes.XAPI_STATEMENTS_READ_MINE]
                     });
                     return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
@@ -139,7 +139,7 @@ describe('get statements with scopes', function () {
             switch (_a.label) {
                 case 0:
                     client = createClientModel_1.default({
-                        _id: 'test_client_b',
+                        _id: '59891b200000000000000000',
                         scopes: TEST_FORBIDDEN_SCOPES
                     });
                     return [4 /*yield*/, storeStatements([TEST_STATEMENT])];

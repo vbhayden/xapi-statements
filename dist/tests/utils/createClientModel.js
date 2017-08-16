@@ -15,9 +15,6 @@ var DEFAULT_AUTHORITY = {
 };
 exports.default = function (overrides) {
     if (overrides === void 0) { overrides = {}; }
-    return __assign({ _id: 'test_id', title: 'test_title', organisation: 'test_organisation', lrs_id: 'test_lrs_id', api: {
-            basic_key: 'test_basic_key',
-            basic_secret: 'test_basic_secret',
-        }, authority: DEFAULT_AUTHORITY, isTrusted: true, scopes: [scopes_1.ALL] }, overrides);
+    return __assign({ _id: '5988f0f00000000000000002', title: 'test_title', organisation: '5988f0f00000000000000000', lrs_id: '5988f0f00000000000000001', authority: DEFAULT_AUTHORITY, isTrusted: true, scopes: [scopes_1.ALL] }, overrides);
 };
 //# sourceMappingURL=createClientModel.js.map
