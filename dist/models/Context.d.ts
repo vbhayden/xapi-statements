@@ -7,6 +7,6 @@ interface Context {
     team?: Group;
     instructor?: Agent;
     registration?: string;
-    extensions: Extensions;
+    extensions?: Extensions;
 }
 export default Context;

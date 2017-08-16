@@ -46,7 +46,7 @@ var storeStatementsInService_1 = require("./utils/storeStatementsInService");
 var TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 var TEST_STATEMENT = createStatement_1.default({ id: TEST_ID });
 var TEST_UNKNOWN_CLIENT = createClientModel_1.default({
-    lrs_id: 'unknown_client_id'
+    lrs_id: '5988ff000000000000000001'
 });
 var TEST_OPTIONS = {
     client: TEST_UNKNOWN_CLIENT
@@ -78,7 +78,7 @@ describe('get statement', function () {
             switch (_a.label) {
                 case 0:
                     unknownClient = createClientModel_1.default({
-                        lrs_id: 'unknown_lrs_id'
+                        lrs_id: '5988ff000000000000000001'
                     });
                     return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
                 case 1:
