@@ -6,6 +6,7 @@ import createClientModel from '../utils/createClientModel';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
 const LRS2_ID = '5988f0f00000000000000002';
+
 const LRS2_CLIENT = createClientModel({lrs_id: LRS2_ID});
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
