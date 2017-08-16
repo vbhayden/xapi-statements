@@ -20,7 +20,7 @@ var READ_ALL_SCOPES = [
 ];
 exports.default = function (client, enableReadMine) {
     if (enableReadMine === void 0) { enableReadMine = false; }
-    var canOnlyReadMine = (enableReadMine === false &&
+    var canOnlyReadMine = (enableReadMine &&
         lodash_1.intersection(READ_ALL_SCOPES, client.scopes).length === 0 &&
         lodash_1.includes(client.scopes, scopes.XAPI_STATEMENTS_READ_MINE));
     return __assign({ organisation: new mongodb_1.ObjectID(client.organisation), lrs_id: new mongodb_1.ObjectID(client.lrs_id) }, (canOnlyReadMine

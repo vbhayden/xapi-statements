@@ -13,7 +13,7 @@ const READ_ALL_SCOPES = [
 
 export default (client: ClientModel, enableReadMine = false): Object => {
   const canOnlyReadMine = (
-    enableReadMine === false &&
+    enableReadMine &&
     intersection(READ_ALL_SCOPES, client.scopes).length === 0 &&
     includes(client.scopes, scopes.XAPI_STATEMENTS_READ_MINE)
   );
