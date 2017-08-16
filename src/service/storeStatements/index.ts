@@ -26,8 +26,8 @@ export default (config: Config) => {
     const preValidatedModels = preValidationSetup(opts.models);
     validateStatements(preValidatedModels);
     const postValidatedModels = postValidationSetup(preValidatedModels, opts.client);
-    const unstoredModels = await getUnstoredModels(config, postValidatedModels);
-    const voidedObjectIds = await checkVoiders(config, unstoredModels);
+    const unstoredModels = await getUnstoredModels(config, postValidatedModels, opts.client);
+    const voidedObjectIds = await checkVoiders(config, unstoredModels, opts.client);
     await checkAttachments(config, unstoredModels, opts.attachments);
 
     await createStatements(config, unstoredModels);
@@ -39,8 +39,8 @@ export default (config: Config) => {
     // Completes actions that do not need to be awaited.
     const unawaitedUpdates: Promise<any> = Promise.all([
       createAttachments(config, opts.attachments),
-      voidStatements(config, unstoredModels, voidedObjectIds),
-      updateReferences(config, unstoredModels),
+      voidStatements(config, unstoredModels, voidedObjectIds, opts.client),
+      updateReferences(config, unstoredModels, opts.client),
     ]);
 
     await awaitUpdates(config, unawaitedUpdates);

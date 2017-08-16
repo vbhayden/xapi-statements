@@ -90,7 +90,7 @@ describe('get statement', function () {
         var promise;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, storeStatements([createStatement_1.default({ id: TEST_ID })])];
+                case 0: return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
                 case 1:
                     _a.sent();
                     promise = service.getStatement({ id: TEST_ID, voided: true, client: TEST_CLIENT });

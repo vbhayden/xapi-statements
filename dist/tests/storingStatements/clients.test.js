@@ -1,12 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -44,24 +36,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var voidQuery_1 = require("../utils/voidQuery");
-exports.default = function (_a) {
-    var config = _a.config, searchKey = _a.searchKey, ids = _a.ids;
-    return __awaiter(_this, void 0, void 0, function () {
-        var collection, query, project, results, _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0: return [4 /*yield*/, config.db];
+var assert = require("assert");
+var lodash_1 = require("lodash");
+var setup_1 = require("../utils/setup");
+var createStatement_1 = require("../utils/createStatement");
+var createClientModel_1 = require("../utils/createClientModel");
+var storeStatementsInService_1 = require("../utils/storeStatementsInService");
+var LRS2_ID = '5988f0f00000000000000002';
+var LRS2_CLIENT = createClientModel_1.default({ lrs_id: LRS2_ID });
+var TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
+var TEST_STATEMENT = createStatement_1.default({ id: TEST_ID });
+describe('store lrs statements with same ids', function () {
+    var service = setup_1.default();
+    var storeStatements = storeStatementsInService_1.default(service);
+    it('should store statements with matching ids across 2 stores', function () { return __awaiter(_this, void 0, void 0, function () {
+        var ids;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
                 case 1:
-                    collection = (_c.sent()).collection('statements');
-                    query = __assign((_a = {}, _a[searchKey] = { $in: ids }, _a), voidQuery_1.default);
-                    project = (_b = {}, _b[searchKey] = 1, _b);
-                    return [4 /*yield*/, collection.find(query).project(project).toArray()];
+                    _a.sent();
+                    return [4 /*yield*/, storeStatements([TEST_STATEMENT], [], LRS2_CLIENT)];
                 case 2:
-                    results = _c.sent();
-                    return [2 /*return*/, results];
+                    _a.sent();
+                    return [4 /*yield*/, storeStatements([TEST_STATEMENT])];
+                case 3:
+                    ids = _a.sent();
+                    assert.equal(lodash_1.isArray(ids), true);
+                    assert.deepEqual(ids, [TEST_ID]);
+                    return [2 /*return*/];
             }
         });
-    });
-};
-//# sourceMappingURL=getVoiders.js.map
+    }); });
+});
+//# sourceMappingURL=clients.test.js.map

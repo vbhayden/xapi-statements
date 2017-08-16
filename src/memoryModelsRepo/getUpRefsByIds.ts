@@ -3,6 +3,7 @@ import ChangedStatementRef from '../errors/ChangedStatementRef';
 import StoredStatementModel from '../models/StoredStatementModel';
 import UpRef from '../models/UpRef';
 import GetUpRefsByIdsOptions from '../repoFactory/options/GetUpRefsByIdsOptions';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 const getTargetId = (model: StoredStatementModel) => {
@@ -19,7 +20,8 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.object.objectType === 'StatementRef' &&
-        includes(opts.targetIds, model.statement.object.id)
+        includes(opts.targetIds, model.statement.object.id) &&
+        matchesClientOption(model, opts.client)
       );
     });
     return filteredModels.map((model) => {

@@ -11,15 +11,16 @@ const READ_ALL_SCOPES = [
   scopes.XAPI_STATEMENTS_READ,
 ];
 
-export default (model: StoredStatementModel, client: ClientModel): boolean => {
+export default (model: StoredStatementModel, client: ClientModel, enableReadMine = false): boolean => {
+  const canOnlyReadMine = (
+    enableReadMine &&
+    intersection(READ_ALL_SCOPES, client.scopes).length === 0 &&
+    includes(client.scopes, scopes.XAPI_STATEMENTS_READ_MINE)
+  );
+
   return (
+    model.organisation === client.organisation &&
     model.lrs_id === client.lrs_id &&
-    (
-      intersection(READ_ALL_SCOPES, client.scopes).length > 0 ||
-      (
-        includes(client.scopes, scopes.XAPI_STATEMENTS_READ_MINE) &&
-        model.client === client._id
-      )
-    )
+    ( canOnlyReadMine ? model.client === client._id : true )
   );
 };

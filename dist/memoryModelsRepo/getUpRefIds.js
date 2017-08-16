@@ -36,13 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var matchesClientOption_1 = require("./utils/matchesClientOption");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var filteredModels;
         return __generator(this, function (_a) {
             filteredModels = config.state.statements.filter(function (model) {
                 return (model.statement.object.objectType === 'StatementRef' &&
-                    model.statement.object.id === opts.id);
+                    model.statement.object.id === opts.id &&
+                    matchesClientOption_1.default(model, opts.client));
             });
             return [2 /*return*/, filteredModels.map(function (model) {
                     return model.statement.id;

@@ -67,12 +67,13 @@ var checkWithinStatements = function (voiderIds, voidingModels) {
         }
     });
 };
-var checkWithinRepo = function (config, voiderIds, voidedObjectIds) { return __awaiter(_this, void 0, void 0, function () {
+var checkWithinRepo = function (config, voiderIds, voidedObjectIds, client) { return __awaiter(_this, void 0, void 0, function () {
     var voidersByObjectIds, voidersByIds;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, config.repo.getVoidersByIds({
                     ids: voidedObjectIds,
+                    client: client
                 })];
             case 1:
                 voidersByObjectIds = _a.sent();
@@ -81,6 +82,7 @@ var checkWithinRepo = function (config, voiderIds, voidedObjectIds) { return __a
                 }
                 return [4 /*yield*/, config.repo.getVoidersByObjectIds({
                         ids: voiderIds,
+                        client: client
                     })];
             case 2:
                 voidersByIds = _a.sent();
@@ -91,7 +93,7 @@ var checkWithinRepo = function (config, voiderIds, voidedObjectIds) { return __a
         }
     });
 }); };
-exports.default = function (config, statements) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, statements, client) { return __awaiter(_this, void 0, void 0, function () {
     var _a, voiderIds, voidedObjectIds, voidingModels;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -101,7 +103,7 @@ exports.default = function (config, statements) { return __awaiter(_this, void 0
                 _a = getVoiders(statements), voiderIds = _a.voiderIds, voidedObjectIds = _a.voidedObjectIds, voidingModels = _a.voidingModels;
                 if (!(voiderIds.length > 0)) return [3 /*break*/, 2];
                 checkWithinStatements(voiderIds, voidingModels);
-                return [4 /*yield*/, checkWithinRepo(config, voiderIds, voidedObjectIds)];
+                return [4 /*yield*/, checkWithinRepo(config, voiderIds, voidedObjectIds, client)];
             case 1:
                 _b.sent();
                 _b.label = 2;

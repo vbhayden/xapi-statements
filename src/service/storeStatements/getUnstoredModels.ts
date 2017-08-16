@@ -1,6 +1,7 @@
 import { has, keys, values, groupBy, Dictionary } from 'lodash';
 import StatementHash from '../../models/StatementHash';
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
+import ClientModel from '../../models/ClientModel';
 import Conflict from '../../errors/Conflict';
 import DuplicateId from '../../errors/DuplicateId';
 import Config from '../Config';
@@ -36,9 +37,12 @@ const modelsConflicts = (models: UnstoredStatementModel[]): ConflictRes => {
   }, { modelsMap: {}, generatedIdModels: [] });
 };
 
-const repoConflicts = async (config: Config, modelsMap: ModelsMap): Promise<UnstoredStatementModel[]> => {
+const repoConflicts = async (
+  config: Config, modelsMap: ModelsMap, client: ClientModel
+): Promise<UnstoredStatementModel[]> => {
   const hashesMap: Dictionary<StatementHash[]> = groupBy(await config.repo.getHashes({
     ids: keys(modelsMap),
+    client
   }), 'statementId');
   return values(modelsMap).filter((model: UnstoredStatementModel) => {
     const statementId = model.statement.id;
@@ -52,11 +56,13 @@ const repoConflicts = async (config: Config, modelsMap: ModelsMap): Promise<Unst
   });
 };
 
-export default async (config: Config, models: UnstoredStatementModel[]): Promise<UnstoredStatementModel[]> => {
+export default async (
+  config: Config, models: UnstoredStatementModel[], client: ClientModel
+): Promise<UnstoredStatementModel[]> => {
   /* istanbul ignore next */
   if (!config.enableConflictChecks) return models;
 
   const conflictRes = modelsConflicts(models);
-  const ungeneratedIdModels = await repoConflicts(config, conflictRes.modelsMap);
+  const ungeneratedIdModels = await repoConflicts(config, conflictRes.modelsMap, client);
   return [...ungeneratedIdModels, ...conflictRes.generatedIdModels];
 };

@@ -34,7 +34,7 @@ describe('get statement', () => {
   });
 
   it('should throw an error when the voider is not voided ', async () => {
-    await storeStatements([createStatement({ id: TEST_ID })]);
+    await storeStatements([TEST_STATEMENT]);
     const promise = service.getStatement({ id: TEST_ID, voided: true, client: TEST_CLIENT });
     await assertError(NoModel, promise);
   });

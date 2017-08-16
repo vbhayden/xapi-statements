@@ -9,6 +9,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
+var mongodb_1 = require("mongodb");
 var scopes = require("../../utils/scopes");
 var READ_ALL_SCOPES = [
     scopes.ALL,
@@ -17,11 +18,13 @@ var READ_ALL_SCOPES = [
     scopes.XAPI_READ,
     scopes.XAPI_STATEMENTS_READ,
 ];
-exports.default = function (client) {
-    var canOnlyReadMine = (lodash_1.intersection(READ_ALL_SCOPES, client.scopes).length === 0 &&
+exports.default = function (client, enableReadMine) {
+    if (enableReadMine === void 0) { enableReadMine = false; }
+    var canOnlyReadMine = (enableReadMine &&
+        lodash_1.intersection(READ_ALL_SCOPES, client.scopes).length === 0 &&
         lodash_1.includes(client.scopes, scopes.XAPI_STATEMENTS_READ_MINE));
-    return __assign({ lrs_id: client.lrs_id }, (canOnlyReadMine
-        ? { client: client._id }
+    return __assign({ organisation: new mongodb_1.ObjectID(client.organisation), lrs_id: new mongodb_1.ObjectID(client.lrs_id) }, (canOnlyReadMine
+        ? { client: new mongodb_1.ObjectID(client._id) }
         : {}));
 };
 //# sourceMappingURL=matchesClientOption.js.map

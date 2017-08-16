@@ -51,7 +51,7 @@ var shortIds = function (ids) {
 var stack = function (value, values) {
     return lodash_1.union([value], values);
 };
-exports.default = function (config, models) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, models, client) { return __awaiter(_this, void 0, void 0, function () {
     var _this = this;
     var groupedUpRefIds, groupedDownRefs, groupedDownRefIds, getDownRefId, getUpRefIds, getDownRefs, setRefs, traverseDown, traverseUp, traverseUpRefs;
     return __generator(this, function (_a) {
@@ -60,10 +60,10 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                 /* istanbul ignore next */
                 if (!config.enableReferencing)
                     return [2 /*return*/];
-                return [4 /*yield*/, eagerLoadUpRefs_1.default(config, models)];
+                return [4 /*yield*/, eagerLoadUpRefs_1.default(config, models, client)];
             case 1:
                 groupedUpRefIds = _a.sent();
-                return [4 /*yield*/, eagerLoadDownRefs_1.default(config, models)];
+                return [4 /*yield*/, eagerLoadDownRefs_1.default(config, models, client)];
             case 2:
                 groupedDownRefs = _a.sent();
                 groupedDownRefIds = lodash_1.keys(groupedDownRefs);
@@ -71,7 +71,7 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                     return [2 /*return*/];
                 getDownRefId = function (id) {
                     logger_1.default.debug('getDownRefId', shortId(id));
-                    return config.repo.getDownRefId({ id: id });
+                    return config.repo.getDownRefId({ id: id, client: client });
                 };
                 getUpRefIds = function (id) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
@@ -80,7 +80,7 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                             return [2 /*return*/, lodash_1.get(groupedUpRefIds, id, [])];
                         }
                         logger_1.default.debug('getUpRefIds', shortId(id));
-                        return [2 /*return*/, config.repo.getUpRefIds({ id: id })];
+                        return [2 /*return*/, config.repo.getUpRefIds({ id: id, client: client })];
                     });
                 }); };
                 getDownRefs = function (targetIds) { return __awaiter(_this, void 0, void 0, function () {
@@ -99,6 +99,7 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                                 });
                                 return [4 /*yield*/, config.repo.getStatementsByIds({
                                         ids: unloadedTargetIds,
+                                        client: client
                                     })];
                             case 1:
                                 unloadedDownRefs = _a.sent();
@@ -118,7 +119,7 @@ exports.default = function (config, models) { return __awaiter(_this, void 0, vo
                             case 1:
                                 refs = _a.sent();
                                 logger_1.default.debug('setRefs', shortId(id), shortIds(refIds));
-                                return [2 /*return*/, config.repo.setRefs({ id: id, refs: refs })];
+                                return [2 /*return*/, config.repo.setRefs({ id: id, refs: refs, client: client })];
                         }
                     });
                 }); };

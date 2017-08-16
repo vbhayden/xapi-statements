@@ -49,14 +49,15 @@ var matchesClientOption_1 = require("./utils/matchesClientOption");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection, filteredModel, decodedModel;
+        var collection, query, filteredModel, decodedModel;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
                     collection = (_a.sent()).collection('statements');
-                    return [4 /*yield*/, collection.findOne(__assign({ 'statement.id': opts.id }, matchesClientOption_1.default(opts.client), (opts.voided === undefined ? {} :
-                            { voided: opts.voided })))];
+                    query = __assign({ 'statement.id': opts.id }, matchesClientOption_1.default(opts.client, true), (opts.voided === undefined ? {} :
+                        { voided: opts.voided }));
+                    return [4 /*yield*/, collection.findOne(query)];
                 case 2:
                     filteredModel = _a.sent();
                     if (filteredModel === null) {

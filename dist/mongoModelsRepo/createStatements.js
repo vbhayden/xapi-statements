@@ -44,23 +44,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var mongodb_1 = require("mongodb");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection, documents;
+        var documents, collection;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (opts.models.length === 0) {
                         return [2 /*return*/, []];
                     }
+                    documents = opts.models.map(function (model) {
+                        var statement = replaceDotsInStatement_1.encodeDotsInStatement(model.statement);
+                        return __assign({}, model, { organisation: new mongodb_1.ObjectID(model.organisation), lrs_id: new mongodb_1.ObjectID(model.lrs_id), client: new mongodb_1.ObjectID(model.client), statement: statement });
+                    });
                     return [4 /*yield*/, config.db];
                 case 1:
                     collection = (_a.sent()).collection('statements');
-                    documents = opts.models.map(function (model) {
-                        var statement = replaceDotsInStatement_1.encodeDotsInStatement(model.statement);
-                        return __assign({}, model, { statement: statement });
-                    });
                     return [4 /*yield*/, collection.insertMany(documents)];
                 case 2:
                     _a.sent();

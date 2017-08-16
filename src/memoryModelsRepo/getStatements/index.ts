@@ -15,7 +15,7 @@ const filterModels = (models: StoredStatementModel[], opts: GetStatementsOptions
     const statement = model.statement;
     return (
       matchesCursorOption(model, opts) &&
-      matchesClientOption(model, opts.client) &&
+      matchesClientOption(model, opts.client, true) &&
       matchesAgentOption(model, opts) &&
       matchesVerbOption(model, opts) &&
       matchesActivityOption(model, opts) &&
