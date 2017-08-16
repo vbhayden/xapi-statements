@@ -1,4 +1,4 @@
-import * as modr from '../utils/modr';
+import * as modr from '../../utils/modr';
 
 const wrapObjectInArray = modr.modifyType(Object, (data) => {
   return [data];

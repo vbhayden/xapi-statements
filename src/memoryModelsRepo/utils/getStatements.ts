@@ -1,7 +1,7 @@
 import Statement from '../../models/Statement';
 import Config from '../Config';
 
-interface Options<Result> {
+export interface Options<Result> {
   config: Config;
   query: (model: Statement) => boolean;
   project: (model: Statement) => Result;

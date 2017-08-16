@@ -1,6 +1,6 @@
 import Config from '../Config';
 
-interface Options {
+export interface Options {
   config: Config;
   query: Object;
   project: Object;

@@ -7,7 +7,7 @@ import storeStatement from '../utils/storeStatement';
 import Config from '../Config';
 import storeStatements from './storeStatements';
 
-interface Options {
+export interface Options {
   config: Config;
   method: string;
   req: Request;

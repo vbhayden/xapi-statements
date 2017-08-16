@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { S3 } from 'aws-sdk';
+import * as S3 from 'aws-sdk/clients/s3';
 import memoryModelsRepo from '../memoryModelsRepo';
 import mongoModelsRepo from '../mongoModelsRepo';
 import localStorageRepo from '../localStorageRepo';

@@ -3,7 +3,7 @@ import StatementsResult from '../../../models/StatementsResult';
 import GetStatementsOptions from '../../../serviceFactory/options/GetStatementsOptions';
 import StatementsResultOptions from '../../../serviceFactory/options/StatementsResultOptions';
 
-interface MoreLinkOptions {
+export interface MoreLinkOptions {
   results: StatementsResult;
   statementsOpts: Partial<GetStatementsOptions>;
   resultOpts: StatementsResultOptions;

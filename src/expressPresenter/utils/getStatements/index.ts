@@ -5,7 +5,7 @@ import Config from '../../Config';
 import getSingleStatement from './getSingleStatement';
 import getMultipleStatements from './getMultipleStatements';
 
-interface Options {
+export interface Options {
   config: Config;
   res: Response;
   client: ClientModel;

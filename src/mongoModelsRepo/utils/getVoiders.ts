@@ -2,7 +2,7 @@ import GetVoidersOptions from '../../repoFactory/options/GetVoidersOptions';
 import voidQuery from '../utils/voidQuery';
 import Config from '../Config';
 
-interface Options extends GetVoidersOptions {
+export interface Options extends GetVoidersOptions {
   config: Config;
   searchKey: string;
 }

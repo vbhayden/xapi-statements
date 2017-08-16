@@ -2,6 +2,7 @@ import NoModel from 'jscommons/dist/errors/NoModel';
 import StoredStatementModel from '../models/StoredStatementModel';
 import GetStatementOptions from '../repoFactory/options/GetStatementOptions';
 import matchesClientOption from './utils/matchesClientOption';
+import { decodeDotsInStatement } from './utils/replaceDotsInStatement';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -20,6 +21,10 @@ export default (config: Config) => {
       throw new NoModel('Statement');
     }
 
-    return filteredModel;
+    const decodedModel = {
+      ...filteredModel,
+      statement: decodeDotsInStatement(filteredModel.statement),
+    };
+    return decodedModel;
   };
 };

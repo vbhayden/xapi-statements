@@ -1,13 +1,13 @@
 import Statement from './Statement';
 
-type Ref = { statement: Statement };
+export type Ref = { statement: Statement };
 
 interface UnstoredStatementModel {
   hasGeneratedId: boolean;
   organisation: string;
   client: string;
   lrs_id: string;
-  person: string;
+  person: string | null;
   active: boolean;
   voided: boolean;
   timestamp: Date;

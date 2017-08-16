@@ -2,6 +2,7 @@ import Actor from './Actor';
 import Attachment from './Attachment';
 import Verb from './Verb';
 import Context from './Context';
+import Result from './Result';
 import StatementObject from './StatementObject';
 
 interface StatementBase {
@@ -9,6 +10,7 @@ interface StatementBase {
   object: StatementObject;
   verb: Verb;
   context?: Context;
+  result?: Result;
   attachments?: Attachment[];
 }
 

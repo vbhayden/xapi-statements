@@ -1,13 +1,13 @@
 {
-  "name": "xapi-server",
+  "name": "xapi-statements",
   "version": "1.0.0",
-  "description": "A server for the xAPI",
+  "description": "A service for xAPI statements",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LearningLocker/xapi-server.git"
+    "url": "https://github.com/LearningLocker/xapi-statements.git"
   },
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc",
@@ -30,7 +30,7 @@
     "npm": "^5.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.74.0",
+    "aws-sdk": "^2.97.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "boolean": "^0.1.2",
@@ -55,7 +55,7 @@
     "uuid": "^3.0.1",
     "winston": "^2.3.1",
     "winston-aws-cloudwatch": "^1.5.0",
-    "xapi-validation": "^2.0.0"
+    "xapi-validation": "git+https://git@github.com/LearningLocker/xapi-validation.git"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.4",

@@ -5,8 +5,9 @@ import Config from '../../Config';
 import getMoreLink from './getMoreLink';
 import getStatementsOptions from './getStatementsOptions';
 import getStatementsResultOptions from './getStatementsResultOptions';
+import { xapiHeaderVersion } from '../../../utils/constants';
 
-interface Options {
+export interface Options {
   config: Config;
   res: Response;
   queryParams: any;
@@ -16,7 +17,6 @@ interface Options {
 export default async (opts: Options) => {
   const { queryParams, config, res, client } = opts;
   const timestamp = new Date().toISOString();
-  const xapiVersion = '1.0.0';
   const resultOpts = getStatementsResultOptions(queryParams);
   const statementsOpts = getStatementsOptions(queryParams);
 
@@ -35,7 +35,7 @@ export default async (opts: Options) => {
     const crlf = '\r\n';
     const fullBoundary = `${crlf}--${boundary}${crlf}`;
     res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-    res.setHeader('X-Experience-API-Version', xapiVersion);
+    res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
     res.setHeader('Content-Type', `multipart/mixed; charset=UTF-8; boundary="${boundary}"`);
     res.status(200);
     res.write(fullBoundary);
@@ -67,7 +67,7 @@ export default async (opts: Options) => {
   }
   res
     .set('X-Experience-API-Consistent-Through', timestamp)
-    .set('X-Experience-API-Version', xapiVersion)
+    .set('X-Experience-API-Version', xapiHeaderVersion)
     .status(200)
     .json(statementResult);
 };

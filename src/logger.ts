@@ -1,3 +1,4 @@
+import * as winston from 'winston';
 import commonWinston from 'jscommons/dist/winston';
 import config from './config';
 
@@ -9,6 +10,7 @@ export default commonWinston({
     level: config.winston.cloudWatch.level,
     enabled: config.winston.cloudWatch.enabled,
     logGroupName: config.winston.cloudWatch.logGroupName,
+    logStreamName: config.winston.cloudWatch.logStreamName,
     awsConfig: {
       accessKeyId: (
         /* istanbul ignore next */
@@ -24,4 +26,4 @@ export default commonWinston({
       ),
     },
   }
-});
+}) as winston.LoggerInstance;

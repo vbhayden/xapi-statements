@@ -1,4 +1,4 @@
-import matchesModel from './matchesModel';
+import matchesModel, { ModelMatcher } from './matchesModel';
 
 const matcher = (statementKey: string, verb: string): Object => {
   return {
@@ -8,4 +8,4 @@ const matcher = (statementKey: string, verb: string): Object => {
 
 export default matchesModel(matcher, (opts) => {
   return opts.verb;
-});
+}) as ModelMatcher;

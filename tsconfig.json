@@ -10,14 +10,14 @@
     "sourceMap": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "declaration": false,
+    "declaration": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "alwaysStrict": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": false
   },
   "includes": ["src/**/*"],
   "exclude": ["node_modules", "dist/**/*"],

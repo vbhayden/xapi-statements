@@ -4,10 +4,9 @@ import Config from '../../Config';
 import checkStatementsOpts from './checkStatementsOpts';
 import getStatementsOptions from './getStatementsOptions';
 import getStatementsResultOptions from './getStatementsResultOptions';
+import { xapiHeaderVersion } from '../../../utils/constants';
 
-const XAPI_VERSION = '1.0.0';
-
-interface Options {
+export interface Options {
   config: Config;
   res: Response;
   queryParams: any;
@@ -26,7 +25,7 @@ export default async (opts: Options) => {
 
   const results = await config.service.getStatement({ client, id, voided, ...resultOpts });
   res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-  res.setHeader('X-Experience-API-Version', XAPI_VERSION);
+  res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
   res.setHeader('Last-Modified', results.statements[0].stored);
   res.status(200);
   res.json(results.statements[0]);

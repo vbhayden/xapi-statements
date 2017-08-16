@@ -1,6 +1,7 @@
 import StoredStatementModel from '../../models/StoredStatementModel';
 import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
 import matchesClientOption from '../utils/matchesClientOption';
+import { decodeDotsInStatement } from '../utils/replaceDotsInStatement';
 import Config from '../Config';
 import matchesAgentOption from './matchesAgentOption';
 import matchesCursorOption from './matchesCursorOption';
@@ -45,6 +46,11 @@ export default (config: Config) => {
       .limit(limit)
       .toArray() as StoredStatementModel[];
 
-    return models;
+    const decodedModels = models.map((model) => {
+      const statement = decodeDotsInStatement(model.statement);
+      return { ...model, statement };
+    });
+
+    return decodedModels;
   };
 };
