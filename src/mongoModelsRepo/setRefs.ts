@@ -1,4 +1,5 @@
 import SetRefsOptions from '../repoFactory/options/SetRefsOptions';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -8,7 +9,10 @@ export default (config: Config) => {
       return { statement };
     });
 
-    const query = { 'statement.id': opts.id };
+    const query = { 
+      'statement.id': opts.id,
+      ...matchesClientOption(opts.client)
+    };
     const update = { $set: { refs } };
     const options = { multi: false };
 

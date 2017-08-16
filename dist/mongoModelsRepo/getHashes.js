@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -36,21 +44,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var matchesClientOption_1 = require("./utils/matchesClientOption");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection, results;
+        var collection, query, project, results;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
                     collection = (_a.sent()).collection('statements');
-                    return [4 /*yield*/, collection.find({
-                            'statement.id': { $in: opts.ids },
-                        }).project({
-                            _id: 0,
-                            'statement.id': 1,
-                            hash: 1,
-                        }).toArray()];
+                    query = __assign({ 'statement.id': { $in: opts.ids } }, matchesClientOption_1.default(opts.client));
+                    project = {
+                        _id: 0,
+                        'statement.id': 1,
+                        hash: 1,
+                    };
+                    return [4 /*yield*/, collection.find(query).project(project).toArray()];
                 case 2:
                     results = _a.sent();
                     return [2 /*return*/, results.map(function (result) {

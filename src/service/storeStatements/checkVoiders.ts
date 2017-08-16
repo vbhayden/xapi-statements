@@ -2,6 +2,7 @@ import { includes } from 'lodash';
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
 import VoidingError from '../../errors/VoidingError';
 import InvalidVoidType from '../../errors/InvalidVoidType';
+import ClientModel from '../../models/ClientModel';
 import voidVerbId from '../../utils/voidVerbId';
 import Config from '../Config';
 
@@ -45,10 +46,12 @@ const checkWithinRepo = async (
   config: Config,
   voiderIds: string[],
   voidedObjectIds: string[],
+  client: ClientModel
 ): Promise<void> => {
   // Checks that a new voider doesn't reference an existing voider.
   const voidersByObjectIds: string[] = await config.repo.getVoidersByIds({
     ids: voidedObjectIds,
+    client
   });
   if (voidersByObjectIds.length > 0) {
     throw new VoidingError(voidersByObjectIds);
@@ -57,19 +60,20 @@ const checkWithinRepo = async (
   // Checks that a voider doesn't void a new voider.
   const voidersByIds: string[] = await config.repo.getVoidersByObjectIds({
     ids: voiderIds,
+    client
   });
   if (voidersByIds.length > 0) {
     throw new VoidingError(voidersByIds);
   }
 };
 
-export default async (config: Config, statements: UnstoredStatementModel[]): Promise<string[]> => {
+export default async (config: Config, statements: UnstoredStatementModel[], client: ClientModel): Promise<string[]> => {
   if (!config.enableVoidingChecks) return [];
   const { voiderIds, voidedObjectIds, voidingModels }: VoidResult = getVoiders(statements);
 
   if (voiderIds.length > 0) {
     checkWithinStatements(voiderIds, voidingModels);
-    await checkWithinRepo(config, voiderIds, voidedObjectIds);
+    await checkWithinRepo(config, voiderIds, voidedObjectIds, client);
   }
 
   return voidedObjectIds;

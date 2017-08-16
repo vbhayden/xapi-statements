@@ -1,5 +1,6 @@
 import NoModel from 'jscommons/dist/errors/NoModel';
 import GetDownRefIdOptions from '../repoFactory/options/GetDownRefIdOptions';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 interface Result {
@@ -13,15 +14,19 @@ interface Result {
 export default (config: Config) => {
   return async (opts: GetDownRefIdOptions): Promise<string> => {
     const collection = (await config.db).collection('statements');
-    const result = await collection.findOne({
+
+    const query = {
       'statement.object.objectType': 'StatementRef',
       'statement.id': opts.id,
-    }, {
-        fields: {
-          _id: 0,
-          'statement.object.id': 1,
-        }
-      }) as Result | null;
+      ...matchesClientOption(opts.client)
+    };
+    const queryOptions = {
+      fields: {
+        _id: 0,
+        'statement.object.id': 1,
+      }
+    };
+    const result = await collection.findOne(query, queryOptions) as Result | null;
 
     if (result === null) {
       throw new NoModel('Statement');

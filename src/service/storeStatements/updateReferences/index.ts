@@ -3,6 +3,7 @@ import NoModel from 'jscommons/dist/errors/NoModel';
 import MissingLoadedId from '../../../errors/MissingLoadedId';
 import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
 import Statement from '../../../models/Statement';
+import ClientModel from '../../../models/ClientModel';
 import Config from '../../Config';
 import logger from '../../../logger';
 import eagerLoadUpRefs from './eagerLoadUpRefs';
@@ -20,19 +21,19 @@ const stack = <T>(value: T, values: T[]): T[] => {
   return union([value], values);
 };
 
-export default async (config: Config, models: UnstoredStatementModel[]): Promise<void> => {
+export default async (config: Config, models: UnstoredStatementModel[], client: ClientModel): Promise<void> => {
   /* istanbul ignore next */
   if (!config.enableReferencing) return;
 
-  const groupedUpRefIds = await eagerLoadUpRefs(config, models);
-  const groupedDownRefs = await eagerLoadDownRefs(config, models);
+  const groupedUpRefIds = await eagerLoadUpRefs(config, models, client);
+  const groupedDownRefs = await eagerLoadDownRefs(config, models, client);
   const groupedDownRefIds = keys(groupedDownRefs);
 
   if (size(groupedUpRefIds) === 0 && size(groupedDownRefs) === 0) return;
 
   const getDownRefId = (id: string): Promise<string> => {
     logger.debug('getDownRefId', shortId(id));
-    return config.repo.getDownRefId({ id });
+    return config.repo.getDownRefId({ id, client });
   };
 
   const getUpRefIds = async (id: string): Promise<string[]> => {
@@ -41,7 +42,7 @@ export default async (config: Config, models: UnstoredStatementModel[]): Promise
       return get(groupedUpRefIds, id, []);
     }
     logger.debug('getUpRefIds', shortId(id));
-    return config.repo.getUpRefIds({ id });
+    return config.repo.getUpRefIds({ id, client });
   };
 
   const getDownRefs = async (targetIds: string[]): Promise<Statement[]> => {
@@ -56,6 +57,7 @@ export default async (config: Config, models: UnstoredStatementModel[]): Promise
     });
     const unloadedDownRefs = await config.repo.getStatementsByIds({
       ids: unloadedTargetIds,
+      client
     });
 
     logger.silly('getDownRefs cached', shortIds(loadedTargetIds));
@@ -67,7 +69,7 @@ export default async (config: Config, models: UnstoredStatementModel[]): Promise
     const refIds = pull(givenRefIds, id);
     const refs = await getDownRefs(refIds);
     logger.debug('setRefs', shortId(id), shortIds(refIds));
-    return config.repo.setRefs({ id, refs });
+    return config.repo.setRefs({ id, refs, client });
   };
 
   const traverseDown = async (modelId: string, visitedIds: string[]): Promise<string[]> => {

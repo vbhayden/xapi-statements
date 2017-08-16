@@ -41,7 +41,7 @@ var voidVerbId_1 = require("../utils/voidVerbId");
 var getStatements_1 = require("./utils/getStatements");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var query, project;
+        var query, project, client;
         return __generator(this, function (_a) {
             query = function (statement) {
                 return (statement.verb.id === voidVerbId_1.default &&
@@ -51,7 +51,8 @@ exports.default = function (config) {
             project = function (statement) {
                 return statement.id;
             };
-            return [2 /*return*/, getStatements_1.default({ config: config, query: query, project: project })];
+            client = opts.client;
+            return [2 /*return*/, getStatements_1.default({ config: config, query: query, project: project, client: client })];
         });
     }); };
 };

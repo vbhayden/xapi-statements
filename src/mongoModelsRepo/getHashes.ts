@@ -1,5 +1,6 @@
 import StatementHash from '../models/StatementHash';
 import GetHashesOptions from '../repoFactory/options/GetHashesOptions';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 interface Result {
@@ -12,13 +13,17 @@ interface Result {
 export default (config: Config) => {
   return async (opts: GetHashesOptions): Promise<StatementHash[]> => {
     const collection = (await config.db).collection('statements');
-    const results = await collection.find({
+
+    const query = {
       'statement.id': { $in: opts.ids },
-    }).project({
+      ...matchesClientOption(opts.client)
+    };
+    const project = {
       _id: 0,
       'statement.id': 1,
       hash: 1,
-    }).toArray() as Result[];
+    };
+    const results = await collection.find(query).project(project).toArray() as Result[];
 
     return results.map((result) => {
       return {

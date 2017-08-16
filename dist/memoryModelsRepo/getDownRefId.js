@@ -38,13 +38,15 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var NoModel_1 = require("jscommons/dist/errors/NoModel");
 var ChangedStatementRef_1 = require("../errors/ChangedStatementRef");
+var matchesClientOption_1 = require("./utils/matchesClientOption");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var filteredModels, statementObject;
         return __generator(this, function (_a) {
             filteredModels = config.state.statements.filter(function (model) {
                 return (model.statement.object.objectType === 'StatementRef' &&
-                    model.statement.id === opts.id);
+                    model.statement.id === opts.id &&
+                    matchesClientOption_1.default(model, opts.client));
             });
             if (filteredModels.length === 0) {
                 throw new NoModel_1.default('Statement');

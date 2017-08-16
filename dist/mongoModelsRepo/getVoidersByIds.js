@@ -48,13 +48,14 @@ var voidQuery_1 = require("./utils/voidQuery");
 var getStatements_1 = require("./utils/getStatements");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var query, project, results;
+        var query, project, client, results;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     query = __assign({ 'statement.id': { $in: opts.ids } }, voidQuery_1.default);
                     project = { 'statement.id': 1 };
-                    return [4 /*yield*/, getStatements_1.default({ config: config, query: query, project: project })];
+                    client = opts.client;
+                    return [4 /*yield*/, getStatements_1.default({ config: config, query: query, project: project, client: client })];
                 case 1:
                     results = _a.sent();
                     return [2 /*return*/, results.map(function (result) {

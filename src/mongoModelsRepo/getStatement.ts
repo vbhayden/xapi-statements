@@ -8,14 +8,16 @@ import Config from './Config';
 export default (config: Config) => {
   return async (opts: GetStatementOptions): Promise<StoredStatementModel> => {
     const collection = (await config.db).collection('statements');
-    const filteredModel = await collection.findOne({
+    const query = {
       'statement.id': opts.id,
-      ...matchesClientOption(opts.client),
+      ...matchesClientOption(opts.client, true),
       ...(
         opts.voided === undefined ? {} :
           { voided: opts.voided }
       ),
-    }) as StoredStatementModel;
+    };
+
+    const filteredModel = await collection.findOne(query) as StoredStatementModel;
 
     if (filteredModel === null) {
       throw new NoModel('Statement');

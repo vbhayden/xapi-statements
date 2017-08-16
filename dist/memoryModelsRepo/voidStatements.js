@@ -36,11 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var matchesClientOption_1 = require("./utils/matchesClientOption");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             config.state.statements = config.state.statements.map(function (model) {
-                if (opts.ids.includes(model.statement.id)) {
+                if (opts.ids.includes(model.statement.id) &&
+                    matchesClientOption_1.default(model, opts.client)) {
                     model.voided = true;
                 }
                 return model;

@@ -54,7 +54,7 @@ var matchesRegistrationOption_1 = require("./matchesRegistrationOption");
 var matchesUntilOption_1 = require("./matchesUntilOption");
 var matchesSinceOption_1 = require("./matchesSinceOption");
 var filterModels = function (opts) {
-    return __assign({ voided: false }, matchesCursorOption_1.default(opts), matchesClientOption_1.default(opts.client), matchesAgentOption_1.default(opts), matchesVerbOption_1.default(opts), matchesActivityOption_1.default(opts), matchesRegistrationOption_1.default(opts), matchesUntilOption_1.default(opts), matchesSinceOption_1.default(opts));
+    return __assign({ voided: false }, matchesCursorOption_1.default(opts), matchesClientOption_1.default(opts.client, true), matchesAgentOption_1.default(opts), matchesVerbOption_1.default(opts), matchesActivityOption_1.default(opts), matchesRegistrationOption_1.default(opts), matchesUntilOption_1.default(opts), matchesSinceOption_1.default(opts));
 };
 var sortModels = function (ascending) {
     return {

@@ -1,6 +1,7 @@
 import NoModel from 'jscommons/dist/errors/NoModel';
 import GetDownRefIdOptions from '../repoFactory/options/GetDownRefIdOptions';
 import ChangedStatementRef from '../errors/ChangedStatementRef';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -8,7 +9,8 @@ export default (config: Config) => {
     const filteredModels = config.state.statements.filter((model) => {
       return (
         model.statement.object.objectType === 'StatementRef' &&
-        model.statement.id === opts.id
+        model.statement.id === opts.id &&
+        matchesClientOption(model, opts.client)
       );
     });
     if (filteredModels.length === 0) {

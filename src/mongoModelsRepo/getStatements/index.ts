@@ -15,7 +15,7 @@ const filterModels = (opts: GetStatementsOptions): Object => {
   return {
     voided: false,
     ...matchesCursorOption(opts),
-    ...matchesClientOption(opts.client),
+    ...matchesClientOption(opts.client, true),
     ...matchesAgentOption(opts),
     ...matchesVerbOption(opts),
     ...matchesActivityOption(opts),

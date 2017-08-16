@@ -1,4 +1,5 @@
 import VoidStatementsOptions from '../repoFactory/options/VoidStatementsOptions';
+import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
 
 export default (config: Config) => {
@@ -7,7 +8,10 @@ export default (config: Config) => {
 
     const collection = (await config.db).collection('statements');
 
-    const query = { 'statement.id': { $in: opts.ids } };
+    const query = {
+      'statement.id': { $in: opts.ids },
+      ...matchesClientOption(opts.client)
+    };
     const update = { $set: { voided: true } };
     const options = { multi: true };
 
