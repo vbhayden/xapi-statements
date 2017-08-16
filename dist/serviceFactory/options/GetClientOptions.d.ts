@@ -1,3 +1,4 @@
-export default interface Options {
+interface Options {
     readonly authToken: string;
 }
+export default Options;
