@@ -36,18 +36,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = function (config, authToken) {
-    if (authToken === void 0) { authToken = ''; }
-    return __awaiter(_this, void 0, void 0, function () {
-        var client;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, config.service.getClient({ authToken: authToken })];
-                case 1:
-                    client = (_a.sent()).client;
-                    return [2 /*return*/, client];
-            }
+var atob = require("atob");
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
+exports.default = function (config) {
+    return function (_a) {
+        var authToken = _a.authToken;
+        return __awaiter(_this, void 0, void 0, function () {
+            var strippedAuthToken, decodedAuthToken, splitAuthToken, key, secret, document, client;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        strippedAuthToken = authToken.replace('Basic ', '');
+                        decodedAuthToken = atob(strippedAuthToken);
+                        splitAuthToken = decodedAuthToken.split(':');
+                        key = splitAuthToken[0], secret = splitAuthToken[1];
+                        return [4 /*yield*/, config.db];
+                    case 1: return [4 /*yield*/, (_a.sent()).collection('client').findOne({
+                            'api.basic_key': key,
+                            'api.basic_secret': secret,
+                        })];
+                    case 2:
+                        document = _a.sent();
+                        if (document === null || document === undefined) {
+                            throw new NoModel_1.default('Client');
+                        }
+                        client = {
+                            _id: document._id.toString(),
+                            title: document.title,
+                            authority: document.authority,
+                            isTrusted: document.isTrusted,
+                            lrs_id: document.lrs_id.toString(),
+                            organisation: document.organisation.toString(),
+                            scopes: document.scopes,
+                        };
+                        return [2 /*return*/, { client: client }];
+                }
+            });
         });
-    });
+    };
 };
 //# sourceMappingURL=getClient.js.map

@@ -36,18 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = function (config, authToken) {
-    if (authToken === void 0) { authToken = ''; }
-    return __awaiter(_this, void 0, void 0, function () {
-        var client;
+exports.default = function (config) {
+    return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, config.service.getClient({ authToken: authToken })];
-                case 1:
-                    client = (_a.sent()).client;
-                    return [2 /*return*/, client];
-            }
+            return [2 /*return*/, config.repo.getClient(opts)];
         });
-    });
+    }); };
 };
 //# sourceMappingURL=getClient.js.map

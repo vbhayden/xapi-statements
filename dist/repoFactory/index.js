@@ -50,10 +50,29 @@ var memoryModelsRepo_1 = require("../memoryModelsRepo");
 var mongoModelsRepo_1 = require("../mongoModelsRepo");
 var localStorageRepo_1 = require("../localStorageRepo");
 var s3StorageRepo_1 = require("../s3StorageRepo");
+var testAuthRepo_1 = require("../testAuthRepo");
+var mongoAuthRepo_1 = require("../mongoAuthRepo");
+var fetchAuthRepo_1 = require("../fetchAuthRepo");
 var config_1 = require("../config");
 /* istanbul ignore next */
+var getAuthRepo = function () {
+    switch (config_1.default.repoFactory.authRepoName) {
+        case 'test':
+            return testAuthRepo_1.default({});
+        case 'fetch':
+            return fetchAuthRepo_1.default({
+                llClientInfoEndpoint: config_1.default.llClientInfoEndpoint,
+            });
+        default:
+        case 'mongo':
+            return mongoAuthRepo_1.default({
+                db: mongodb_1.MongoClient.connect(config_1.default.mongo.url),
+            });
+    }
+};
+/* istanbul ignore next */
 var getModelsRepo = function () {
-    switch (config_1.default.modelsRepoName) {
+    switch (config_1.default.repoFactory.modelsRepoName) {
         case 'mongo':
             return mongoModelsRepo_1.default({
                 db: mongodb_1.MongoClient.connect(config_1.default.mongo.url),
@@ -67,7 +86,7 @@ var getModelsRepo = function () {
 };
 /* istanbul ignore next */
 var getStorageRepo = function () {
-    switch (config_1.default.storageRepoName) {
+    switch (config_1.default.repoFactory.storageRepoName) {
         case 's3':
             return s3StorageRepo_1.default({
                 client: new S3(config_1.default.storage.s3.awsConfig),
@@ -80,9 +99,10 @@ var getStorageRepo = function () {
     }
 };
 exports.default = function () {
+    var authRepo = getAuthRepo();
     var modelsRepo = getModelsRepo();
     var storageRepo = getStorageRepo();
-    return __assign({}, modelsRepo, storageRepo, { clearRepo: function () { return __awaiter(_this, void 0, void 0, function () {
+    return __assign({}, authRepo, modelsRepo, storageRepo, { clearRepo: function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, modelsRepo.clearRepo()];

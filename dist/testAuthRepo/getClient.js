@@ -36,18 +36,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = function (config, authToken) {
-    if (authToken === void 0) { authToken = ''; }
-    return __awaiter(_this, void 0, void 0, function () {
-        var client;
+var testValues_1 = require("../utils/testValues");
+exports.default = function (_config) {
+    return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, config.service.getClient({ authToken: authToken })];
-                case 1:
-                    client = (_a.sent()).client;
-                    return [2 /*return*/, client];
+            switch (opts.authToken) {
+                case testValues_1.TEST_INVALID_SCOPE_TOKEN:
+                    return [2 /*return*/, { client: testValues_1.TEST_INVALID_SCOPE_CLIENT }];
+                case testValues_1.TEST_VALID_SCOPE_TOKEN:
+                    return [2 /*return*/, { client: testValues_1.TEST_VALID_SCOPE_CLIENT }];
+                case testValues_1.TEST_OUTSIDE_ORG_TOKEN:
+                    return [2 /*return*/, { client: testValues_1.TEST_CLIENT_OUTSIDE_ORG }];
+                case testValues_1.TEST_OUTSIDE_STORE_TOKEN:
+                    return [2 /*return*/, { client: testValues_1.TEST_CLIENT_OUTSIDE_STORE }];
+                default:
+                    return [2 /*return*/, { client: testValues_1.TEST_CLIENT }];
             }
+            return [2 /*return*/];
         });
-    });
+    }); };
 };
 //# sourceMappingURL=getClient.js.map
