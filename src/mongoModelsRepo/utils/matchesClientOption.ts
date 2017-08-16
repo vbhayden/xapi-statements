@@ -1,4 +1,5 @@
 import { includes, intersection } from 'lodash';
+import { ObjectID } from 'mongodb';
 import ClientModel from '../../models/ClientModel';
 import * as scopes from '../../utils/scopes';
 
@@ -17,10 +18,11 @@ export default (client: ClientModel): Object => {
   );
 
   return {
-    lrs_id: client.lrs_id,
+    organisation: new ObjectID(client.organisation),
+    lrs_id: new ObjectID(client.lrs_id),
     ...(
       canOnlyReadMine
-      ? { client: client._id }
+      ? { client: new ObjectID(client._id) }
       : {}
     )
   };

@@ -1,3 +1,4 @@
+import { ObjectID } from 'mongodb';
 import UnstoredStatementModel from '../models/UnstoredStatementModel';
 import CreateStatementsOptions from '../repoFactory/options/CreateStatementsOptions';
 import { encodeDotsInStatement } from './utils/replaceDotsInStatement';
@@ -9,11 +10,18 @@ export default (config: Config) => {
       return [];
     }
 
-    const collection = (await config.db).collection('statements');
-    const documents = opts.models.map((model) => {
+    const documents = opts.models.map( (model) => {
       const statement = encodeDotsInStatement(model.statement);
-      return { ...model, statement };
+      return {
+        ...model,
+        organisation: new ObjectID(model.organisation),
+        lrs_id: new ObjectID(model.lrs_id),
+        client: new ObjectID(model.client),
+        statement
+      };
     });
+
+    const collection = (await config.db).collection('statements');
     await collection.insertMany(documents);
     return opts.models;
   };

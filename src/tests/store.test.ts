@@ -10,7 +10,7 @@ import storeStatementsInService from './utils/storeStatementsInService';
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_STATEMENT = createStatement({ id: TEST_ID });
 const TEST_UNKNOWN_CLIENT = createClientModel({
-  lrs_id: 'unknown_client_id'
+  lrs_id: '5988ff000000000000000001'
 });
 const TEST_OPTIONS = {
   client: TEST_UNKNOWN_CLIENT
@@ -32,7 +32,7 @@ describe('get statement', () => {
 
   it('should throw an error when the store does not match', async () => {
     const unknownClient = createClientModel({
-      lrs_id: 'unknown_lrs_id'
+      lrs_id: '5988ff000000000000000001'
     });
     await storeStatements([TEST_STATEMENT]);
     const promise = service.getStatement({ id: TEST_ID, voided: false, client: unknownClient });

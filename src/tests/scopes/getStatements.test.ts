@@ -18,7 +18,7 @@ describe('get statements with scopes', () => {
   const storeStatements = storeStatementsInService(service);
 
   const testReadAllScope = async (scopes: string[]) => {
-    const client = createClientModel({ _id: 'test_client_b', scopes });
+    const client = createClientModel({ _id: '59891b200000000000000000', scopes });
     await storeStatements([TEST_STATEMENT]);
     const result = await service.getStatements({ client });
     const actualIds = result.statements.map(statement => {
@@ -30,7 +30,7 @@ describe('get statements with scopes', () => {
 
   it('should return no statements when using a different client with read mine scope', async () => {
     const client = createClientModel({
-      _id: 'test_client_b',
+      _id: '59891b200000000000000000',
       scopes: [scopes.XAPI_STATEMENTS_READ_MINE]
     });
     await storeStatements([TEST_STATEMENT]);
@@ -56,7 +56,7 @@ describe('get statements with scopes', () => {
 
   it('should throw an error when using a forbidden read scope', async () => {
     const client = createClientModel({
-      _id: 'test_client_b',
+      _id: '59891b200000000000000000',
       scopes: TEST_FORBIDDEN_SCOPES
     });
     await storeStatements([TEST_STATEMENT]);
