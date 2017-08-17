@@ -27,7 +27,7 @@ const filterModels = (opts: GetStatementsOptions): Object => {
 
 const sortModels = (ascending: boolean) => {
   return {
-    'statement.stored': ascending ? 1 : -1,
+    stored: ascending ? 1 : -1
   };
 };
 
