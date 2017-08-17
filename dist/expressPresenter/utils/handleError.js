@@ -20,8 +20,12 @@ var QueryIds_1 = require("../../errors/QueryIds");
 var QueryOptions_1 = require("../../errors/QueryOptions");
 var UnequalStatementId_1 = require("../../errors/UnequalStatementId");
 var VoidingError_1 = require("../../errors/VoidingError");
+var constants_1 = require("../../utils/constants");
 exports.default = function (_a) {
     var translator = _a.translator, errorId = _a.errorId, res = _a.res, err = _a.err;
+    var timestamp = new Date().toISOString();
+    res.setHeader('X-Experience-API-Consistent-Through', timestamp);
+    res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
     if (lodash_1.isNull(err) || lodash_1.isUndefined(null)) {
         var code = 500;
         var message = translator.serverError();
