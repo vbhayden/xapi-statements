@@ -38,6 +38,14 @@ describe('get statements by slicing', () => {
     assert.equal(statements[0].id, TEST_ID_1);
   });
 
+  it('should return statements when they are inside the default limit', async () => {
+    const statements = await sliceStatements({
+      limit: 0,
+      client: TEST_CLIENT
+    });
+    assert.equal(statements.length, 3);
+  });
+
   it('should return statements when they are not skipped', async () => {
     const statements = await sliceStatements({
       skip: 2,

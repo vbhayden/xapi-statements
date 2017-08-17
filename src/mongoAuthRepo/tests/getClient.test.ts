@@ -23,6 +23,7 @@ describe('getClient from mongo client', () => {
     // Insert client to db
     await (await authConfig.db).collection('client').insert({
       ...CLIENT_MODEL,
+      authority: JSON.stringify(CLIENT_MODEL.authority),
       api: {
         basic_key,
         basic_secret
