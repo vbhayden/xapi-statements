@@ -1,6 +1,7 @@
 import checkScopes from 'jscommons/dist/service/utils/checkScopes';
 import { STATEMENT_READ_SCOPES } from '../utils/scopes';
 import GetStatementsOptions from '../serviceFactory/options/GetStatementsOptions';
+import getNumberOption from 'jscommons/dist/config/getNumberOption';
 import StatementsResult from '../models/StatementsResult';
 import getStatementsResult from './utils/getStatementsResult';
 import Config from './Config';
@@ -9,7 +10,12 @@ export default (config: Config) => {
   return async (opts: GetStatementsOptions): Promise<StatementsResult> => {
     checkScopes(STATEMENT_READ_SCOPES, opts.client.scopes);
 
-    const limit = opts.limit === undefined || opts.limit === 0 ? 100 : opts.limit;
+    let limit = getNumberOption(opts.limit, 100);
+    // if limit is set to 0, use a default
+    if (limit === 0) {
+      limit = 100;
+    }
+
     const models = await config.repo.getStatements({
       agent: opts.agent,
       activity: opts.activity,
