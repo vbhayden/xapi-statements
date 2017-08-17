@@ -6,15 +6,20 @@ import StatementsResult from '../models/StatementsResult';
 import getStatementsResult from './utils/getStatementsResult';
 import Config from './Config';
 
+const getLimit = (val?: any) => {
+  const defaultLimit = 100;
+  const limit = getNumberOption(val, defaultLimit);
+  if (limit === 0) {
+    return defaultLimit;
+  }
+  return limit;
+};
+
 export default (config: Config) => {
   return async (opts: GetStatementsOptions): Promise<StatementsResult> => {
     checkScopes(STATEMENT_READ_SCOPES, opts.client.scopes);
 
-    let limit = getNumberOption(opts.limit, 100);
-    // if limit is set to 0, use a default
-    if (limit === 0) {
-      limit = 100;
-    }
+    const limit = getLimit(opts.limit);
 
     const models = await config.repo.getStatements({
       agent: opts.agent,

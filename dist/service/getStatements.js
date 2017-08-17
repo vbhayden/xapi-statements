@@ -46,7 +46,6 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var checkScopes_1 = require("jscommons/dist/service/utils/checkScopes");
 var scopes_1 = require("../utils/scopes");
-var getNumberOption_1 = require("jscommons/dist/config/getNumberOption");
 var getStatementsResult_1 = require("./utils/getStatementsResult");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
@@ -55,11 +54,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0:
                     checkScopes_1.default(scopes_1.STATEMENT_READ_SCOPES, opts.client.scopes);
-                    limit = getNumberOption_1.default(opts.limit, 100);
-                    // if limit is set to 0, use a default
-                    if (limit === 0) {
-                        limit = 100;
-                    }
+                    limit = opts.limit === 0 ? 100 : opts.limit;
                     return [4 /*yield*/, config.repo.getStatements({
                             agent: opts.agent,
                             activity: opts.activity,
