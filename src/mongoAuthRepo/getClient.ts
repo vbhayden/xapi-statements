@@ -24,7 +24,7 @@ export default (config: Config) => {
     const client: ClientModel = {
       _id: document._id.toString() as string,
       title: document.title as string,
-      authority: document.authority as Actor,
+      authority: JSON.parse(document.authority) as Actor,
       isTrusted: document.isTrusted as boolean,
       lrs_id: document.lrs_id.toString() as string,
       organisation: document.organisation.toString() as string,
