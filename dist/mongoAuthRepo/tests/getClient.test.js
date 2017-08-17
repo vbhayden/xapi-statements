@@ -66,7 +66,7 @@ describe('getClient from mongo client', function () {
                 case 0: return [4 /*yield*/, authConfig.db];
                 case 1: 
                 // Insert client to db
-                return [4 /*yield*/, (_a.sent()).collection('client').insert(__assign({}, CLIENT_MODEL, { api: {
+                return [4 /*yield*/, (_a.sent()).collection('client').insert(__assign({}, CLIENT_MODEL, { authority: JSON.stringify(CLIENT_MODEL.authority), api: {
                             basic_key: basic_key,
                             basic_secret: basic_secret
                         } }))];
