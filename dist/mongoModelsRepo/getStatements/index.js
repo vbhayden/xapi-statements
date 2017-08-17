@@ -58,7 +58,7 @@ var filterModels = function (opts) {
 };
 var sortModels = function (ascending) {
     return {
-        'statement.stored': ascending ? 1 : -1,
+        stored: ascending ? 1 : -1
     };
 };
 exports.default = function (config) {
