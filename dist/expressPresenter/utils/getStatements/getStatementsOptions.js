@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var getNumberOption_1 = require("jscommons/dist/config/getNumberOption");
 exports.default = function (queryParams) {
     return {
         agent: queryParams.agent,
@@ -11,7 +10,7 @@ exports.default = function (queryParams) {
         relatedAgents: queryParams.related_agents,
         since: queryParams.since,
         until: queryParams.until,
-        limit: getNumberOption_1.default(queryParams.limit, 0),
+        limit: queryParams.limit,
         ascending: queryParams.ascending,
         cursor: queryParams.cursor,
     };
