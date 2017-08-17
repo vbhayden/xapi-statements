@@ -21,12 +21,16 @@ import QueryOptions from '../../errors/QueryOptions';
 import UnequalStatementId from '../../errors/UnequalStatementId';
 import VoidingError from '../../errors/VoidingError';
 import Translator from '../../translatorFactory/Translator';
+import { xapiHeaderVersion } from '../../utils/constants';
 
 export interface Options extends CommonOptions {
   translator: Translator;
 }
 
 export default ({ translator, errorId, res, err }: Options): Response => {
+  const timestamp = new Date().toISOString();
+  res.setHeader('X-Experience-API-Consistent-Through', timestamp);
+  res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
   if (isNull(err) || isUndefined(null)) {
     const code = 500;
     const message = translator.serverError();
