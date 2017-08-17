@@ -16,8 +16,13 @@ export default {
   ),
   lang: getStringOption(process.env.LANG, 'en'),
   defaultTimeout: getNumberOption(process.env.DEFAULT_TIMEOUT_MS, 300000),
-  modelsRepoName: getStringOption(process.env.MODELS_REPO, 'memory'),
-  storageRepoName: getStringOption(process.env.STORAGE_REPO, 'memory'),
+
+  repoFactory: {
+    authRepoName: getStringOption(process.env.AUTH_REPO, 'mongo'),
+    modelsRepoName: getStringOption(process.env.MODELS_REPO, 'memory'),
+    storageRepoName: getStringOption(process.env.STORAGE_REPO, 'memory'),
+  },
+
   winston: {
     console: {
       level: getStringOption(process.env.WINSTON_CONSOLE_LEVEL, 'info'),

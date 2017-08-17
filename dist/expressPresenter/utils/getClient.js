@@ -36,37 +36,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var node_fetch_1 = require("node-fetch");
-var Unauthorised_1 = require("jscommons/dist/errors/Unauthorised");
-exports.default = function (config, authHeader) { return __awaiter(_this, void 0, void 0, function () {
-    var json, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, node_fetch_1.default(config.llClientInfoEndpoint, {
-                        headers: {
-                            Authorization: authHeader
-                        }
-                    }).then(function (res) {
-                        return res.json();
-                    })];
-            case 1:
-                json = _a.sent();
-                return [2 /*return*/, {
-                        _id: json._id,
-                        title: json.title,
-                        organisation: json.organisation,
-                        lrs_id: json.lrs_id,
-                        authority: json.authority,
-                        isTrusted: json.isTrusted,
-                        scopes: json.scopes
-                    }];
-            case 2:
-                err_1 = _a.sent();
-                throw new Unauthorised_1.default();
-            case 3: return [2 /*return*/];
-        }
+exports.default = function (config, authToken) {
+    if (authToken === void 0) { authToken = ''; }
+    return __awaiter(_this, void 0, void 0, function () {
+        var client;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, config.service.getClient({ authToken: authToken })];
+                case 1:
+                    client = (_a.sent()).client;
+                    return [2 /*return*/, client];
+            }
+        });
     });
-}); };
+};
 //# sourceMappingURL=getClient.js.map

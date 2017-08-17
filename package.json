@@ -18,9 +18,9 @@
     "test-memory": "MODELS_REPO=memory STORAGE_REPO=local npm run test",
     "migrate": "node dist/migrate.js",
     "rollback": "node dist/rollback.js",
-    "cover-s3": "nyc --lines 100 --check-coverage --exclude '(dist/mongoModelsRepo|dist/memoryStorageRepo|dist/config.js)' npm run test-s3",
-    "cover-memory": "nyc --lines 100 --check-coverage --exclude '(dist/mongoModelsRepo|dist/s3StorageRepo|dist/config.js)' npm run test-memory",
-    "cover-mongo": "nyc --lines 100 --check-coverage --exclude '(dist/memoryModelsRepo|dist/s3StorageRepo|dist/config.js)' npm run test-mongo",
+    "cover-s3": "nyc --lines 100 --check-coverage --exclude '(dist/testAuthRepo|dist/fetchAuthRepo|dist/mongoModelsRepo|dist/memoryStorageRepo|dist/config.js)' npm run test-s3",
+    "cover-memory": "nyc --lines 100 --check-coverage --exclude '(dist/testAuthRepo|dist/fetchAuthRepo|dist/mongoModelsRepo|dist/s3StorageRepo|dist/config.js)' npm run test-memory",
+    "cover-mongo": "nyc --lines 100 --check-coverage --exclude '(dist/testAuthRepo|dist/fetchAuthRepo|dist/memoryModelsRepo|dist/s3StorageRepo|dist/config.js)' npm run test-mongo",
     "clean": "rm -rf dist",
     "lint": "./node_modules/tslint/bin/tslint --project ./tsconfig.json -c ./tslint.json",
     "duplication": "./node_modules/jscpd/bin/jscpd"
@@ -30,10 +30,12 @@
     "npm": "^5.0.0"
   },
   "dependencies": {
+    "atob": "^2.0.3",
     "aws-sdk": "^2.97.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "boolean": "^0.1.2",
+    "btoa": "^1.1.2",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
     "express": "^4.14.1",

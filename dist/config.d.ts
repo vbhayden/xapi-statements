@@ -3,8 +3,11 @@ declare const _default: {
     llClientInfoEndpoint: string;
     lang: string;
     defaultTimeout: number;
-    modelsRepoName: string;
-    storageRepoName: string;
+    repoFactory: {
+        authRepoName: string;
+        modelsRepoName: string;
+        storageRepoName: string;
+    };
     winston: {
         console: {
             level: string;

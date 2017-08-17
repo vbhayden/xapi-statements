@@ -5,13 +5,33 @@ import mongoModelsRepo from '../mongoModelsRepo';
 import localStorageRepo from '../localStorageRepo';
 import s3StorageRepo from '../s3StorageRepo';
 import Repo from './Repo';
+import AuthRepo from './AuthRepo';
 import StorageRepo from './StorageRepo';
+import testAuthRepo from '../testAuthRepo';
+import mongoAuthRepo from '../mongoAuthRepo';
+import fetchAuthRepo from '../fetchAuthRepo';
 import ModelsRepo from './ModelsRepo';
 import config from '../config';
 
 /* istanbul ignore next */
+const getAuthRepo = (): AuthRepo => {
+  switch (config.repoFactory.authRepoName) {
+    case 'test':
+      return testAuthRepo({});
+    case 'fetch':
+      return fetchAuthRepo({
+        llClientInfoEndpoint: config.llClientInfoEndpoint,
+      });
+    default: case 'mongo':
+      return mongoAuthRepo({
+        db: MongoClient.connect(config.mongo.url),
+      });
+  }
+};
+
+/* istanbul ignore next */
 const getModelsRepo = (): ModelsRepo => {
-  switch (config.modelsRepoName) {
+  switch (config.repoFactory.modelsRepoName) {
     case 'mongo':
       return mongoModelsRepo({
         db: MongoClient.connect(config.mongo.url),
@@ -25,7 +45,7 @@ const getModelsRepo = (): ModelsRepo => {
 
 /* istanbul ignore next */
 const getStorageRepo = (): StorageRepo => {
-  switch (config.storageRepoName) {
+  switch (config.repoFactory.storageRepoName) {
     case 's3':
       return s3StorageRepo({
         client: new S3(config.storage.s3.awsConfig),
@@ -39,10 +59,12 @@ const getStorageRepo = (): StorageRepo => {
 };
 
 export default (): Repo => {
+  const authRepo = getAuthRepo();
   const modelsRepo = getModelsRepo();
   const storageRepo = getStorageRepo();
 
   return {
+    ...authRepo,
     ...modelsRepo,
     ...storageRepo,
 
