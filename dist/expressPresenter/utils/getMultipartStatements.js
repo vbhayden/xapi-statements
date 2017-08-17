@@ -41,7 +41,7 @@ var streamToString = require("stream-to-string");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
 var NoStatements_1 = require("../../errors/NoStatements");
 var getParts_1 = require("../utils/getParts");
-var BOUNDARY_REGEXP = /boundary\=\"([A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\"/;
+var BOUNDARY_REGEXP = /boundary\=((\"([A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|([A-Za-z\d\-]+))/;
 var getBoundaryFromContentType = function (contentType) {
     var result = BOUNDARY_REGEXP.exec(contentType);
     if (result === null || result.length < 1 || result.length > 2) {

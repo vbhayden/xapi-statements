@@ -63,7 +63,7 @@ exports.default = function (config) {
                         client = {
                             _id: document._id.toString(),
                             title: document.title,
-                            authority: document.authority,
+                            authority: JSON.parse(document.authority),
                             isTrusted: document.isTrusted,
                             lrs_id: document.lrs_id.toString(),
                             organisation: document.organisation.toString(),
