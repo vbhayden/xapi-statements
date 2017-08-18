@@ -15,20 +15,6 @@ describe('get statements by agent in authority', function () {
     agentTest_1.default(assertFilteredStatements_1.default)(function (authority) {
         return { authority: authority };
     }, true);
-    describe('identified group members', function () {
-        agentFilterTest_1.default(assertFilteredStatements_1.default)(function (actor) {
-            return {
-                authority: {
-                    mbox: 'mailto:test@example.com',
-                    objectType: 'Group',
-                    member: [__assign({}, actor, { objectType: 'Agent' }), {
-                            mbox: 'mailto:test@example.com',
-                            objectType: 'Agent',
-                        }],
-                },
-            };
-        }, true);
-    });
     describe('anonymous group members', function () {
         agentFilterTest_1.default(assertFilteredStatements_1.default)(function (actor) {
             return {

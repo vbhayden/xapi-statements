@@ -50,18 +50,18 @@ var getStatementsOptions_1 = require("./getStatementsOptions");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
 var constants_1 = require("../../../utils/constants");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
-    var queryParams, config, res, client, timestamp, resultOpts, statementsOpts, results, moreLink, statementResult, boundary, crlf_1, fullBoundary_1;
+    var queryParams, config, res, client, urlPath, timestamp, resultOpts, statementsOpts, results, moreLink, statementResult, boundary, crlf_1, fullBoundary_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                queryParams = opts.queryParams, config = opts.config, res = opts.res, client = opts.client;
+                queryParams = opts.queryParams, config = opts.config, res = opts.res, client = opts.client, urlPath = opts.urlPath;
                 timestamp = new Date().toISOString();
                 resultOpts = getStatementsResultOptions_1.default(queryParams);
                 statementsOpts = getStatementsOptions_1.default(queryParams);
                 return [4 /*yield*/, config.service.getStatements(__assign({ client: client }, statementsOpts, resultOpts))];
             case 1:
                 results = _a.sent();
-                moreLink = getMoreLink_1.default({ results: results, resultOpts: resultOpts, statementsOpts: statementsOpts });
+                moreLink = getMoreLink_1.default({ results: results, resultOpts: resultOpts, statementsOpts: statementsOpts, urlPath: urlPath });
                 statementResult = {
                     more: moreLink,
                     statements: results.statements,

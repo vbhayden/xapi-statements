@@ -7,6 +7,7 @@ export interface Options {
     res: Response;
     queryParams: any;
     client: ClientModel;
+    urlPath: string;
 }
 declare const _default: (opts: Options) => Promise<void>;
 export default _default;

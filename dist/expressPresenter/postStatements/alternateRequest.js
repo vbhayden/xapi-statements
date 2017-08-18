@@ -42,6 +42,7 @@ var getClient_1 = require("../utils/getClient");
 var getStatements_1 = require("../utils/getStatements");
 var storeStatement_1 = require("../utils/storeStatement");
 var storeStatements_1 = require("./storeStatements");
+var validateHeaderVersion_1 = require("../utils/validateHeaderVersion");
 var checkContentType = function (req) {
     if (req.body['Content-Type'] !== 'application/json') {
         throw new InvalidContentType_1.default(req.body['Content-Type']);
@@ -55,7 +56,7 @@ var getBodyContent = function (req) {
 exports.default = function (_a) {
     var config = _a.config, method = _a.method, req = _a.req, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
-        var _a, client, body, client, queryParams, client, body, queryParams;
+        var _a, client, body, urlPath, client, queryParams, client, body, queryParams;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -71,18 +72,23 @@ exports.default = function (_a) {
                     return [4 /*yield*/, getClient_1.default(config, req.body.Authorization || '')];
                 case 2:
                     client = _b.sent();
+                    validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     body = getBodyContent(req);
                     return [2 /*return*/, storeStatements_1.default({ config: config, client: client, body: body, attachments: [], res: res })];
-                case 3: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization || '')];
+                case 3:
+                    urlPath = req.path;
+                    return [4 /*yield*/, getClient_1.default(config, req.body.Authorization || '')];
                 case 4:
                     client = _b.sent();
+                    validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     queryParams = req.body;
-                    return [2 /*return*/, getStatements_1.default({ config: config, res: res, client: client, queryParams: queryParams })];
+                    return [2 /*return*/, getStatements_1.default({ config: config, res: res, client: client, queryParams: queryParams, urlPath: urlPath })];
                 case 5:
                     checkContentType(req);
                     return [4 /*yield*/, getClient_1.default(config, req.body.Authorization || '')];
                 case 6:
                     client = _b.sent();
+                    validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     body = getBodyContent(req);
                     queryParams = req.body;
                     return [2 /*return*/, storeStatement_1.default({ config: config, client: client, body: body, attachments: [], queryParams: queryParams, res: res })];

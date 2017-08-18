@@ -10,9 +10,10 @@ export interface Options {
   res: Response;
   client: ClientModel;
   queryParams: any;
+  urlPath: string;
 }
 
-export default async ({ config, res, client, queryParams }: Options) => {
+export default async ({ config, res, client, queryParams, urlPath }: Options) => {
   const statementId = queryParams.statementId;
   const voidedStatementId = queryParams.voidedStatementId;
 
@@ -32,5 +33,5 @@ export default async ({ config, res, client, queryParams }: Options) => {
     return getSingleStatement({ config, res, queryParams, id, voided, client });
   }
 
-  return getMultipleStatements({ config, res, queryParams, client });
+  return getMultipleStatements({ config, res, queryParams, client, urlPath });
 };

@@ -39,20 +39,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var catchErrors_1 = require("./utils/catchErrors");
 var getClient_1 = require("./utils/getClient");
 var getStatements_1 = require("./utils/getStatements");
+var validateHeaderVersion_1 = require("./utils/validateHeaderVersion");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-        var client, queryParams;
+        var client, queryParams, urlPath;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, getClient_1.default(config, req.header('Authorization') || '')];
                 case 1:
                     client = _a.sent();
+                    validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     queryParams = req.query;
+                    urlPath = req.path;
                     return [2 /*return*/, getStatements_1.default({
                             config: config,
                             res: res,
                             client: client,
                             queryParams: queryParams,
+                            urlPath: urlPath
                         })];
             }
         });

@@ -5,6 +5,7 @@ export interface MoreLinkOptions {
     results: StatementsResult;
     statementsOpts: Partial<GetStatementsOptions>;
     resultOpts: StatementsResultOptions;
+    urlPath: string;
 }
 declare const _default: (opts: MoreLinkOptions) => string | undefined;
 export default _default;
