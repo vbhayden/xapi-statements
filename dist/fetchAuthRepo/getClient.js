@@ -36,22 +36,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var Unauthorised_1 = require("jscommons/dist/errors/Unauthorised");
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
 var node_fetch_1 = require("node-fetch");
+var OK_HTTP_CODE = 200;
+var NO_MODEL_HTTP_CODE = 404;
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var json, client, err_1;
+        var json, client;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, node_fetch_1.default(config.llClientInfoEndpoint, {
-                            headers: {
-                                Authorization: opts.authToken,
-                            },
-                        }).then(function (res) {
-                            return res.json();
-                        })];
+                case 0: return [4 /*yield*/, node_fetch_1.default(config.llClientInfoEndpoint, {
+                        headers: {
+                            Authorization: opts.authToken,
+                        },
+                    }).then(function (res) {
+                        if (res.status === NO_MODEL_HTTP_CODE) {
+                            throw new NoModel_1.default('ClientModel');
+                        }
+                        if (res.status !== OK_HTTP_CODE) {
+                            throw new Error("Getting client failed with error code " + res.status);
+                        }
+                        return res.json();
+                    })];
                 case 1:
                     json = _a.sent();
                     client = {
@@ -64,10 +70,6 @@ exports.default = function (config) {
                         scopes: json.scopes,
                     };
                     return [2 /*return*/, { client: client }];
-                case 2:
-                    err_1 = _a.sent();
-                    throw new Unauthorised_1.default();
-                case 3: return [2 /*return*/];
             }
         });
     }); };

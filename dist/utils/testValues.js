@@ -26,6 +26,7 @@ exports.TEST_OUTSIDE_STORE_TOKEN = 'outside_store_client';
 exports.TEST_CLIENT_OUTSIDE_STORE = __assign({}, exports.TEST_CLIENT, { lrs_id: '58fe13e34effd3c26a7fc4c7' });
 exports.TEST_OUTSIDE_ORG_TOKEN = 'outside_org_client';
 exports.TEST_CLIENT_OUTSIDE_ORG = __assign({}, exports.TEST_CLIENT, { organisation: '58fe13e34effd3c26a7fc4c6' });
+exports.TEST_MISSING_TOKEN = 'Basic missing_token';
 exports.TEST_MBOX_AGENT = {
     objectType: 'Agent',
     mbox: 'mailto:test_agent@example.org',

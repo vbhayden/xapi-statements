@@ -9,6 +9,7 @@ export declare const TEST_OUTSIDE_STORE_TOKEN = "outside_store_client";
 export declare const TEST_CLIENT_OUTSIDE_STORE: ClientModel;
 export declare const TEST_OUTSIDE_ORG_TOKEN = "outside_org_client";
 export declare const TEST_CLIENT_OUTSIDE_ORG: ClientModel;
+export declare const TEST_MISSING_TOKEN = "Basic missing_token";
 export declare const TEST_MBOX_AGENT: Agent;
 export declare const TEST_MBOXSHA1_AGENT: Agent;
 export declare const TEST_OPENID_AGENT: Agent;

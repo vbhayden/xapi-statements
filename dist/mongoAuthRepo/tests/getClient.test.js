@@ -44,63 +44,64 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
+var assertError_1 = require("jscommons/dist/tests/utils/assertError");
 var btoa = require("btoa");
 var config_1 = require("../../config");
 var mongodb_1 = require("mongodb");
 var mongoAuthRepo_1 = require("../../mongoAuthRepo");
 var createClientModel_1 = require("../../tests/utils/createClientModel");
 var assert = require("assert");
+var TEST_CLIENT_MODEL = createClientModel_1.default({
+    _id: '5988f0f00000000000000123'
+});
+var TEST_BASIC_KEY = '123';
+var TEST_BASIC_SECRET = 'abc';
+var TEST_TOKEN = "Basic " + btoa(TEST_BASIC_KEY + ":" + TEST_BASIC_SECRET);
 describe('getClient from mongo client', function () {
-    var authConfig = {
-        db: mongodb_1.MongoClient.connect(config_1.default.mongo.url)
-    };
+    var db = mongodb_1.MongoClient.connect(config_1.default.mongo.url);
+    var authConfig = { db: db };
     var authRepo = mongoAuthRepo_1.default(authConfig);
-    var basic_key = '123';
-    var basic_secret = 'abc';
-    var CLIENT_MODEL = createClientModel_1.default({
-        _id: '5988f0f00000000000000123'
-    });
-    before(function () { return __awaiter(_this, void 0, void 0, function () {
+    it('should return a client from the db', function () { return __awaiter(_this, void 0, void 0, function () {
+        var testDocument, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, authConfig.db];
-                case 1: 
-                // Insert client to db
-                return [4 /*yield*/, (_a.sent()).collection('client').insert(__assign({}, CLIENT_MODEL, { authority: JSON.stringify(CLIENT_MODEL.authority), api: {
-                            basic_key: basic_key,
-                            basic_secret: basic_secret
-                        } }))];
+                case 0:
+                    testDocument = __assign({}, TEST_CLIENT_MODEL, { api: {
+                            basic_key: TEST_BASIC_KEY,
+                            basic_secret: TEST_BASIC_SECRET,
+                        }, authority: JSON.stringify(TEST_CLIENT_MODEL) });
+                    return [4 /*yield*/, db];
+                case 1: return [4 /*yield*/, (_a.sent()).collection('client').insert(testDocument)];
                 case 2:
-                    // Insert client to db
+                    _a.sent();
+                    return [4 /*yield*/, authRepo.getClient({ authToken: TEST_TOKEN })];
+                case 3:
+                    result = _a.sent();
+                    assert.equal(result.client._id, TEST_CLIENT_MODEL._id);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('should error when getting without any clients in the DB', function () { return __awaiter(_this, void 0, void 0, function () {
+        var promise;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    promise = authRepo.getClient({ authToken: TEST_TOKEN });
+                    return [4 /*yield*/, assertError_1.default(NoModel_1.default, promise)];
+                case 1:
                     _a.sent();
                     return [2 /*return*/];
             }
         });
     }); });
-    it('should return a client from the db', function () { return __awaiter(_this, void 0, void 0, function () {
-        var b64, authToken, result;
+    afterEach(function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    b64 = btoa(basic_key + ":" + basic_secret);
-                    authToken = "Basic " + b64;
-                    return [4 /*yield*/, authRepo.getClient({ authToken: authToken })];
-                case 1:
-                    result = _a.sent();
-                    assert.equal(result.client._id, CLIENT_MODEL._id);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    after(function () { return __awaiter(_this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, authConfig.db];
-                case 1: 
-                // clear client from db
-                return [4 /*yield*/, (_a.sent()).collection('client').remove({})];
+                case 0: return [4 /*yield*/, db];
+                case 1: return [4 /*yield*/, (_a.sent()).collection('client').remove({})];
                 case 2:
-                    // clear client from db
                     _a.sent();
                     return [2 /*return*/];
             }
