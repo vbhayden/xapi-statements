@@ -35,9 +35,10 @@ export default async ({ config, method, req, res }: Options) => {
       return storeStatements({ config, client, body, attachments: [], res });
     }
     case 'GET': {
+      const urlPath = req.path;
       const client = await getClient(config, req.body.Authorization || '');
       const queryParams = req.body;
-      return getStatements({ config, res, client, queryParams });
+      return getStatements({ config, res, client, queryParams, urlPath });
     }
     case 'PUT': {
       checkContentType(req);

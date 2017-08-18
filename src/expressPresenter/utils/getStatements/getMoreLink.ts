@@ -7,6 +7,7 @@ export interface MoreLinkOptions {
   results: StatementsResult;
   statementsOpts: Partial<GetStatementsOptions>;
   resultOpts: StatementsResultOptions;
+  urlPath: string;
 }
 
 export default (opts: MoreLinkOptions) => {
@@ -26,5 +27,5 @@ export default (opts: MoreLinkOptions) => {
     return param !== '';
   }).join('&');
 
-  return `/statements?${moreLinkParams}`;
+  return `${opts.urlPath}?${moreLinkParams}`;
 };
