@@ -41,6 +41,7 @@ var catchErrors_1 = require("./utils/catchErrors");
 var getClient_1 = require("./utils/getClient");
 var getMultipartStatements_1 = require("./utils/getMultipartStatements");
 var storeStatement_1 = require("./utils/storeStatement");
+var validateHeaderVersion_1 = require("./utils/validateHeaderVersion");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var contentType, client, queryParams, _a, body, attachments, body, attachments;
@@ -51,6 +52,7 @@ exports.default = function (config) {
                     return [4 /*yield*/, getClient_1.default(config, req.header('Authorization') || '')];
                 case 1:
                     client = _b.sent();
+                    validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     queryParams = req.query;
                     if (!/multipart\/mixed/.test(contentType)) return [3 /*break*/, 3];
                     return [4 /*yield*/, getMultipartStatements_1.default(req)];

@@ -6,11 +6,14 @@ import getClient from './utils/getClient';
 import getMultipartStatements from './utils/getMultipartStatements';
 import storeStatement from './utils/storeStatement';
 import Config from './Config';
+import validateVersionHeader from './utils/validateHeaderVersion';
 
 export default (config: Config) => {
   return catchErrors(config, async (req: Request, res: Response): Promise<void> => {
     const contentType = req.header('Content-Type') || '';
     const client = await getClient(config, req.header('Authorization') || '');
+    validateVersionHeader(req.header('X-Experience-API-Version'));
+
     const queryParams = req.query;
 
     if (/multipart\/mixed/.test(contentType)) {
