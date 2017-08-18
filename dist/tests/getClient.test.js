@@ -36,18 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var setup_1 = require("./utils/setup");
+var Unauthorised_1 = require("jscommons/dist/errors/Unauthorised");
 var assertError_1 = require("jscommons/dist/tests/utils/assertError");
-var NoModel_1 = require("jscommons/dist/errors/NoModel");
-describe('getClient', function () {
+var testValues_1 = require("../utils/testValues");
+var setup_1 = require("./utils/setup");
+describe('getClient using non-existing model', function () {
     var service = setup_1.default();
-    it('should fail to get a client that doesn\'t exist', function () { return __awaiter(_this, void 0, void 0, function () {
+    it('should error when getting without clients', function () { return __awaiter(_this, void 0, void 0, function () {
         var promise;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    promise = service.getClient({ authToken: 'Basic DOESNOTEXIST' });
-                    return [4 /*yield*/, assertError_1.default(NoModel_1.default, promise)];
+                    promise = service.getClient({ authToken: testValues_1.TEST_MISSING_TOKEN });
+                    return [4 /*yield*/, assertError_1.default(Unauthorised_1.default, promise)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

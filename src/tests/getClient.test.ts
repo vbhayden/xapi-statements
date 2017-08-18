@@ -1,13 +1,13 @@
-import setup from './utils/setup';
+import Unauthorised from 'jscommons/dist/errors/Unauthorised';
 import assertError from 'jscommons/dist/tests/utils/assertError';
-import NoModel from 'jscommons/dist/errors/NoModel';
+import { TEST_MISSING_TOKEN } from '../utils/testValues';
+import setup from './utils/setup';
 
-describe('getClient', () => {
+describe('getClient using non-existing model', () => {
   const service = setup();
 
-  it('should fail to get a client that doesn\'t exist', async () => {
-    const promise = service.getClient({ authToken: 'Basic DOESNOTEXIST' });
-    await assertError(NoModel, promise);
+  it('should error when getting without clients', async () => {
+    const promise = service.getClient({ authToken: TEST_MISSING_TOKEN });
+    await assertError(Unauthorised, promise);
   });
-
 });

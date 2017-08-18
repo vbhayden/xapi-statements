@@ -36,6 +36,8 @@ export const TEST_CLIENT_OUTSIDE_ORG: ClientModel = {
   organisation: '58fe13e34effd3c26a7fc4c6',
 };
 
+export const TEST_MISSING_TOKEN = 'Basic missing_token';
+
 export const TEST_MBOX_AGENT: Agent = {
   objectType: 'Agent',
   mbox: 'mailto:test_agent@example.org',
