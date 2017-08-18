@@ -6,14 +6,14 @@ import InvalidBoundary from '../../errors/InvalidBoundary';
 import NoStatements from '../../errors/NoStatements';
 import getParts from '../utils/getParts';
 
-const BOUNDARY_REGEXP = /boundary\=((\"([A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|([A-Za-z\d\-]+))/;
+const BOUNDARY_REGEXP = /boundary\=((?:\"(?:[A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|(?:[A-Za-z\d\-]+))/;
 
 const getBoundaryFromContentType = (contentType: string): string => {
   const result = BOUNDARY_REGEXP.exec(contentType);
   if (result === null || result.length < 1 || result.length > 2) {
     throw new InvalidBoundary(contentType);
   }
-  return result[1];
+  return result[1].replace(/\"/g, '');
 };
 
 export default async (req: Request) => {

@@ -41,13 +41,13 @@ var streamToString = require("stream-to-string");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
 var NoStatements_1 = require("../../errors/NoStatements");
 var getParts_1 = require("../utils/getParts");
-var BOUNDARY_REGEXP = /boundary\=((\"([A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|([A-Za-z\d\-]+))/;
+var BOUNDARY_REGEXP = /boundary\=((?:\"(?:[A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|(?:[A-Za-z\d\-]+))/;
 var getBoundaryFromContentType = function (contentType) {
     var result = BOUNDARY_REGEXP.exec(contentType);
     if (result === null || result.length < 1 || result.length > 2) {
         throw new InvalidBoundary_1.default(contentType);
     }
-    return result[1];
+    return result[1].replace(/\"/g, '');
 };
 exports.default = function (req) { return __awaiter(_this, void 0, void 0, function () {
     var contentType, boundary, parts, hasStatements, unparsedBody, body, attachments;
