@@ -1,12 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -44,35 +36,46 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var checkStatementsOpts_1 = require("./checkStatementsOpts");
-var getStatementsOptions_1 = require("./getStatementsOptions");
-var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
-var constants_1 = require("../../../utils/constants");
-var sendMultipartResult_1 = require("./sendMultipartResult");
-exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
-    var queryParams, config, id, voided, res, client, timestamp, resultOpts, statementsOpts, results, jsonResponse;
+var bluebird_1 = require("bluebird");
+exports.default = function (jsonResponse, attachments, res) { return __awaiter(_this, void 0, void 0, function () {
+    var boundary, crlf, fullBoundary;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                queryParams = opts.queryParams, config = opts.config, id = opts.id, voided = opts.voided, res = opts.res, client = opts.client;
-                timestamp = new Date().toISOString();
-                resultOpts = getStatementsResultOptions_1.default(queryParams);
-                statementsOpts = getStatementsOptions_1.default(queryParams);
-                checkStatementsOpts_1.default(statementsOpts);
-                return [4 /*yield*/, config.service.getStatement(__assign({ client: client, id: id, voided: voided }, resultOpts))];
-            case 1:
-                results = _a.sent();
-                res.setHeader('X-Experience-API-Consistent-Through', timestamp);
-                res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
-                res.setHeader('Last-Modified', results.statements[0].stored);
-                jsonResponse = results.statements[0];
-                if (resultOpts.attachments) {
-                    return [2 /*return*/, sendMultipartResult_1.default(jsonResponse, results.attachments, res)];
-                }
+                boundary = 'abcABC0123\'()+_,-./:=?';
+                crlf = '\r\n';
+                fullBoundary = crlf + "--" + boundary + crlf;
+                res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=\"" + boundary + "\"");
                 res.status(200);
-                res.json(jsonResponse);
+                res.write(fullBoundary);
+                res.write("Content-Type:application/json" + crlf + crlf);
+                res.write(JSON.stringify(jsonResponse));
+                res.write(crlf);
+                return [4 /*yield*/, bluebird_1.reduce(attachments, function (_result, attachment) {
+                        return new Promise(function (resolve, reject) {
+                            res.write(fullBoundary);
+                            res.write("Content-Type:" + attachment.contentType + crlf);
+                            res.write("Content-Transfer-Encoding:binary" + crlf);
+                            res.write("X-Experience-API-Hash:" + attachment.hash + crlf);
+                            res.write(crlf);
+                            attachment.stream.on('data', function (data) {
+                                res.write(data);
+                            });
+                            attachment.stream.on('end', function () {
+                                res.write(crlf);
+                                resolve();
+                            });
+                            attachment.stream.on('error', function (err) {
+                                reject(err);
+                            });
+                        });
+                    }, Promise.resolve())];
+            case 1:
+                _a.sent();
+                res.write("--" + boundary + "--");
+                res.end();
                 return [2 /*return*/];
         }
     });
 }); };
-//# sourceMappingURL=getSingleStatement.js.map
+//# sourceMappingURL=sendMultipartResult.js.map

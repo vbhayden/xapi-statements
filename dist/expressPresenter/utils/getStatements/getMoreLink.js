@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 exports.default = function (opts) {
     if (opts.results.cursor === undefined) {
-        return undefined;
+        return '';
     }
     var moreLinkOpts = __assign({}, opts.statementsOpts, opts.resultOpts, { cursor: opts.results.cursor });
     var moreLinkParams = lodash_1.map(moreLinkOpts, function (value, key) {

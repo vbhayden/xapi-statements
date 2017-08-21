@@ -43,8 +43,10 @@ var getStatements_1 = require("../utils/getStatements");
 var storeStatement_1 = require("../utils/storeStatement");
 var storeStatements_1 = require("./storeStatements");
 var validateHeaderVersion_1 = require("../utils/validateHeaderVersion");
+var getUrlPath_1 = require("../utils/getUrlPath");
 var checkContentType = function (req) {
-    if (req.body['Content-Type'] !== 'application/json') {
+    var contentType = req.body['Content-Type'];
+    if (contentType !== 'application/json' || contentType !== undefined) {
         throw new InvalidContentType_1.default(req.body['Content-Type']);
     }
 };
@@ -76,7 +78,7 @@ exports.default = function (_a) {
                     body = getBodyContent(req);
                     return [2 /*return*/, storeStatements_1.default({ config: config, client: client, body: body, attachments: [], res: res })];
                 case 3:
-                    urlPath = req.path;
+                    urlPath = getUrlPath_1.default(req);
                     return [4 /*yield*/, getClient_1.default(config, req.body.Authorization || '')];
                 case 4:
                     client = _b.sent();

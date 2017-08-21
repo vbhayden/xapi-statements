@@ -44,13 +44,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var bluebird_1 = require("bluebird");
 var getMoreLink_1 = require("./getMoreLink");
 var getStatementsOptions_1 = require("./getStatementsOptions");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
 var constants_1 = require("../../../utils/constants");
+var sendMultipartResult_1 = require("./sendMultipartResult");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
-    var queryParams, config, res, client, urlPath, timestamp, resultOpts, statementsOpts, results, moreLink, statementResult, boundary, crlf_1, fullBoundary_1;
+    var queryParams, config, res, client, urlPath, timestamp, resultOpts, statementsOpts, results, moreLink, jsonResponse;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -62,52 +62,16 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
             case 1:
                 results = _a.sent();
                 moreLink = getMoreLink_1.default({ results: results, resultOpts: resultOpts, statementsOpts: statementsOpts, urlPath: urlPath });
-                statementResult = {
+                jsonResponse = {
                     more: moreLink,
                     statements: results.statements,
                 };
-                if (!resultOpts.attachments) return [3 /*break*/, 3];
-                boundary = 'abcABC0123\'()+_,-./:=?';
-                crlf_1 = '\r\n';
-                fullBoundary_1 = crlf_1 + "--" + boundary + crlf_1;
                 res.setHeader('X-Experience-API-Consistent-Through', timestamp);
                 res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
-                res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=\"" + boundary + "\"");
-                res.status(200);
-                res.write(fullBoundary_1);
-                res.write("Content-Type:application/json" + crlf_1 + crlf_1);
-                res.write(JSON.stringify(statementResult));
-                res.write(crlf_1);
-                return [4 /*yield*/, bluebird_1.reduce(results.attachments, function (_result, attachment) {
-                        return new Promise(function (resolve, reject) {
-                            res.write(fullBoundary_1);
-                            res.write("Content-Type:" + attachment.contentType + crlf_1);
-                            res.write("Content-Transfer-Encoding:binary" + crlf_1);
-                            res.write("X-Experience-API-Hash:" + attachment.hash + crlf_1);
-                            res.write(crlf_1);
-                            attachment.stream.on('data', function (data) {
-                                res.write(data);
-                            });
-                            attachment.stream.on('end', function () {
-                                res.write(crlf_1);
-                                resolve();
-                            });
-                            attachment.stream.on('error', function (err) {
-                                reject(err);
-                            });
-                        });
-                    }, Promise.resolve())];
-            case 2:
-                _a.sent();
-                res.write("--" + boundary + "--");
-                res.end();
-                return [2 /*return*/];
-            case 3:
-                res
-                    .set('X-Experience-API-Consistent-Through', timestamp)
-                    .set('X-Experience-API-Version', constants_1.xapiHeaderVersion)
-                    .status(200)
-                    .json(statementResult);
+                if (resultOpts.attachments) {
+                    return [2 /*return*/, sendMultipartResult_1.default(jsonResponse, results.attachments, res)];
+                }
+                res.status(200).json(jsonResponse);
                 return [2 /*return*/];
         }
     });
