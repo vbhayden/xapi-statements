@@ -6,6 +6,7 @@ import getStatements from '../utils/getStatements';
 import storeStatement from '../utils/storeStatement';
 import Config from '../Config';
 import storeStatements from './storeStatements';
+import validateVersionHeader from '../utils/validateHeaderVersion';
 
 export interface Options {
   config: Config;
@@ -32,17 +33,21 @@ export default async ({ config, method, req, res }: Options) => {
     case 'POST': {
       checkContentType(req);
       const client = await getClient(config, req.body.Authorization || '');
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       const body = getBodyContent(req);
       return storeStatements({ config, client, body, attachments: [], res });
     }
     case 'GET': {
+      const urlPath = req.path;
       const client = await getClient(config, req.body.Authorization || '');
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       const queryParams = req.body;
-      return getStatements({ config, res, client, queryParams });
+      return getStatements({ config, res, client, queryParams, urlPath });
     }
     case 'PUT': {
       checkContentType(req);
       const client = await getClient(config, req.body.Authorization || '');
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       const body = getBodyContent(req);
       const queryParams = req.body;
       return storeStatement({ config, client, body, attachments: [], queryParams, res });

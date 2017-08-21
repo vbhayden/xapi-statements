@@ -19,6 +19,6 @@ exports.default = function (opts) {
     }).filter(function (param) {
         return param !== '';
     }).join('&');
-    return "/statements?" + moreLinkParams;
+    return opts.urlPath + "?" + moreLinkParams;
 };
 //# sourceMappingURL=getMoreLink.js.map

@@ -42,6 +42,7 @@ var getClient_1 = require("../utils/getClient");
 var alternateRequest_1 = require("./alternateRequest");
 var storeStatements_1 = require("./storeStatements");
 var storeWithAttachments_1 = require("./storeWithAttachments");
+var validateHeaderVersion_1 = require("../utils/validateHeaderVersion");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var method, contentType, client, body, attachments;
@@ -57,6 +58,7 @@ exports.default = function (config) {
                     return [4 /*yield*/, getClient_1.default(config, req.header('Authorization') || '')];
                 case 1:
                     client = _a.sent();
+                    validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     body = req.body;
                     attachments = [];
                     return [2 /*return*/, storeStatements_1.default({ config: config, client: client, body: body, attachments: attachments, res: res })];

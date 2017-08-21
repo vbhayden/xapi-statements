@@ -40,7 +40,7 @@ var QueryIds_1 = require("../../../errors/QueryIds");
 var getSingleStatement_1 = require("./getSingleStatement");
 var getMultipleStatements_1 = require("./getMultipleStatements");
 exports.default = function (_a) {
-    var config = _a.config, res = _a.res, client = _a.client, queryParams = _a.queryParams;
+    var config = _a.config, res = _a.res, client = _a.client, queryParams = _a.queryParams, urlPath = _a.urlPath;
     return __awaiter(_this, void 0, void 0, function () {
         var statementId, voidedStatementId, id, voided, id, voided;
         return __generator(this, function (_a) {
@@ -59,7 +59,7 @@ exports.default = function (_a) {
                 voided = true;
                 return [2 /*return*/, getSingleStatement_1.default({ config: config, res: res, queryParams: queryParams, id: id, voided: voided, client: client })];
             }
-            return [2 /*return*/, getMultipleStatements_1.default({ config: config, res: res, queryParams: queryParams, client: client })];
+            return [2 /*return*/, getMultipleStatements_1.default({ config: config, res: res, queryParams: queryParams, client: client, urlPath: urlPath })];
         });
     });
 };

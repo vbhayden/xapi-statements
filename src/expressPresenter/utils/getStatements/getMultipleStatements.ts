@@ -12,10 +12,11 @@ export interface Options {
   res: Response;
   queryParams: any;
   client: ClientModel;
+  urlPath: string;
 }
 
 export default async (opts: Options) => {
-  const { queryParams, config, res, client } = opts;
+  const { queryParams, config, res, client, urlPath } = opts;
   const timestamp = new Date().toISOString();
   const resultOpts = getStatementsResultOptions(queryParams);
   const statementsOpts = getStatementsOptions(queryParams);
@@ -25,7 +26,7 @@ export default async (opts: Options) => {
     ...statementsOpts,
     ...resultOpts
   });
-  const moreLink = getMoreLink({ results, resultOpts, statementsOpts });
+  const moreLink = getMoreLink({ results, resultOpts, statementsOpts, urlPath });
   const statementResult = {
     more: moreLink,
     statements: results.statements,
