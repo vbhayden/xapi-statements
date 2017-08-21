@@ -17,7 +17,8 @@ export interface Options {
 }
 
 const checkContentType = (req: Request) => {
-  if (req.body['Content-Type'] !== 'application/json') {
+  const contentType = req.body['Content-Type'];
+  if (contentType !== 'application/json' || contentType !== undefined) {
     throw new InvalidContentType(req.body['Content-Type']);
   }
 };
