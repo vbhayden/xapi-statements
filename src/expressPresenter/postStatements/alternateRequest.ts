@@ -7,6 +7,7 @@ import storeStatement from '../utils/storeStatement';
 import Config from '../Config';
 import storeStatements from './storeStatements';
 import validateVersionHeader from '../utils/validateHeaderVersion';
+import getUrlPath from '../utils/getUrlPath';
 
 export interface Options {
   config: Config;
@@ -37,7 +38,7 @@ export default async ({ config, method, req, res }: Options) => {
       return storeStatements({ config, client, body, attachments: [], res });
     }
     case 'GET': {
-      const urlPath = req.path;
+      const urlPath = getUrlPath(req);
       const client = await getClient(config, req.body.Authorization || '');
       validateVersionHeader(req.header('X-Experience-API-Version'));
       const queryParams = req.body;

@@ -4,6 +4,7 @@ import getClient from './utils/getClient';
 import getStatements from './utils/getStatements';
 import Config from './Config';
 import validateVersionHeader from './utils/validateHeaderVersion';
+import getUrlPath from './utils/getUrlPath';
 
 export default (config: Config) => {
   return catchErrors(config, async (req: Request, res: Response): Promise<void> => {
@@ -12,7 +13,7 @@ export default (config: Config) => {
     validateVersionHeader(req.header('X-Experience-API-Version'));
 
     const queryParams = req.query;
-    const urlPath = req.path;
+    const urlPath = getUrlPath(req);
 
     return getStatements({
       config,

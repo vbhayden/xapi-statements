@@ -40,6 +40,7 @@ var catchErrors_1 = require("./utils/catchErrors");
 var getClient_1 = require("./utils/getClient");
 var getStatements_1 = require("./utils/getStatements");
 var validateHeaderVersion_1 = require("./utils/validateHeaderVersion");
+var getUrlPath_1 = require("./utils/getUrlPath");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var client, queryParams, urlPath;
@@ -50,7 +51,7 @@ exports.default = function (config) {
                     client = _a.sent();
                     validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     queryParams = req.query;
-                    urlPath = req.path;
+                    urlPath = getUrlPath_1.default(req);
                     return [2 /*return*/, getStatements_1.default({
                             config: config,
                             res: res,

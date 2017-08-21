@@ -12,7 +12,7 @@ export interface MoreLinkOptions {
 
 export default (opts: MoreLinkOptions) => {
   if (opts.results.cursor === undefined) {
-    return undefined;
+    return '';
   }
 
   const moreLinkOpts = {
