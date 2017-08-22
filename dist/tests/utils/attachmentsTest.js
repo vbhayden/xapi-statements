@@ -42,7 +42,6 @@ var storeStatementsInService_1 = require("../utils/storeStatementsInService");
 var TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 var TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 var TEST_CONTENT_A = 'A';
-var TEST_CONTENT_B = 'B';
 var TEST_ATTACHMENT_A = createAttachment_1.default(TEST_CONTENT_A);
 var TEST_FILE_URL_ATTACHMENT = createAttachment_1.default(TEST_CONTENT_A, 'http://www.example.com');
 exports.default = function (service, assertAttachments, createStatement) {
@@ -123,24 +122,6 @@ exports.default = function (service, assertAttachments, createStatement) {
                     testAttachmentModelA = createAttachmentModel_1.default(TEST_CONTENT_A);
                     testStatement = createStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_A], TEST_ID_1);
                     return [4 /*yield*/, storeStatements([testStatement], [testAttachmentModelA])];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, assertAttachments([TEST_ID_1], [testAttachmentModelA])];
-                case 2:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it('should return one attachment when two are attached and one is referenced', function () { return __awaiter(_this, void 0, void 0, function () {
-        var testAttachmentModelA, testAttachmentModelB, testStatement;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    testAttachmentModelA = createAttachmentModel_1.default(TEST_CONTENT_A);
-                    testAttachmentModelB = createAttachmentModel_1.default(TEST_CONTENT_B);
-                    testStatement = createStatement([TEST_ATTACHMENT_A], TEST_ID_1);
-                    return [4 /*yield*/, storeStatements([testStatement], [testAttachmentModelA, testAttachmentModelB])];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, assertAttachments([TEST_ID_1], [testAttachmentModelA])];
