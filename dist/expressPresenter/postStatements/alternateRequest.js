@@ -44,6 +44,7 @@ var storeStatement_1 = require("../utils/storeStatement");
 var storeStatements_1 = require("./storeStatements");
 var validateHeaderVersion_1 = require("../utils/validateHeaderVersion");
 var getUrlPath_1 = require("../utils/getUrlPath");
+var checkUnknownParams_1 = require("../utils/checkUnknownParams");
 var checkContentType = function (req) {
     var contentType = req.body['Content-Type'] || 'application/json';
     if (contentType !== 'application/json') {
@@ -61,10 +62,12 @@ var getHeader = function (req, name) {
 exports.default = function (_a) {
     var config = _a.config, method = _a.method, req = _a.req, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
-        var _a, client, body, urlPath, client, queryParams, client, body, queryParams;
+        var reqQueryParams, _a, client, body, urlPath, client, queryParams, client, body, queryParams;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    reqQueryParams = Object.keys(req.query);
+                    checkUnknownParams_1.default(reqQueryParams, ['method']);
                     _a = method;
                     switch (_a) {
                         case 'POST': return [3 /*break*/, 1];

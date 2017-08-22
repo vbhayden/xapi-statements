@@ -8,6 +8,7 @@ import Config from '../Config';
 import storeStatements from './storeStatements';
 import validateVersionHeader from '../utils/validateHeaderVersion';
 import getUrlPath from '../utils/getUrlPath';
+import checkUnknownParams from '../utils/checkUnknownParams';
 
 export interface Options {
   config: Config;
@@ -34,6 +35,9 @@ const getHeader = (req: Request, name: string): string => {
 };
 
 export default async ({ config, method, req, res }: Options) => {
+  const reqQueryParams = Object.keys(req.query);
+  checkUnknownParams(reqQueryParams, ['method']);
+
   switch (method) {
     case 'POST': {
       checkContentType(req);
