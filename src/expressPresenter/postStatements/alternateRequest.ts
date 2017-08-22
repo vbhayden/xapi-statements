@@ -29,26 +29,30 @@ const getBodyContent = (req: Request) => {
   return body;
 };
 
+const getHeader = (req: Request, name: string): string => {
+  return req.body[name] || req.header(name) || '';
+};
+
 export default async ({ config, method, req, res }: Options) => {
   switch (method) {
     case 'POST': {
       checkContentType(req);
-      const client = await getClient(config, req.body.Authorization || '');
-      validateVersionHeader(req.header('X-Experience-API-Version'));
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
       const body = getBodyContent(req);
       return storeStatements({ config, client, body, attachments: [], res });
     }
     case 'GET': {
       const urlPath = getUrlPath(req);
-      const client = await getClient(config, req.body.Authorization || '');
-      validateVersionHeader(req.header('X-Experience-API-Version'));
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
       const queryParams = req.body;
       return getStatements({ config, res, client, queryParams, urlPath });
     }
     case 'PUT': {
       checkContentType(req);
-      const client = await getClient(config, req.body.Authorization || '');
-      validateVersionHeader(req.header('X-Experience-API-Version'));
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
       const body = getBodyContent(req);
       const queryParams = req.body;
       return storeStatement({ config, client, body, attachments: [], queryParams, res });
