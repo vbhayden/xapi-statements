@@ -10,7 +10,7 @@ import DataBeyondFinalBoundary from '../../errors/DataBeyondFinalBoundary';
 import DuplicateId from '../../errors/DuplicateId';
 import InvalidBoundary from '../../errors/InvalidBoundary';
 import InvalidContentType from '../../errors/InvalidContentType';
-import InvalidContentTypeEncoding from '../../errors/InvalidContentTypeEncoding';
+import InvalidContentTransferEncoding from '../../errors/InvalidContentTransferEncoding';
 import InvalidMethod from '../../errors/InvalidMethod';
 import InvalidVoidType from '../../errors/InvalidVoidType';
 import JsonSyntaxError from '../../errors/JsonSyntaxError';
@@ -85,9 +85,9 @@ export default ({ translator, errorId, res, err }: Options): Response => {
       const message = translator.invalidContentTypeError(err as InvalidContentType);
       return sendMessage({ res, code, errorId, message });
     }
-    case InvalidContentTypeEncoding: {
+    case InvalidContentTransferEncoding: {
       const code = 400;
-      const message = translator.invalidContentTypeEncodingError(err as InvalidContentTypeEncoding);
+      const message = translator.invalidContentTransferEncodingError(err as InvalidContentTransferEncoding);
       return sendMessage({ res, code, errorId, message });
     }
     case InvalidMethod: {

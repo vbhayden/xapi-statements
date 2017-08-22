@@ -7,7 +7,7 @@ import DuplicateId from '../errors/DuplicateId';
 import InvalidBoundary from '../errors/InvalidBoundary';
 import JsonSyntaxError from '../errors/JsonSyntaxError';
 import InvalidContentType from '../errors/InvalidContentType';
-import InvalidContentTypeEncoding from '../errors/InvalidContentTypeEncoding';
+import InvalidContentTransferEncoding from '../errors/InvalidContentTransferEncoding';
 import InvalidMethod from '../errors/InvalidMethod';
 import InvalidVoidType from '../errors/InvalidVoidType';
 import MissingAttachments from '../errors/MissingAttachments';
@@ -27,7 +27,7 @@ interface Translator extends CommonTranslator {
     readonly duplicateIdError: (err: DuplicateId) => string;
     readonly invalidBoundaryError: (err: InvalidBoundary) => string;
     readonly invalidContentTypeError: (err: InvalidContentType) => string;
-    readonly invalidContentTypeEncodingError: (err: InvalidContentTypeEncoding) => string;
+    readonly invalidContentTransferEncodingError: (err: InvalidContentTransferEncoding) => string;
     readonly invalidMethodError: (err: InvalidMethod) => string;
     readonly jsonSyntaxError: (err: JsonSyntaxError) => string;
     readonly invalidVoidTypeError: (err: InvalidVoidType) => string;
