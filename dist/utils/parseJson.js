@@ -9,6 +9,8 @@ exports.default = function (data, path) {
         if (err instanceof SyntaxError) {
             throw new JsonSyntaxError_1.default(path);
         }
+        /* istanbul ignore next */
+        throw err;
     }
 };
 //# sourceMappingURL=parseJson.js.map
