@@ -45,6 +45,7 @@ var storeStatements_1 = require("./storeStatements");
 var validateHeaderVersion_1 = require("../utils/validateHeaderVersion");
 var getUrlPath_1 = require("../utils/getUrlPath");
 var checkUnknownParams_1 = require("../utils/checkUnknownParams");
+var parseJson_1 = require("../../utils/parseJson");
 var checkContentType = function (req) {
     var contentType = req.body['Content-Type'] || 'application/json';
     if (contentType !== 'application/json') {
@@ -53,7 +54,7 @@ var checkContentType = function (req) {
 };
 var getBodyContent = function (req) {
     var unparsedBody = req.body.content;
-    var body = JSON.parse(unparsedBody);
+    var body = parseJson_1.default(unparsedBody, ['body', 'content']);
     return body;
 };
 var getHeader = function (req, name) {

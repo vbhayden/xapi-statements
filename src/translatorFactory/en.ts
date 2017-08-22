@@ -1,4 +1,5 @@
 import commonTranslator from 'jscommons/dist/translatorFactory/en';
+import stringPath from 'jscommons/dist/translatorFactory/utils/stringPath';
 import Translator from './Translator';
 
 const translator: Translator = {
@@ -8,6 +9,10 @@ const translator: Translator = {
   dataBeyondFinalBoundaryError: () => 'There was data beyond the final boundary',
   duplicateIdError: (err) => `${err.statementId} is duplicated in the current batch`,
   invalidBoundaryError: (err) => `Content-Type (${err.contentType}) contains an invalid boundary`,
+  jsonSyntaxError: (err) => {
+    const path = stringPath(err.path);
+    return `Expected valid JSON in ${path}`;
+  },
   invalidContentTypeError: (err) => `Content-Type (${err.contentType}) is not supported`,
   invalidMethodError: (err) => `Method (${err.method}) is invalid for alternate request syntax`,
   invalidVoidTypeError: (err) => `Voider 'objectType' ('${err.objectType}) must be 'StatementRef'`,

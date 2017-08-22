@@ -12,6 +12,7 @@ import InvalidBoundary from '../../errors/InvalidBoundary';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
 import InvalidVoidType from '../../errors/InvalidVoidType';
+import JsonSyntaxError from '../../errors/JsonSyntaxError';
 import MissingAttachments from '../../errors/MissingAttachments';
 import MissingLoadedId from '../../errors/MissingLoadedId';
 import MissingStatementId from '../../errors/MissingStatementId';
@@ -38,7 +39,11 @@ export default ({ translator, errorId, res, err }: Options): Response => {
   }
 
   switch (err.constructor) {
-    case ChangedStatementRef: {
+    case JsonSyntaxError: {
+      const code = 400;
+      const message = translator.jsonSyntaxError(err as JsonSyntaxError);
+      return sendMessage({ res, code, errorId, message });
+    } case ChangedStatementRef: {
       const code = 500;
       const message = translator.changedStatementRefError(err as ChangedStatementRef);
       return sendMessage({ res, code, errorId, message });

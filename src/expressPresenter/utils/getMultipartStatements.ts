@@ -5,6 +5,7 @@ import AttachmentModel from '../../models/AttachmentModel';
 import InvalidBoundary from '../../errors/InvalidBoundary';
 import NoStatements from '../../errors/NoStatements';
 import getParts from '../utils/getParts';
+import parseJson from '../../utils/parseJson';
 
 const BOUNDARY_REGEXP = /boundary\=((?:\"(?:[A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|(?:[A-Za-z\d\-]+))/;
 
@@ -30,7 +31,7 @@ export default async (req: Request) => {
   }
 
   const unparsedBody = await streamToString(parts[0].stream);
-  const body = JSON.parse(unparsedBody);
+  const body = parseJson(unparsedBody, ['body']);
   const attachments = parts.slice(1).map((part): AttachmentModel => {
     return {
       stream: part.stream,

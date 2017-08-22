@@ -12,6 +12,7 @@ var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
 var InvalidVoidType_1 = require("../../errors/InvalidVoidType");
+var JsonSyntaxError_1 = require("../../errors/JsonSyntaxError");
 var MissingAttachments_1 = require("../../errors/MissingAttachments");
 var MissingLoadedId_1 = require("../../errors/MissingLoadedId");
 var MissingStatementId_1 = require("../../errors/MissingStatementId");
@@ -32,6 +33,11 @@ exports.default = function (_a) {
         return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
     }
     switch (err.constructor) {
+        case JsonSyntaxError_1.default: {
+            var code = 400;
+            var message = translator.jsonSyntaxError(err);
+            return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
+        }
         case ChangedStatementRef_1.default: {
             var code = 500;
             var message = translator.changedStatementRefError(err);

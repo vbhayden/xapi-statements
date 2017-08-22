@@ -5,6 +5,7 @@ import DataBeforeFirstBoundary from '../errors/DataBeforeFirstBoundary';
 import DataBeyondFinalBoundary from '../errors/DataBeyondFinalBoundary';
 import DuplicateId from '../errors/DuplicateId';
 import InvalidBoundary from '../errors/InvalidBoundary';
+import JsonSyntaxError from '../errors/JsonSyntaxError';
 import InvalidContentType from '../errors/InvalidContentType';
 import InvalidMethod from '../errors/InvalidMethod';
 import InvalidVoidType from '../errors/InvalidVoidType';
@@ -25,6 +26,7 @@ interface Translator extends CommonTranslator {
     readonly invalidBoundaryError: (err: InvalidBoundary) => string;
     readonly invalidContentTypeError: (err: InvalidContentType) => string;
     readonly invalidMethodError: (err: InvalidMethod) => string;
+    readonly jsonSyntaxError: (err: JsonSyntaxError) => string;
     readonly invalidVoidTypeError: (err: InvalidVoidType) => string;
     readonly missingAttachmentsError: (err: MissingAttachments) => string;
     readonly missingLoadedIdError: (err: MissingLoadedId) => string;

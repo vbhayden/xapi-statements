@@ -38,6 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var atob = require("atob");
 var NoModel_1 = require("jscommons/dist/errors/NoModel");
+var parseJson_1 = require("../utils/parseJson");
 exports.default = function (config) {
     return function (_a) {
         var authToken = _a.authToken;
@@ -63,7 +64,7 @@ exports.default = function (config) {
                         client = {
                             _id: document._id.toString(),
                             title: document.title,
-                            authority: JSON.parse(document.authority),
+                            authority: parseJson_1.default(document.authority, ['client', 'authority']),
                             isTrusted: document.isTrusted,
                             lrs_id: document.lrs_id.toString(),
                             organisation: document.organisation.toString(),

@@ -41,6 +41,7 @@ var streamToString = require("stream-to-string");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
 var NoStatements_1 = require("../../errors/NoStatements");
 var getParts_1 = require("../utils/getParts");
+var parseJson_1 = require("../../utils/parseJson");
 var BOUNDARY_REGEXP = /boundary\=((?:\"(?:[A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|(?:[A-Za-z\d\-]+))/;
 var getBoundaryFromContentType = function (contentType) {
     var result = BOUNDARY_REGEXP.exec(contentType);
@@ -67,7 +68,7 @@ exports.default = function (req) { return __awaiter(_this, void 0, void 0, funct
                 return [4 /*yield*/, streamToString(parts[0].stream)];
             case 2:
                 unparsedBody = _a.sent();
-                body = JSON.parse(unparsedBody);
+                body = parseJson_1.default(unparsedBody, ['body']);
                 attachments = parts.slice(1).map(function (part) {
                     return {
                         stream: part.stream,

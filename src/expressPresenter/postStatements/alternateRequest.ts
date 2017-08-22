@@ -9,6 +9,7 @@ import storeStatements from './storeStatements';
 import validateVersionHeader from '../utils/validateHeaderVersion';
 import getUrlPath from '../utils/getUrlPath';
 import checkUnknownParams from '../utils/checkUnknownParams';
+import parseJson from '../../utils/parseJson';
 
 export interface Options {
   config: Config;
@@ -26,7 +27,7 @@ const checkContentType = (req: Request) => {
 
 const getBodyContent = (req: Request) => {
   const unparsedBody = req.body.content;
-  const body = JSON.parse(unparsedBody);
+  const body = parseJson(unparsedBody, ['body', 'content']);
   return body;
 };
 
