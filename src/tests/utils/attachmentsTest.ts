@@ -6,7 +6,6 @@ import storeStatementsInService from '../utils/storeStatementsInService';
 const TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 const TEST_CONTENT_A = 'A';
-const TEST_CONTENT_B = 'B';
 const TEST_ATTACHMENT_A = createAttachment(TEST_CONTENT_A);
 const TEST_FILE_URL_ATTACHMENT = createAttachment(TEST_CONTENT_A, 'http://www.example.com');
 
@@ -56,14 +55,6 @@ export default (
     const testAttachmentModelA = createAttachmentModel(TEST_CONTENT_A);
     const testStatement = createStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_A], TEST_ID_1);
     await storeStatements([testStatement], [testAttachmentModelA]);
-    await assertAttachments([TEST_ID_1], [testAttachmentModelA]);
-  });
-
-  it('should return one attachment when two are attached and one is referenced', async () => {
-    const testAttachmentModelA = createAttachmentModel(TEST_CONTENT_A);
-    const testAttachmentModelB = createAttachmentModel(TEST_CONTENT_B);
-    const testStatement = createStatement([TEST_ATTACHMENT_A], TEST_ID_1);
-    await storeStatements([testStatement], [testAttachmentModelA, testAttachmentModelB]);
     await assertAttachments([TEST_ID_1], [testAttachmentModelA]);
   });
 };

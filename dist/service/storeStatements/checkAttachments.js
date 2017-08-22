@@ -38,9 +38,10 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var MissingAttachments_1 = require("../../errors/MissingAttachments");
+var ExtraAttachments_1 = require("../../errors/ExtraAttachments");
 var getAttachmentHashes_1 = require("../utils/getAttachmentHashes");
 exports.default = function (config, statements, attachments) { return __awaiter(_this, void 0, void 0, function () {
-    var attachmentHashes, statementHashes, missingHashes;
+    var attachmentHashes, statementHashes, missingHashes, extraHashes;
     return __generator(this, function (_a) {
         /* istanbul ignore next */
         if (!config.enableAttachmentValidation)
@@ -52,8 +53,12 @@ exports.default = function (config, statements, attachments) { return __awaiter(
             return attachment.sha2;
         });
         missingHashes = lodash_1.difference(statementHashes, attachmentHashes);
+        extraHashes = lodash_1.difference(attachmentHashes, statementHashes);
         if (missingHashes.length > 0) {
             throw new MissingAttachments_1.default(missingHashes);
+        }
+        if (extraHashes.length > 0) {
+            throw new ExtraAttachments_1.default(missingHashes);
         }
         return [2 /*return*/];
     });

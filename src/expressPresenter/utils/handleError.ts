@@ -10,9 +10,12 @@ import DataBeyondFinalBoundary from '../../errors/DataBeyondFinalBoundary';
 import DuplicateId from '../../errors/DuplicateId';
 import InvalidBoundary from '../../errors/InvalidBoundary';
 import InvalidContentType from '../../errors/InvalidContentType';
+import InvalidContentTypeEncoding from '../../errors/InvalidContentTypeEncoding';
 import InvalidMethod from '../../errors/InvalidMethod';
 import InvalidVoidType from '../../errors/InvalidVoidType';
+import JsonSyntaxError from '../../errors/JsonSyntaxError';
 import MissingAttachments from '../../errors/MissingAttachments';
+import ExtraAttachments from '../../errors/ExtraAttachments';
 import MissingLoadedId from '../../errors/MissingLoadedId';
 import MissingStatementId from '../../errors/MissingStatementId';
 import NoStatements from '../../errors/NoStatements';
@@ -38,7 +41,11 @@ export default ({ translator, errorId, res, err }: Options): Response => {
   }
 
   switch (err.constructor) {
-    case ChangedStatementRef: {
+    case JsonSyntaxError: {
+      const code = 400;
+      const message = translator.jsonSyntaxError(err as JsonSyntaxError);
+      return sendMessage({ res, code, errorId, message });
+    } case ChangedStatementRef: {
       const code = 500;
       const message = translator.changedStatementRefError(err as ChangedStatementRef);
       return sendMessage({ res, code, errorId, message });
@@ -63,6 +70,11 @@ export default ({ translator, errorId, res, err }: Options): Response => {
       const message = translator.duplicateIdError(err as DuplicateId);
       return sendMessage({ res, code, errorId, message });
     }
+    case ExtraAttachments: {
+      const code = 400;
+      const message = translator.extraAttachmentsError(err as ExtraAttachments);
+      return sendMessage({ res, code, errorId, message });
+    }
     case InvalidBoundary: {
       const code = 400;
       const message = translator.invalidBoundaryError(err as InvalidBoundary);
@@ -71,6 +83,11 @@ export default ({ translator, errorId, res, err }: Options): Response => {
     case InvalidContentType: {
       const code = 400;
       const message = translator.invalidContentTypeError(err as InvalidContentType);
+      return sendMessage({ res, code, errorId, message });
+    }
+    case InvalidContentTypeEncoding: {
+      const code = 400;
+      const message = translator.invalidContentTypeEncodingError(err as InvalidContentTypeEncoding);
       return sendMessage({ res, code, errorId, message });
     }
     case InvalidMethod: {

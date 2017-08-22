@@ -8,6 +8,8 @@ import Config from '../Config';
 import storeStatements from './storeStatements';
 import validateVersionHeader from '../utils/validateHeaderVersion';
 import getUrlPath from '../utils/getUrlPath';
+import checkUnknownParams from '../utils/checkUnknownParams';
+import parseJson from '../../utils/parseJson';
 
 export interface Options {
   config: Config;
@@ -25,7 +27,7 @@ const checkContentType = (req: Request) => {
 
 const getBodyContent = (req: Request) => {
   const unparsedBody = req.body.content;
-  const body = JSON.parse(unparsedBody);
+  const body = parseJson(unparsedBody, ['body', 'content']);
   return body;
 };
 
@@ -34,6 +36,9 @@ const getHeader = (req: Request, name: string): string => {
 };
 
 export default async ({ config, method, req, res }: Options) => {
+  const reqQueryParams = Object.keys(req.query);
+  checkUnknownParams(reqQueryParams, ['method']);
+
   switch (method) {
     case 'POST': {
       checkContentType(req);

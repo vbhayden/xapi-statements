@@ -5,6 +5,7 @@ import GetClientOptions from '../repoFactory/options/GetClientOptions';
 import GetClientResult from '../repoFactory/results/GetClientResult';
 import Actor from '../models/Actor';
 import Config from './Config';
+import parseJson from '../utils/parseJson';
 
 export default (config: Config) => {
   return async ({ authToken }: GetClientOptions): Promise<GetClientResult> => {
@@ -24,7 +25,7 @@ export default (config: Config) => {
     const client: ClientModel = {
       _id: document._id.toString() as string,
       title: document.title as string,
-      authority: JSON.parse(document.authority) as Actor,
+      authority: parseJson(document.authority, ['client', 'authority']) as Actor,
       isTrusted: document.isTrusted as boolean,
       lrs_id: document.lrs_id.toString() as string,
       organisation: document.organisation.toString() as string,

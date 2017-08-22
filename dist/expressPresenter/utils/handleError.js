@@ -10,9 +10,12 @@ var DataBeyondFinalBoundary_1 = require("../../errors/DataBeyondFinalBoundary");
 var DuplicateId_1 = require("../../errors/DuplicateId");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
+var InvalidContentTypeEncoding_1 = require("../../errors/InvalidContentTypeEncoding");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
 var InvalidVoidType_1 = require("../../errors/InvalidVoidType");
+var JsonSyntaxError_1 = require("../../errors/JsonSyntaxError");
 var MissingAttachments_1 = require("../../errors/MissingAttachments");
+var ExtraAttachments_1 = require("../../errors/ExtraAttachments");
 var MissingLoadedId_1 = require("../../errors/MissingLoadedId");
 var MissingStatementId_1 = require("../../errors/MissingStatementId");
 var NoStatements_1 = require("../../errors/NoStatements");
@@ -32,6 +35,11 @@ exports.default = function (_a) {
         return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
     }
     switch (err.constructor) {
+        case JsonSyntaxError_1.default: {
+            var code = 400;
+            var message = translator.jsonSyntaxError(err);
+            return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
+        }
         case ChangedStatementRef_1.default: {
             var code = 500;
             var message = translator.changedStatementRefError(err);
@@ -57,6 +65,11 @@ exports.default = function (_a) {
             var message = translator.duplicateIdError(err);
             return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
         }
+        case ExtraAttachments_1.default: {
+            var code = 400;
+            var message = translator.extraAttachmentsError(err);
+            return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
+        }
         case InvalidBoundary_1.default: {
             var code = 400;
             var message = translator.invalidBoundaryError(err);
@@ -65,6 +78,11 @@ exports.default = function (_a) {
         case InvalidContentType_1.default: {
             var code = 400;
             var message = translator.invalidContentTypeError(err);
+            return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
+        }
+        case InvalidContentTypeEncoding_1.default: {
+            var code = 400;
+            var message = translator.invalidContentTypeEncodingError(err);
             return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
         }
         case InvalidMethod_1.default: {

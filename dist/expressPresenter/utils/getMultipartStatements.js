@@ -39,8 +39,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var streamToString = require("stream-to-string");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
+var InvalidContentTypeEncoding_1 = require("../../errors/InvalidContentTypeEncoding");
 var NoStatements_1 = require("../../errors/NoStatements");
 var getParts_1 = require("../utils/getParts");
+var parseJson_1 = require("../../utils/parseJson");
 var BOUNDARY_REGEXP = /boundary\=((?:\"(?:[A-Za-z\d\'\(\)\+\_\,\-\.\/\:\=\?]+)\")|(?:[A-Za-z\d\-]+))/;
 var getBoundaryFromContentType = function (contentType) {
     var result = BOUNDARY_REGEXP.exec(contentType);
@@ -67,8 +69,12 @@ exports.default = function (req) { return __awaiter(_this, void 0, void 0, funct
                 return [4 /*yield*/, streamToString(parts[0].stream)];
             case 2:
                 unparsedBody = _a.sent();
-                body = JSON.parse(unparsedBody);
+                body = parseJson_1.default(unparsedBody, ['body']);
                 attachments = parts.slice(1).map(function (part) {
+                    var contentTypeEncoding = lodash_1.get(part.headers, 'content-type-encoding');
+                    if (contentTypeEncoding !== 'binary') {
+                        throw new InvalidContentTypeEncoding_1.default(contentTypeEncoding);
+                    }
                     return {
                         stream: part.stream,
                         hash: lodash_1.get(part.headers, 'x-experience-api-hash'),
