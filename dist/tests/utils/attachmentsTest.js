@@ -42,7 +42,6 @@ var storeStatementsInService_1 = require("../utils/storeStatementsInService");
 var TEST_ID_1 = '1c86d8e9-f325-404f-b3d9-24c451035582';
 var TEST_ID_2 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 var TEST_CONTENT_A = 'A';
-var TEST_CONTENT_B = 'B';
 var TEST_ATTACHMENT_A = createAttachment_1.default(TEST_CONTENT_A);
 var TEST_FILE_URL_ATTACHMENT = createAttachment_1.default(TEST_CONTENT_A, 'http://www.example.com');
 exports.default = function (service, assertAttachments, createStatement) {
