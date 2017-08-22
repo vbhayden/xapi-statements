@@ -58,12 +58,4 @@ export default (
     await storeStatements([testStatement], [testAttachmentModelA]);
     await assertAttachments([TEST_ID_1], [testAttachmentModelA]);
   });
-
-  it('should return one attachment when two are attached and one is referenced', async () => {
-    const testAttachmentModelA = createAttachmentModel(TEST_CONTENT_A);
-    const testAttachmentModelB = createAttachmentModel(TEST_CONTENT_B);
-    const testStatement = createStatement([TEST_ATTACHMENT_A], TEST_ID_1);
-    await storeStatements([testStatement], [testAttachmentModelA, testAttachmentModelB]);
-    await assertAttachments([TEST_ID_1], [testAttachmentModelA]);
-  });
 };

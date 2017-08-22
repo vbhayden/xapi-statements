@@ -132,23 +132,5 @@ exports.default = function (service, assertAttachments, createStatement) {
             }
         });
     }); });
-    it('should return one attachment when two are attached and one is referenced', function () { return __awaiter(_this, void 0, void 0, function () {
-        var testAttachmentModelA, testAttachmentModelB, testStatement;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    testAttachmentModelA = createAttachmentModel_1.default(TEST_CONTENT_A);
-                    testAttachmentModelB = createAttachmentModel_1.default(TEST_CONTENT_B);
-                    testStatement = createStatement([TEST_ATTACHMENT_A], TEST_ID_1);
-                    return [4 /*yield*/, storeStatements([testStatement], [testAttachmentModelA, testAttachmentModelB])];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, assertAttachments([TEST_ID_1], [testAttachmentModelA])];
-                case 2:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
 };
 //# sourceMappingURL=attachmentsTest.js.map

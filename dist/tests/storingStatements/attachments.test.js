@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var assertError_1 = require("jscommons/dist/tests/utils/assertError");
+var ExtraAttachments_1 = require("../../errors/ExtraAttachments");
 var MissingAttachments_1 = require("../../errors/MissingAttachments");
 var setup_1 = require("../utils/setup");
 var createAttachment_1 = require("../utils/createAttachment");
@@ -46,7 +47,8 @@ var createAttachmentSubStatement_1 = require("../utils/createAttachmentSubStatem
 var storeStatementsInService_1 = require("../utils/storeStatementsInService");
 var TEST_CONTENT_A = 'A';
 var TEST_CONTENT_B = 'B';
-var TEST_ATTACHMENT_MODEL = createAttachmentModel_1.default(TEST_CONTENT_A);
+var TEST_ATTACHMENT_MODEL_A = createAttachmentModel_1.default(TEST_CONTENT_A);
+var TEST_ATTACHMENT_MODEL_B = createAttachmentModel_1.default(TEST_CONTENT_B);
 var TEST_ATTACHMENT_A = createAttachment_1.default(TEST_CONTENT_A);
 var TEST_ATTACHMENT_B = createAttachment_1.default(TEST_CONTENT_B);
 describe('store statements with attachments', function () {
@@ -58,7 +60,7 @@ describe('store statements with attachments', function () {
             switch (_a.label) {
                 case 0:
                     testStatement = createAttachmentStatement_1.default([TEST_ATTACHMENT_A]);
-                    return [4 /*yield*/, storeStatements([testStatement], [TEST_ATTACHMENT_MODEL])];
+                    return [4 /*yield*/, storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A])];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -71,7 +73,7 @@ describe('store statements with attachments', function () {
             switch (_a.label) {
                 case 0:
                     testStatement = createAttachmentStatement_1.default([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
-                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL]);
+                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
                     return [4 /*yield*/, assertError_1.default(MissingAttachments_1.default, promise)];
                 case 1:
                     _a.sent();
@@ -85,8 +87,22 @@ describe('store statements with attachments', function () {
             switch (_a.label) {
                 case 0:
                     testStatement = createAttachmentStatement_1.default([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
-                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL]);
+                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
                     return [4 /*yield*/, assertError_1.default(MissingAttachments_1.default, promise)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('should throw an error when there is an extra SHA', function () { return __awaiter(_this, void 0, void 0, function () {
+        var testStatement, promise;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    testStatement = createAttachmentStatement_1.default([TEST_ATTACHMENT_A]);
+                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A, TEST_ATTACHMENT_MODEL_B]);
+                    return [4 /*yield*/, assertError_1.default(ExtraAttachments_1.default, promise)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -99,7 +115,7 @@ describe('store statements with attachments', function () {
             switch (_a.label) {
                 case 0:
                     testStatement = createAttachmentSubStatement_1.default([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
-                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL]);
+                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
                     return [4 /*yield*/, assertError_1.default(MissingAttachments_1.default, promise)];
                 case 1:
                     _a.sent();
@@ -113,7 +129,7 @@ describe('store statements with attachments', function () {
             switch (_a.label) {
                 case 0:
                     testStatement = createAttachmentSubStatement_1.default([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
-                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL]);
+                    promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
                     return [4 /*yield*/, assertError_1.default(MissingAttachments_1.default, promise)];
                 case 1:
                     _a.sent();
