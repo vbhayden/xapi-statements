@@ -14,9 +14,11 @@ const translator: Translator = {
     return `Expected valid JSON in ${path}`;
   },
   invalidContentTypeError: (err) => `Content-Type (${err.contentType}) is not supported`,
+  invalidContentTypeEncodingError: (err) => `Content-Type-Encoding (${err.contentTypeEncoding}) is not supported`,
   invalidMethodError: (err) => `Method (${err.method}) is invalid for alternate request syntax`,
   invalidVoidTypeError: (err) => `Voider 'objectType' ('${err.objectType}) must be 'StatementRef'`,
   missingAttachmentsError: (err) => `Received missing attachments (${err.hashes.join(', ')})`,
+  extraAttachmentsError: (err) => `Received extra attachments (${err.hashes.join(', ')})`,
   missingLoadedIdError: (err) => `Eager loaded '${err.targetId}' is now missing`,
   missingStatementIdError: () => 'Missing required \'statementId\' query param',
   noStatementsError: () => 'No statements in request content',
