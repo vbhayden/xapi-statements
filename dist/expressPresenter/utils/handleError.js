@@ -17,7 +17,7 @@ var MissingLoadedId_1 = require("../../errors/MissingLoadedId");
 var MissingStatementId_1 = require("../../errors/MissingStatementId");
 var NoStatements_1 = require("../../errors/NoStatements");
 var QueryIds_1 = require("../../errors/QueryIds");
-var QueryOptions_1 = require("../../errors/QueryOptions");
+var UnknownParams_1 = require("../../errors/UnknownParams");
 var UnequalStatementId_1 = require("../../errors/UnequalStatementId");
 var VoidingError_1 = require("../../errors/VoidingError");
 var constants_1 = require("../../utils/constants");
@@ -102,9 +102,9 @@ exports.default = function (_a) {
             var message = translator.queryIdsError(err);
             return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
         }
-        case QueryOptions_1.default: {
+        case UnknownParams_1.default: {
             var code = 400;
-            var message = translator.queryOptionsError(err);
+            var message = translator.unknownParamsError(err);
             return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
         }
         case UnequalStatementId_1.default: {

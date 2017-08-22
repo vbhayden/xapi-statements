@@ -16,8 +16,8 @@ const translator: Translator = {
   missingStatementIdError: () => 'Missing required \'statementId\' query param',
   noStatementsError: () => 'No statements in request content',
   queryIdsError: () => 'Cannot use \'statementId\' and \'voidedStatementId\'',
-  queryOptionsError: (err) => {
-    return `'statementId' or 'voidedStatementId' can't be used with '${err.opts.join(', ')}'`;
+  unknownParamsError: (err) => {
+    return `Cannot use unknown params '${err.unknownParams.join(', ')}'`;
   },
   unequalStatementIdError: (err) => `Statement id must match the query param (${err.statementId})`,
   voidingErrorError: (err) => {

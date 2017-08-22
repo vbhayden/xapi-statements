@@ -48,6 +48,7 @@ var getMoreLink_1 = require("./getMoreLink");
 var getStatementsOptions_1 = require("./getStatementsOptions");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
 var constants_1 = require("../../../utils/constants");
+var checkUnknownParams_1 = require("../checkUnknownParams");
 var sendMultipartResult_1 = require("./sendMultipartResult");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
     var queryParams, config, res, client, urlPath, timestamp, resultOpts, statementsOpts, results, moreLink, jsonResponse;
@@ -58,6 +59,21 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
                 timestamp = new Date().toISOString();
                 resultOpts = getStatementsResultOptions_1.default(queryParams);
                 statementsOpts = getStatementsOptions_1.default(queryParams);
+                checkUnknownParams_1.default(queryParams, [
+                    'format',
+                    'attachments',
+                    'agent',
+                    'verb',
+                    'activity',
+                    'registration',
+                    'relatedActivities',
+                    'relatedAgents',
+                    'since',
+                    'until',
+                    'limit',
+                    'ascending',
+                    'cursor',
+                ]);
                 return [4 /*yield*/, config.service.getStatements(__assign({ client: client }, statementsOpts, resultOpts))];
             case 1:
                 results = _a.sent();

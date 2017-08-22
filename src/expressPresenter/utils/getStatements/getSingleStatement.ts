@@ -1,8 +1,7 @@
 import { Response } from 'express';
 import ClientModel from '../../../models/ClientModel';
 import Config from '../../Config';
-import checkStatementsOpts from './checkStatementsOpts';
-import getStatementsOptions from './getStatementsOptions';
+import checkUnknownParams from '../checkUnknownParams';
 import getStatementsResultOptions from './getStatementsResultOptions';
 import { xapiHeaderVersion } from '../../../utils/constants';
 import sendMultipartResult from './sendMultipartResult';
@@ -20,9 +19,13 @@ export default async (opts: Options) => {
   const { queryParams, config, id, voided, res, client } = opts;
   const timestamp = new Date().toISOString();
   const resultOpts = getStatementsResultOptions(queryParams);
-  const statementsOpts = getStatementsOptions(queryParams);
 
-  checkStatementsOpts(statementsOpts);
+  checkUnknownParams(queryParams, [
+    'statementId',
+    'voidedStatementId',
+    'format',
+    'attachments',
+  ]);
 
   const results = await config.service.getStatement({ client, id, voided, ...resultOpts });
   res.setHeader('X-Experience-API-Consistent-Through', timestamp);

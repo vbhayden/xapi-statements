@@ -1,5 +1,5 @@
 import BaseError from 'jscommons/dist/errors/BaseError';
 export default class  extends BaseError {
-    opts: string[];
-    constructor(opts: string[]);
+    unknownParams: string[];
+    constructor(unknownParams: string[]);
 }
