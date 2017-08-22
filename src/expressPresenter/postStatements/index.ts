@@ -27,7 +27,7 @@ export default (config: Config) => {
       return storeStatements({ config, client, body, attachments, res });
     }
 
-    if (method !== undefined && contentType === 'application/x-www-form-urlencoded') {
+    if (method !== undefined &&  /application\/x-www-form-urlencoded/.test(contentType)) {
       return alternateRequest({ config, method, req, res });
     }
 

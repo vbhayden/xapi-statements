@@ -3,10 +3,10 @@ import { reduce } from 'bluebird';
 import AttachmentModel from '../../../models/AttachmentModel';
 
 export default async (jsonResponse: Object, attachments: AttachmentModel[], res: Response) => {
-  const boundary = 'abcABC0123\'()+_,-./:=?';
+  const boundary = 'zzzlearninglockerzzz';
   const crlf = '\r\n';
   const fullBoundary = `${crlf}--${boundary}${crlf}`;
-  res.setHeader('Content-Type', `multipart/mixed; charset=UTF-8; boundary="${boundary}"`);
+  res.setHeader('Content-Type', `multipart/mixed; charset=UTF-8; boundary=${boundary}`);
   res.status(200);
   res.write(fullBoundary);
   res.write(`Content-Type:application/json${crlf}${crlf}`);

@@ -42,10 +42,10 @@ exports.default = function (jsonResponse, attachments, res) { return __awaiter(_
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                boundary = 'abcABC0123\'()+_,-./:=?';
+                boundary = 'zzzlearninglockerzzz';
                 crlf = '\r\n';
                 fullBoundary = crlf + "--" + boundary + crlf;
-                res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=\"" + boundary + "\"");
+                res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=" + boundary);
                 res.status(200);
                 res.write(fullBoundary);
                 res.write("Content-Type:application/json" + crlf + crlf);
