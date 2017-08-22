@@ -44,21 +44,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var checkStatementsOpts_1 = require("./checkStatementsOpts");
-var getStatementsOptions_1 = require("./getStatementsOptions");
+var checkUnknownParams_1 = require("../checkUnknownParams");
 var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
 var constants_1 = require("../../../utils/constants");
 var sendMultipartResult_1 = require("./sendMultipartResult");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
-    var queryParams, config, id, voided, res, client, timestamp, resultOpts, statementsOpts, results, jsonResponse;
+    var queryParams, config, id, voided, res, client, timestamp, resultOpts, results, jsonResponse;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 queryParams = opts.queryParams, config = opts.config, id = opts.id, voided = opts.voided, res = opts.res, client = opts.client;
                 timestamp = new Date().toISOString();
                 resultOpts = getStatementsResultOptions_1.default(queryParams);
-                statementsOpts = getStatementsOptions_1.default(queryParams);
-                checkStatementsOpts_1.default(statementsOpts);
+                checkUnknownParams_1.default(queryParams, [
+                    'statementId',
+                    'voidedStatementId',
+                    'format',
+                    'attachments',
+                ]);
                 return [4 /*yield*/, config.service.getStatement(__assign({ client: client, id: id, voided: voided }, resultOpts))];
             case 1:
                 results = _a.sent();

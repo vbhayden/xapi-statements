@@ -17,7 +17,7 @@ import MissingLoadedId from '../../errors/MissingLoadedId';
 import MissingStatementId from '../../errors/MissingStatementId';
 import NoStatements from '../../errors/NoStatements';
 import QueryIds from '../../errors/QueryIds';
-import QueryOptions from '../../errors/QueryOptions';
+import UnknownParams from '../../errors/UnknownParams';
 import UnequalStatementId from '../../errors/UnequalStatementId';
 import VoidingError from '../../errors/VoidingError';
 import Translator from '../../translatorFactory/Translator';
@@ -108,9 +108,9 @@ export default ({ translator, errorId, res, err }: Options): Response => {
       const message = translator.queryIdsError(err as QueryIds);
       return sendMessage({ res, code, errorId, message });
     }
-    case QueryOptions: {
+    case UnknownParams: {
       const code = 400;
-      const message = translator.queryOptionsError(err as QueryOptions);
+      const message = translator.unknownParamsError(err as UnknownParams);
       return sendMessage({ res, code, errorId, message });
     }
     case UnequalStatementId: {

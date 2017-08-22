@@ -5,6 +5,7 @@ import getMoreLink from './getMoreLink';
 import getStatementsOptions from './getStatementsOptions';
 import getStatementsResultOptions from './getStatementsResultOptions';
 import { xapiHeaderVersion } from '../../../utils/constants';
+import checkUnknownParams from '../checkUnknownParams';
 import sendMultipartResult from './sendMultipartResult';
 
 export interface Options {
@@ -20,6 +21,22 @@ export default async (opts: Options) => {
   const timestamp = new Date().toISOString();
   const resultOpts = getStatementsResultOptions(queryParams);
   const statementsOpts = getStatementsOptions(queryParams);
+
+  checkUnknownParams(queryParams, [
+    'format',
+    'attachments',
+    'agent',
+    'verb',
+    'activity',
+    'registration',
+    'relatedActivities',
+    'relatedAgents',
+    'since',
+    'until',
+    'limit',
+    'ascending',
+    'cursor',
+  ]);
 
   const results = await config.service.getStatements({
     client,

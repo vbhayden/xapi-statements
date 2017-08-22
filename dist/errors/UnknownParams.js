@@ -13,12 +13,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var BaseError_1 = require("jscommons/dist/errors/BaseError");
 var default_1 = (function (_super) {
     __extends(default_1, _super);
-    function default_1(opts) {
+    function default_1(unknownParams) {
         var _this = _super.call(this) || this;
-        _this.opts = opts;
+        _this.unknownParams = unknownParams;
         return _this;
     }
     return default_1;
 }(BaseError_1.default));
 exports.default = default_1;
-//# sourceMappingURL=QueryOptions.js.map
+//# sourceMappingURL=UnknownParams.js.map

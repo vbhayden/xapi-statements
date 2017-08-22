@@ -13,7 +13,7 @@ import MissingLoadedId from '../errors/MissingLoadedId';
 import MissingStatementId from '../errors/MissingStatementId';
 import NoStatements from '../errors/NoStatements';
 import QueryIds from '../errors/QueryIds';
-import QueryOptions from '../errors/QueryOptions';
+import UnknownParams from '../errors/UnknownParams';
 import UnequalStatementId from '../errors/UnequalStatementId';
 import VoidingError from '../errors/VoidingError';
 
@@ -34,7 +34,7 @@ interface Translator extends CommonTranslator {
   readonly unequalStatementIdError: (err: UnequalStatementId) => string;
   readonly voidingErrorError: (err: VoidingError) => string;
   readonly queryIdsError: (err: QueryIds) => string;
-  readonly queryOptionsError: (err: QueryOptions) => string;
+  readonly unknownParamsError: (err: UnknownParams) => string;
 }
 
 export default Translator;
