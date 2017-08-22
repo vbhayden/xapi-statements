@@ -63,7 +63,7 @@ exports.default = function (config) {
                     attachments = [];
                     return [2 /*return*/, storeStatements_1.default({ config: config, client: client, body: body, attachments: attachments, res: res })];
                 case 2:
-                    if (method !== undefined && contentType === 'application/x-www-form-urlencoded') {
+                    if (method !== undefined && /application\/x-www-form-urlencoded/.test(contentType)) {
                         return [2 /*return*/, alternateRequest_1.default({ config: config, method: method, req: req, res: res })];
                     }
                     throw new InvalidContentType_1.default(contentType);

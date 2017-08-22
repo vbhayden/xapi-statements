@@ -45,8 +45,8 @@ var storeStatements_1 = require("./storeStatements");
 var validateHeaderVersion_1 = require("../utils/validateHeaderVersion");
 var getUrlPath_1 = require("../utils/getUrlPath");
 var checkContentType = function (req) {
-    var contentType = req.body['Content-Type'];
-    if (contentType !== 'application/json' || contentType !== undefined) {
+    var contentType = req.body['Content-Type'] || 'application/json';
+    if (contentType !== 'application/json') {
         throw new InvalidContentType_1.default(req.body['Content-Type']);
     }
 };
