@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var streamToString = require("stream-to-string");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
-var InvalidContentTypeEncoding_1 = require("../../errors/InvalidContentTypeEncoding");
+var InvalidContentTransferEncoding_1 = require("../../errors/InvalidContentTransferEncoding");
 var NoStatements_1 = require("../../errors/NoStatements");
 var getParts_1 = require("../utils/getParts");
 var parseJson_1 = require("../../utils/parseJson");
@@ -71,9 +71,9 @@ exports.default = function (req) { return __awaiter(_this, void 0, void 0, funct
                 unparsedBody = _a.sent();
                 body = parseJson_1.default(unparsedBody, ['body']);
                 attachments = parts.slice(1).map(function (part) {
-                    var contentTypeEncoding = lodash_1.get(part.headers, 'content-type-encoding');
-                    if (contentTypeEncoding !== 'binary') {
-                        throw new InvalidContentTypeEncoding_1.default(contentTypeEncoding);
+                    var contentTransferEncoding = lodash_1.get(part.headers, 'content-transfer-encoding');
+                    if (contentTransferEncoding !== 'binary') {
+                        throw new InvalidContentTransferEncoding_1.default(contentTransferEncoding);
                     }
                     return {
                         stream: part.stream,

@@ -10,7 +10,7 @@ var DataBeyondFinalBoundary_1 = require("../../errors/DataBeyondFinalBoundary");
 var DuplicateId_1 = require("../../errors/DuplicateId");
 var InvalidBoundary_1 = require("../../errors/InvalidBoundary");
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
-var InvalidContentTypeEncoding_1 = require("../../errors/InvalidContentTypeEncoding");
+var InvalidContentTransferEncoding_1 = require("../../errors/InvalidContentTransferEncoding");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
 var InvalidVoidType_1 = require("../../errors/InvalidVoidType");
 var JsonSyntaxError_1 = require("../../errors/JsonSyntaxError");
@@ -80,9 +80,9 @@ exports.default = function (_a) {
             var message = translator.invalidContentTypeError(err);
             return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
         }
-        case InvalidContentTypeEncoding_1.default: {
+        case InvalidContentTransferEncoding_1.default: {
             var code = 400;
-            var message = translator.invalidContentTypeEncodingError(err);
+            var message = translator.invalidContentTransferEncodingError(err);
             return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
         }
         case InvalidMethod_1.default: {
