@@ -4,7 +4,7 @@ import * as boolean from 'boolean';
 
 export default (queryParams: any): Partial<GetStatementsOptions> => {
   return {
-    agent: parseJson(queryParams.agent, ['query', 'agent']),
+    agent: queryParams.agent !== undefined ? parseJson(queryParams.agent, ['query', 'agent']) : undefined,
     verb: queryParams.verb,
     activity: queryParams.activity,
     registration: queryParams.registration,

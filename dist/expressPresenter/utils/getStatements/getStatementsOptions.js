@@ -4,7 +4,7 @@ var parseJson_1 = require("./../../../utils/parseJson");
 var boolean = require("boolean");
 exports.default = function (queryParams) {
     return {
-        agent: parseJson_1.default(queryParams.agent, ['query', 'agent']),
+        agent: queryParams.agent !== undefined ? parseJson_1.default(queryParams.agent, ['query', 'agent']) : undefined,
         verb: queryParams.verb,
         activity: queryParams.activity,
         registration: queryParams.registration,
