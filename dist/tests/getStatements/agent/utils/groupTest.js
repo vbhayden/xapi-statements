@@ -10,11 +10,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var agentFilterTest_1 = require("./agentFilterTest");
 exports.default = function (assertFilteredStatements) {
-    return function (createActor, relatedAgents) {
+    return function (createActor, related_agents) {
         describe('identified group', function () {
             agentFilterTest_1.default(assertFilteredStatements)(function (actor) {
                 return createActor(__assign({}, actor, { objectType: 'Group' }));
-            }, relatedAgents);
+            }, related_agents);
         });
         describe('identified group members', function () {
             agentFilterTest_1.default(assertFilteredStatements)(function (actor) {
@@ -23,7 +23,7 @@ exports.default = function (assertFilteredStatements) {
                     objectType: 'Group',
                     member: [__assign({}, actor, { objectType: 'Agent' })]
                 });
-            }, relatedAgents);
+            }, related_agents);
         });
         describe('anonymous group members', function () {
             agentFilterTest_1.default(assertFilteredStatements)(function (actor) {
@@ -31,7 +31,7 @@ exports.default = function (assertFilteredStatements) {
                     objectType: 'Group',
                     member: [__assign({}, actor, { objectType: 'Group' })]
                 });
-            }, relatedAgents);
+            }, related_agents);
         });
     };
 };

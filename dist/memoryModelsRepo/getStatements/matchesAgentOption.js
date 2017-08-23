@@ -5,7 +5,7 @@ var isMatchingUnrelatedAgent_1 = require("./isMatchingUnrelatedAgent");
 var matchesModel_1 = require("./matchesModel");
 var matcher = function (statement, opts) {
     return (opts.agent === undefined ? true :
-        (opts.relatedAgents === true ?
+        (opts.related_agents === true ?
             isMatchingRelatedAgent_1.default(statement, opts.agent) :
             isMatchingUnrelatedAgent_1.default(statement, opts.agent)));
 };

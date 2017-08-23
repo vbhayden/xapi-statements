@@ -52,7 +52,7 @@ var TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 var TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 var TEST_CLIENT = createClientModel_1.default();
 exports.default = function (assertFilteredStatements) {
-    return function (createActor, relatedAgents) {
+    return function (createActor, related_agents) {
         var service = setup_1.default();
         var storeStatements = function (statements, authority) {
             return storeAwaitedStatements_1.default(service)({
@@ -79,7 +79,7 @@ exports.default = function (assertFilteredStatements) {
                         _a.sent();
                         return [4 /*yield*/, assertFilteredStatements(service)({
                                 agent: actor1,
-                                relatedAgents: relatedAgents,
+                                related_agents: related_agents,
                                 client: TEST_CLIENT,
                             }, [TEST_TARGET_ID])];
                     case 3:
