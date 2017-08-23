@@ -1,17 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var parseJson_1 = require("./../../../utils/parseJson");
+var boolean = require("boolean");
 exports.default = function (queryParams) {
     return {
-        agent: queryParams.agent,
+        agent: parseJson_1.default(queryParams.agent, ['query', 'agent']),
         verb: queryParams.verb,
         activity: queryParams.activity,
         registration: queryParams.registration,
-        relatedActivities: queryParams.related_activities,
-        relatedAgents: queryParams.related_agents,
+        relatedActivities: boolean(queryParams.related_activities),
+        relatedAgents: boolean(queryParams.related_agents),
         since: queryParams.since,
         until: queryParams.until,
-        limit: queryParams.limit,
-        ascending: queryParams.ascending,
+        limit: Number(queryParams.limit),
+        ascending: boolean(queryParams.ascending),
         cursor: queryParams.cursor,
     };
 };
