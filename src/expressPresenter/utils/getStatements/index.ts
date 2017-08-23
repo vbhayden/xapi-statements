@@ -1,3 +1,4 @@
+import { parse as parseAcceptedLanguages } from 'accept-language-parser';
 import { Response } from 'express';
 import ClientModel from '../../../models/ClientModel';
 import QueryIds from '../../../errors/QueryIds';
@@ -11,11 +12,20 @@ export interface Options {
   client: ClientModel;
   queryParams: any;
   urlPath: string;
+  acceptedLangs: string;
 }
 
-export default async ({ config, res, client, queryParams, urlPath }: Options) => {
+const getAcceptedLanguages = (acceptedLangs: string) => {
+  return parseAcceptedLanguages(acceptedLangs).map((acceptedLang) => {
+    const ending = acceptedLang.region === undefined ? '' : `-${acceptedLang.region}`;
+    return `${acceptedLang.code}${ending}`;
+  });
+};
+
+export default async ({ config, res, client, queryParams, urlPath, acceptedLangs }: Options) => {
   const statementId = queryParams.statementId;
   const voidedStatementId = queryParams.voidedStatementId;
+  const langs = getAcceptedLanguages(acceptedLangs);
 
   if (statementId !== undefined && voidedStatementId !== undefined) {
     throw new QueryIds();
@@ -24,14 +34,14 @@ export default async ({ config, res, client, queryParams, urlPath }: Options) =>
   if (statementId !== undefined && voidedStatementId === undefined) {
     const id = statementId;
     const voided = false;
-    return getSingleStatement({ config, res, queryParams, id, voided, client });
+    return getSingleStatement({ config, res, queryParams, id, voided, client, langs });
   }
 
   if (statementId === undefined && voidedStatementId !== undefined) {
     const id = voidedStatementId;
     const voided = true;
-    return getSingleStatement({ config, res, queryParams, id, voided, client });
+    return getSingleStatement({ config, res, queryParams, id, voided, client, langs });
   }
 
-  return getMultipleStatements({ config, res, queryParams, client, urlPath });
+  return getMultipleStatements({ config, res, queryParams, client, urlPath, langs });
 };

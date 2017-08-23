@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = require("lodash");
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
 var getClient_1 = require("../utils/getClient");
@@ -63,12 +64,11 @@ var getHeader = function (req, name) {
 exports.default = function (_a) {
     var config = _a.config, method = _a.method, req = _a.req, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
-        var reqQueryParams, _a, client, body, urlPath, client, queryParams, client, body, queryParams;
+        var _a, client, body, urlPath, client, acceptedLangs, queryParams, client, body, queryParams;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    reqQueryParams = Object.keys(req.query);
-                    checkUnknownParams_1.default(reqQueryParams, ['method']);
+                    checkUnknownParams_1.default(req.query, ['method']);
                     _a = method;
                     switch (_a) {
                         case 'POST': return [3 /*break*/, 1];
@@ -90,8 +90,9 @@ exports.default = function (_a) {
                 case 4:
                     client = _b.sent();
                     validateHeaderVersion_1.default(getHeader(req, 'X-Experience-API-Version'));
+                    acceptedLangs = lodash_1.defaultTo(req.header('Accept-Language'), '');
                     queryParams = req.body;
-                    return [2 /*return*/, getStatements_1.default({ config: config, res: res, client: client, queryParams: queryParams, urlPath: urlPath })];
+                    return [2 /*return*/, getStatements_1.default({ config: config, res: res, client: client, queryParams: queryParams, urlPath: urlPath, acceptedLangs: acceptedLangs })];
                 case 5:
                     checkContentType(req);
                     return [4 /*yield*/, getClient_1.default(config, getHeader(req, 'Authorization'))];

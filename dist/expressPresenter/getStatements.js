@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = require("lodash");
 var catchErrors_1 = require("./utils/catchErrors");
 var getClient_1 = require("./utils/getClient");
 var getStatements_1 = require("./utils/getStatements");
@@ -43,7 +44,7 @@ var validateHeaderVersion_1 = require("./utils/validateHeaderVersion");
 var getUrlPath_1 = require("./utils/getUrlPath");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-        var client, queryParams, urlPath;
+        var client, queryParams, urlPath, acceptedLangs;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, getClient_1.default(config, req.header('Authorization') || '')];
@@ -52,12 +53,14 @@ exports.default = function (config) {
                     validateHeaderVersion_1.default(req.header('X-Experience-API-Version'));
                     queryParams = req.query;
                     urlPath = getUrlPath_1.default(req);
+                    acceptedLangs = lodash_1.defaultTo(req.header('Accept-Language'), '');
                     return [2 /*return*/, getStatements_1.default({
                             config: config,
                             res: res,
                             client: client,
                             queryParams: queryParams,
-                            urlPath: urlPath
+                            urlPath: urlPath,
+                            acceptedLangs: acceptedLangs,
                         })];
             }
         });

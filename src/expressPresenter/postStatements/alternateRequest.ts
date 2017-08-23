@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { defaultTo } from 'lodash';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
 import getClient from '../utils/getClient';
@@ -36,8 +37,7 @@ const getHeader = (req: Request, name: string): string => {
 };
 
 export default async ({ config, method, req, res }: Options) => {
-  const reqQueryParams = Object.keys(req.query);
-  checkUnknownParams(reqQueryParams, ['method']);
+  checkUnknownParams(req.query, ['method']);
 
   switch (method) {
     case 'POST': {
@@ -51,8 +51,9 @@ export default async ({ config, method, req, res }: Options) => {
       const urlPath = getUrlPath(req);
       const client = await getClient(config, getHeader(req, 'Authorization'));
       validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
+      const acceptedLangs = defaultTo<string>(req.header('Accept-Language'), '');
       const queryParams = req.body;
-      return getStatements({ config, res, client, queryParams, urlPath });
+      return getStatements({ config, res, client, queryParams, urlPath, acceptedLangs });
     }
     case 'PUT': {
       checkContentType(req);
