@@ -28,6 +28,7 @@ export default (queryParams: any): Partial<GetStatementsOptions> => {
       queryParams.limit !== undefined ? Number(queryParams.limit) : undefined,
     ascending:
       queryParams.ascending !== undefined ? boolean(queryParams.ascending) : undefined,
-    cursor: queryParams.cursor,
+    cursor:
+      queryParams.cursor,
   };
 };
