@@ -13,10 +13,11 @@ export interface Options {
   id: string;
   voided: boolean;
   client: ClientModel;
+  langs: string[];
 }
 
 export default async (opts: Options) => {
-  const { queryParams, config, id, voided, res, client } = opts;
+  const { queryParams, config, id, voided, res, client, langs } = opts;
   const timestamp = new Date().toISOString();
   const resultOpts = getStatementsResultOptions(queryParams);
 
@@ -27,7 +28,7 @@ export default async (opts: Options) => {
     'attachments',
   ]);
 
-  const results = await config.service.getStatement({ client, id, voided, ...resultOpts });
+  const results = await config.service.getStatement({ client, id, voided, langs, ...resultOpts });
   res.setHeader('X-Experience-API-Consistent-Through', timestamp);
   res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
   res.setHeader('Last-Modified', results.statements[0].stored);

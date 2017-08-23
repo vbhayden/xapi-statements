@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { defaultTo } from 'lodash';
 import catchErrors from './utils/catchErrors';
 import getClient from './utils/getClient';
 import getStatements from './utils/getStatements';
@@ -14,13 +15,15 @@ export default (config: Config) => {
 
     const queryParams = req.query;
     const urlPath = getUrlPath(req);
+    const acceptedLangs = defaultTo<string>(req.header('Accept-Language'), '');
 
     return getStatements({
       config,
       res,
       client,
       queryParams,
-      urlPath
+      urlPath,
+      acceptedLangs,
     });
   });
 };

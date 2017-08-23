@@ -36,30 +36,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var accept_language_parser_1 = require("accept-language-parser");
 var QueryIds_1 = require("../../../errors/QueryIds");
 var getSingleStatement_1 = require("./getSingleStatement");
 var getMultipleStatements_1 = require("./getMultipleStatements");
+var getAcceptedLanguages = function (acceptedLangs) {
+    return accept_language_parser_1.parse(acceptedLangs).map(function (acceptedLang) {
+        var ending = acceptedLang.region === undefined ? '' : "-" + acceptedLang.region;
+        return "" + acceptedLang.code + ending;
+    });
+};
 exports.default = function (_a) {
-    var config = _a.config, res = _a.res, client = _a.client, queryParams = _a.queryParams, urlPath = _a.urlPath;
+    var config = _a.config, res = _a.res, client = _a.client, queryParams = _a.queryParams, urlPath = _a.urlPath, acceptedLangs = _a.acceptedLangs;
     return __awaiter(_this, void 0, void 0, function () {
-        var statementId, voidedStatementId, id, voided, id, voided;
+        var statementId, voidedStatementId, langs, id, voided, id, voided;
         return __generator(this, function (_a) {
             statementId = queryParams.statementId;
             voidedStatementId = queryParams.voidedStatementId;
+            langs = getAcceptedLanguages(acceptedLangs);
             if (statementId !== undefined && voidedStatementId !== undefined) {
                 throw new QueryIds_1.default();
             }
             if (statementId !== undefined && voidedStatementId === undefined) {
                 id = statementId;
                 voided = false;
-                return [2 /*return*/, getSingleStatement_1.default({ config: config, res: res, queryParams: queryParams, id: id, voided: voided, client: client })];
+                return [2 /*return*/, getSingleStatement_1.default({ config: config, res: res, queryParams: queryParams, id: id, voided: voided, client: client, langs: langs })];
             }
             if (statementId === undefined && voidedStatementId !== undefined) {
                 id = voidedStatementId;
                 voided = true;
-                return [2 /*return*/, getSingleStatement_1.default({ config: config, res: res, queryParams: queryParams, id: id, voided: voided, client: client })];
+                return [2 /*return*/, getSingleStatement_1.default({ config: config, res: res, queryParams: queryParams, id: id, voided: voided, client: client, langs: langs })];
             }
-            return [2 /*return*/, getMultipleStatements_1.default({ config: config, res: res, queryParams: queryParams, client: client, urlPath: urlPath })];
+            return [2 /*return*/, getMultipleStatements_1.default({ config: config, res: res, queryParams: queryParams, client: client, urlPath: urlPath, langs: langs })];
         });
     });
 };

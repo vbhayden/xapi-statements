@@ -49,11 +49,11 @@ var getStatementsResultOptions_1 = require("./getStatementsResultOptions");
 var constants_1 = require("../../../utils/constants");
 var sendMultipartResult_1 = require("./sendMultipartResult");
 exports.default = function (opts) { return __awaiter(_this, void 0, void 0, function () {
-    var queryParams, config, id, voided, res, client, timestamp, resultOpts, results, jsonResponse;
+    var queryParams, config, id, voided, res, client, langs, timestamp, resultOpts, results, jsonResponse;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                queryParams = opts.queryParams, config = opts.config, id = opts.id, voided = opts.voided, res = opts.res, client = opts.client;
+                queryParams = opts.queryParams, config = opts.config, id = opts.id, voided = opts.voided, res = opts.res, client = opts.client, langs = opts.langs;
                 timestamp = new Date().toISOString();
                 resultOpts = getStatementsResultOptions_1.default(queryParams);
                 checkUnknownParams_1.default(queryParams, [
@@ -62,7 +62,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
                     'format',
                     'attachments',
                 ]);
-                return [4 /*yield*/, config.service.getStatement(__assign({ client: client, id: id, voided: voided }, resultOpts))];
+                return [4 /*yield*/, config.service.getStatement(__assign({ client: client, id: id, voided: voided, langs: langs }, resultOpts))];
             case 1:
                 results = _a.sent();
                 res.setHeader('X-Experience-API-Consistent-Through', timestamp);

@@ -1,5 +1,6 @@
 POST http://localhost:1338/xAPI/statements HTTP/1.1
 Content-Type: application/json
+X-Experience-API-Version: 1.0.3
 
 {
   "actor": {
@@ -9,6 +10,12 @@ Content-Type: application/json
     "id": "http://example.org/dummy_verb"
   },
   "object": {
-    "id": "http://example.org/dummy_activity"
+    "id": "http://example.org/dummy_activity",
+    "definition": {
+      "name": {
+        "en-GB": "hello",
+        "fr": "bonjour"
+      }
+    }
   }
 }
