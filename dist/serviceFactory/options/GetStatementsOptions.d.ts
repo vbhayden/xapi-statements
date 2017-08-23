@@ -5,8 +5,8 @@ interface GetStatementsOptions extends StatementsResultOptions {
     agent?: FilterAgent;
     activity?: string;
     verb?: string;
-    relatedAgents?: boolean;
-    relatedActivities?: boolean;
+    related_agents?: boolean;
+    related_activities?: boolean;
     registration?: string;
     since?: string;
     until?: string;

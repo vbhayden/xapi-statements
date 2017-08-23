@@ -8,7 +8,7 @@ const matcher = (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
     opts.activity === undefined ? true :
       (
-        opts.relatedActivities === true ?
+        opts.related_activities === true ?
           isMatchingRelatedActivity(statement, opts.activity) :
           (
             statement.object.objectType === 'Activity' &&

@@ -4,7 +4,7 @@ var boolean = require("boolean");
 exports.default = function (queryParams) {
     return {
         format: queryParams.format,
-        attachments: boolean(queryParams.attachments)
+        attachments: queryParams.attachments !== undefined ? boolean(queryParams.attachments) : undefined
     };
 };
 //# sourceMappingURL=getStatementsResultOptions.js.map

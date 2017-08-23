@@ -10,11 +10,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var agentFilterTest_1 = require("./agentFilterTest");
 exports.default = function (assertFilteredStatements) {
-    return function (createActor, relatedAgents) {
+    return function (createActor, related_agents) {
         describe('agent', function () {
             agentFilterTest_1.default(assertFilteredStatements)(function (actor) {
                 return createActor(__assign({}, actor, { objectType: 'Agent' }));
-            }, relatedAgents);
+            }, related_agents);
         });
     };
 };

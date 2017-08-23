@@ -59,8 +59,8 @@ var TEST_CLIENT = createClientModel_1.default();
 exports.default = function (assertFilteredStatements) {
     var service = setup_1.default();
     var storeStatements = storeStatementsInService_1.default(service);
-    var assertFilter = function (createActivity, relatedActivities) {
-        if (relatedActivities === void 0) { relatedActivities = false; }
+    var assertFilter = function (createActivity, related_activities) {
+        if (related_activities === void 0) { related_activities = false; }
         return __awaiter(_this, void 0, void 0, function () {
             var statement1, statement2;
             return __generator(this, function (_a) {
@@ -73,7 +73,7 @@ exports.default = function (assertFilteredStatements) {
                         _a.sent();
                         return [4 /*yield*/, assertFilteredStatements(service)({
                                 activity: TEST_TARGET_ACTIVITY,
-                                relatedActivities: relatedActivities,
+                                related_activities: related_activities,
                                 client: TEST_CLIENT,
                             }, [TEST_TARGET_ID])];
                     case 2:

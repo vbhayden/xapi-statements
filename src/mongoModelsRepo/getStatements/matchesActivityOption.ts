@@ -5,7 +5,7 @@ import matchesModel from './matchesModel';
 
 const matcher = (statementKey: string, activity: string, opts: GetStatementsOptions): Object => {
   return (
-    opts.relatedActivities === true ?
+    opts.related_activities === true ?
       isMatchingRelatedActivity(statementKey, activity) :
       {
         [`${statementKey}.object.objectType`]: 'Activity',
