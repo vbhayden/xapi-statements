@@ -36,32 +36,68 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = require("lodash");
-var getAttachmentHashes_1 = require("../utils/getAttachmentHashes");
+var getStatementsAttachments_1 = require("../utils/getStatementsAttachments");
+var bluebird_1 = require("bluebird");
 exports.default = function (config, models, hasAttachments) { return __awaiter(_this, void 0, void 0, function () {
     var _this = this;
-    var attachmentsMap, streamedAttachments;
+    var attachments, potentialAttachments, storedAttachments, streamedAttachments, awaitedAttachments;
     return __generator(this, function (_a) {
-        if (hasAttachments) {
-            attachmentsMap = getAttachmentHashes_1.default(models);
-            streamedAttachments = lodash_1.map(attachmentsMap, function (attachment) { return __awaiter(_this, void 0, void 0, function () {
-                var _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _a = {
-                                hash: attachment.sha2
-                            };
-                            return [4 /*yield*/, config.repo.getAttachment({ hash: attachment.sha2 })];
-                        case 1: return [2 /*return*/, (_a.stream = _b.sent(),
-                                _a.contentType = attachment.contentType,
-                                _a)];
-                    }
+        switch (_a.label) {
+            case 0:
+                if (!hasAttachments) {
+                    return [2 /*return*/, []];
+                }
+                attachments = getStatementsAttachments_1.default(models);
+                potentialAttachments = attachments.map(function (attachment) {
+                    return {
+                        fileUrl: attachment.fileUrl,
+                        hash: attachment.sha2,
+                        streamPromise: config.repo.getAttachment({ hash: attachment.sha2 }),
+                        contentType: attachment.contentType,
+                    };
                 });
-            }); });
-            return [2 /*return*/, Promise.all(streamedAttachments)];
+                return [4 /*yield*/, bluebird_1.filter(potentialAttachments, function (potentialAttachment) { return __awaiter(_this, void 0, void 0, function () {
+                        var err_1;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    _a.trys.push([0, 2, , 3]);
+                                    return [4 /*yield*/, potentialAttachment.streamPromise];
+                                case 1:
+                                    _a.sent();
+                                    return [2 /*return*/, true];
+                                case 2:
+                                    err_1 = _a.sent();
+                                    if (potentialAttachment.fileUrl === undefined) {
+                                        throw err_1;
+                                    }
+                                    return [2 /*return*/, false];
+                                case 3: return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            case 1:
+                storedAttachments = _a.sent();
+                streamedAttachments = storedAttachments.map(function (storedAttachment) { return __awaiter(_this, void 0, void 0, function () {
+                    var _a;
+                    return __generator(this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                _a = {
+                                    hash: storedAttachment.hash
+                                };
+                                return [4 /*yield*/, storedAttachment.streamPromise];
+                            case 1: return [2 /*return*/, (_a.stream = _b.sent(),
+                                    _a.contentType = storedAttachment.contentType,
+                                    _a)];
+                        }
+                    });
+                }); });
+                return [4 /*yield*/, Promise.all(streamedAttachments)];
+            case 2:
+                awaitedAttachments = _a.sent();
+                return [2 /*return*/, awaitedAttachments];
         }
-        return [2 /*return*/, []];
     });
 }); };
 //# sourceMappingURL=getAttachments.js.map

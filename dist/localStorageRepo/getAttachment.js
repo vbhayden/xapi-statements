@@ -39,12 +39,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var attachmentsDirectory, filePath, stream;
+        var attachmentsDirectory, filePath, isExisting, stream;
         return __generator(this, function (_a) {
-            attachmentsDirectory = config.storageDir + "/attachments";
-            filePath = attachmentsDirectory + "/" + opts.hash;
-            stream = fs.createReadStream(filePath);
-            return [2 /*return*/, stream];
+            switch (_a.label) {
+                case 0:
+                    attachmentsDirectory = config.storageDir + "/attachments";
+                    filePath = attachmentsDirectory + "/" + opts.hash;
+                    return [4 /*yield*/, fs.pathExists(filePath)];
+                case 1:
+                    isExisting = _a.sent();
+                    if (isExisting === false) {
+                        throw new Error("Missing attachment file path " + filePath);
+                    }
+                    stream = fs.createReadStream(filePath);
+                    return [2 /*return*/, stream];
+            }
         });
     }); };
 };

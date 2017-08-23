@@ -39,9 +39,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var MissingAttachments_1 = require("../../errors/MissingAttachments");
 var ExtraAttachments_1 = require("../../errors/ExtraAttachments");
-var getAttachmentHashes_1 = require("../utils/getAttachmentHashes");
+var getStatementsAttachments_1 = require("../utils/getStatementsAttachments");
 exports.default = function (config, statements, attachments) { return __awaiter(_this, void 0, void 0, function () {
-    var attachmentHashes, statementHashes, missingHashes, extraHashes;
+    var attachmentHashes, statementsAttachments, missingHashes, statementHashes, extraHashes;
     return __generator(this, function (_a) {
         /* istanbul ignore next */
         if (!config.enableAttachmentValidation)
@@ -49,16 +49,21 @@ exports.default = function (config, statements, attachments) { return __awaiter(
         attachmentHashes = attachments.map(function (attachment) {
             return attachment.hash;
         });
-        statementHashes = lodash_1.map(getAttachmentHashes_1.default(statements), function (attachment) {
+        statementsAttachments = getStatementsAttachments_1.default(statements);
+        missingHashes = statementsAttachments.filter(function (attachment) {
+            return !lodash_1.includes(attachmentHashes, attachment.sha2) && attachment.fileUrl === undefined;
+        }).map(function (attachment) {
             return attachment.sha2;
         });
-        missingHashes = lodash_1.difference(statementHashes, attachmentHashes);
-        extraHashes = lodash_1.difference(attachmentHashes, statementHashes);
         if (missingHashes.length > 0) {
             throw new MissingAttachments_1.default(missingHashes);
         }
+        statementHashes = statementsAttachments.map(function (attachment) {
+            return attachment.sha2;
+        });
+        extraHashes = lodash_1.difference(attachmentHashes, statementHashes);
         if (extraHashes.length > 0) {
-            throw new ExtraAttachments_1.default(missingHashes);
+            throw new ExtraAttachments_1.default(extraHashes);
         }
         return [2 /*return*/];
     });
