@@ -64,12 +64,11 @@ var getHeader = function (req, name) {
 exports.default = function (_a) {
     var config = _a.config, method = _a.method, req = _a.req, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
-        var reqQueryParams, _a, client, body, urlPath, client, acceptedLangs, queryParams, client, body, queryParams;
+        var _a, client, body, urlPath, client, acceptedLangs, queryParams, client, body, queryParams;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    reqQueryParams = Object.keys(req.query);
-                    checkUnknownParams_1.default(reqQueryParams, ['method']);
+                    checkUnknownParams_1.default(req.query, ['method']);
                     _a = method;
                     switch (_a) {
                         case 'POST': return [3 /*break*/, 1];

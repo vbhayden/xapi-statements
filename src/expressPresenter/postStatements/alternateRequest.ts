@@ -37,8 +37,7 @@ const getHeader = (req: Request, name: string): string => {
 };
 
 export default async ({ config, method, req, res }: Options) => {
-  const reqQueryParams = Object.keys(req.query);
-  checkUnknownParams(reqQueryParams, ['method']);
+  checkUnknownParams(req.query, ['method']);
 
   switch (method) {
     case 'POST': {
