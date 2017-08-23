@@ -9,6 +9,7 @@ export interface Options {
     id: string;
     voided: boolean;
     client: ClientModel;
+    langs: string[];
 }
 declare const _default: (opts: Options) => Promise<void>;
 export default _default;
