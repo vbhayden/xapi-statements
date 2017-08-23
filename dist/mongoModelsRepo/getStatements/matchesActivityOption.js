@@ -12,7 +12,7 @@ var isMatchingRelatedActivity_1 = require("./isMatchingRelatedActivity");
 var isMatchingActivity_1 = require("./isMatchingActivity");
 var matchesModel_1 = require("./matchesModel");
 var matcher = function (statementKey, activity, opts) {
-    return (opts.relatedActivities === true ?
+    return (opts.related_activities === true ?
         isMatchingRelatedActivity_1.default(statementKey, activity) : __assign((_a = {}, _a[statementKey + ".object.objectType"] = 'Activity', _a), isMatchingActivity_1.default(statementKey + ".object", activity)));
     var _a;
 };

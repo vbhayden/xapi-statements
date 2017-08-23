@@ -8,7 +8,7 @@ const matcher = (statement: Statement, opts: GetStatementsOptions): boolean => {
   return (
     opts.agent === undefined ? true :
       (
-        opts.relatedAgents === true ?
+        opts.related_agents === true ?
           isMatchingRelatedAgent(statement, opts.agent) :
           isMatchingUnrelatedAgent(statement, opts.agent)
       )

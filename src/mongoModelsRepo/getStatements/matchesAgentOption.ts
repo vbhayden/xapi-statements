@@ -6,7 +6,7 @@ import matchesModel from './matchesModel';
 
 const matcher = (statementKey: string, agent: FilterAgent, opts: GetStatementsOptions): Object => {
   return (
-    opts.relatedAgents === true ?
+    opts.related_agents === true ?
       isMatchingRelatedAgent(statementKey, agent) :
       isMatchingUnrelatedAgent(statementKey, agent)
   );

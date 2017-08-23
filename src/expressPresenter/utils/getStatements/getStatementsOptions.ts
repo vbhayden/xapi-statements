@@ -8,8 +8,10 @@ export default (queryParams: any): Partial<GetStatementsOptions> => {
     verb: queryParams.verb,
     activity: queryParams.activity,
     registration: queryParams.registration,
-    relatedActivities: boolean(queryParams.related_activities),
-    relatedAgents: boolean(queryParams.related_agents),
+    related_activities:
+      queryParams.related_activities !== undefined ? boolean(queryParams.related_activities) : undefined,
+    related_agents:
+      queryParams.related_agents !== undefined ? boolean(queryParams.related_agents) : undefined,
     since: queryParams.since,
     until: queryParams.until,
     limit: Number(queryParams.limit),
