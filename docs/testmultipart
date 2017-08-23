@@ -1,0 +1,12 @@
+
+---------314159265358979323846
+Content-Type: application/json
+
+{"actor":{"objectType":"Agent","name":"xAPI account","mbox":"mailto:xapi@adlnet.gov"},"verb":{"id":"http://adlnet.gov/expapi/verbs/attended","display":{"en-GB":"attended","en-US":"attended"}},"object":{"objectType":"Activity","id":"http://www.example.com/meetings/occurances/34534"},"attachments":[{"usageType":"http://example.com/attachment-usage/test","display":{"en-US":"A test attachment"},"description":{"en-US":"A test attachment (description)"},"contentType":"text/plain","length":27,"sha2":"495395e777cd98da653df9615d09c0fd6bb2f8d4788394cd53c56a3bfdcd848a","fileUrl":"http://over.there.com/file.txt"}]}
+---------314159265358979323846
+Content-Type: text/plain
+Content-Transfer-Encoding: binary
+X-Experience-API-Hash: 495395e777cd98da653df9615d09c0fd6bb2f8d4788394cd53c56a3bfdcd848a
+
+here is a simple attachment
+---------314159265358979323846--

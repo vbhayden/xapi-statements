@@ -1,25 +1,45 @@
-import { map } from 'lodash';
 import AttachmentModel from '../../models/AttachmentModel';
 import UnstoredStatementModel from '../../models/UnstoredStatementModel';
-import getAttachmentHashes from '../utils/getAttachmentHashes';
+import getStatementsAttachments from '../utils/getStatementsAttachments';
 import Config from '../Config';
+import { filter } from 'bluebird';
 
 export default async (
   config: Config,
   models: UnstoredStatementModel[],
   hasAttachments: boolean
 ): Promise<AttachmentModel[]> => {
-  if (hasAttachments) {
-    const attachmentsMap = getAttachmentHashes(models);
-    const streamedAttachments = map(attachmentsMap, async (attachment) => {
-      return {
-        hash: attachment.sha2,
-        stream: await config.repo.getAttachment({ hash: attachment.sha2 }),
-        contentType: attachment.contentType,
-      };
-    });
-    return Promise.all(streamedAttachments);
+  if (!hasAttachments) {
+    return [];
   }
 
-  return [];
+  const attachments = getStatementsAttachments(models);
+  const potentialAttachments = attachments.map((attachment) => {
+    return {
+      fileUrl: attachment.fileUrl,
+      hash: attachment.sha2,
+      streamPromise: config.repo.getAttachment({ hash: attachment.sha2 }),
+      contentType: attachment.contentType,
+    };
+  });
+  const storedAttachments = await filter(potentialAttachments, async (potentialAttachment) => {
+    try {
+      await potentialAttachment.streamPromise;
+      return true;
+    } catch (err) {
+      if (potentialAttachment.fileUrl === undefined) {
+        throw err;
+      }
+      return false;
+    }
+  });
+  const streamedAttachments = storedAttachments.map(async (storedAttachment) => {
+    return {
+      hash: storedAttachment.hash,
+      stream: await storedAttachment.streamPromise,
+      contentType: storedAttachment.contentType,
+    };
+  });
+  const awaitedAttachments = await Promise.all(streamedAttachments);
+  return awaitedAttachments;
 };
