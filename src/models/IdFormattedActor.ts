@@ -1,7 +1,7 @@
 import Account from './Account';
 
 interface IdFormattedActor {
-  objectType: 'Agent'|'Group';
+  objectType?: 'Agent'|'Group';
   mbox?: string;
   openid?: string;
   mbox_sha1sum?: string;

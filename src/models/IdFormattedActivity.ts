@@ -1,5 +1,4 @@
 interface IdFormattedActivity {
-  objectType: 'Activity';
   id: string;
 }
 

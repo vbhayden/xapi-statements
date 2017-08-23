@@ -28,7 +28,7 @@ var formatActor = function (actor) {
     var actorWithId = getActorWithId(actor);
     var actorWithMembers = (Object.keys(actorWithId).length > 0 ? {} :
         getActorWithMembers(actor));
-    return __assign({ objectType: actor.objectType }, actorWithId, actorWithMembers);
+    return __assign({}, (actor.objectType !== 'Agent' ? { objectType: actor.objectType } : {}), actorWithId, actorWithMembers);
 };
 exports.default = formatActor;
 //# sourceMappingURL=actor.js.map
