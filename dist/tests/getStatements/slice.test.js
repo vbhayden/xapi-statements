@@ -86,7 +86,7 @@ describe('get statements by slicing', function () {
                 case 1:
                     statements = _a.sent();
                     assert.equal(statements.length, 1);
-                    assert.equal(statements[0].id, TEST_ID_1);
+                    assert.equal(statements[0].id, TEST_ID_3);
                     return [2 /*return*/];
             }
         });
@@ -117,7 +117,7 @@ describe('get statements by slicing', function () {
                 case 1:
                     statements = _a.sent();
                     assert.equal(statements.length, 1);
-                    assert.equal(statements[0].id, TEST_ID_3);
+                    assert.equal(statements[0].id, TEST_ID_1);
                     return [2 /*return*/];
             }
         });

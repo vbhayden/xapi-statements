@@ -3,7 +3,12 @@ declare const _default: {
     llClientInfoEndpoint: string;
     lang: string;
     defaultTimeout: number;
+    redis: {
+        url: string;
+        prefix: string;
+    };
     repoFactory: {
+        eventsRepoName: string;
         authRepoName: string;
         modelsRepoName: string;
         storageRepoName: string;

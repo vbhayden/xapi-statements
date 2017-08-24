@@ -1,12 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -44,51 +36,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var matchesClientOption_1 = require("../utils/matchesClientOption");
-var replaceDotsInStatement_1 = require("../utils/replaceDotsInStatement");
-var matchesAgentOption_1 = require("./matchesAgentOption");
-var matchesCursorOption_1 = require("./matchesCursorOption");
-var matchesVerbOption_1 = require("./matchesVerbOption");
-var matchesActivityOption_1 = require("./matchesActivityOption");
-var matchesRegistrationOption_1 = require("./matchesRegistrationOption");
-var matchesUntilOption_1 = require("./matchesUntilOption");
-var matchesSinceOption_1 = require("./matchesSinceOption");
-var filterModels = function (opts) {
-    return __assign({ voided: false }, matchesCursorOption_1.default(opts), matchesClientOption_1.default(opts.client, true), matchesAgentOption_1.default(opts), matchesVerbOption_1.default(opts), matchesActivityOption_1.default(opts), matchesRegistrationOption_1.default(opts), matchesUntilOption_1.default(opts), matchesSinceOption_1.default(opts));
-};
-var sortModels = function (ascending) {
-    return {
-        stored: ascending ? 1 : -1,
-        _id: -1,
-    };
-};
+var EVENT_NAME = 'statement.new';
+var CHANNEL_NAME = 'statement.notify';
 exports.default = function (config) {
+    var rpush = function (key) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return new Promise(function (resolve) {
+            (_a = config.client).rpush.apply(_a, [key].concat(args, [function () {
+                    resolve();
+                }]));
+            var _a;
+        });
+    };
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var collection, query, sort, skip, limit, models, decodedModels;
+        var listName, channelName;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, config.db];
+                case 0:
+                    listName = config.prefix + ":" + EVENT_NAME;
+                    channelName = config.prefix + ":" + CHANNEL_NAME;
+                    return [4 /*yield*/, rpush.apply(void 0, [listName].concat(opts.ids))];
                 case 1:
-                    collection = (_a.sent()).collection('statements');
-                    query = filterModels(opts);
-                    sort = sortModels(opts.ascending);
-                    skip = opts.skip || 0;
-                    limit = opts.limit;
-                    return [4 /*yield*/, collection
-                            .find(query)
-                            .sort(sort)
-                            .skip(skip)
-                            .limit(limit)
-                            .toArray()];
-                case 2:
-                    models = _a.sent();
-                    decodedModels = models.map(function (model) {
-                        var statement = replaceDotsInStatement_1.decodeDotsInStatement(model.statement);
-                        return __assign({}, model, { statement: statement });
-                    });
-                    return [2 /*return*/, decodedModels];
+                    _a.sent();
+                    config.client.publish(channelName, '');
+                    return [2 /*return*/];
             }
         });
     }); };
 };
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=emitNewStatements.js.map

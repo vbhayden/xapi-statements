@@ -89,10 +89,10 @@ describe('get statements by references', function () {
                     ])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_A, [TEST_ID_B, TEST_ID_A])];
                 case 2:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_B, TEST_ID_A])];
                 case 3:
                     _a.sent();
                     return [2 /*return*/];
@@ -108,10 +108,10 @@ describe('get statements by references', function () {
                     return [4 /*yield*/, storeStatements([createReferenceStatement_1.default(TEST_ID_B, TEST_ID_A)])];
                 case 2:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_A, [TEST_ID_B, TEST_ID_A])];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_B, TEST_ID_A])];
                 case 4:
                     _a.sent();
                     return [2 /*return*/];
@@ -128,7 +128,7 @@ describe('get statements by references', function () {
                     ])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_C, [TEST_ID_C, TEST_ID_B, TEST_ID_A])];
                 case 2:
                     _a.sent();
                     return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_B])];
@@ -151,13 +151,13 @@ describe('get statements by references', function () {
                     ])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B, TEST_ID_C])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_A, [TEST_ID_C, TEST_ID_B, TEST_ID_A])];
                 case 2:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B, TEST_ID_C])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_B, [TEST_ID_C, TEST_ID_B, TEST_ID_A])];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C])];
+                    return [4 /*yield*/, assertTargetingStatement(TEST_ID_C, [TEST_ID_C, TEST_ID_B, TEST_ID_A])];
                 case 4:
                     _a.sent();
                     return [2 /*return*/];
@@ -241,7 +241,7 @@ describe('get statements by references', function () {
                             agent: createAgentFilter(TEST_ID_B),
                             limit: 1,
                             client: TEST_CLIENT
-                        }, [TEST_ID_A])];
+                        }, [TEST_ID_B])];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];
@@ -261,7 +261,7 @@ describe('get statements by references', function () {
                             agent: createAgentFilter(TEST_ID_B),
                             skip: 1,
                             client: TEST_CLIENT
-                        }, [TEST_ID_B])];
+                        }, [TEST_ID_A])];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];

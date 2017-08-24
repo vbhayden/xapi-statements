@@ -36,6 +36,10 @@ const sortModels = (models: StoredStatementModel[], ascending: boolean) => {
 
     /* istanbul ignore next */
     if (storedA > storedB) return higher;
+    if (modelA._id < modelB._id) return lower;
+    /* istanbul ignore next */
+    if (modelA._id > modelB._id) return higher;
+    /* istanbul ignore next */
     return 0;
   });
 };

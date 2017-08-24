@@ -68,6 +68,7 @@ describe('get statements with cursors', function () {
                     return [4 /*yield*/, service.getStatements({
                             limit: 1,
                             client: TEST_CLIENT,
+                            ascending: true,
                         })];
                 case 4:
                     result1 = _a.sent();
@@ -80,6 +81,7 @@ describe('get statements with cursors', function () {
                             limit: 1,
                             client: TEST_CLIENT,
                             cursor: result1.cursor,
+                            ascending: true,
                         })];
                 case 5:
                     result2 = _a.sent();
