@@ -68,6 +68,12 @@ var sortModels = function (models, ascending) {
         /* istanbul ignore next */
         if (storedA > storedB)
             return higher;
+        if (modelA._id < modelB._id)
+            return lower;
+        /* istanbul ignore next */
+        if (modelA._id > modelB._id)
+            return higher;
+        /* istanbul ignore next */
         return 0;
     });
 };

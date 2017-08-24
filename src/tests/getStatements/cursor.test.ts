@@ -23,6 +23,7 @@ describe('get statements with cursors', () => {
     const result1 = await service.getStatements({
       limit: 1,
       client: TEST_CLIENT,
+      ascending: true,
     });
     assert.notEqual(result1.cursor, undefined);
     assert(isArray(result1.statements), 'Expected an array of statements');
@@ -33,6 +34,7 @@ describe('get statements with cursors', () => {
       limit: 1,
       client: TEST_CLIENT,
       cursor: result1.cursor,
+      ascending: true,
     });
     assert.equal(result2.cursor, undefined);
     assert(isArray(result2.statements), 'Expected an array of statements');

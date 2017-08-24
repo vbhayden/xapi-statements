@@ -50,9 +50,9 @@ var assertFilteredStatementRefs = function (service) {
                     return [4 /*yield*/, storeStatementsInService_1.default(service)([refStatement])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, assertFilteredStatements_1.default(service)(opts, expectedTargetIds.concat([
-                            TEST_REF_ID,
-                        ]))];
+                    return [4 /*yield*/, assertFilteredStatements_1.default(service)(opts, [
+                            TEST_REF_ID
+                        ].concat(expectedTargetIds))];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];

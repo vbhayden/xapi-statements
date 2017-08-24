@@ -35,7 +35,7 @@ describe('get statements by slicing', () => {
       client: TEST_CLIENT
     });
     assert.equal(statements.length, 1);
-    assert.equal(statements[0].id, TEST_ID_1);
+    assert.equal(statements[0].id, TEST_ID_3);
   });
 
   it('should return statements when they are inside the default limit', async () => {
@@ -52,7 +52,7 @@ describe('get statements by slicing', () => {
       client: TEST_CLIENT
     });
     assert.equal(statements.length, 1);
-    assert.equal(statements[0].id, TEST_ID_3);
+    assert.equal(statements[0].id, TEST_ID_1);
   });
 
   it('should return statements when they are not sliced', async () => {

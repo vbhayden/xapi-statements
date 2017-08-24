@@ -28,6 +28,7 @@ export default async (
       return true;
     } catch (err) {
       if (potentialAttachment.fileUrl === undefined) {
+        /* istanbul ignore next - only happens if a file incorrectly goes missing */
         throw err;
       }
       return false;

@@ -1,4 +1,5 @@
 import GetStatementsOptions from '../../repoFactory/options/GetStatementsOptions';
+import { ObjectID } from 'mongodb';
 
 export default (opts: GetStatementsOptions): object => {
   if (opts.cursor === undefined) {
@@ -8,8 +9,8 @@ export default (opts: GetStatementsOptions): object => {
   return {
     _id: (
       opts.ascending
-        ? { $gt: opts.cursor }
-        : { $lt: opts.cursor }
+        ? { $gt: new ObjectID(opts.cursor) }
+        : { $lt: new ObjectID(opts.cursor) }
     ),
   };
 };

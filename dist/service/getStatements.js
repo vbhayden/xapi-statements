@@ -73,7 +73,7 @@ exports.default = function (config) {
                             registration: opts.registration,
                             since: opts.since,
                             until: opts.until,
-                            ascending: opts.ascending === undefined ? true : opts.ascending,
+                            ascending: opts.ascending === undefined ? false : opts.ascending,
                             limit: limit + 1,
                             skip: opts.skip,
                             client: opts.client,

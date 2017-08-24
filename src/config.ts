@@ -17,7 +17,13 @@ export default {
   lang: getStringOption(process.env.LANG, 'en'),
   defaultTimeout: getNumberOption(process.env.DEFAULT_TIMEOUT_MS, 300000),
 
+  redis: {
+    url: getStringOption(process.env.REDIS_URL, 'redis://127.0.0.1:6379/0'),
+    prefix: getStringOption(process.env.REDIS_PREFIX, 'xapistatements'),
+  },
+
   repoFactory: {
+    eventsRepoName: getStringOption(process.env.EVENTS_REPO, 'redis'),
     authRepoName: getStringOption(process.env.AUTH_REPO, 'mongo'),
     modelsRepoName: getStringOption(process.env.MODELS_REPO, 'memory'),
     storageRepoName: getStringOption(process.env.STORAGE_REPO, 'memory'),
@@ -30,7 +36,7 @@ export default {
     cloudWatch: {
       enabled: getBooleanOption(process.env.WINSTON_CLOUDWATCH_ENABLED, false),
       level: getStringOption(process.env.WINSTON_CLOUDWATCH_LEVEL, 'info'),
-      logGroupName: getStringOption(process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME, 'xapi-server'),
+      logGroupName: getStringOption(process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME, 'xapi-statements'),
       logStreamName: getStringOption(process.env.WINSTON_CLOUDWATCH_LOG_STREAM_NAME, os.hostname()),
       awsConfig: {
         accessKeyId: getStringOption(process.env.WINSTON_CLOUDWATCH_ACCESS_KEY_ID),
@@ -74,6 +80,6 @@ export default {
     },
   },
   mongo: {
-    url: getStringOption(process.env.MONGO_URL, 'mongodb://localhost:27017/xapiserver')
+    url: getStringOption(process.env.MONGO_URL, 'mongodb://127.0.0.1:27017/xapiserver')
   },
 };
