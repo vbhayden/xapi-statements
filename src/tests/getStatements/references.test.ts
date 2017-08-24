@@ -46,15 +46,15 @@ describe('get statements by references', () => {
       createReferenceStatement(TEST_ID_A, TEST_ID_B),
       createReferenceStatement(TEST_ID_B, TEST_ID_A)
     ]);
-    await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B]);
-    await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B]);
+    await assertTargetingStatement(TEST_ID_A, [TEST_ID_B, TEST_ID_A]);
+    await assertTargetingStatement(TEST_ID_B, [TEST_ID_B, TEST_ID_A]);
   });
 
   it('should return both statements when they reference each other in two batches', async () => {
     await storeStatements([createReferenceStatement(TEST_ID_A, TEST_ID_B)]);
     await storeStatements([createReferenceStatement(TEST_ID_B, TEST_ID_A)]);
-    await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B]);
-    await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B]);
+    await assertTargetingStatement(TEST_ID_A, [TEST_ID_B, TEST_ID_A]);
+    await assertTargetingStatement(TEST_ID_B, [TEST_ID_B, TEST_ID_A]);
   });
 
   it('should return three statements when two target one', async () => {
@@ -63,7 +63,7 @@ describe('get statements by references', () => {
       createReferenceStatement(TEST_ID_B, TEST_ID_C),
       createReferenceStatement(TEST_ID_C, TEST_ID_D)
     ]);
-    await assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
+    await assertTargetingStatement(TEST_ID_C, [TEST_ID_C, TEST_ID_B, TEST_ID_A]);
     await assertTargetingStatement(TEST_ID_B, [TEST_ID_B]);
     await assertTargetingStatement(TEST_ID_A, [TEST_ID_A]);
   });
@@ -74,9 +74,9 @@ describe('get statements by references', () => {
       createReferenceStatement(TEST_ID_B, TEST_ID_C),
       createReferenceStatement(TEST_ID_C, TEST_ID_A)
     ]);
-    await assertTargetingStatement(TEST_ID_A, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
-    await assertTargetingStatement(TEST_ID_B, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
-    await assertTargetingStatement(TEST_ID_C, [TEST_ID_A, TEST_ID_B, TEST_ID_C]);
+    await assertTargetingStatement(TEST_ID_A, [TEST_ID_C, TEST_ID_B, TEST_ID_A]);
+    await assertTargetingStatement(TEST_ID_B, [TEST_ID_C, TEST_ID_B, TEST_ID_A]);
+    await assertTargetingStatement(TEST_ID_C, [TEST_ID_C, TEST_ID_B, TEST_ID_A]);
   });
 
   it('should not return the source when the since option excludes it', async () => {
@@ -130,7 +130,7 @@ describe('get statements by references', () => {
         limit: 1,
         client: TEST_CLIENT
       },
-      [TEST_ID_A]
+      [TEST_ID_B]
     );
   });
 
@@ -145,7 +145,7 @@ describe('get statements by references', () => {
         skip: 1,
         client: TEST_CLIENT
       },
-      [TEST_ID_B]
+      [TEST_ID_A]
     );
   });
 });

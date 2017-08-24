@@ -1,17 +1,33 @@
 import { MongoClient } from 'mongodb';
 import * as S3 from 'aws-sdk/clients/s3';
+import * as redis from 'redis';
 import memoryModelsRepo from '../memoryModelsRepo';
 import mongoModelsRepo from '../mongoModelsRepo';
 import localStorageRepo from '../localStorageRepo';
 import s3StorageRepo from '../s3StorageRepo';
 import Repo from './Repo';
 import AuthRepo from './AuthRepo';
+import EventsRepo from './EventsRepo';
 import StorageRepo from './StorageRepo';
 import testAuthRepo from '../testAuthRepo';
 import mongoAuthRepo from '../mongoAuthRepo';
+import redisEventsRepo from '../redisEventsRepo';
 import fetchAuthRepo from '../fetchAuthRepo';
 import ModelsRepo from './ModelsRepo';
 import config from '../config';
+
+/* istanbul ignore next */
+const getEventsRepo = (): EventsRepo => {
+  switch (config.repoFactory.authRepoName) {
+    default: case 'redis':
+      return redisEventsRepo({
+        client: redis.createClient({
+          url: config.redis.url,
+        }),
+        prefix: config.redis.prefix,
+      });
+  }
+};
 
 /* istanbul ignore next */
 const getAuthRepo = (): AuthRepo => {
@@ -59,26 +75,37 @@ const getStorageRepo = (): StorageRepo => {
 };
 
 export default (): Repo => {
+  const eventsRepo = getEventsRepo();
   const authRepo = getAuthRepo();
   const modelsRepo = getModelsRepo();
   const storageRepo = getStorageRepo();
 
   return {
+    ...eventsRepo,
     ...authRepo,
     ...modelsRepo,
     ...storageRepo,
 
     clearRepo: async () => {
-      await modelsRepo.clearRepo();
-      await storageRepo.clearRepo();
+      await Promise.all([
+        eventsRepo.clearRepo(),
+        modelsRepo.clearRepo(),
+        storageRepo.clearRepo(),
+      ]);
     },
     migrate: async () => {
-      await modelsRepo.migrate();
-      await storageRepo.migrate();
+      await Promise.all([
+        eventsRepo.migrate(),
+        modelsRepo.migrate(),
+        storageRepo.migrate(),
+      ]);
     },
     rollback: async () => {
-      await modelsRepo.rollback();
-      await storageRepo.rollback();
+      await Promise.all([
+        eventsRepo.rollback(),
+        modelsRepo.rollback(),
+        storageRepo.rollback(),
+      ]);
     },
   };
 };

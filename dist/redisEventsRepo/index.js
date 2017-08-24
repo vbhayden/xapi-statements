@@ -36,60 +36,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var matchesClientOption_1 = require("../utils/matchesClientOption");
-var matchesAgentOption_1 = require("./matchesAgentOption");
-var matchesCursorOption_1 = require("./matchesCursorOption");
-var matchesVerbOption_1 = require("./matchesVerbOption");
-var matchesActivityOption_1 = require("./matchesActivityOption");
-var matchesRegistrationOption_1 = require("./matchesRegistrationOption");
-var matchesUntilOption_1 = require("./matchesUntilOption");
-var matchesSinceOption_1 = require("./matchesSinceOption");
-var filterModels = function (models, opts) {
-    return models.filter(function (model) {
-        var statement = model.statement;
-        return (matchesCursorOption_1.default(model, opts) &&
-            matchesClientOption_1.default(model, opts.client, true) &&
-            matchesAgentOption_1.default(model, opts) &&
-            matchesVerbOption_1.default(model, opts) &&
-            matchesActivityOption_1.default(model, opts) &&
-            matchesRegistrationOption_1.default(model, opts) &&
-            matchesUntilOption_1.default(statement, opts) &&
-            matchesSinceOption_1.default(statement, opts));
-    });
-};
-var sortModels = function (models, ascending) {
-    var lower = ascending ? -1 : 1;
-    var higher = ascending ? 1 : -1;
-    return models.sort(function (modelA, modelB) {
-        var storedA = modelA.statement.stored;
-        var storedB = modelB.statement.stored;
-        if (storedA < storedB)
-            return lower;
-        /* istanbul ignore next */
-        if (storedA > storedB)
-            return higher;
-        if (modelA._id < modelB._id)
-            return lower;
-        /* istanbul ignore next */
-        if (modelA._id > modelB._id)
-            return higher;
-        /* istanbul ignore next */
-        return 0;
-    });
-};
-var limitModels = function (models, skip, limit) {
-    if (skip === void 0) { skip = 0; }
-    return models.slice(skip, limit + skip);
-};
+var emitNewStatements_1 = require("./emitNewStatements");
+var clearRepo_1 = require("./clearRepo");
 exports.default = function (config) {
-    return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var filteredItems, sortedItems, limitedItems;
-        return __generator(this, function (_a) {
-            filteredItems = filterModels(config.state.statements, opts);
-            sortedItems = sortModels(filteredItems, opts.ascending);
-            limitedItems = limitModels(sortedItems, opts.skip, opts.limit);
-            return [2 /*return*/, limitedItems];
-        });
-    }); };
+    return {
+        emitNewStatements: emitNewStatements_1.default(config),
+        clearRepo: clearRepo_1.default(config),
+        migrate: function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); }); },
+        rollback: function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); }); },
+    };
 };
 //# sourceMappingURL=index.js.map

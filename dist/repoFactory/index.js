@@ -46,14 +46,29 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongodb_1 = require("mongodb");
 var S3 = require("aws-sdk/clients/s3");
+var redis = require("redis");
 var memoryModelsRepo_1 = require("../memoryModelsRepo");
 var mongoModelsRepo_1 = require("../mongoModelsRepo");
 var localStorageRepo_1 = require("../localStorageRepo");
 var s3StorageRepo_1 = require("../s3StorageRepo");
 var testAuthRepo_1 = require("../testAuthRepo");
 var mongoAuthRepo_1 = require("../mongoAuthRepo");
+var redisEventsRepo_1 = require("../redisEventsRepo");
 var fetchAuthRepo_1 = require("../fetchAuthRepo");
 var config_1 = require("../config");
+/* istanbul ignore next */
+var getEventsRepo = function () {
+    switch (config_1.default.repoFactory.authRepoName) {
+        default:
+        case 'redis':
+            return redisEventsRepo_1.default({
+                client: redis.createClient({
+                    url: config_1.default.redis.url,
+                }),
+                prefix: config_1.default.redis.prefix,
+            });
+    }
+};
 /* istanbul ignore next */
 var getAuthRepo = function () {
     switch (config_1.default.repoFactory.authRepoName) {
@@ -99,17 +114,19 @@ var getStorageRepo = function () {
     }
 };
 exports.default = function () {
+    var eventsRepo = getEventsRepo();
     var authRepo = getAuthRepo();
     var modelsRepo = getModelsRepo();
     var storageRepo = getStorageRepo();
-    return __assign({}, authRepo, modelsRepo, storageRepo, { clearRepo: function () { return __awaiter(_this, void 0, void 0, function () {
+    return __assign({}, eventsRepo, authRepo, modelsRepo, storageRepo, { clearRepo: function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, modelsRepo.clearRepo()];
+                    case 0: return [4 /*yield*/, Promise.all([
+                            eventsRepo.clearRepo(),
+                            modelsRepo.clearRepo(),
+                            storageRepo.clearRepo(),
+                        ])];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, storageRepo.clearRepo()];
-                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -117,11 +134,12 @@ exports.default = function () {
         }); }, migrate: function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, modelsRepo.migrate()];
+                    case 0: return [4 /*yield*/, Promise.all([
+                            eventsRepo.migrate(),
+                            modelsRepo.migrate(),
+                            storageRepo.migrate(),
+                        ])];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, storageRepo.migrate()];
-                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -129,11 +147,12 @@ exports.default = function () {
         }); }, rollback: function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, modelsRepo.rollback()];
+                    case 0: return [4 /*yield*/, Promise.all([
+                            eventsRepo.rollback(),
+                            modelsRepo.rollback(),
+                            storageRepo.rollback(),
+                        ])];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, storageRepo.rollback()];
-                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }

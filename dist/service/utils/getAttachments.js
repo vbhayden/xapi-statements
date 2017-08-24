@@ -69,6 +69,7 @@ exports.default = function (config, models, hasAttachments) { return __awaiter(_
                                 case 2:
                                     err_1 = _a.sent();
                                     if (potentialAttachment.fileUrl === undefined) {
+                                        /* istanbul ignore next - only happens if a file incorrectly goes missing */
                                         throw err_1;
                                     }
                                     return [2 /*return*/, false];

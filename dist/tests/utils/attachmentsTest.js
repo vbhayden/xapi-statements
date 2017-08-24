@@ -107,7 +107,7 @@ exports.default = function (service, assertAttachments, createStatement) {
                     return [4 /*yield*/, storeStatements([testStatement1, testStatement2], [testAttachmentModelA])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, assertAttachments([TEST_ID_1, TEST_ID_2], [testAttachmentModelA])];
+                    return [4 /*yield*/, assertAttachments([TEST_ID_2, TEST_ID_1], [testAttachmentModelA])];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];

@@ -44,6 +44,7 @@ export default (config: Config) => {
     ]);
 
     await awaitUpdates(config, unawaitedUpdates);
+    config.repo.emitNewStatements({ ids: statementIds });
 
     return statementIds;
   };

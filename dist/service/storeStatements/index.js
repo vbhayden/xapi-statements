@@ -95,6 +95,7 @@ exports.default = function (config) {
                     return [4 /*yield*/, awaitUpdates(config, unawaitedUpdates)];
                 case 5:
                     _a.sent();
+                    config.repo.emitNewStatements({ ids: statementIds });
                     return [2 /*return*/, statementIds];
             }
         });

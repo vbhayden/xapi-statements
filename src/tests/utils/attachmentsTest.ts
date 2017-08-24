@@ -48,7 +48,7 @@ export default (
     const testStatement1 = createStatement([TEST_ATTACHMENT_A], TEST_ID_1);
     const testStatement2 = createStatement([TEST_ATTACHMENT_A], TEST_ID_2);
     await storeStatements([testStatement1, testStatement2], [testAttachmentModelA]);
-    await assertAttachments([TEST_ID_1, TEST_ID_2], [testAttachmentModelA]);
+    await assertAttachments([TEST_ID_2, TEST_ID_1], [testAttachmentModelA]);
   });
 
   it('should return an attachment once when it is referenced twice in one statement', async () => {
