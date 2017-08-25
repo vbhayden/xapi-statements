@@ -1,13 +1,16 @@
 import agentFormatTest from './agentFormatTest';
 
-export default (createActorStatement: (actor: any) => any) => {
+export default (
+  createActorStatement: (actor: any) => any,
+  createIdsActorStatement: (actor: any) => any = createActorStatement,
+) => {
   describe('identified group', () => {
     agentFormatTest((ifi: any): any => {
       return {
         objectType: 'Group',
         ...ifi,
       };
-    })(createActorStatement);
+    })(createActorStatement, createIdsActorStatement);
   });
 
   describe('identified group members', () => {
@@ -25,18 +28,23 @@ export default (createActorStatement: (actor: any) => any) => {
           mbox: 'mailto:test@example.com',
         }]
       };
-    })(createActorStatement);
+    })(createActorStatement, createIdsActorStatement);
   });
 
   describe('anonymous group members', () => {
     agentFormatTest((ifi: any): any => {
       return {
         objectType: 'Group',
+        member: [ifi]
+      };
+    }, (ifi: any): any => {
+      return {
+        objectType: 'Group',
         member: [{
           objectType: 'Agent',
           ...ifi,
-        }]
+        }],
       };
-    })(createActorStatement);
+    })(createActorStatement, createIdsActorStatement);
   });
 };

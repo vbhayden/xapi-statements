@@ -1,4 +1,5 @@
 import createStatement from '../../../utils/createStatement';
+import createIdsStatement from '../../../utils/createIdsStatement';
 import setupIdsTest from './setupIdsTest';
 
 type ActorCreator = (ifi: any) => any;
@@ -6,6 +7,7 @@ type ActorCreator = (ifi: any) => any;
 const defaultExactActorCreator = (createIdsActor: ActorCreator): ActorCreator => {
   return (ifi: any): any => {
     return {
+      objectType: 'Agent',
       name: 'Test1',
       ...createIdsActor(ifi),
     };
@@ -16,12 +18,15 @@ export default (
   createIdsActor: ActorCreator,
   createExactActor = defaultExactActorCreator(createIdsActor)
 ) => {
-  return (createActorStatement: (actor: any) => any) => {
+  return (
+    createActorStatement: (actor: any) => any,
+    createIdsActorStatement: (actor: any) => any = createActorStatement,
+  ) => {
     const assertIdsStatements = setupIdsTest();
 
     const assertIdsActor = async (ifi: any) => {
       const exactStatement = createStatement(createActorStatement(createExactActor(ifi)));
-      const expectedStatement = createStatement(createActorStatement(createIdsActor(ifi)));
+      const expectedStatement = createIdsStatement(createIdsActorStatement(createIdsActor(ifi)));
       await assertIdsStatements(exactStatement, expectedStatement);
     };
 

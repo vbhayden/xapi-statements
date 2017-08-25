@@ -1,12 +1,12 @@
 import agentFormatTest from './agentFormatTest';
 
-export default (createActorStatement: (actor: any) => any) => {
+export default (
+  createActorStatement: (actor: any) => any,
+  createIdsActorStatement: (actor: any) => any = createActorStatement,
+) => {
   describe('agent', () => {
     agentFormatTest((ifi: any): any => {
-      return {
-        objectType: 'Agent',
-        ...ifi,
-      };
-    })(createActorStatement);
+      return ifi;
+    })(createActorStatement, createIdsActorStatement);
   });
 };

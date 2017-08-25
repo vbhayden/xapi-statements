@@ -45,17 +45,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var createStatement_1 = require("../../../utils/createStatement");
+var createIdsStatement_1 = require("../../../utils/createIdsStatement");
 var setupIdsTest_1 = require("./setupIdsTest");
 var createIdsActivity = function (id) {
     return {
-        objectType: 'Activity',
         id: id,
     };
 };
 var createExactActivity = function (id) {
     return __assign({ definition: {} }, createIdsActivity(id));
 };
-exports.default = function (createActivityStatement) {
+exports.default = function (createActivityStatement, createIdsActivityStatement) {
+    if (createIdsActivityStatement === void 0) { createIdsActivityStatement = createActivityStatement; }
     var assertIdsStatements = setupIdsTest_1.default();
     var assertIdsActivity = function (id) { return __awaiter(_this, void 0, void 0, function () {
         var exactStatement, expectedStatement;
@@ -63,7 +64,7 @@ exports.default = function (createActivityStatement) {
             switch (_a.label) {
                 case 0:
                     exactStatement = createStatement_1.default(createActivityStatement(createExactActivity(id)));
-                    expectedStatement = createStatement_1.default(createActivityStatement(createIdsActivity(id)));
+                    expectedStatement = createIdsStatement_1.default(createIdsActivityStatement(createIdsActivity(id)));
                     return [4 /*yield*/, assertIdsStatements(exactStatement, expectedStatement)];
                 case 1:
                     _a.sent();

@@ -9,11 +9,12 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var agentFormatTest_1 = require("./agentFormatTest");
-exports.default = function (createActorStatement) {
+exports.default = function (createActorStatement, createIdsActorStatement) {
+    if (createIdsActorStatement === void 0) { createIdsActorStatement = createActorStatement; }
     describe('identified group', function () {
         agentFormatTest_1.default(function (ifi) {
             return __assign({ objectType: 'Group' }, ifi);
-        })(createActorStatement);
+        })(createActorStatement, createIdsActorStatement);
     });
     describe('identified group members', function () {
         agentFormatTest_1.default(function (ifi) {
@@ -23,15 +24,20 @@ exports.default = function (createActorStatement) {
                         objectType: 'Agent',
                         mbox: 'mailto:test@example.com',
                     }] });
-        })(createActorStatement);
+        })(createActorStatement, createIdsActorStatement);
     });
     describe('anonymous group members', function () {
         agentFormatTest_1.default(function (ifi) {
             return {
                 objectType: 'Group',
-                member: [__assign({ objectType: 'Agent' }, ifi)]
+                member: [ifi]
             };
-        })(createActorStatement);
+        }, function (ifi) {
+            return {
+                objectType: 'Group',
+                member: [__assign({ objectType: 'Agent' }, ifi)],
+            };
+        })(createActorStatement, createIdsActorStatement);
     });
 };
 //# sourceMappingURL=groupTest.js.map

@@ -37,7 +37,7 @@ const formatActor = (actor: Actor): IdFormattedActor => {
     getActorWithMembers(actor)
   );
   return {
-    objectType: actor.objectType,
+    ...(actor.objectType !== 'Agent' ? {objectType: actor.objectType} : {}),
     ...actorWithId,
     ...actorWithMembers,
   };
