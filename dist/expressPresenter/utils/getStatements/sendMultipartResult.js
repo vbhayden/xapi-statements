@@ -38,23 +38,28 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var bluebird_1 = require("bluebird");
 exports.default = function (jsonResponse, attachments, res) { return __awaiter(_this, void 0, void 0, function () {
-    var boundary, crlf, fullBoundary;
+    var boundary, crlf, fullBoundary, stringResponse;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 boundary = 'zzzlearninglockerzzz';
                 crlf = '\r\n';
                 fullBoundary = crlf + "--" + boundary + crlf;
+                stringResponse = JSON.stringify(jsonResponse);
                 res.setHeader('Content-Type', "multipart/mixed; charset=UTF-8; boundary=" + boundary);
                 res.status(200);
                 res.write(fullBoundary);
-                res.write("Content-Type:application/json" + crlf + crlf);
-                res.write(JSON.stringify(jsonResponse));
+                res.write("Content-Type:application/json; charset=UTF-8" + crlf);
+                res.write("Content-Length:" + stringResponse.length + crlf);
                 res.write(crlf);
+                res.write(stringResponse);
                 return [4 /*yield*/, bluebird_1.reduce(attachments, function (_result, attachment) {
                         return new Promise(function (resolve, reject) {
                             res.write(fullBoundary);
                             res.write("Content-Type:" + attachment.contentType + crlf);
+                            if (attachment.contentLength !== undefined) {
+                                res.write("Content-Length:" + attachment.contentLength + crlf);
+                            }
                             res.write("Content-Transfer-Encoding:binary" + crlf);
                             res.write("X-Experience-API-Hash:" + attachment.hash + crlf);
                             res.write(crlf);

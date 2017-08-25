@@ -18,13 +18,13 @@ export default async (
     return {
       fileUrl: attachment.fileUrl,
       hash: attachment.sha2,
-      streamPromise: config.repo.getAttachment({ hash: attachment.sha2 }),
+      attachmentRequest: config.repo.getAttachment({ hash: attachment.sha2 }),
       contentType: attachment.contentType,
     };
   });
   const storedAttachments = await filter(potentialAttachments, async (potentialAttachment) => {
     try {
-      await potentialAttachment.streamPromise;
+      await potentialAttachment.attachmentRequest;
       return true;
     } catch (err) {
       if (potentialAttachment.fileUrl === undefined) {
@@ -35,9 +35,11 @@ export default async (
     }
   });
   const streamedAttachments = storedAttachments.map(async (storedAttachment) => {
+    const attachmentResult = await storedAttachment.attachmentRequest;
     return {
       hash: storedAttachment.hash,
-      stream: await storedAttachment.streamPromise,
+      stream: attachmentResult.stream,
+      contentLength: attachmentResult.contentLength,
       contentType: storedAttachment.contentType,
     };
   });

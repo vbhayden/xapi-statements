@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var attachmentsDirectory, filePath, isExisting, stream;
+        var attachmentsDirectory, filePath, isExisting, stream, stats, contentLength;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -52,7 +52,11 @@ exports.default = function (config) {
                         throw new Error("Missing attachment file path " + filePath);
                     }
                     stream = fs.createReadStream(filePath);
-                    return [2 /*return*/, stream];
+                    return [4 /*yield*/, fs.stat(filePath)];
+                case 2:
+                    stats = _a.sent();
+                    contentLength = stats.size;
+                    return [2 /*return*/, { stream: stream, contentLength: contentLength }];
             }
         });
     }); };

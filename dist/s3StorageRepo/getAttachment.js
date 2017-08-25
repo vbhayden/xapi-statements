@@ -38,15 +38,23 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var attachmentsDirectory, filePath, stream;
+        var attachmentsDirectory, filePath, s3ObjectRequest, s3Object, contentLength, stream;
         return __generator(this, function (_a) {
-            attachmentsDirectory = config.subFolder + "/attachments";
-            filePath = attachmentsDirectory + "/" + opts.hash;
-            stream = config.client.getObject({
-                Bucket: config.bucketName,
-                Key: filePath,
-            }).createReadStream();
-            return [2 /*return*/, stream];
+            switch (_a.label) {
+                case 0:
+                    attachmentsDirectory = config.subFolder + "/attachments";
+                    filePath = attachmentsDirectory + "/" + opts.hash;
+                    s3ObjectRequest = config.client.getObject({
+                        Bucket: config.bucketName,
+                        Key: filePath,
+                    });
+                    return [4 /*yield*/, s3ObjectRequest.promise()];
+                case 1:
+                    s3Object = _a.sent();
+                    contentLength = s3Object.ContentLength;
+                    stream = s3ObjectRequest.createReadStream();
+                    return [2 /*return*/, { stream: stream, contentLength: contentLength }];
+            }
         });
     }); };
 };
