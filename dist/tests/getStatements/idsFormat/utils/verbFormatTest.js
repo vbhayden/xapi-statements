@@ -45,6 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var createStatement_1 = require("../../../utils/createStatement");
+var createIdsStatement_1 = require("../../../utils/createIdsStatement");
 var setupIdsTest_1 = require("./setupIdsTest");
 var createIdsVerb = function (id) {
     return {
@@ -54,7 +55,8 @@ var createIdsVerb = function (id) {
 var createExactVerb = function (id) {
     return __assign({ display: {} }, createIdsVerb(id));
 };
-exports.default = function (createVerbStatement) {
+exports.default = function (createVerbStatement, createIdsVerbStatement) {
+    if (createIdsVerbStatement === void 0) { createIdsVerbStatement = createVerbStatement; }
     var assertIdsStatements = setupIdsTest_1.default();
     var assertIdsVerb = function (id) { return __awaiter(_this, void 0, void 0, function () {
         var exactStatement, expectedStatement;
@@ -62,7 +64,7 @@ exports.default = function (createVerbStatement) {
             switch (_a.label) {
                 case 0:
                     exactStatement = createStatement_1.default(createVerbStatement(createExactVerb(id)));
-                    expectedStatement = createStatement_1.default(createVerbStatement(createIdsVerb(id)));
+                    expectedStatement = createIdsStatement_1.default(createIdsVerbStatement(createIdsVerb(id)));
                     return [4 /*yield*/, assertIdsStatements(exactStatement, expectedStatement)];
                 case 1:
                     _a.sent();

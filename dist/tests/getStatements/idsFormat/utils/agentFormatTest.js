@@ -45,15 +45,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var createStatement_1 = require("../../../utils/createStatement");
+var createIdsStatement_1 = require("../../../utils/createIdsStatement");
 var setupIdsTest_1 = require("./setupIdsTest");
 var defaultExactActorCreator = function (createIdsActor) {
     return function (ifi) {
-        return __assign({ name: 'Test1' }, createIdsActor(ifi));
+        return __assign({ objectType: 'Agent', name: 'Test1' }, createIdsActor(ifi));
     };
 };
 exports.default = function (createIdsActor, createExactActor) {
     if (createExactActor === void 0) { createExactActor = defaultExactActorCreator(createIdsActor); }
-    return function (createActorStatement) {
+    return function (createActorStatement, createIdsActorStatement) {
+        if (createIdsActorStatement === void 0) { createIdsActorStatement = createActorStatement; }
         var assertIdsStatements = setupIdsTest_1.default();
         var assertIdsActor = function (ifi) { return __awaiter(_this, void 0, void 0, function () {
             var exactStatement, expectedStatement;
@@ -61,7 +63,7 @@ exports.default = function (createIdsActor, createExactActor) {
                 switch (_a.label) {
                     case 0:
                         exactStatement = createStatement_1.default(createActorStatement(createExactActor(ifi)));
-                        expectedStatement = createStatement_1.default(createActorStatement(createIdsActor(ifi)));
+                        expectedStatement = createIdsStatement_1.default(createIdsActorStatement(createIdsActor(ifi)));
                         return [4 /*yield*/, assertIdsStatements(exactStatement, expectedStatement)];
                     case 1:
                         _a.sent();

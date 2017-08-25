@@ -1,24 +1,32 @@
 import createStatement from '../../../utils/createStatement';
+import createIdsStatement from '../../../utils/createIdsStatement';
 import activityFormatTest from './activityFormatTest';
 import actorTest from './actorTest';
 import setupIdsTest from './setupIdsTest';
 
 const TEST_REF_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 
-export default (createObjectStatement: (object: any) => any) => {
+export default (
+  createObjectStatement: (object: any) => any,
+  createIdsObjectStatement: (object: any) => any = createObjectStatement,
+) => {
   describe('activity', () => {
-    activityFormatTest(createObjectStatement);
+    activityFormatTest(createObjectStatement, createIdsObjectStatement);
   });
-  actorTest(createObjectStatement);
+  actorTest(createObjectStatement, createIdsObjectStatement);
   describe('statement ref', () => {
     const assertIdsStatements = setupIdsTest();
 
     it('should not change the format when using a StatementRef', async () => {
-      const statement = createStatement(createObjectStatement({
+      const exactStatement = createStatement(createObjectStatement({
         objectType: 'StatementRef',
         id: TEST_REF_ID,
       }));
-      await assertIdsStatements(statement, statement);
+      const idsStatement = createIdsStatement(createIdsObjectStatement({
+        objectType: 'StatementRef',
+        id: TEST_REF_ID,
+      }));
+      await assertIdsStatements(exactStatement, idsStatement);
     });
   });
 };

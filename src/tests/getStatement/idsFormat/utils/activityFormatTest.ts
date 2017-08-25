@@ -1,9 +1,9 @@
 import createStatement from '../../../utils/createStatement';
+import createIdsStatement from '../../../utils/createIdsStatement';
 import setupIdsTest from './setupIdsTest';
 
 const createIdsActivity = (id: any): any => {
   return {
-    objectType: 'Activity',
     id,
   };
 };
@@ -15,12 +15,15 @@ const createExactActivity = (id: any): any => {
   };
 };
 
-export default (createActivityStatement: (activity: any) => any) => {
+export default (
+  createActivityStatement: (activity: any) => any,
+  createIdsActivityStatement: (activity: any) => any = createActivityStatement,
+) => {
   const assertIdsStatements = setupIdsTest();
 
   const assertIdsActivity = async (id: any) => {
     const exactStatement = createStatement(createActivityStatement(createExactActivity(id)));
-    const expectedStatement = createStatement(createActivityStatement(createIdsActivity(id)));
+    const expectedStatement = createIdsStatement(createIdsActivityStatement(createIdsActivity(id)));
     await assertIdsStatements(exactStatement, expectedStatement);
   };
 

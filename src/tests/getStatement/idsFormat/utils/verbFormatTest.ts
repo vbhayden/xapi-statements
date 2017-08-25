@@ -1,4 +1,5 @@
 import createStatement from '../../../utils/createStatement';
+import createIdsStatement from '../../../utils/createIdsStatement';
 import setupIdsTest from './setupIdsTest';
 
 const createIdsVerb = (id: any): any => {
@@ -14,12 +15,15 @@ const createExactVerb = (id: any): any => {
   };
 };
 
-export default (createVerbStatement: (activity: any) => any) => {
+export default (
+  createVerbStatement: (verb: any) => any,
+  createIdsVerbStatement: (verb: any) => any = createVerbStatement,
+) => {
   const assertIdsStatements = setupIdsTest();
 
   const assertIdsVerb = async (id: any) => {
     const exactStatement = createStatement(createVerbStatement(createExactVerb(id)));
-    const expectedStatement = createStatement(createVerbStatement(createIdsVerb(id)));
+    const expectedStatement = createIdsStatement(createIdsVerbStatement(createIdsVerb(id)));
     await assertIdsStatements(exactStatement, expectedStatement);
   };
 

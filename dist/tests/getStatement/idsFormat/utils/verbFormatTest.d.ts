@@ -1,2 +1,2 @@
-declare const _default: (createVerbStatement: (activity: any) => any) => void;
+declare const _default: (createVerbStatement: (verb: any) => any, createIdsVerbStatement?: (verb: any) => any) => void;
 export default _default;

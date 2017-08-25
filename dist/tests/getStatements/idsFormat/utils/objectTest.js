@@ -37,27 +37,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var createStatement_1 = require("../../../utils/createStatement");
+var createIdsStatement_1 = require("../../../utils/createIdsStatement");
 var activityFormatTest_1 = require("./activityFormatTest");
 var actorTest_1 = require("./actorTest");
 var setupIdsTest_1 = require("./setupIdsTest");
 var TEST_REF_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
-exports.default = function (createObjectStatement) {
+exports.default = function (createObjectStatement, createIdsObjectStatement) {
+    if (createIdsObjectStatement === void 0) { createIdsObjectStatement = createObjectStatement; }
     describe('activity', function () {
-        activityFormatTest_1.default(createObjectStatement);
+        activityFormatTest_1.default(createObjectStatement, createIdsObjectStatement);
     });
-    actorTest_1.default(createObjectStatement);
+    actorTest_1.default(createObjectStatement, createIdsObjectStatement);
     describe('statement ref', function () {
         var assertIdsStatements = setupIdsTest_1.default();
         it('should not change the format when using a StatementRef', function () { return __awaiter(_this, void 0, void 0, function () {
-            var statement;
+            var exactStatement, idsStatement;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        statement = createStatement_1.default(createObjectStatement({
+                        exactStatement = createStatement_1.default(createObjectStatement({
                             objectType: 'StatementRef',
                             id: TEST_REF_ID,
                         }));
-                        return [4 /*yield*/, assertIdsStatements(statement, statement)];
+                        idsStatement = createIdsStatement_1.default(createIdsObjectStatement({
+                            objectType: 'StatementRef',
+                            id: TEST_REF_ID,
+                        }));
+                        return [4 /*yield*/, assertIdsStatements(exactStatement, idsStatement)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
