@@ -52,7 +52,7 @@ exports.default = function (config, models, hasAttachments) { return __awaiter(_
                     return {
                         fileUrl: attachment.fileUrl,
                         hash: attachment.sha2,
-                        streamPromise: config.repo.getAttachment({ hash: attachment.sha2 }),
+                        attachmentRequest: config.repo.getAttachment({ hash: attachment.sha2 }),
                         contentType: attachment.contentType,
                     };
                 });
@@ -62,7 +62,7 @@ exports.default = function (config, models, hasAttachments) { return __awaiter(_
                             switch (_a.label) {
                                 case 0:
                                     _a.trys.push([0, 2, , 3]);
-                                    return [4 /*yield*/, potentialAttachment.streamPromise];
+                                    return [4 /*yield*/, potentialAttachment.attachmentRequest];
                                 case 1:
                                     _a.sent();
                                     return [2 /*return*/, true];
@@ -80,17 +80,18 @@ exports.default = function (config, models, hasAttachments) { return __awaiter(_
             case 1:
                 storedAttachments = _a.sent();
                 streamedAttachments = storedAttachments.map(function (storedAttachment) { return __awaiter(_this, void 0, void 0, function () {
-                    var _a;
-                    return __generator(this, function (_b) {
-                        switch (_b.label) {
-                            case 0:
-                                _a = {
-                                    hash: storedAttachment.hash
-                                };
-                                return [4 /*yield*/, storedAttachment.streamPromise];
-                            case 1: return [2 /*return*/, (_a.stream = _b.sent(),
-                                    _a.contentType = storedAttachment.contentType,
-                                    _a)];
+                    var attachmentResult;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, storedAttachment.attachmentRequest];
+                            case 1:
+                                attachmentResult = _a.sent();
+                                return [2 /*return*/, {
+                                        hash: storedAttachment.hash,
+                                        stream: attachmentResult.stream,
+                                        contentLength: attachmentResult.contentLength,
+                                        contentType: storedAttachment.contentType,
+                                    }];
                         }
                     });
                 }); });
