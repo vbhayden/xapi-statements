@@ -12,6 +12,7 @@ import StorageRepo from './StorageRepo';
 import testAuthRepo from '../testAuthRepo';
 import mongoAuthRepo from '../mongoAuthRepo';
 import redisEventsRepo from '../redisEventsRepo';
+import testEventsRepo from '../testEventsRepo';
 import fetchAuthRepo from '../fetchAuthRepo';
 import ModelsRepo from './ModelsRepo';
 import config from '../config';
@@ -19,6 +20,8 @@ import config from '../config';
 /* istanbul ignore next */
 const getEventsRepo = (): EventsRepo => {
   switch (config.repoFactory.authRepoName) {
+    case 'test':
+      return testEventsRepo();
     default: case 'redis':
       return redisEventsRepo({
         client: redis.createClient({

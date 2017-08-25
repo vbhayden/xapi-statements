@@ -54,11 +54,14 @@ var s3StorageRepo_1 = require("../s3StorageRepo");
 var testAuthRepo_1 = require("../testAuthRepo");
 var mongoAuthRepo_1 = require("../mongoAuthRepo");
 var redisEventsRepo_1 = require("../redisEventsRepo");
+var testEventsRepo_1 = require("../testEventsRepo");
 var fetchAuthRepo_1 = require("../fetchAuthRepo");
 var config_1 = require("../config");
 /* istanbul ignore next */
 var getEventsRepo = function () {
     switch (config_1.default.repoFactory.authRepoName) {
+        case 'test':
+            return testEventsRepo_1.default();
         default:
         case 'redis':
             return redisEventsRepo_1.default({
