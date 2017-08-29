@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -70,7 +78,10 @@ exports.default = function (_a) {
                     });
                     definedActivities = activities.filter(function (activity) {
                         return activity.definition !== undefined && (activity.definition.name !== undefined ||
-                            activity.definition.description !== undefined);
+                            activity.definition.description !== undefined ||
+                            activity.definition.extensions !== undefined ||
+                            activity.definition.moreInfo !== undefined ||
+                            activity.definition.type !== undefined);
                     });
                     groupedActivities = lodash_1.groupBy(definedActivities, function (activity) {
                         return activity.id;
@@ -84,11 +95,23 @@ exports.default = function (_a) {
                             return (matchingActivity.definition !== undefined &&
                                 matchingActivity.definition.description !== undefined) ? matchingActivity.definition.description : {};
                         });
-                        return {
-                            activityId: activityId,
-                            name: Object.assign.apply(Object, [{}].concat(names)),
-                            description: Object.assign.apply(Object, [{}].concat(descriptions)),
-                        };
+                        var extensions = matchingActivities.map(function (matchingActivity) {
+                            return (matchingActivity.definition !== undefined &&
+                                matchingActivity.definition.extensions !== undefined) ? matchingActivity.definition.extensions : {};
+                        });
+                        var types = matchingActivities.map(function (matchingActivity) {
+                            return (matchingActivity.definition !== undefined &&
+                                matchingActivity.definition.type !== undefined) ? matchingActivity.definition.type : undefined;
+                        }).filter(function (value) {
+                            return value !== undefined;
+                        });
+                        var moreInfos = matchingActivities.map(function (matchingActivity) {
+                            return (matchingActivity.definition !== undefined &&
+                                matchingActivity.definition.moreInfo !== undefined) ? matchingActivity.definition.moreInfo : undefined;
+                        }).filter(function (value) {
+                            return value !== undefined;
+                        });
+                        return __assign({ activityId: activityId, name: Object.assign.apply(Object, [{}].concat(names)), description: Object.assign.apply(Object, [{}].concat(descriptions)), extensions: Object.assign.apply(Object, [{}].concat(extensions)) }, (types.length > 0 ? { type: types[types.length - 1] } : {}), (moreInfos.length > 0 ? { moreInfo: moreInfos[moreInfos.length - 1] } : {}));
                     });
                     return [4 /*yield*/, config.repo.updateFullActivities({ updates: updates, client: client })];
                 case 1:

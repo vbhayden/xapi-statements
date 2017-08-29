@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -39,7 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var matchesFullActivity_1 = require("./utils/matchesFullActivity");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var lrsId, organisationId, activityId, filteredModels;
+        var lrsId, organisationId, activityId, filteredModels, fullActivity;
         return __generator(this, function (_a) {
             lrsId = opts.client.lrs_id;
             organisationId = opts.client.organisation;
@@ -52,13 +60,11 @@ exports.default = function (config) {
                         id: opts.activityId,
                         name: {},
                         description: {},
+                        extensions: {},
                     }];
             }
-            return [2 /*return*/, {
-                    id: filteredModels[0].id,
-                    name: filteredModels[0].name,
-                    description: filteredModels[0].description
-                }];
+            fullActivity = filteredModels[0];
+            return [2 /*return*/, __assign({ id: fullActivity.id, name: fullActivity.name, description: fullActivity.description, extensions: fullActivity.extensions }, (fullActivity.moreInfo !== undefined ? { moreInfo: fullActivity.moreInfo } : {}), (fullActivity.type !== undefined ? { type: fullActivity.type } : {}))];
         });
     }); };
 };

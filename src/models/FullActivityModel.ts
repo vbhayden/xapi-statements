@@ -1,11 +1,15 @@
 import LanguageMap from './LanguageMap';
+import Extensions from './Extensions';
 
 interface FullActivityModel {
-  id: string;
-  name: LanguageMap;
-  description: LanguageMap;
-  organisationId: string;
-  lrsId: string;
+  readonly id: string;
+  readonly name: LanguageMap;
+  readonly description: LanguageMap;
+  readonly moreInfo?: string;
+  readonly type?: string;
+  readonly extensions: Extensions;
+  readonly organisationId: string;
+  readonly lrsId: string;
 }
 
 export default FullActivityModel;

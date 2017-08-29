@@ -4,6 +4,9 @@ export interface Update {
     readonly activityId: string;
     readonly name: LanguageMap;
     readonly description: LanguageMap;
+    readonly extensions: LanguageMap;
+    readonly moreInfo?: string;
+    readonly type?: string;
 }
 interface UpdateFullActivitiesOptions {
     readonly updates: Update[];

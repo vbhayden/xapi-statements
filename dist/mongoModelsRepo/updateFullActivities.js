@@ -46,6 +46,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var matchesFullActivity_1 = require("./utils/matchesFullActivity");
+var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 var getPatchUpdate = function (patch, parentKeys) {
     return lodash_1.mapKeys(patch, function (_value, key) {
         var parentPath = parentKeys.join('.');
@@ -65,9 +66,10 @@ exports.default = function (config) {
                     batch = collection.initializeUnorderedBulkOp();
                     opts.updates.forEach(function (update) {
                         var activityId = update.activityId;
+                        var extensions = replaceDotsInStatement_1.replaceDotsInExtensions(/\./g, '&46;')(update.extensions);
                         var mongoQuery = matchesFullActivity_1.default({ activityId: activityId, lrsId: lrsId, organisationId: organisationId });
                         var mongoUpdate = {
-                            $set: __assign({}, getPatchUpdate(update.name, ['name']), getPatchUpdate(update.description, ['description'])),
+                            $set: __assign({}, getPatchUpdate(update.name, ['name']), getPatchUpdate(update.description, ['description']), getPatchUpdate(extensions, ['extensions']), (update.moreInfo !== undefined ? { moreInfo: update.moreInfo } : {}), (update.type !== undefined ? { type: update.type } : {})),
                         };
                         batch.find(mongoQuery).upsert().updateOne(mongoUpdate);
                     });

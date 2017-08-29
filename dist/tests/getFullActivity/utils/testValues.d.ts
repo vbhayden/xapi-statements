@@ -12,6 +12,7 @@ export declare const TEST_BASE_ACTIVITY: {
     definition: {
         name: {};
         description: {};
+        extensions: {};
     };
 };
 export declare const TEST_ACTIVITY: {
@@ -22,6 +23,11 @@ export declare const TEST_ACTIVITY: {
         description: {
             'en-GB': string;
         };
+        extensions: {
+            'http://www.example.org/test_extension': number;
+        };
+        moreInfo: string;
+        type: string;
     };
     objectType: string;
     id: string;
@@ -34,6 +40,11 @@ export declare const TEST_MERGE_ACTIVITY: {
         description: {
             'en-US': string;
         };
+        extensions: {
+            'http://www.example.org/test_merge_extension': number;
+        };
+        moreInfo: string;
+        type: string;
     };
     objectType: string;
     id: string;
@@ -47,6 +58,11 @@ export declare const TEST_IMMUTABLE_ACTIVITY: {
         description: {
             'en-US': string;
         };
+        extensions: {
+            'http://www.example.org/test_merge_extension': number;
+        };
+        moreInfo: string;
+        type: string;
     };
     objectType: string;
 };
@@ -60,6 +76,12 @@ export declare const TEST_MERGED_ACTIVITY: {
             'en-US': string;
             'en-GB': string;
         };
+        extensions: {
+            'http://www.example.org/test_merge_extension': number;
+            'http://www.example.org/test_extension': number;
+        };
+        moreInfo: string;
+        type: string;
     };
     objectType: string;
     id: string;

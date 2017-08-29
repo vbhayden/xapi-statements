@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -37,6 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var matchesFullActivity_1 = require("./utils/matchesFullActivity");
+var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var collection, query, fields, result;
@@ -55,14 +64,22 @@ exports.default = function (config) {
                         id: 1,
                         name: 1,
                         description: 1,
+                        extensions: 1,
+                        moreInfo: 1,
+                        type: 1,
                     };
                     return [4 /*yield*/, collection.findOne(query, { fields: fields })];
                 case 2:
                     result = _a.sent();
                     if (result === null) {
-                        return [2 /*return*/, { id: opts.activityId, name: {}, description: {} }];
+                        return [2 /*return*/, {
+                                id: opts.activityId,
+                                name: {},
+                                description: {},
+                                extensions: {},
+                            }];
                     }
-                    return [2 /*return*/, result];
+                    return [2 /*return*/, __assign({}, result, { extensions: replaceDotsInStatement_1.replaceDotsInExtensions(/&46;/g, '.')(result.extensions) })];
             }
         });
     }); };
