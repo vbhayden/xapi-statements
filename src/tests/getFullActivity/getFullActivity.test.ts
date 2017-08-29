@@ -4,6 +4,7 @@ import createClientModel from '../utils/createClientModel';
 import setup from '../utils/setup';
 
 const TEST_ACTIVITY_ID = 'http://www.example.org/fullActivityTest';
+const TEST_IMMUTABLE_ACTIVITY_ID = 'http://www.example.org/fullActivityTest/immutable';
 const TEST_CLIENT = createClientModel();
 const TEST_BASE_ACTIVITY = {
   objectType: 'Activity',
@@ -34,6 +35,10 @@ const TEST_MERGE_ACTIVITY = {
       'en-US': 'test_us_description',
     },
   },
+};
+const TEST_IMMUTABLE_ACTIVITY = {
+  ...TEST_MERGE_ACTIVITY,
+  id: TEST_IMMUTABLE_ACTIVITY_ID,
 };
 const TEST_MERGED_ACTIVITY = {
   ...TEST_BASE_ACTIVITY,
@@ -74,11 +79,52 @@ describe('getFullActivity', () => {
     assert.deepEqual(fullActivity, TEST_ACTIVITY);
   });
 
-  it('should merge the definitions when storing two definitions', async () => {
+  it('should merge the definitions when storing two definitions in one batch', async () => {
     const initialStatement = createStatement({ object: TEST_ACTIVITY });
     const mergeStatement = createStatement({ object: TEST_MERGE_ACTIVITY });
     await service.storeStatements({
       models: [initialStatement, mergeStatement],
+      attachments: [],
+      client: TEST_CLIENT,
+    });
+    const fullActivity = await service.getFullActivity({
+      activityId: TEST_ACTIVITY_ID,
+      client: TEST_CLIENT,
+    });
+    assert.deepEqual(fullActivity, TEST_MERGED_ACTIVITY);
+  });
+
+  it('should merge the definitions when storing two definitions in two batches', async () => {
+    const initialStatement = createStatement({ object: TEST_ACTIVITY });
+    const mergeStatement = createStatement({ object: TEST_MERGE_ACTIVITY });
+    await service.storeStatements({
+      models: [initialStatement],
+      attachments: [],
+      client: TEST_CLIENT,
+    });
+    await service.storeStatements({
+      models: [mergeStatement],
+      attachments: [],
+      client: TEST_CLIENT,
+    });
+    const fullActivity = await service.getFullActivity({
+      activityId: TEST_ACTIVITY_ID,
+      client: TEST_CLIENT,
+    });
+    assert.deepEqual(fullActivity, TEST_MERGED_ACTIVITY);
+  });
+
+  it('should merge with existing activities when storing a different ID', async () => {
+    const existingActivityStatement = createStatement({ object: TEST_IMMUTABLE_ACTIVITY });
+    const initialStatement = createStatement({ object: TEST_ACTIVITY });
+    const mergeStatement = createStatement({ object: TEST_MERGE_ACTIVITY });
+    await service.storeStatements({
+      models: [initialStatement, existingActivityStatement],
+      attachments: [],
+      client: TEST_CLIENT,
+    });
+    await service.storeStatements({
+      models: [mergeStatement],
       attachments: [],
       client: TEST_CLIENT,
     });
