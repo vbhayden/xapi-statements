@@ -1,58 +1,15 @@
 import * as assert from 'assert';
 import createStatement from '../utils/createStatement';
-import createClientModel from '../utils/createClientModel';
 import setup from '../utils/setup';
-
-const TEST_ACTIVITY_ID = 'http://www.example.org/fullActivityTest';
-const TEST_IMMUTABLE_ACTIVITY_ID = 'http://www.example.org/fullActivityTest/immutable';
-const TEST_CLIENT = createClientModel();
-const TEST_BASE_ACTIVITY = {
-  objectType: 'Activity',
-  id: TEST_ACTIVITY_ID,
-  definition: {
-    name: {},
-    description: {},
-  },
-};
-const TEST_ACTIVITY = {
-  ...TEST_BASE_ACTIVITY,
-  definition: {
-    name: {
-      'en-GB': 'test_gb_name',
-    },
-    description: {
-      'en-GB': 'test_gb_description',
-    },
-  },
-};
-const TEST_MERGE_ACTIVITY = {
-  ...TEST_BASE_ACTIVITY,
-  definition: {
-    name: {
-      'en-US': 'test_us_name',
-    },
-    description: {
-      'en-US': 'test_us_description',
-    },
-  },
-};
-const TEST_IMMUTABLE_ACTIVITY = {
-  ...TEST_MERGE_ACTIVITY,
-  id: TEST_IMMUTABLE_ACTIVITY_ID,
-};
-const TEST_MERGED_ACTIVITY = {
-  ...TEST_BASE_ACTIVITY,
-  definition: {
-    name: {
-      ...TEST_ACTIVITY.definition.name,
-      ...TEST_MERGE_ACTIVITY.definition.name,
-    },
-    description: {
-      ...TEST_ACTIVITY.definition.description,
-      ...TEST_MERGE_ACTIVITY.definition.description,
-    }
-  }
-};
+import {
+  TEST_ACTIVITY_ID,
+  TEST_CLIENT,
+  TEST_BASE_ACTIVITY,
+  TEST_ACTIVITY,
+  TEST_MERGE_ACTIVITY,
+  TEST_IMMUTABLE_ACTIVITY,
+  TEST_MERGED_ACTIVITY,
+} from './utils/testValues';
 
 describe('getFullActivity', () => {
   const service = setup();

@@ -1,12 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -46,40 +38,8 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var assert = require("assert");
 var createStatement_1 = require("../utils/createStatement");
-var createClientModel_1 = require("../utils/createClientModel");
 var setup_1 = require("../utils/setup");
-var TEST_ACTIVITY_ID = 'http://www.example.org/fullActivityTest';
-var TEST_IMMUTABLE_ACTIVITY_ID = 'http://www.example.org/fullActivityTest/immutable';
-var TEST_CLIENT = createClientModel_1.default();
-var TEST_BASE_ACTIVITY = {
-    objectType: 'Activity',
-    id: TEST_ACTIVITY_ID,
-    definition: {
-        name: {},
-        description: {},
-    },
-};
-var TEST_ACTIVITY = __assign({}, TEST_BASE_ACTIVITY, { definition: {
-        name: {
-            'en-GB': 'test_gb_name',
-        },
-        description: {
-            'en-GB': 'test_gb_description',
-        },
-    } });
-var TEST_MERGE_ACTIVITY = __assign({}, TEST_BASE_ACTIVITY, { definition: {
-        name: {
-            'en-US': 'test_us_name',
-        },
-        description: {
-            'en-US': 'test_us_description',
-        },
-    } });
-var TEST_IMMUTABLE_ACTIVITY = __assign({}, TEST_MERGE_ACTIVITY, { id: TEST_IMMUTABLE_ACTIVITY_ID });
-var TEST_MERGED_ACTIVITY = __assign({}, TEST_BASE_ACTIVITY, { definition: {
-        name: __assign({}, TEST_ACTIVITY.definition.name, TEST_MERGE_ACTIVITY.definition.name),
-        description: __assign({}, TEST_ACTIVITY.definition.description, TEST_MERGE_ACTIVITY.definition.description)
-    } });
+var testValues_1 = require("./utils/testValues");
 describe('getFullActivity', function () {
     var service = setup_1.default();
     it('should return the activity ID when getting a non-existing activity', function () { return __awaiter(_this, void 0, void 0, function () {
@@ -87,12 +47,12 @@ describe('getFullActivity', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, service.getFullActivity({
-                        activityId: TEST_ACTIVITY_ID,
-                        client: TEST_CLIENT,
+                        activityId: testValues_1.TEST_ACTIVITY_ID,
+                        client: testValues_1.TEST_CLIENT,
                     })];
                 case 1:
                     fullActivity = _a.sent();
-                    assert.deepEqual(fullActivity, TEST_BASE_ACTIVITY);
+                    assert.deepEqual(fullActivity, testValues_1.TEST_BASE_ACTIVITY);
                     return [2 /*return*/];
             }
         });
@@ -102,21 +62,21 @@ describe('getFullActivity', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    statement = createStatement_1.default({ object: TEST_ACTIVITY });
+                    statement = createStatement_1.default({ object: testValues_1.TEST_ACTIVITY });
                     return [4 /*yield*/, service.storeStatements({
                             models: [statement],
                             attachments: [],
-                            client: TEST_CLIENT,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, service.getFullActivity({
-                            activityId: TEST_ACTIVITY_ID,
-                            client: TEST_CLIENT,
+                            activityId: testValues_1.TEST_ACTIVITY_ID,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 2:
                     fullActivity = _a.sent();
-                    assert.deepEqual(fullActivity, TEST_ACTIVITY);
+                    assert.deepEqual(fullActivity, testValues_1.TEST_ACTIVITY);
                     return [2 /*return*/];
             }
         });
@@ -126,22 +86,22 @@ describe('getFullActivity', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    initialStatement = createStatement_1.default({ object: TEST_ACTIVITY });
-                    mergeStatement = createStatement_1.default({ object: TEST_MERGE_ACTIVITY });
+                    initialStatement = createStatement_1.default({ object: testValues_1.TEST_ACTIVITY });
+                    mergeStatement = createStatement_1.default({ object: testValues_1.TEST_MERGE_ACTIVITY });
                     return [4 /*yield*/, service.storeStatements({
                             models: [initialStatement, mergeStatement],
                             attachments: [],
-                            client: TEST_CLIENT,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, service.getFullActivity({
-                            activityId: TEST_ACTIVITY_ID,
-                            client: TEST_CLIENT,
+                            activityId: testValues_1.TEST_ACTIVITY_ID,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 2:
                     fullActivity = _a.sent();
-                    assert.deepEqual(fullActivity, TEST_MERGED_ACTIVITY);
+                    assert.deepEqual(fullActivity, testValues_1.TEST_MERGED_ACTIVITY);
                     return [2 /*return*/];
             }
         });
@@ -151,29 +111,29 @@ describe('getFullActivity', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    initialStatement = createStatement_1.default({ object: TEST_ACTIVITY });
-                    mergeStatement = createStatement_1.default({ object: TEST_MERGE_ACTIVITY });
+                    initialStatement = createStatement_1.default({ object: testValues_1.TEST_ACTIVITY });
+                    mergeStatement = createStatement_1.default({ object: testValues_1.TEST_MERGE_ACTIVITY });
                     return [4 /*yield*/, service.storeStatements({
                             models: [initialStatement],
                             attachments: [],
-                            client: TEST_CLIENT,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, service.storeStatements({
                             models: [mergeStatement],
                             attachments: [],
-                            client: TEST_CLIENT,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 2:
                     _a.sent();
                     return [4 /*yield*/, service.getFullActivity({
-                            activityId: TEST_ACTIVITY_ID,
-                            client: TEST_CLIENT,
+                            activityId: testValues_1.TEST_ACTIVITY_ID,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 3:
                     fullActivity = _a.sent();
-                    assert.deepEqual(fullActivity, TEST_MERGED_ACTIVITY);
+                    assert.deepEqual(fullActivity, testValues_1.TEST_MERGED_ACTIVITY);
                     return [2 /*return*/];
             }
         });
@@ -183,30 +143,30 @@ describe('getFullActivity', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    existingActivityStatement = createStatement_1.default({ object: TEST_IMMUTABLE_ACTIVITY });
-                    initialStatement = createStatement_1.default({ object: TEST_ACTIVITY });
-                    mergeStatement = createStatement_1.default({ object: TEST_MERGE_ACTIVITY });
+                    existingActivityStatement = createStatement_1.default({ object: testValues_1.TEST_IMMUTABLE_ACTIVITY });
+                    initialStatement = createStatement_1.default({ object: testValues_1.TEST_ACTIVITY });
+                    mergeStatement = createStatement_1.default({ object: testValues_1.TEST_MERGE_ACTIVITY });
                     return [4 /*yield*/, service.storeStatements({
                             models: [initialStatement, existingActivityStatement],
                             attachments: [],
-                            client: TEST_CLIENT,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, service.storeStatements({
                             models: [mergeStatement],
                             attachments: [],
-                            client: TEST_CLIENT,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 2:
                     _a.sent();
                     return [4 /*yield*/, service.getFullActivity({
-                            activityId: TEST_ACTIVITY_ID,
-                            client: TEST_CLIENT,
+                            activityId: testValues_1.TEST_ACTIVITY_ID,
+                            client: testValues_1.TEST_CLIENT,
                         })];
                 case 3:
                     fullActivity = _a.sent();
-                    assert.deepEqual(fullActivity, TEST_MERGED_ACTIVITY);
+                    assert.deepEqual(fullActivity, testValues_1.TEST_MERGED_ACTIVITY);
                     return [2 /*return*/];
             }
         });
