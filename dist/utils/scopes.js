@@ -17,6 +17,13 @@ exports.STATEMENT_READ_SCOPES = [
     exports.XAPI_STATEMENTS_READ,
     exports.XAPI_STATEMENTS_READ_MINE,
 ];
+exports.PROFILE_READ_SCOPES = [
+    exports.ALL,
+    exports.ALL_READ,
+    exports.XAPI_ALL,
+    exports.XAPI_READ,
+    exports.XAPI_PROFILE_ALL,
+];
 exports.STATEMENT_WRITE_SCOPES = [
     exports.ALL,
     exports.XAPI_ALL,

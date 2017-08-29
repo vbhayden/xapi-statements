@@ -2,6 +2,7 @@ import commonMemoryRepo from 'jscommons/dist/memoryRepo';
 import ModelsRepo from '../repoFactory/ModelsRepo';
 import Config from './Config';
 import createStatements from './createStatements';
+import getFullActivity from './getFullActivity';
 import getHashes from './getHashes';
 import getStatement from './getStatement';
 import getStatements from './getStatements';
@@ -13,11 +14,12 @@ import getUpRefIds from './getUpRefIds';
 import setRefs from './setRefs';
 import getStatementsByIds from './getStatementsByIds';
 import getUpRefsByIds from './getUpRefsByIds';
+import updateFullActivities from './updateFullActivities';
 
 export default (config: Config): ModelsRepo => {
   return {
-    // Statement functions.
     createStatements: createStatements(config),
+    getFullActivity: getFullActivity(config),
     getHashes: getHashes(config),
     getStatement: getStatement(config),
     getStatements: getStatements(config),
@@ -29,6 +31,7 @@ export default (config: Config): ModelsRepo => {
     setRefs: setRefs(config),
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
+    updateFullActivities: updateFullActivities(config),
     ...commonMemoryRepo(config),
   };
 };

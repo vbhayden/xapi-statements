@@ -4,6 +4,7 @@ import storeStatements from './storeStatements';
 import getClient from './getClient';
 import getStatement from './getStatement';
 import getStatements from './getStatements';
+import getFullActivity from './getFullActivity';
 import Config from './Config';
 
 export default (config: Config): Service => {
@@ -12,6 +13,7 @@ export default (config: Config): Service => {
     storeStatements: storeStatements(config),
     getStatement: getStatement(config),
     getStatements: getStatements(config),
+    getFullActivity: getFullActivity(config),
     ...commonService(config),
   };
 };

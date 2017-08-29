@@ -48,6 +48,7 @@ var createAttachments_1 = require("./createAttachments");
 var createStatements_1 = require("./createStatements");
 var voidStatements_1 = require("./voidStatements");
 var updateReferences_1 = require("./updateReferences");
+var updateFullActivities_1 = require("./updateFullActivities");
 /* istanbul ignore next */
 var awaitUpdates = function (config, updates) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -91,6 +92,7 @@ exports.default = function (config) {
                         createAttachments_1.default(config, opts.attachments),
                         voidStatements_1.default(config, unstoredModels, voidedObjectIds, opts.client),
                         updateReferences_1.default(config, unstoredModels, opts.client),
+                        updateFullActivities_1.default({ config: config, models: unstoredModels, client: opts.client }),
                     ]);
                     return [4 /*yield*/, awaitUpdates(config, unawaitedUpdates)];
                 case 5:

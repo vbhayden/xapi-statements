@@ -98,7 +98,7 @@ var getModelsRepo = function () {
         default:
         case 'memory':
             return memoryModelsRepo_1.default({
-                state: { statements: [] }
+                state: { statements: [], fullActivities: [] }
             });
     }
 };

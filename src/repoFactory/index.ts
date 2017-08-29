@@ -57,7 +57,7 @@ const getModelsRepo = (): ModelsRepo => {
       });
     default: case 'memory':
       return memoryModelsRepo({
-        state: { statements: [] }
+        state: { statements: [], fullActivities: [] }
       });
   }
 };

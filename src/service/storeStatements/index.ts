@@ -12,6 +12,7 @@ import createAttachments from './createAttachments';
 import createStatements from './createStatements';
 import voidStatements from './voidStatements';
 import updateReferences from './updateReferences';
+import updateFullActivities from './updateFullActivities';
 
 /* istanbul ignore next */
 const awaitUpdates = async (config: Config, updates: Promise<any>) => {
@@ -41,6 +42,7 @@ export default (config: Config) => {
       createAttachments(config, opts.attachments),
       voidStatements(config, unstoredModels, voidedObjectIds, opts.client),
       updateReferences(config, unstoredModels, opts.client),
+      updateFullActivities({ config, models: unstoredModels, client: opts.client }),
     ]);
 
     await awaitUpdates(config, unawaitedUpdates);
