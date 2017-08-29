@@ -13,6 +13,17 @@ export default (config: Config) => {
       definition: {
         name: fullActivityResult.name,
         description: fullActivityResult.description,
+        extensions: fullActivityResult.extensions,
+        ...(
+          fullActivityResult.moreInfo !== undefined
+          ? { moreInfo: fullActivityResult.moreInfo }
+          : {}
+        ),
+        ...(
+          fullActivityResult.type !== undefined
+          ? { type: fullActivityResult.type }
+          : {}
+        ),
       },
     };
   };

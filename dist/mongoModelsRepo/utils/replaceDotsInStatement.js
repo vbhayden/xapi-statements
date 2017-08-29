@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var modr = require("../../utils/modr");
 var lodash_1 = require("lodash");
-var replaceDotsInExtensions = function (searchValue, replaceValue) {
+exports.replaceDotsInExtensions = function (searchValue, replaceValue) {
     return modr.modifyType(Object, function (extensions) {
         return lodash_1.mapKeys(extensions, function (_value, key) {
             return key.replace(searchValue, replaceValue);
@@ -11,7 +11,7 @@ var replaceDotsInExtensions = function (searchValue, replaceValue) {
 };
 var replaceDotsInParent = function (searchValue, replaceValue) {
     return modr.modifySchema({
-        extensions: replaceDotsInExtensions(searchValue, replaceValue),
+        extensions: exports.replaceDotsInExtensions(searchValue, replaceValue),
     });
 };
 var replaceDotsInActivity = function (searchValue, replaceValue) {
@@ -41,7 +41,7 @@ var replaceDotsInContext = function (searchValue, replaceValue) {
             parent: replaceDotsInActivities(searchValue, replaceValue),
             other: replaceDotsInActivities(searchValue, replaceValue),
         }),
-        extensions: replaceDotsInExtensions(searchValue, replaceValue),
+        extensions: exports.replaceDotsInExtensions(searchValue, replaceValue),
     });
 };
 var replaceDotsInStatement = function (searchValue, replaceValue) {

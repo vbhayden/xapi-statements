@@ -55,15 +55,18 @@ export default async ({ config, models, client }: Opts): Promise<void> => {
     ];
   });
 
-  // Filters out activities that don't contain a name or description.
+  // Filters out activities that don't contain used keys in the definition.
   const definedActivities = activities.filter((activity) => {
     return activity.definition !== undefined && (
       activity.definition.name !== undefined ||
-      activity.definition.description !== undefined
+      activity.definition.description !== undefined ||
+      activity.definition.extensions !== undefined ||
+      activity.definition.moreInfo !== undefined ||
+      activity.definition.type !== undefined
     );
   });
 
-  // Merges the activity names and descriptions to reduce the number of updates.
+  // Merges the activity definitions to reduce the number of updates.
   const groupedActivities = groupBy(definedActivities, (activity) => {
     return activity.id;
   });
@@ -80,10 +83,36 @@ export default async ({ config, models, client }: Opts): Promise<void> => {
         matchingActivity.definition.description !== undefined
       ) ? matchingActivity.definition.description : {};
     });
+    const extensions = matchingActivities.map((matchingActivity) => {
+      return (
+        matchingActivity.definition !== undefined &&
+        matchingActivity.definition.extensions !== undefined
+      ) ? matchingActivity.definition.extensions : {};
+    });
+    const types = matchingActivities.map((matchingActivity) => {
+      return (
+        matchingActivity.definition !== undefined &&
+        matchingActivity.definition.type !== undefined
+      ) ? matchingActivity.definition.type : undefined;
+    }).filter((value) => {
+      return value !== undefined;
+    });
+    const moreInfos = matchingActivities.map((matchingActivity) => {
+      return (
+        matchingActivity.definition !== undefined &&
+        matchingActivity.definition.moreInfo !== undefined
+      ) ? matchingActivity.definition.moreInfo : undefined;
+    }).filter((value) => {
+      return value !== undefined;
+    });
+
     return {
       activityId,
       name: Object.assign({}, ...names),
       description: Object.assign({}, ...descriptions),
+      extensions: Object.assign({}, ...extensions),
+      ...(types.length > 0 ? { type: types[types.length - 1] } : {}),
+      ...(moreInfos.length > 0 ? { moreInfo: moreInfos[moreInfos.length - 1] } : {}),
     };
   });
 

@@ -18,13 +18,18 @@ export default (config: Config) => {
         id: opts.activityId,
         name: {},
         description: {},
+        extensions: {},
       };
     }
 
+    const fullActivity = filteredModels[0];
     return {
-      id: filteredModels[0].id,
-      name: filteredModels[0].name,
-      description: filteredModels[0].description
+      id: fullActivity.id,
+      name: fullActivity.name,
+      description: fullActivity.description,
+      extensions: fullActivity.extensions,
+      ...(fullActivity.moreInfo !== undefined ? { moreInfo: fullActivity.moreInfo } : {}),
+      ...(fullActivity.type !== undefined ? { type: fullActivity.type } : {}),
     };
   };
 };

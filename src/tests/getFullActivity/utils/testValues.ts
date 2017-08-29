@@ -24,6 +24,7 @@ export const TEST_BASE_ACTIVITY = {
   definition: {
     name: {},
     description: {},
+    extensions: {},
   },
 };
 export const TEST_ACTIVITY = {
@@ -35,6 +36,11 @@ export const TEST_ACTIVITY = {
     description: {
       'en-GB': 'test_gb_description',
     },
+    extensions: {
+      'http://www.example.org/test_extension': 1,
+    },
+    moreInfo: 'http://www.example.org/moreInfo',
+    type: 'http://www.example.org/type',
   },
 };
 export const TEST_MERGE_ACTIVITY = {
@@ -46,6 +52,11 @@ export const TEST_MERGE_ACTIVITY = {
     description: {
       'en-US': 'test_us_description',
     },
+    extensions: {
+      'http://www.example.org/test_merge_extension': 2,
+    },
+    moreInfo: 'http://www.example.org/mergedMoreInfo',
+    type: 'http://www.example.org/mergedType',
   },
 };
 export const TEST_IMMUTABLE_ACTIVITY = {
@@ -62,6 +73,12 @@ export const TEST_MERGED_ACTIVITY = {
     description: {
       ...TEST_ACTIVITY.definition.description,
       ...TEST_MERGE_ACTIVITY.definition.description,
-    }
+    },
+    extensions: {
+      ...TEST_ACTIVITY.definition.extensions,
+      ...TEST_MERGE_ACTIVITY.definition.extensions,
+    },
+    moreInfo: 'http://www.example.org/mergedMoreInfo',
+    type: 'http://www.example.org/mergedType',
   }
 };

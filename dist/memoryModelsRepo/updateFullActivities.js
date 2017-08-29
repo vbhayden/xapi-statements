@@ -66,6 +66,9 @@ exports.default = function (config) {
                             organisationId: organisationId,
                             name: update.name,
                             description: update.description,
+                            extensions: update.extensions,
+                            moreInfo: update.moreInfo,
+                            type: update.type,
                         },
                     ]);
                     return;
@@ -75,7 +78,7 @@ exports.default = function (config) {
                     if (!matchesFullActivity_1.default({ activityId: activityId, lrsId: lrsId, model: model, organisationId: organisationId })) {
                         return model;
                     }
-                    return __assign({}, model, { name: __assign({}, model.name, update.name), description: __assign({}, model.description, update.description) });
+                    return __assign({}, model, { name: __assign({}, model.name, update.name), description: __assign({}, model.description, update.description), extensions: __assign({}, model.extensions, update.extensions), moreInfo: update.moreInfo, type: update.type });
                 });
             });
             return [2 /*return*/];

@@ -4,7 +4,7 @@ import StatementObject from '../../models/StatementObject';
 import SubStatementObject from '../../models/SubStatementObject';
 import { mapKeys } from 'lodash';
 
-const replaceDotsInExtensions = (searchValue: RegExp, replaceValue: string) => {
+export const replaceDotsInExtensions = (searchValue: RegExp, replaceValue: string) => {
   return modr.modifyType(Object, (extensions: Extensions) => {
     return mapKeys(extensions, (_value: any, key: string) => {
       return key.replace(searchValue, replaceValue);

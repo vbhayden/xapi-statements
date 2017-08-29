@@ -24,6 +24,9 @@ export default (config: Config) => {
             organisationId,
             name: update.name,
             description: update.description,
+            extensions: update.extensions,
+            moreInfo: update.moreInfo,
+            type: update.type,
           },
         ];
         return;
@@ -44,6 +47,12 @@ export default (config: Config) => {
             ...model.description,
             ...update.description,
           },
+          extensions: {
+            ...model.extensions,
+            ...update.extensions,
+          },
+          moreInfo: update.moreInfo,
+          type: update.type,
         };
       });
     });
