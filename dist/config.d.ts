@@ -44,6 +44,7 @@ declare const _default: {
         enableAttachmentCreation: boolean;
         enableVoiding: boolean;
         enableReferencing: boolean;
+        enableActivityUpdates: boolean;
         awaitUpdates: boolean;
     };
     storage: {

@@ -1,0 +1,2 @@
+GET http://localhost:1338/xAPI/activities?activityId=http%3A%2F%2Fexample.org/dummy_activity HTTP/1.1
+X-EXPERIENCE-API-VERSION: 1.0.3

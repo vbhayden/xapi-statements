@@ -15,10 +15,13 @@ import GetUpRefIdsOptions from './options/GetUpRefIdsOptions';
 import SetRefsOptions from './options/SetRefsOptions';
 import GetStatementsByIdsOptions from './options/GetStatementsByIdsOptions';
 import GetUpRefsByIdsOptions from './options/GetUpRefsByIdsOptions';
+import GetFullActivityOptions from './options/GetFullActivityOptions';
+import GetFullActivityResult from './results/GetFullActivityResult';
+import UpdateFullActivitiesOptions from './options/UpdateFullActivitiesOptions';
 
 interface ModelsRepo extends CommonRepo {
-  // Statement functions.
   createStatements: (opts: CreateStatementsOptions) => Promise<UnstoredStatementModel[]>;
+  getFullActivity: (opts: GetFullActivityOptions) => Promise<GetFullActivityResult>;
   getStatement: (opts: GetStatementOptions) => Promise<StoredStatementModel>;
   getStatements: (opts: GetStatementsOptions) => Promise<StoredStatementModel[]>;
   getHashes: (opts: GetHashesOptions) => Promise<StatementHash[]>;
@@ -30,6 +33,7 @@ interface ModelsRepo extends CommonRepo {
   setRefs: (opts: SetRefsOptions) => Promise<void>;
   getStatementsByIds: (opts: GetStatementsByIdsOptions) => Promise<Statement[]>;
   getUpRefsByIds: (opts: GetUpRefsByIdsOptions) => Promise<UpRef[]>;
+  updateFullActivities: (opts: UpdateFullActivitiesOptions) => Promise<void>;
 }
 
 export default ModelsRepo;

@@ -54,6 +54,7 @@ exports.default = {
         enableAttachmentCreation: getBooleanOption_1.default(process.env.SERVICE_CREATE_ATTACHMENTS, true),
         enableVoiding: getBooleanOption_1.default(process.env.SERVICE_UPDATE_VOIDS, true),
         enableReferencing: getBooleanOption_1.default(process.env.SERVICE_UPDATE_REFS, true),
+        enableActivityUpdates: getBooleanOption_1.default(process.env.SERVICE_UPDATE_ACTIVITIES, true),
         awaitUpdates: getBooleanOption_1.default(process.env.SERVICE_AWAIT_UODATES, true),
     },
     storage: {

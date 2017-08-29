@@ -19,7 +19,7 @@ import config from '../config';
 
 /* istanbul ignore next */
 const getEventsRepo = (): EventsRepo => {
-  switch (config.repoFactory.authRepoName) {
+  switch (config.repoFactory.eventsRepoName) {
     case 'test':
       return testEventsRepo();
     default: case 'redis':
@@ -57,7 +57,7 @@ const getModelsRepo = (): ModelsRepo => {
       });
     default: case 'memory':
       return memoryModelsRepo({
-        state: { statements: [] }
+        state: { statements: [], fullActivities: [] }
       });
   }
 };

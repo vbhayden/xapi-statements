@@ -59,7 +59,7 @@ var fetchAuthRepo_1 = require("../fetchAuthRepo");
 var config_1 = require("../config");
 /* istanbul ignore next */
 var getEventsRepo = function () {
-    switch (config_1.default.repoFactory.authRepoName) {
+    switch (config_1.default.repoFactory.eventsRepoName) {
         case 'test':
             return testEventsRepo_1.default();
         default:
@@ -98,7 +98,7 @@ var getModelsRepo = function () {
         default:
         case 'memory':
             return memoryModelsRepo_1.default({
-                state: { statements: [] }
+                state: { statements: [], fullActivities: [] }
             });
     }
 };

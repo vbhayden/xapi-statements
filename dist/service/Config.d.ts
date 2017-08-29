@@ -9,5 +9,6 @@ interface Config {
     enableVoiding: boolean;
     enableReferencing: boolean;
     awaitUpdates: boolean;
+    enableActivityUpdates: boolean;
 }
 export default Config;

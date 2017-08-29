@@ -13,7 +13,8 @@ var storeStatements_1 = require("./storeStatements");
 var getClient_1 = require("./getClient");
 var getStatement_1 = require("./getStatement");
 var getStatements_1 = require("./getStatements");
+var getFullActivity_1 = require("./getFullActivity");
 exports.default = function (config) {
-    return __assign({ getClient: getClient_1.default(config), storeStatements: storeStatements_1.default(config), getStatement: getStatement_1.default(config), getStatements: getStatements_1.default(config) }, service_1.default(config));
+    return __assign({ getClient: getClient_1.default(config), storeStatements: storeStatements_1.default(config), getStatement: getStatement_1.default(config), getStatements: getStatements_1.default(config), getFullActivity: getFullActivity_1.default(config) }, service_1.default(config));
 };
 //# sourceMappingURL=index.js.map
