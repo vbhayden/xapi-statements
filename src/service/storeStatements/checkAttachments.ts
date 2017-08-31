@@ -6,18 +6,18 @@ import ExtraAttachments from '../../errors/ExtraAttachments';
 import getStatementsAttachments from '../utils/getStatementsAttachments';
 import Config from '../Config';
 
-export default async (
+export default (
   config: Config,
-  statements: UnstoredStatementModel[],
+  models: UnstoredStatementModel[],
   attachments: AttachmentModel[],
-): Promise<void> => {
+) => {
   /* istanbul ignore next */
   if (!config.enableAttachmentValidation) return;
 
   const attachmentHashes = attachments.map((attachment) => {
     return attachment.hash;
   });
-  const statementsAttachments = getStatementsAttachments(statements);
+  const statementsAttachments = getStatementsAttachments(models);
 
   // Checks for attachments defined in statements but not in the attachments.
   const missingHashes = statementsAttachments.filter((attachment) => {

@@ -23,6 +23,10 @@ import QueryIds from '../../errors/QueryIds';
 import UnknownParams from '../../errors/UnknownParams';
 import UnequalStatementId from '../../errors/UnequalStatementId';
 import VoidingError from '../../errors/VoidingError';
+import InvalidX5CType from '../../errors/InvalidX5CType';
+import InvalidX5CChain from '../../errors/InvalidX5CChain';
+import InvalidJws from '../../errors/InvalidJws';
+import InvalidSignedStatement from '../../errors/InvalidSignedStatement';
 import Translator from '../../translatorFactory/Translator';
 import { xapiHeaderVersion } from '../../utils/constants';
 
@@ -41,7 +45,23 @@ export default ({ translator, errorId, res, err }: Options): Response => {
   }
 
   switch (err.constructor) {
-    case JsonSyntaxError: {
+    case InvalidX5CType: {
+      const code = 400;
+      const message = translator.invalidX5CTypeError(err as InvalidX5CType);
+      return sendMessage({ res, code, errorId, message });
+    } case InvalidX5CChain: {
+      const code = 400;
+      const message = translator.invalidX5CChainError(err as InvalidX5CChain);
+      return sendMessage({ res, code, errorId, message });
+    } case InvalidJws: {
+      const code = 400;
+      const message = translator.invalidJwsError(err as InvalidJws);
+      return sendMessage({ res, code, errorId, message });
+    } case InvalidSignedStatement: {
+      const code = 400;
+      const message = translator.invalidSignedStatementError(err as InvalidSignedStatement);
+      return sendMessage({ res, code, errorId, message });
+    } case JsonSyntaxError: {
       const code = 400;
       const message = translator.jsonSyntaxError(err as JsonSyntaxError);
       return sendMessage({ res, code, errorId, message });

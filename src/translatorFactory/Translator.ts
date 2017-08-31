@@ -19,6 +19,10 @@ import QueryIds from '../errors/QueryIds';
 import UnknownParams from '../errors/UnknownParams';
 import UnequalStatementId from '../errors/UnequalStatementId';
 import VoidingError from '../errors/VoidingError';
+import InvalidX5CType from '../errors/InvalidX5CType';
+import InvalidX5CChain from '../errors/InvalidX5CChain';
+import InvalidJws from '../errors/InvalidJws';
+import InvalidSignedStatement from '../errors/InvalidSignedStatement';
 
 interface Translator extends CommonTranslator {
   readonly changedStatementRefError: (err: ChangedStatementRef) => string;
@@ -41,6 +45,10 @@ interface Translator extends CommonTranslator {
   readonly voidingErrorError: (err: VoidingError) => string;
   readonly queryIdsError: (err: QueryIds) => string;
   readonly unknownParamsError: (err: UnknownParams) => string;
+  readonly invalidX5CTypeError: (err: InvalidX5CType) => string;
+  readonly invalidX5CChainError: (err: InvalidX5CChain) => string;
+  readonly invalidJwsError: (err: InvalidJws) => string;
+  readonly invalidSignedStatementError: (err: InvalidSignedStatement) => string;
 }
 
 export default Translator;

@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -37,6 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var checkScopes_1 = require("jscommons/dist/service/utils/checkScopes");
+var stream_1 = require("stream");
 var scopes_1 = require("../../utils/scopes");
 var preValidationSetup_1 = require("./preValidationSetup");
 var validateStatements_1 = require("./validateStatements");
@@ -63,25 +72,32 @@ var awaitUpdates = function (config, updates) { return __awaiter(_this, void 0, 
         }
     });
 }); };
+var cloneAttachments = function (attachmentModels) {
+    return attachmentModels.map(function (attachmentModel) {
+        return __assign({}, attachmentModel, { stream: attachmentModel.stream.pipe(new stream_1.PassThrough()) });
+    });
+};
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var preValidatedModels, postValidatedModels, unstoredModels, voidedObjectIds, statementIds, unawaitedUpdates;
+        var preValidatedModels, attachments, clonedAttachments, postValidatedModels, unstoredModels, voidedObjectIds, statementIds, unawaitedUpdates;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     checkScopes_1.default(scopes_1.STATEMENT_WRITE_SCOPES, opts.client.scopes);
                     preValidatedModels = preValidationSetup_1.default(opts.models);
                     validateStatements_1.default(preValidatedModels);
-                    postValidatedModels = postValidationSetup_1.default(preValidatedModels, opts.client);
-                    return [4 /*yield*/, getUnstoredModels_1.default(config, postValidatedModels, opts.client)];
+                    attachments = cloneAttachments(opts.attachments);
+                    clonedAttachments = cloneAttachments(opts.attachments);
+                    return [4 /*yield*/, postValidationSetup_1.default(preValidatedModels, clonedAttachments, opts.client)];
                 case 1:
+                    postValidatedModels = _a.sent();
+                    return [4 /*yield*/, getUnstoredModels_1.default(config, postValidatedModels, opts.client)];
+                case 2:
                     unstoredModels = _a.sent();
                     return [4 /*yield*/, checkVoiders_1.default(config, unstoredModels, opts.client)];
-                case 2:
-                    voidedObjectIds = _a.sent();
-                    return [4 /*yield*/, checkAttachments_1.default(config, unstoredModels, opts.attachments)];
                 case 3:
-                    _a.sent();
+                    voidedObjectIds = _a.sent();
+                    checkAttachments_1.default(config, unstoredModels, attachments);
                     return [4 /*yield*/, createStatements_1.default(config, unstoredModels)];
                 case 4:
                     _a.sent();
@@ -89,7 +105,7 @@ exports.default = function (config) {
                         return postValidatedModel.statement.id;
                     });
                     unawaitedUpdates = Promise.all([
-                        createAttachments_1.default(config, opts.attachments),
+                        createAttachments_1.default(config, attachments),
                         voidStatements_1.default(config, unstoredModels, voidedObjectIds, opts.client),
                         updateReferences_1.default(config, unstoredModels, opts.client),
                         updateFullActivities_1.default({ config: config, models: unstoredModels, client: opts.client }),

@@ -20,6 +20,14 @@ var translator = __assign({ changedStatementRefError: function (err) { return er
     }, unequalStatementIdError: function (err) { return "Statement id must match the query param (" + err.statementId + ")"; }, voidingErrorError: function (err) {
         var voiders = err.voidedStatementIds.join(', ');
         return "Voider cannot void another voider (" + voiders + ")";
+    }, invalidX5CTypeError: function (err) {
+        return "X5C header should be an array for '" + err.statementId + "'";
+    }, invalidX5CChainError: function (err) {
+        return "X5C header should have at least one element for '" + err.statementId + "'";
+    }, invalidJwsError: function (err) {
+        return "Invalid JWS for '" + err.statementId + "'";
+    }, invalidSignedStatementError: function (err) {
+        return "Signed statement should match original statement for '" + err.statementId + "'";
     } }, en_1.default);
 exports.default = translator;
 //# sourceMappingURL=en.js.map

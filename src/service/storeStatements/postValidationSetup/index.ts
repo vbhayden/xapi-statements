@@ -1,15 +1,27 @@
+import { groupBy, mapValues } from 'lodash';
 import { sha1 } from 'object-hash';
 import ClientModel from '../../../models/ClientModel';
 import UnstoredStatementModel from '../../../models/UnstoredStatementModel';
+import checkSignedStatements from './checkSignedStatements';
 import setupObjectTypes from './setupObjectTypes';
 import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
+import AttachmentModel from '../../../models/AttachmentModel';
 
-export default (models: any[], client: ClientModel) => {
+export default async (models: any[], attachments: AttachmentModel[], client: ClientModel) => {
   const storedTime = new Date();
   const storedTimeString = storedTime.toISOString();
-  return models.map((model: any): UnstoredStatementModel => {
+
+  const hashAttachmentDictionary = groupBy(attachments, (attachment) => {
+    return attachment.hash;
+  });
+  const uniqueHashAttachmentDictionary = mapValues(hashAttachmentDictionary, (attachments) => {
+    return attachments[0];
+  });
+
+  const unstoredModelPromises = models.map(async (model: any): Promise<UnstoredStatementModel> => {
     const objectTypesModel = setupObjectTypes(model);
+    await checkSignedStatements(objectTypesModel, uniqueHashAttachmentDictionary);
     const preHashStatement = setupPreHashStatement(objectTypesModel, client.authority);
     const postHashStatement = setupPostHashStatement(preHashStatement, storedTimeString);
     const timestampTime = new Date(postHashStatement.timestamp);
@@ -28,4 +40,7 @@ export default (models: any[], client: ClientModel) => {
       statement: postHashStatement,
     };
   });
+
+  const unstoredModels = await Promise.all(unstoredModelPromises);
+  return unstoredModels;
 };
