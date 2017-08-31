@@ -27,6 +27,7 @@ var InvalidX5CType_1 = require("../../errors/InvalidX5CType");
 var InvalidX5CChain_1 = require("../../errors/InvalidX5CChain");
 var InvalidJws_1 = require("../../errors/InvalidJws");
 var InvalidSignedStatement_1 = require("../../errors/InvalidSignedStatement");
+var InvalidSignatureAlgorithm_1 = require("../../errors/InvalidSignatureAlgorithm");
 var constants_1 = require("../../utils/constants");
 exports.default = function (_a) {
     var translator = _a.translator, errorId = _a.errorId, res = _a.res, err = _a.err;
@@ -39,6 +40,11 @@ exports.default = function (_a) {
         return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
     }
     switch (err.constructor) {
+        case InvalidSignatureAlgorithm_1.default: {
+            var code = 400;
+            var message = translator.invalidSignatureAlgorithmError(err);
+            return sendMessage_1.default({ res: res, code: code, errorId: errorId, message: message });
+        }
         case InvalidX5CType_1.default: {
             var code = 400;
             var message = translator.invalidX5CTypeError(err);

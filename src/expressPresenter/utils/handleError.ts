@@ -27,6 +27,7 @@ import InvalidX5CType from '../../errors/InvalidX5CType';
 import InvalidX5CChain from '../../errors/InvalidX5CChain';
 import InvalidJws from '../../errors/InvalidJws';
 import InvalidSignedStatement from '../../errors/InvalidSignedStatement';
+import InvalidSignatureAlgorithm from '../../errors/InvalidSignatureAlgorithm';
 import Translator from '../../translatorFactory/Translator';
 import { xapiHeaderVersion } from '../../utils/constants';
 
@@ -45,7 +46,11 @@ export default ({ translator, errorId, res, err }: Options): Response => {
   }
 
   switch (err.constructor) {
-    case InvalidX5CType: {
+    case InvalidSignatureAlgorithm: {
+      const code = 400;
+      const message = translator.invalidSignatureAlgorithmError(err as InvalidSignatureAlgorithm);
+      return sendMessage({ res, code, errorId, message });
+    } case InvalidX5CType: {
       const code = 400;
       const message = translator.invalidX5CTypeError(err as InvalidX5CType);
       return sendMessage({ res, code, errorId, message });

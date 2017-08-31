@@ -63,23 +63,25 @@ export default async (
     }
 
     // Validates the decoded x5c header.
-    const decodedX5C = decodedHeaders.x5c as string[];
-    if (!isArray(decodedX5C)) {
-      throw new InvalidX5CType(originalStatement.id);
-    }
-    if (decodedX5C.length === 0) {
-      throw new InvalidX5CChain(originalStatement.id);
-    }
+    const decodedX5C = decodedHeaders.x5c as string[]|undefined;
+    if (decodedX5C !== undefined) {
+      if (!isArray(decodedX5C)) {
+        throw new InvalidX5CType(originalStatement.id);
+      }
+      if (decodedX5C.length === 0) {
+        throw new InvalidX5CChain(originalStatement.id);
+      }
 
-    // Gets the public key from the decoded x5c header.
-    const publicKeyDER = decodedX5C[0];
-    const splitDER = publicKeyDER.replace(/(.{64})/g, '$1\n');
-    const publicKey = `-----BEGIN CERTIFICATE-----\n${splitDER}\n-----END CERTIFICATE-----`;
+      // Gets the public key from the decoded x5c header.
+      const publicKeyDER = decodedX5C[0];
+      const splitDER = publicKeyDER.replace(/(.{64})/g, '$1\n');
+      const publicKey = `-----BEGIN CERTIFICATE-----\n${splitDER}\n-----END CERTIFICATE-----`;
 
-    try {
-      jwt.verify(token, publicKey);
-    } catch (err) {
-      throw new InvalidJws(originalStatement.id);
+      try {
+        jwt.verify(token, publicKey);
+      } catch (err) {
+        throw new InvalidJws(originalStatement.id);
+      }
     }
 
     // Validates that the decoded statement matches the original statement.

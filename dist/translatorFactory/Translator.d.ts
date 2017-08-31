@@ -23,6 +23,7 @@ import InvalidX5CType from '../errors/InvalidX5CType';
 import InvalidX5CChain from '../errors/InvalidX5CChain';
 import InvalidJws from '../errors/InvalidJws';
 import InvalidSignedStatement from '../errors/InvalidSignedStatement';
+import InvalidSignatureAlgorithm from '../errors/InvalidSignatureAlgorithm';
 interface Translator extends CommonTranslator {
     readonly changedStatementRefError: (err: ChangedStatementRef) => string;
     readonly conflictError: (err: Conflict) => string;
@@ -48,5 +49,6 @@ interface Translator extends CommonTranslator {
     readonly invalidX5CChainError: (err: InvalidX5CChain) => string;
     readonly invalidJwsError: (err: InvalidJws) => string;
     readonly invalidSignedStatementError: (err: InvalidSignedStatement) => string;
+    readonly invalidSignatureAlgorithmError: (err: InvalidSignatureAlgorithm) => string;
 }
 export default Translator;

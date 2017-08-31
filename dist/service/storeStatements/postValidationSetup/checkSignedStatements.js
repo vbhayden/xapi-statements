@@ -102,20 +102,22 @@ exports.default = function (statement, uniqueHashAttachmentDictionary) { return 
                                     throw new InvalidSignatureAlgorithm_1.default(originalStatement.id, decodedHeaders.alg);
                                 }
                                 decodedX5C = decodedHeaders.x5c;
-                                if (!lodash_1.isArray(decodedX5C)) {
-                                    throw new InvalidX5CType_1.default(originalStatement.id);
-                                }
-                                if (decodedX5C.length === 0) {
-                                    throw new InvalidX5CChain_1.default(originalStatement.id);
-                                }
-                                publicKeyDER = decodedX5C[0];
-                                splitDER = publicKeyDER.replace(/(.{64})/g, '$1\n');
-                                publicKey = "-----BEGIN CERTIFICATE-----\n" + splitDER + "\n-----END CERTIFICATE-----";
-                                try {
-                                    jwt.verify(token, publicKey);
-                                }
-                                catch (err) {
-                                    throw new InvalidJws_1.default(originalStatement.id);
+                                if (decodedX5C !== undefined) {
+                                    if (!lodash_1.isArray(decodedX5C)) {
+                                        throw new InvalidX5CType_1.default(originalStatement.id);
+                                    }
+                                    if (decodedX5C.length === 0) {
+                                        throw new InvalidX5CChain_1.default(originalStatement.id);
+                                    }
+                                    publicKeyDER = decodedX5C[0];
+                                    splitDER = publicKeyDER.replace(/(.{64})/g, '$1\n');
+                                    publicKey = "-----BEGIN CERTIFICATE-----\n" + splitDER + "\n-----END CERTIFICATE-----";
+                                    try {
+                                        jwt.verify(token, publicKey);
+                                    }
+                                    catch (err) {
+                                        throw new InvalidJws_1.default(originalStatement.id);
+                                    }
                                 }
                                 decodedStatement = decodedToken.payload;
                                 decodedStatementHash = object_hash_1.sha1(decodedStatement);

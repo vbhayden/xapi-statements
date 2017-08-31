@@ -101,6 +101,8 @@ var MALFORMED_X5C_JWS = 'eyJhbGciOiJSUzI1NiIsIng1YyI6WyJNSUlETnpDQ0FxQ2dBd0lCQWd
 var NO_X5C_JWS = 'eyJhbGciOiJSUzI1NiJ9.eyJ2ZXJzaW9uIjoiMS4wLjAiLCJpZCI6IjMzY2ZmNDE2LWUzMzEtNGM5ZC05NjllLTUzNzNhMTc1NjEyMCIsImFjdG9yIjp7Im1ib3giOiJtYWlsdG86ZXhhbXBsZUBleGFtcGxlLmNvbSIsIm5hbWUiOiJFeGFtcGxlIExlYXJuZXIiLCJvYmplY3RUeXBlIjoiQWdlbnQifSwidmVyYiI6eyJpZCI6Imh0dHA6Ly9hZGxuZXQuZ292L2V4cGFwaS92ZXJicy9leHBlcmllbmNlZCIsImRpc3BsYXkiOnsiZW4tVVMiOiJleHBlcmllbmNlZCJ9fSwib2JqZWN0Ijp7ImlkIjoiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g_dj14aDRrSWlIM1NtOCIsIm9iamVjdFR5cGUiOiJBY3Rpdml0eSIsImRlZmluaXRpb24iOnsibmFtZSI6eyJlbi1VUyI6IlRheCBUaXBzICYgSW5mb3JtYXRpb24gOiBIb3cgdG8gRmlsZSBhIFRheCBSZXR1cm4gIn0sImRlc2NyaXB0aW9uIjp7ImVuLVVTIjoiRmlsaW5nIGEgdGF4IHJldHVybiB3aWxsIHJlcXVpcmUgZmlsbGluZyBvdXQgZWl0aGVyIGEgMTA0MCwgMTA0MEEgb3IgMTA0MEVaIGZvcm0ifX19LCJ0aW1lc3RhbXAiOiIyMDEzLTA0LTAxVDEyOjAwOjAwWiJ9.TC6HW1c7gcz6vodY5CShlYvRG0x0ySyuyn2Yc9CPWA4';
 // tslint:disable-next-line:max-line-length
 var EMPTY_X5C_JWS = 'eyJhbGciOiJSUzI1NiIsIng1YyI6W119.eyJ2ZXJzaW9uIjoiMS4wLjAiLCJpZCI6IjMzY2ZmNDE2LWUzMzEtNGM5ZC05NjllLTUzNzNhMTc1NjEyMCIsImFjdG9yIjp7Im1ib3giOiJtYWlsdG86ZXhhbXBsZUBleGFtcGxlLmNvbSIsIm5hbWUiOiJFeGFtcGxlIExlYXJuZXIiLCJvYmplY3RUeXBlIjoiQWdlbnQifSwidmVyYiI6eyJpZCI6Imh0dHA6Ly9hZGxuZXQuZ292L2V4cGFwaS92ZXJicy9leHBlcmllbmNlZCIsImRpc3BsYXkiOnsiZW4tVVMiOiJleHBlcmllbmNlZCJ9fSwib2JqZWN0Ijp7ImlkIjoiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g_dj14aDRrSWlIM1NtOCIsIm9iamVjdFR5cGUiOiJBY3Rpdml0eSIsImRlZmluaXRpb24iOnsibmFtZSI6eyJlbi1VUyI6IlRheCBUaXBzICYgSW5mb3JtYXRpb24gOiBIb3cgdG8gRmlsZSBhIFRheCBSZXR1cm4gIn0sImRlc2NyaXB0aW9uIjp7ImVuLVVTIjoiRmlsaW5nIGEgdGF4IHJldHVybiB3aWxsIHJlcXVpcmUgZmlsbGluZyBvdXQgZWl0aGVyIGEgMTA0MCwgMTA0MEEgb3IgMTA0MEVaIGZvcm0ifX19LCJ0aW1lc3RhbXAiOiIyMDEzLTA0LTAxVDEyOjAwOjAwWiJ9.-t3A6NP4xAv9uf2UKMMN3Vew1HM6JwOoyMHTNhQbA_M';
+// tslint:disable-next-line:max-line-length
+var INVALID_X5C_TYPE = 'eyJhbGciOiJSUzI1NiIsIng1YyI6MTB9.eyJ2ZXJzaW9uIjoiMS4wLjAiLCJpZCI6IjMzY2ZmNDE2LWUzMzEtNGM5ZC05NjllLTUzNzNhMTc1NjEyMCIsImFjdG9yIjp7Im1ib3giOiJtYWlsdG86ZXhhbXBsZUBleGFtcGxlLmNvbSIsIm5hbWUiOiJFeGFtcGxlIExlYXJuZXIiLCJvYmplY3RUeXBlIjoiQWdlbnQifSwidmVyYiI6eyJpZCI6Imh0dHA6Ly9hZGxuZXQuZ292L2V4cGFwaS92ZXJicy9leHBlcmllbmNlZCIsImRpc3BsYXkiOnsiZW4tVVMiOiJleHBlcmllbmNlZCJ9fSwib2JqZWN0Ijp7ImlkIjoiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g_dj14aDRrSWlIM1NtOCIsIm9iamVjdFR5cGUiOiJBY3Rpdml0eSIsImRlZmluaXRpb24iOnsibmFtZSI6eyJlbi1VUyI6IlRheCBUaXBzICYgSW5mb3JtYXRpb24gOiBIb3cgdG8gRmlsZSBhIFRheCBSZXR1cm4gIn0sImRlc2NyaXB0aW9uIjp7ImVuLVVTIjoiRmlsaW5nIGEgdGF4IHJldHVybiB3aWxsIHJlcXVpcmUgZmlsbGluZyBvdXQgZWl0aGVyIGEgMTA0MCwgMTA0MEEgb3IgMTA0MEVaIGZvcm0ifX19LCJ0aW1lc3RhbXAiOiIyMDEzLTA0LTAxVDEyOjAwOjAwWiJ9.mULbjy6E3T72a8H3cOd0H4l4B-sWEcoSo2-JjeQrmF4dI2g0iXHo_-46qTWz4AtbS1Yxi4hSEqBvbAqg2sqZ91-42FC1N8XoarV9Nnymoi_KE3BESRCqpv6aBZRND1aIkivixdJWkqFIZKG-6jpZeblo1fJ0zv2GdsnczteYIW0';
 describe('store statements with signed attachments', function () {
     var service = setup_1.default();
     var storeStatements = storeStatementsInService_1.default(service);
@@ -170,7 +172,7 @@ describe('store statements with signed attachments', function () {
             }
         });
     }); });
-    it('should throw an error when the signed attachment has an invalid x5c', function () { return __awaiter(_this, void 0, void 0, function () {
+    it('should throw an error when the signed attachment has an invalid public key', function () { return __awaiter(_this, void 0, void 0, function () {
         var attachmentModel, attachment, testStatement, promise;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -202,16 +204,31 @@ describe('store statements with signed attachments', function () {
             }
         });
     }); });
-    it('should throw an error when the signed attachment has no x5c', function () { return __awaiter(_this, void 0, void 0, function () {
+    it('should throw an error when the x5c is an invalid type', function () { return __awaiter(_this, void 0, void 0, function () {
         var attachmentModel, attachment, testStatement, promise;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    attachmentModel = createAttachmentModel_1.default(INVALID_X5C_TYPE);
+                    attachment = createSignatureAttachment_1.default(INVALID_X5C_TYPE);
+                    testStatement = createAttachmentStatement_1.default([attachment]);
+                    promise = storeStatements([testStatement], [attachmentModel]);
+                    return [4 /*yield*/, assertError_1.default(InvalidX5CType_1.default, promise)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('should store the signed attachment when the signed attachment has no x5c', function () { return __awaiter(_this, void 0, void 0, function () {
+        var attachmentModel, attachment, testStatement;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     attachmentModel = createAttachmentModel_1.default(NO_X5C_JWS);
                     attachment = createSignatureAttachment_1.default(NO_X5C_JWS);
-                    testStatement = createAttachmentStatement_1.default([attachment]);
-                    promise = storeStatements([testStatement], [attachmentModel]);
-                    return [4 /*yield*/, assertError_1.default(InvalidX5CType_1.default, promise)];
+                    testStatement = __assign({}, STATEMENT, { attachments: [attachment] });
+                    return [4 /*yield*/, storeStatements([testStatement], [attachmentModel])];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
