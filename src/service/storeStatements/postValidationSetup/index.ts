@@ -22,8 +22,8 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
   const unstoredModelPromises = models.map(async (model: any): Promise<UnstoredStatementModel> => {
     const objectTypesModel = setupObjectTypes(model);
     await checkSignedStatements(objectTypesModel, uniqueHashAttachmentDictionary);
-    const preHashStatement = setupPreHashStatement(objectTypesModel, client.authority);
-    const postHashStatement = setupPostHashStatement(preHashStatement, storedTimeString);
+    const preHashStatement = setupPreHashStatement(objectTypesModel);
+    const postHashStatement = setupPostHashStatement(preHashStatement, storedTimeString, client.authority);
     const timestampTime = new Date(postHashStatement.timestamp);
     return {
       hasGeneratedId: model.id === undefined,
