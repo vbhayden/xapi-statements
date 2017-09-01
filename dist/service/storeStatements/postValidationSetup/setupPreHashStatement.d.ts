@@ -1,2 +1,2 @@
-declare const _default: (model: any, authority: any) => any;
+declare const _default: (model: any) => any;
 export default _default;

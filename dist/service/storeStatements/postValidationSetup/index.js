@@ -65,8 +65,8 @@ exports.default = function (models, attachments, client) { return __awaiter(_thi
                                 return [4 /*yield*/, checkSignedStatements_1.default(objectTypesModel, uniqueHashAttachmentDictionary)];
                             case 1:
                                 _a.sent();
-                                preHashStatement = setupPreHashStatement_1.default(objectTypesModel, client.authority);
-                                postHashStatement = setupPostHashStatement_1.default(preHashStatement, storedTimeString);
+                                preHashStatement = setupPreHashStatement_1.default(objectTypesModel);
+                                postHashStatement = setupPostHashStatement_1.default(preHashStatement, storedTimeString, client.authority);
                                 timestampTime = new Date(postHashStatement.timestamp);
                                 return [2 /*return*/, {
                                         hasGeneratedId: model.id === undefined,
