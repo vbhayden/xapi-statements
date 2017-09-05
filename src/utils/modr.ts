@@ -37,6 +37,18 @@ export const modifySchema = (schema: Schema) => {
   });
 };
 
+export const modifyRestrictedSchema = (schema: Schema) => {
+  return modifyType(Object, (data) => {
+    return Object.keys(schema).reduce((newData, key) => {
+      const value = schema[key](data[key]);
+      return {
+        ...newData,
+        ...(value === undefined ? {} : { [key]: value }),
+      };
+    }, {});
+  });
+};
+
 export const modifyCollection = (modifier: (index: number) => Modifier) => {
   return modifyType(Array, (data) => {
     return data.map((elem: any, index: number) => {
