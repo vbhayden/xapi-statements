@@ -35,6 +35,15 @@ exports.modifySchema = function (schema) {
         }, data);
     });
 };
+exports.modifyRestrictedSchema = function (schema) {
+    return exports.modifyType(Object, function (data) {
+        return Object.keys(schema).reduce(function (newData, key) {
+            var value = schema[key](data[key]);
+            return __assign({}, newData, (value === undefined ? {} : (_a = {}, _a[key] = value, _a)));
+            var _a;
+        }, {});
+    });
+};
 exports.modifyCollection = function (modifier) {
     return exports.modifyType(Array, function (data) {
         return data.map(function (elem, index) {
