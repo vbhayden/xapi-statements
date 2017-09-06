@@ -4,7 +4,8 @@ import Config from '../Config';
 
 export default async (
   config: Config,
-  attachments: AttachmentModel[]
+  attachments: AttachmentModel[],
+  lrs_id: string,
 ): Promise<void> => {
   /* istanbul ignore next */
   if (!config.enableAttachmentCreation) return;
@@ -14,5 +15,6 @@ export default async (
   });
   await config.repo.createAttachments({
     models: uniqueAttachments,
+    lrs_id
   });
 };

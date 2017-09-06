@@ -46,7 +46,7 @@ exports.default = function (config, opts, models) { return __awaiter(_this, void
                 attachmentsOpt = opts.attachments || false;
                 formatOpt = opts.format || 'exact';
                 langsOpt = opts.langs || [];
-                return [4 /*yield*/, getAttachments_1.default(config, models, attachmentsOpt)];
+                return [4 /*yield*/, getAttachments_1.default(config, models, attachmentsOpt, opts.client.lrs_id)];
             case 1:
                 attachments = _a.sent();
                 statements = formatStatements_1.default(models, formatOpt, langsOpt);

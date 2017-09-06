@@ -4,7 +4,7 @@ import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: CreateAttachmentsOptions): Promise<void> => {
-    const attachmentsDirectory = `${config.storageDir}/attachments`;
+    const attachmentsDirectory = `${config.storageDir}/${opts.lrs_id}/attachments`;
     await fs.ensureDir(attachmentsDirectory);
     const promises = opts.models.map((model) => {
       return new Promise((resolve, reject) => {

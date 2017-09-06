@@ -20,7 +20,7 @@ export interface Options {
 export default async (opts: Options) => {
   const { queryParams, config, res, client, urlPath, langs } = opts;
   const timestamp = new Date().toISOString();
-  const resultOpts = getStatementsResultOptions(queryParams);
+  const resultOpts = getStatementsResultOptions(queryParams, client);
   const statementsOpts = getStatementsOptions(queryParams);
 
   checkUnknownParams(queryParams, [

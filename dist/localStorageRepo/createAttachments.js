@@ -43,7 +43,7 @@ exports.default = function (config) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    attachmentsDirectory = config.storageDir + "/attachments";
+                    attachmentsDirectory = config.storageDir + "/" + opts.lrs_id + "/attachments";
                     return [4 /*yield*/, fs.ensureDir(attachmentsDirectory)];
                 case 1:
                     _a.sent();

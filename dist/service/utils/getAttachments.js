@@ -38,7 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var getStatementsAttachments_1 = require("../utils/getStatementsAttachments");
 var bluebird_1 = require("bluebird");
-exports.default = function (config, models, hasAttachments) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, models, hasAttachments, lrs_id) { return __awaiter(_this, void 0, void 0, function () {
     var _this = this;
     var attachments, potentialAttachments, storedAttachments, streamedAttachments, awaitedAttachments;
     return __generator(this, function (_a) {
@@ -52,7 +52,7 @@ exports.default = function (config, models, hasAttachments) { return __awaiter(_
                     return {
                         fileUrl: attachment.fileUrl,
                         hash: attachment.sha2,
-                        attachmentRequest: config.repo.getAttachment({ hash: attachment.sha2 }),
+                        attachmentRequest: config.repo.getAttachment({ lrs_id: lrs_id, hash: attachment.sha2 }),
                         contentType: attachment.contentType,
                     };
                 });

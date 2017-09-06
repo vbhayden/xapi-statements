@@ -42,7 +42,7 @@ exports.default = function (config) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    attachmentsDirectory = config.subFolder + "/attachments";
+                    attachmentsDirectory = config.subFolder + "/" + opts.lrs_id + "/attachments";
                     filePath = attachmentsDirectory + "/" + opts.hash;
                     s3ObjectRequest = config.client.getObject({
                         Bucket: config.bucketName,

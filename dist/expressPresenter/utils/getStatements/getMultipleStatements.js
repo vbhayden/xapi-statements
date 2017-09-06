@@ -57,7 +57,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
             case 0:
                 queryParams = opts.queryParams, config = opts.config, res = opts.res, client = opts.client, urlPath = opts.urlPath, langs = opts.langs;
                 timestamp = new Date().toISOString();
-                resultOpts = getStatementsResultOptions_1.default(queryParams);
+                resultOpts = getStatementsResultOptions_1.default(queryParams, client);
                 statementsOpts = getStatementsOptions_1.default(queryParams);
                 checkUnknownParams_1.default(queryParams, [
                     'format',
