@@ -1,2 +1,2 @@
-declare const _default: (contentType: string) => string | false;
+declare const _default: (contentType: string) => string;
 export default _default;
