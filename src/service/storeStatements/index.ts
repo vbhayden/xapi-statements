@@ -56,7 +56,7 @@ export default (config: Config) => {
 
     // Completes actions that do not need to be awaited.
     const unawaitedUpdates: Promise<any> = Promise.all([
-      createAttachments(config, attachments),
+      createAttachments(config, attachments, opts.client.lrs_id),
       voidStatements(config, unstoredModels, voidedObjectIds, opts.client),
       updateReferences(config, unstoredModels, opts.client),
       updateFullActivities({ config, models: unstoredModels, client: opts.client }),

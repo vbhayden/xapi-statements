@@ -4,7 +4,7 @@ import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: GetAttachmentOptions): Promise<GetAttachmentResult> => {
-    const attachmentsDirectory = `${config.subFolder}/attachments`;
+    const attachmentsDirectory = `${config.subFolder}/${opts.lrs_id}/attachments`;
     const filePath = `${attachmentsDirectory}/${opts.hash}`;
     const s3ObjectRequest = config.client.getObject({
       Bucket: config.bucketName,

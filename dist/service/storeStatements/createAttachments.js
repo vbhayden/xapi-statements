@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var removeDuplicates_1 = require("../../utils/removeDuplicates");
-exports.default = function (config, attachments) { return __awaiter(_this, void 0, void 0, function () {
+exports.default = function (config, attachments, lrs_id) { return __awaiter(_this, void 0, void 0, function () {
     var uniqueAttachments;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -50,6 +50,7 @@ exports.default = function (config, attachments) { return __awaiter(_this, void 
                 });
                 return [4 /*yield*/, config.repo.createAttachments({
                         models: uniqueAttachments,
+                        lrs_id: lrs_id
                     })];
             case 1:
                 _a.sent();

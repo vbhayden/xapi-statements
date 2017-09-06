@@ -105,7 +105,7 @@ exports.default = function (config) {
                         return postValidatedModel.statement.id;
                     });
                     unawaitedUpdates = Promise.all([
-                        createAttachments_1.default(config, attachments),
+                        createAttachments_1.default(config, attachments, opts.client.lrs_id),
                         voidStatements_1.default(config, unstoredModels, voidedObjectIds, opts.client),
                         updateReferences_1.default(config, unstoredModels, opts.client),
                         updateFullActivities_1.default({ config: config, models: unstoredModels, client: opts.client }),

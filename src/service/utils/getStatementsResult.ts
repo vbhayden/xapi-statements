@@ -13,7 +13,7 @@ export default async (
   const attachmentsOpt = opts.attachments || false;
   const formatOpt = opts.format || 'exact';
   const langsOpt = opts.langs || [];
-  const attachments = await getAttachments(config, models, attachmentsOpt);
+  const attachments = await getAttachments(config, models, attachmentsOpt, opts.client.lrs_id);
   const statements = formatStatements(models, formatOpt, langsOpt);
   return { statements, attachments };
 };

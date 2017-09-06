@@ -7,7 +7,8 @@ import { filter } from 'bluebird';
 export default async (
   config: Config,
   models: UnstoredStatementModel[],
-  hasAttachments: boolean
+  hasAttachments: boolean,
+  lrs_id: string,
 ): Promise<AttachmentModel[]> => {
   if (!hasAttachments) {
     return [];
@@ -18,7 +19,7 @@ export default async (
     return {
       fileUrl: attachment.fileUrl,
       hash: attachment.sha2,
-      attachmentRequest: config.repo.getAttachment({ hash: attachment.sha2 }),
+      attachmentRequest: config.repo.getAttachment({ lrs_id, hash: attachment.sha2 }),
       contentType: attachment.contentType,
     };
   });

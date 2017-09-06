@@ -1,13 +1,32 @@
 {
   "rules": {
     "class-name": true,
-    "comment-format": [true, "check-space"],
-    "indent": [true, "spaces", 2],
-    "linebreak-style": [false, "LF"],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "linebreak-style": [
+      false,
+      "LF"
+    ],
     "eofline": true,
-    "max-classes-per-file": [true, 0],
-    "max-line-length": [true, 120],
-    "max-file-line-count": [true, 300],
+    "max-classes-per-file": [
+      true,
+      0
+    ],
+    "max-line-length": [
+      true,
+      120
+    ],
+    "max-file-line-count": [
+      true,
+      300
+    ],
     "no-unused-variable": true,
     "no-unused-expression": true,
     "no-unused-new": true,
@@ -19,14 +38,30 @@
     "align": true,
     "import-spacing": true,
     "interface-over-type-literal": false,
-    "object-literal-key-quotes": [true, "as-needed"],
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
     "object-literal-shorthand": true,
     "one-variable-per-declaration": true,
     "no-consecutive-blank-lines": true,
-    "one-line": [true, "check-open-brace", "check-whitespace"],
-    "quotemark": [true, "single"],
-    "semicolon": [true, "always"],
-    "triple-equals": [true, "allow-null-check"],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-whitespace"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
     "typedef-whitespace": [
       true,
       {
@@ -38,7 +73,10 @@
       }
     ],
     "variable-name": {
-      "items": ["check-format", "ban-keywords"],
+      "items": [
+        "check-format",
+        "ban-keywords"
+      ],
       "minLength": 3,
       "maxLength": 15
     },

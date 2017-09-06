@@ -55,7 +55,7 @@ exports.default = function (opts) { return __awaiter(_this, void 0, void 0, func
             case 0:
                 queryParams = opts.queryParams, config = opts.config, id = opts.id, voided = opts.voided, res = opts.res, client = opts.client, langs = opts.langs;
                 timestamp = new Date().toISOString();
-                resultOpts = getStatementsResultOptions_1.default(queryParams);
+                resultOpts = getStatementsResultOptions_1.default(queryParams, client);
                 checkUnknownParams_1.default(queryParams, [
                     'statementId',
                     'voidedStatementId',
