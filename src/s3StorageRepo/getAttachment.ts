@@ -1,11 +1,17 @@
 import GetAttachmentOptions from '../repoFactory/options/GetAttachmentOptions';
 import GetAttachmentResult from '../repoFactory/results/GetAttachmentResult';
+import getAttachmentDir from '../utils/getAttachmentDir';
+import getAttachmentPath from '../utils/getAttachmentPath';
 import Config from './Config';
 
 export default (config: Config) => {
   return async (opts: GetAttachmentOptions): Promise<GetAttachmentResult> => {
-    const attachmentsDirectory = `${config.subFolder}/${opts.lrs_id}/attachments`;
-    const filePath = `${attachmentsDirectory}/${opts.hash}`;
+    const dir = getAttachmentDir({ subfolder: config.subFolder, lrs_id: opts.lrs_id });
+    const filePath = getAttachmentPath({
+      dir,
+      hash: opts.hash,
+      contentType: opts.contentType
+    });
     const s3ObjectRequest = config.client.getObject({
       Bucket: config.bucketName,
       Key: filePath,

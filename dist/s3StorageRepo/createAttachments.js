@@ -36,15 +36,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var getAttachmentDir_1 = require("../utils/getAttachmentDir");
+var getAttachmentPath_1 = require("../utils/getAttachmentPath");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var attachmentsDirectory, promises;
+        var dir, promises;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    attachmentsDirectory = config.subFolder + "/" + opts.lrs_id + "/attachments";
+                    dir = getAttachmentDir_1.default({ subfolder: config.subFolder, lrs_id: opts.lrs_id });
                     promises = opts.models.map(function (model) {
-                        var filePath = attachmentsDirectory + "/" + model.hash;
+                        var filePath = getAttachmentPath_1.default({
+                            dir: dir,
+                            hash: model.hash,
+                            contentType: model.contentType
+                        });
                         return config.client.upload({
                             Bucket: config.bucketName,
                             Body: model.stream,

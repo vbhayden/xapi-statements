@@ -37,14 +37,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
+var getAttachmentDir_1 = require("../utils/getAttachmentDir");
+var getAttachmentPath_1 = require("../utils/getAttachmentPath");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var attachmentsDirectory, filePath, isExisting, stream, stats, contentLength;
+        var dir, filePath, isExisting, stream, stats, contentLength;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    attachmentsDirectory = config.storageDir + "/" + opts.lrs_id + "/attachments";
-                    filePath = attachmentsDirectory + "/" + opts.hash;
+                    dir = getAttachmentDir_1.default({ subfolder: config.storageDir, lrs_id: opts.lrs_id });
+                    filePath = getAttachmentPath_1.default({
+                        dir: dir,
+                        hash: opts.hash,
+                        contentType: opts.contentType
+                    });
                     return [4 /*yield*/, fs.pathExists(filePath)];
                 case 1:
                     isExisting = _a.sent();

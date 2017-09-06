@@ -30,6 +30,7 @@
     "npm": "^5.0.0"
   },
   "dependencies": {
+    "@types/mime-types": "^2.1.0",
     "accept-language-parser": "^1.4.1",
     "atob": "^2.0.3",
     "aws-sdk": "^2.97.0",
@@ -46,6 +47,7 @@
     "jscommons": "git+https://git@github.com/HT2-Labs/jscommons.git",
     "jsonwebtoken": "^7.4.3",
     "lodash": "^4.17.4",
+    "mime-types": "^2.1.17",
     "moment": "^2.18.0",
     "mongodb": "^2.2.26",
     "morgan": "^1.8.1",

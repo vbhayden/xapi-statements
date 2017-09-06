@@ -19,7 +19,11 @@ export default async (
     return {
       fileUrl: attachment.fileUrl,
       hash: attachment.sha2,
-      attachmentRequest: config.repo.getAttachment({ lrs_id, hash: attachment.sha2 }),
+      attachmentRequest: config.repo.getAttachment({
+        lrs_id,
+        hash: attachment.sha2,
+        contentType: attachment.contentType
+      }),
       contentType: attachment.contentType,
     };
   });

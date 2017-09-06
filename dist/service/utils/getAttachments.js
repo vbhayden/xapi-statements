@@ -52,7 +52,11 @@ exports.default = function (config, models, hasAttachments, lrs_id) { return __a
                     return {
                         fileUrl: attachment.fileUrl,
                         hash: attachment.sha2,
-                        attachmentRequest: config.repo.getAttachment({ lrs_id: lrs_id, hash: attachment.sha2 }),
+                        attachmentRequest: config.repo.getAttachment({
+                            lrs_id: lrs_id,
+                            hash: attachment.sha2,
+                            contentType: attachment.contentType
+                        }),
                         contentType: attachment.contentType,
                     };
                 });

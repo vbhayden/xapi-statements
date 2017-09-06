@@ -37,19 +37,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
+var getAttachmentDir_1 = require("../utils/getAttachmentDir");
+var getAttachmentPath_1 = require("../utils/getAttachmentPath");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var attachmentsDirectory, promises;
+        var dir, promises;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    attachmentsDirectory = config.storageDir + "/" + opts.lrs_id + "/attachments";
-                    return [4 /*yield*/, fs.ensureDir(attachmentsDirectory)];
+                    dir = getAttachmentDir_1.default({ subfolder: config.storageDir, lrs_id: opts.lrs_id });
+                    return [4 /*yield*/, fs.ensureDir(dir)];
                 case 1:
                     _a.sent();
                     promises = opts.models.map(function (model) {
                         return new Promise(function (resolve, reject) {
-                            var filePath = attachmentsDirectory + "/" + model.hash;
+                            var filePath = getAttachmentPath_1.default({
+                                dir: dir,
+                                hash: model.hash,
+                                contentType: model.contentType
+                            });
                             var writeStream = fs.createWriteStream(filePath);
                             model.stream.pipe(writeStream);
                             model.stream.on('end', function () {
