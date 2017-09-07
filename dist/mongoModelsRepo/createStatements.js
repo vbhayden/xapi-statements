@@ -46,6 +46,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongodb_1 = require("mongodb");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
+var constants_1 = require("./utils/constants");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var documents, collection;
@@ -61,7 +62,7 @@ exports.default = function (config) {
                     });
                     return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('statements');
+                    collection = (_a.sent()).collection(constants_1.STATEMENTS_COLLECTION_NAME);
                     return [4 /*yield*/, collection.insertMany(documents)];
                 case 2:
                     _a.sent();

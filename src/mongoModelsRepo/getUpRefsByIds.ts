@@ -2,6 +2,7 @@ import UpRef from '../models/UpRef';
 import GetUpRefsByIdsOptions from '../repoFactory/options/GetUpRefsByIdsOptions';
 import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
+import { STATEMENTS_COLLECTION_NAME } from './utils/constants';
 
 interface Result {
   statement: {
@@ -14,7 +15,7 @@ interface Result {
 
 export default (config: Config) => {
   return async (opts: GetUpRefsByIdsOptions): Promise<UpRef[]> => {
-    const collection = (await config.db).collection('statements');
+    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
 
     const query = {
       'statement.object.objectType': 'StatementRef',

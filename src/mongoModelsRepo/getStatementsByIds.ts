@@ -3,6 +3,7 @@ import GetStatementsByIdsOptions from '../repoFactory/options/GetStatementsByIds
 import matchesClientOption from './utils/matchesClientOption';
 import { decodeDotsInStatement } from './utils/replaceDotsInStatement';
 import Config from './Config';
+import { STATEMENTS_COLLECTION_NAME } from './utils/constants';
 
 interface Result {
   statement: Statement;
@@ -10,7 +11,7 @@ interface Result {
 
 export default (config: Config) => {
   return async (opts: GetStatementsByIdsOptions): Promise<Statement[]> => {
-    const collection = (await config.db).collection('statements');
+    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
 
     const query = {
       'statement.id': { $in: opts.ids },

@@ -2,6 +2,7 @@ import NoModel from 'jscommons/dist/errors/NoModel';
 import GetDownRefIdOptions from '../repoFactory/options/GetDownRefIdOptions';
 import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
+import { STATEMENTS_COLLECTION_NAME } from './utils/constants';
 
 interface Result {
   statement: {
@@ -13,7 +14,7 @@ interface Result {
 
 export default (config: Config) => {
   return async (opts: GetDownRefIdOptions): Promise<string> => {
-    const collection = (await config.db).collection('statements');
+    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
 
     const query = {
       'statement.object.objectType': 'StatementRef',

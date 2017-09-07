@@ -1,6 +1,7 @@
 import matchesClientOption from '../utils/matchesClientOption';
 import Config from '../Config';
 import ClientModel from '../../models/ClientModel';
+import { STATEMENTS_COLLECTION_NAME } from './../utils/constants';
 
 export interface Options {
   config: Config;
@@ -10,7 +11,7 @@ export interface Options {
 }
 
 export default async ({ config, query, project, client }: Options) => {
-  const collection = (await config.db).collection('statements');
+  const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
   const orgQuery = {
     ...query,
     ...matchesClientOption(client)

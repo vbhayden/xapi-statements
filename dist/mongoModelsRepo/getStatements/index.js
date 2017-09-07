@@ -53,6 +53,7 @@ var matchesActivityOption_1 = require("./matchesActivityOption");
 var matchesRegistrationOption_1 = require("./matchesRegistrationOption");
 var matchesUntilOption_1 = require("./matchesUntilOption");
 var matchesSinceOption_1 = require("./matchesSinceOption");
+var constants_1 = require("./../utils/constants");
 var filterModels = function (opts) {
     return __assign({ voided: false }, matchesCursorOption_1.default(opts), matchesClientOption_1.default(opts.client, true), matchesAgentOption_1.default(opts), matchesVerbOption_1.default(opts), matchesActivityOption_1.default(opts), matchesRegistrationOption_1.default(opts), matchesUntilOption_1.default(opts), matchesSinceOption_1.default(opts));
 };
@@ -69,7 +70,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('statements');
+                    collection = (_a.sent()).collection(constants_1.STATEMENTS_COLLECTION_NAME);
                     query = filterModels(opts);
                     sort = sortModels(opts.ascending);
                     skip = opts.skip || 0;
