@@ -109,6 +109,7 @@ exports.default = function (config) {
                         voidStatements_1.default(config, unstoredModels, voidedObjectIds, opts.client),
                         updateReferences_1.default(config, unstoredModels, opts.client),
                         updateFullActivities_1.default({ config: config, models: unstoredModels, client: opts.client }),
+                        config.repo.incrementStoreCount({ client: opts.client, count: unstoredModels.length }),
                     ]);
                     return [4 /*yield*/, awaitUpdates(config, unawaitedUpdates)];
                 case 5:

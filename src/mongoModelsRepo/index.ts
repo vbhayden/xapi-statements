@@ -15,6 +15,7 @@ import setRefs from './setRefs';
 import getStatementsByIds from './getStatementsByIds';
 import getUpRefsByIds from './getUpRefsByIds';
 import updateFullActivities from './updateFullActivities';
+import incrementStoreCount from './incrementStoreCount';
 
 export default (config: Config): ModelsRepo => {
   return {
@@ -32,6 +33,7 @@ export default (config: Config): ModelsRepo => {
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
     updateFullActivities: updateFullActivities(config),
+    incrementStoreCount: incrementStoreCount(config),
     ...commonMongoRepo(config),
   };
 };

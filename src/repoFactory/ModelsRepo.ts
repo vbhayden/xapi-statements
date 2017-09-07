@@ -18,6 +18,7 @@ import GetUpRefsByIdsOptions from './options/GetUpRefsByIdsOptions';
 import GetFullActivityOptions from './options/GetFullActivityOptions';
 import GetFullActivityResult from './results/GetFullActivityResult';
 import UpdateFullActivitiesOptions from './options/UpdateFullActivitiesOptions';
+import IncrementStoreCountOptions from './options/IncrementStoreCountOptions';
 
 interface ModelsRepo extends CommonRepo {
   createStatements: (opts: CreateStatementsOptions) => Promise<UnstoredStatementModel[]>;
@@ -34,6 +35,7 @@ interface ModelsRepo extends CommonRepo {
   getStatementsByIds: (opts: GetStatementsByIdsOptions) => Promise<Statement[]>;
   getUpRefsByIds: (opts: GetUpRefsByIdsOptions) => Promise<UpRef[]>;
   updateFullActivities: (opts: UpdateFullActivitiesOptions) => Promise<void>;
+  incrementStoreCount: (opts: IncrementStoreCountOptions) => Promise<void>;
 }
 
 export default ModelsRepo;

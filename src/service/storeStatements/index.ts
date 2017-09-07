@@ -60,6 +60,7 @@ export default (config: Config) => {
       voidStatements(config, unstoredModels, voidedObjectIds, opts.client),
       updateReferences(config, unstoredModels, opts.client),
       updateFullActivities({ config, models: unstoredModels, client: opts.client }),
+      config.repo.incrementStoreCount({ client: opts.client, count: unstoredModels.length }),
     ]);
 
     await awaitUpdates(config, unawaitedUpdates);
