@@ -3,10 +3,11 @@ import GetFullActivityResult from '../repoFactory/results/GetFullActivityResult'
 import Config from './Config';
 import matchesFullActivity from './utils/matchesFullActivity';
 import { replaceDotsInExtensions } from './utils/replaceDotsInStatement';
+import { FULL_ACTIVITIES_COLLECTION_NAME } from './utils/constants';
 
 export default (config: Config) => {
   return async (opts: GetFullActivityOptions): Promise<GetFullActivityResult> => {
-    const collection = (await config.db).collection('fullActivities');
+    const collection = (await config.db).collection(FULL_ACTIVITIES_COLLECTION_NAME);
     const query = matchesFullActivity({
       activityId: opts.activityId,
       lrsId: opts.client.lrs_id,

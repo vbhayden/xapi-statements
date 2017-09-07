@@ -3,6 +3,7 @@ import UpdateFullActivitiesOptions from '../repoFactory/options/UpdateFullActivi
 import Config from './Config';
 import matchesFullActivity from './utils/matchesFullActivity';
 import { replaceDotsInExtensions } from './utils/replaceDotsInStatement';
+import { FULL_ACTIVITIES_COLLECTION_NAME } from './utils/constants';
 
 const getPatchUpdate = <T>(patch: Dictionary<T>, parentKeys: string[]) => {
   return mapKeys<T, string>(patch, (_value, key) => {
@@ -13,7 +14,7 @@ const getPatchUpdate = <T>(patch: Dictionary<T>, parentKeys: string[]) => {
 
 export default (config: Config) => {
   return async (opts: UpdateFullActivitiesOptions): Promise<void> => {
-    const collection = (await config.db).collection('fullActivities');
+    const collection = (await config.db).collection(FULL_ACTIVITIES_COLLECTION_NAME);
     const lrsId = opts.client.lrs_id;
     const organisationId = opts.client.organisation;
     const batch = collection.initializeUnorderedBulkOp();
