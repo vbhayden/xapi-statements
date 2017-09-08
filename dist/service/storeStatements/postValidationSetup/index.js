@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -57,7 +65,7 @@ exports.default = function (models, attachments, client) { return __awaiter(_thi
                     return attachments[0];
                 });
                 unstoredModelPromises = models.map(function (model) { return __awaiter(_this, void 0, void 0, function () {
-                    var objectTypesModel, preHashStatement, postHashStatement, timestampTime;
+                    var objectTypesModel, preHashStatement, fullStatementWithID, postHashStatement, timestampTime;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0:
@@ -66,7 +74,8 @@ exports.default = function (models, attachments, client) { return __awaiter(_thi
                             case 1:
                                 _a.sent();
                                 preHashStatement = setupPreHashStatement_1.default(objectTypesModel);
-                                postHashStatement = setupPostHashStatement_1.default(preHashStatement, storedTimeString, client.authority);
+                                fullStatementWithID = __assign({}, objectTypesModel, preHashStatement);
+                                postHashStatement = setupPostHashStatement_1.default(fullStatementWithID, storedTimeString, client.authority);
                                 timestampTime = new Date(postHashStatement.timestamp);
                                 return [2 /*return*/, {
                                         hasGeneratedId: model.id === undefined,

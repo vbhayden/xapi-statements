@@ -6,6 +6,7 @@ interface IdFormattedStatement extends IdFormattedStatementBase {
   authority: IdFormattedActor;
   stored: string;
   timestamp: string;
+  version: string;
 }
 
 export default IdFormattedStatement;
