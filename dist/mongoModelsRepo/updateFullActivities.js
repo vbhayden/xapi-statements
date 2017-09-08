@@ -47,6 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var matchesFullActivity_1 = require("./utils/matchesFullActivity");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
+var constants_1 = require("./utils/constants");
 var getPatchUpdate = function (patch, parentKeys) {
     return lodash_1.mapKeys(patch, function (_value, key) {
         var parentPath = parentKeys.join('.');
@@ -60,7 +61,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('fullActivities');
+                    collection = (_a.sent()).collection(constants_1.FULL_ACTIVITIES_COLLECTION_NAME);
                     lrsId = opts.client.lrs_id;
                     organisationId = opts.client.organisation;
                     batch = collection.initializeUnorderedBulkOp();

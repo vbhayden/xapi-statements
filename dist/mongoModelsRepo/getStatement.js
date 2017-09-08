@@ -47,6 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var NoModel_1 = require("jscommons/dist/errors/NoModel");
 var matchesClientOption_1 = require("./utils/matchesClientOption");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
+var constants_1 = require("./utils/constants");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var collection, query, filteredModel, decodedModel;
@@ -54,7 +55,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('statements');
+                    collection = (_a.sent()).collection(constants_1.STATEMENTS_COLLECTION_NAME);
                     query = __assign({ 'statement.id': opts.id }, matchesClientOption_1.default(opts.client, true), (opts.voided === undefined ? {} :
                         { voided: opts.voided }));
                     return [4 /*yield*/, collection.findOne(query)];

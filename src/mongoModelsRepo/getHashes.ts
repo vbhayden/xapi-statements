@@ -2,6 +2,7 @@ import StatementHash from '../models/StatementHash';
 import GetHashesOptions from '../repoFactory/options/GetHashesOptions';
 import matchesClientOption from './utils/matchesClientOption';
 import Config from './Config';
+import { STATEMENTS_COLLECTION_NAME } from './utils/constants';
 
 interface Result {
   hash: string;
@@ -12,7 +13,7 @@ interface Result {
 
 export default (config: Config) => {
   return async (opts: GetHashesOptions): Promise<StatementHash[]> => {
-    const collection = (await config.db).collection('statements');
+    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
 
     const query = {
       'statement.id': { $in: opts.ids },

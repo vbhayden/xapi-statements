@@ -46,6 +46,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var matchesClientOption_1 = require("./utils/matchesClientOption");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
+var constants_1 = require("./utils/constants");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var collection, query, project, filteredModels, filteredStatements;
@@ -53,7 +54,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('statements');
+                    collection = (_a.sent()).collection(constants_1.STATEMENTS_COLLECTION_NAME);
                     query = __assign({ 'statement.id': { $in: opts.ids } }, matchesClientOption_1.default(opts.client));
                     project = {
                         _id: 0,

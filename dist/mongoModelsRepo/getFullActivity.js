@@ -46,6 +46,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var matchesFullActivity_1 = require("./utils/matchesFullActivity");
 var replaceDotsInStatement_1 = require("./utils/replaceDotsInStatement");
+var constants_1 = require("./utils/constants");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
         var collection, query, fields, result;
@@ -53,7 +54,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('fullActivities');
+                    collection = (_a.sent()).collection(constants_1.FULL_ACTIVITIES_COLLECTION_NAME);
                     query = matchesFullActivity_1.default({
                         activityId: opts.activityId,
                         lrsId: opts.client.lrs_id,

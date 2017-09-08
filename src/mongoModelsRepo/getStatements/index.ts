@@ -10,6 +10,7 @@ import matchesActivityOption from './matchesActivityOption';
 import matchesRegistrationOption from './matchesRegistrationOption';
 import matchesUntilOption from './matchesUntilOption';
 import matchesSinceOption from './matchesSinceOption';
+import { STATEMENTS_COLLECTION_NAME } from './../utils/constants';
 
 const filterModels = (opts: GetStatementsOptions): Object => {
   return {
@@ -34,7 +35,7 @@ const sortModels = (ascending: boolean) => {
 
 export default (config: Config) => {
   return async (opts: GetStatementsOptions): Promise<StoredStatementModel[]> => {
-    const collection = (await config.db).collection('statements');
+    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
     const query = filterModels(opts);
     const sort = sortModels(opts.ascending);
     const skip = opts.skip || 0;

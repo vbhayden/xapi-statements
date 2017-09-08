@@ -45,6 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var matchesClientOption_1 = require("../utils/matchesClientOption");
+var constants_1 = require("./../utils/constants");
 exports.default = function (_a) {
     var config = _a.config, query = _a.query, project = _a.project, client = _a.client;
     return __awaiter(_this, void 0, void 0, function () {
@@ -53,7 +54,7 @@ exports.default = function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('statements');
+                    collection = (_a.sent()).collection(constants_1.STATEMENTS_COLLECTION_NAME);
                     orgQuery = __assign({}, query, matchesClientOption_1.default(client));
                     return [4 /*yield*/, collection.find(orgQuery).project(project).toArray()];
                 case 2:
