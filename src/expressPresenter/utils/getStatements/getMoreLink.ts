@@ -2,6 +2,7 @@ import { map } from 'lodash';
 import StatementsResult from '../../../models/StatementsResult';
 import GetStatementsOptions from '../../../serviceFactory/options/GetStatementsOptions';
 import StatementsResultOptions from '../../../serviceFactory/options/StatementsResultOptions';
+import pickDefined from '../pickDefined';
 
 export interface MoreLinkOptions {
   results: StatementsResult;
@@ -15,11 +16,25 @@ export default (opts: MoreLinkOptions) => {
     return '';
   }
 
-  const moreLinkOpts = {
-    ...opts.statementsOpts,
-    ...opts.resultOpts,
+  const moreLinkOpts = pickDefined({
+    agent: opts.statementsOpts.agent,
+    activity: opts.statementsOpts.activity,
+    verb: opts.statementsOpts.verb,
+    related_agents: opts.statementsOpts.related_agents,
+    related_activities: opts.statementsOpts.related_activities,
+    registration: opts.statementsOpts.registration,
+    since: opts.statementsOpts.since,
+    until: opts.statementsOpts.until,
+    ascending: opts.statementsOpts.ascending,
+    limit: opts.statementsOpts.limit,
+    skip: opts.statementsOpts.skip,
+
+    format: opts.resultOpts.format,
+    attachments: opts.resultOpts.attachments,
+    langs: opts.resultOpts.langs,
+
     cursor: opts.results.cursor,
-  };
+  });
 
   const moreLinkParams = map(moreLinkOpts, (value, key) => {
     return value === undefined ? '' : `${key}=${value}`;
