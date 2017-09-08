@@ -6,6 +6,7 @@ interface Statement extends StatementBase {
   authority: Actor;
   stored: string;
   timestamp: string;
+  version: string;
 }
 
 export default Statement;
