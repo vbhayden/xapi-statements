@@ -45,7 +45,7 @@ exports.default = function (config) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
                     collection = (_a.sent()).collection('lrs');
-                    return [4 /*yield*/, collection.updateOne({ lrs_id: new mongodb_1.ObjectID(opts.client.lrs_id) }, { $inc: { statementCount: opts.count } })];
+                    return [4 /*yield*/, collection.updateOne({ _id: new mongodb_1.ObjectID(opts.client.lrs_id) }, { $inc: { statementCount: opts.count } })];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];
