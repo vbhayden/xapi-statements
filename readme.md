@@ -1,7 +1,7 @@
 # xAPI Statements
 > A server for the xAPI statements
 
-[![Build Status](https://travis-ci.org/LearningLocker/xapi-server.svg?branch=master)](https://travis-ci.org/LearningLocker/xapi-server)
+[![Build Status](https://travis-ci.org/LearningLocker/xapi-statements.svg?branch=master)](https://travis-ci.org/LearningLocker/xapi-statements)
 
 *Learning Locker is copyright [HT2](http://ht2.co.uk)*
 
