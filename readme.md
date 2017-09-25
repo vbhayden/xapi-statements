@@ -1,4 +1,6 @@
 # xAPI Statements
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/LearningLocker/xapi-statements.svg)](https://greenkeeper.io/)
 > A server for the xAPI statements
 
 [![Build Status](https://travis-ci.org/LearningLocker/xapi-statements.svg?branch=master)](https://travis-ci.org/LearningLocker/xapi-statements)
