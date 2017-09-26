@@ -10,7 +10,7 @@ interface Result {
       id: string;
     }
   };
-};
+}
 
 export default (config: Config) => {
   return async (opts: GetDownRefIdOptions): Promise<string> => {

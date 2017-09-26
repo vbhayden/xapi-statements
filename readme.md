@@ -1,4 +1,6 @@
 # xAPI Statements
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/LearningLocker/xapi-statements.svg)](https://greenkeeper.io/)
 > A server for the xAPI statements
 
 [![NPM Package Version](https://badge.fury.io/js/xapi-statements.svg)](https://www.npmjs.com/package/xapi-statements)

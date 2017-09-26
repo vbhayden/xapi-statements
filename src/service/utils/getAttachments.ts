@@ -8,7 +8,7 @@ export default async (
   config: Config,
   models: UnstoredStatementModel[],
   hasAttachments: boolean,
-  lrs_id: string,
+  lrsId: string,
 ): Promise<AttachmentModel[]> => {
   if (!hasAttachments) {
     return [];
@@ -20,7 +20,7 @@ export default async (
       fileUrl: attachment.fileUrl,
       hash: attachment.sha2,
       attachmentRequest: config.repo.getAttachment({
-        lrs_id,
+        lrs_id: lrsId,
         hash: attachment.sha2,
         contentType: attachment.contentType
       }),

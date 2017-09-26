@@ -46,7 +46,7 @@ export default async (
 
   if (originalStatement.attachments.length === 0) {
     delete originalStatement.attachments;
-  };
+  }
 
   const originalStatementHash = sha1(originalStatement);
   const attachmentChecks = signaturedAttachments.map(async (signaturedAttachment) => {
