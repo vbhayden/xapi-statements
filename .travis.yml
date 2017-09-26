@@ -21,10 +21,9 @@ before_script:
   - npm prune
 
 script:
-  - npm run cover-memory
-  - npm run cover-mongo
   - npm run build
-  - ./node_modules/tslint/bin/tslint --project ./tsconfig.json -c ./tslint.travis.json
+  - npm run cover-ci
+  - npm run lint -- -c tslint.travis.json
   - npm run duplication -- --limit=0.01
 
 after_script:
