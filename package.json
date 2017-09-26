@@ -1,6 +1,6 @@
 {
   "name": "xapi-statements",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "A service for xAPI statements",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -9,6 +9,11 @@
     "type": "git",
     "url": "https://github.com/LearningLocker/xapi-statements.git"
   },
+  "files": [
+    "dist",
+    ".env.example",
+    "package-lock.json"
+  ],
   "scripts": {
     "acp": "git add -A && npm run commit && git push",
     "commit": "git-cz",
@@ -25,7 +30,8 @@
     "cover-mongo": "nyc --lines 100 --check-coverage --exclude '(dist/testEventsRepo|dist/testAuthRepo|dist/fetchAuthRepo|dist/memoryModelsRepo|dist/s3StorageRepo|dist/config.js)' npm run test-mongo",
     "clean": "rm -rf dist",
     "lint": "./node_modules/tslint/bin/tslint --project ./tsconfig.json",
-    "duplication": "./node_modules/jscpd/bin/jscpd"
+    "duplication": "./node_modules/jscpd/bin/jscpd",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
     "commitizen": {
@@ -98,6 +104,7 @@
     "mocha": "^3.4.2",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^11.0.0",
+    "semantic-release": "^8.0.3",
     "travis-cov": "^0.2.5",
     "tslint": "^4.4.2",
     "tslint-consistent-codestyle": "^1.6.0",

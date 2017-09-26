@@ -8,15 +8,15 @@ env:
 services:
   - redis-server
 
-install:
+before_install:
   - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
   - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
   - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
-  - npm install
 
 before_script:
   - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
   - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
+  - npm prune
 
 script:
   - npm run cover-memory
@@ -27,3 +27,7 @@ script:
 
 after_script:
   - pkill mongod
+
+after_success:
+  - npm prune --production
+  - npm run semantic-release
