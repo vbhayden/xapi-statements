@@ -41,8 +41,8 @@ export default (
     });
 
     it('should return the mbox_sha1sum and objectType without the name', async () => {
-      const mbox_sha1sum = 'e1f9bc64eefbdf3660690684c6184f594f9a5c17';
-      await assertIdsActor({ mbox_sha1sum });
+      const mboxSha1Sum = 'e1f9bc64eefbdf3660690684c6184f594f9a5c17';
+      await assertIdsActor({ mbox_sha1sum: mboxSha1Sum });
     });
 
     it('should return the openid and objectType without the name', async () => {

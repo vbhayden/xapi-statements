@@ -19,7 +19,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
 
   const assertFilter = async (
     createActivity: (activity: any) => any,
-    related_activities: boolean = false
+    relatedActivities: boolean = false
   ) => {
     const statement1 = createStatement({
       id: TEST_TARGET_ID,
@@ -32,7 +32,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
     await storeStatements([statement1, statement2]);
     await assertFilteredStatements(service)({
       activity: TEST_TARGET_ACTIVITY,
-      related_activities,
+      related_activities: relatedActivities,
       client: TEST_CLIENT,
     }, [TEST_TARGET_ID]);
   };

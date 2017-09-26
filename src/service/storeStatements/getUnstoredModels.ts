@@ -20,7 +20,7 @@ const modelsConflicts = (models: UnstoredStatementModel[]): ConflictRes => {
           model,
         ],
       };
-    };
+    }
 
     // Ensures that there are no duplicate ids within the batch (spec requirement).
     const statementId = model.statement.id;

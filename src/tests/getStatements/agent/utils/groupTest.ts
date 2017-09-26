@@ -2,14 +2,14 @@ import agentFilterTest from './agentFilterTest';
 import FilteredStatementsAsserter from '../../utils/FilteredStatementsAsserter';
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
-  return (createActor: (actor: any) => any, related_agents: boolean) => {
+  return (createActor: (actor: any) => any, relatedAgents: boolean) => {
     describe('identified group', () => {
       agentFilterTest(assertFilteredStatements)((actor: any) => {
         return createActor({
           ...actor,
           objectType: 'Group',
         });
-      }, related_agents);
+      }, relatedAgents);
     });
 
     describe('identified group members', () => {
@@ -22,7 +22,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
             objectType: 'Agent',
           }]
         });
-      }, related_agents);
+      }, relatedAgents);
     });
 
     describe('anonymous group members', () => {
@@ -34,7 +34,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
             objectType: 'Group',
           }]
         });
-      }, related_agents);
+      }, relatedAgents);
     });
   };
 };

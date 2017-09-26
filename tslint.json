@@ -29,7 +29,6 @@
     ],
     "no-unused-variable": true,
     "no-unused-expression": true,
-    "no-unused-new": true,
     "no-duplicate-variable": true,
     "no-eval": true,
     "no-internal-module": true,
@@ -72,14 +71,12 @@
         "variable-declaration": "nospace"
       }
     ],
-    "variable-name": {
-      "items": [
-        "check-format",
-        "ban-keywords"
-      ],
-      "minLength": 3,
-      "maxLength": 15
-    },
+    "variable-name": [
+      true,
+      "check-format",
+      "ban-keywords",
+      "allow-leading-underscore"
+    ],
     "whitespace": [
       true,
       "check-branch",

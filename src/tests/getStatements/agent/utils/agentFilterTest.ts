@@ -10,7 +10,7 @@ const TEST_MISSING_ID = '1c86d8e9-f325-404f-b3d9-24c451035583';
 const TEST_CLIENT = createClientModel();
 
 export default (assertFilteredStatements: FilteredStatementsAsserter) => {
-  return (createActor: (actor: any) => any, related_agents: boolean) => {
+  return (createActor: (actor: any) => any, relatedAgents: boolean) => {
     const service = setup();
     const storeStatements = (statements: any[], authority?: Actor) => {
       return storeAwaitedStatements(service)({
@@ -31,7 +31,7 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
       await storeStatements([statement2], statement2.authority);
       await assertFilteredStatements(service)({
         agent: actor1,
-        related_agents,
+        related_agents: relatedAgents,
         client: TEST_CLIENT,
       }, [TEST_TARGET_ID]);
     };
@@ -55,9 +55,9 @@ export default (assertFilteredStatements: FilteredStatementsAsserter) => {
     });
 
     it('should return statements when they match the mbox_sha1sum', async () => {
-      const mbox_sha1sum1 = 'e1f9bc64eefbdf3660690684c6184f594f9a5c17';
-      const mbox_sha1sum2 = 'e1f9bc64eefbdf3660690684c6184f594f9a5c18';
-      await assertFilter({ mbox_sha1sum: mbox_sha1sum1 }, { mbox_sha1sum: mbox_sha1sum2 });
+      const mbox1 = 'e1f9bc64eefbdf3660690684c6184f594f9a5c17';
+      const mbox2 = 'e1f9bc64eefbdf3660690684c6184f594f9a5c18';
+      await assertFilter({ mbox_sha1sum: mbox1 }, { mbox_sha1sum: mbox2 });
     });
 
     it('should return statements when they match the openid', async () => {
