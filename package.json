@@ -44,7 +44,6 @@
     "npm": "^5.0.0"
   },
   "dependencies": {
-    "@types/mime-types": "^2.1.0",
     "accept-language-parser": "^1.4.1",
     "atob": "^2.0.3",
     "aws-sdk": "^2.97.0",
@@ -58,7 +57,7 @@
     "file-stream-rotator": "^0.2.0",
     "fs-extra": "^4.0.2",
     "helmet": "^3.5.0",
-    "jscommons": "git+https://git@github.com/HT2-Labs/jscommons.git",
+    "jscommons": "^1.0.1",
     "jsonwebtoken": "^8.0.1",
     "lodash": "^4.17.4",
     "mime-types": "^2.1.17",
@@ -76,7 +75,7 @@
     "uuid": "^3.0.1",
     "winston": "^2.3.1",
     "winston-aws-cloudwatch": "^1.5.0",
-    "xapi-validation": "git+https://git@github.com/LearningLocker/xapi-validation.git"
+    "xapi-validation": "^2.1.0"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.4",
@@ -88,6 +87,7 @@
     "@types/helmet": "0.0.36",
     "@types/jsonwebtoken": "^7.2.3",
     "@types/lodash": "^4.14.52",
+    "@types/mime-types": "^2.1.0",
     "@types/mocha": "^2.2.39",
     "@types/mongodb": "^2.2.2",
     "@types/morgan": "^1.7.32",
