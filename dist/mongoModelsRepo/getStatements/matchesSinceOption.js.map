@@ -1,1 +1,0 @@
-{"version":3,"file":"matchesSinceOption.js","sourceRoot":"","sources":["../../../src/mongoModelsRepo/getStatements/matchesSinceOption.ts"],"names":[],"mappings":";;AAEA,kBAAe,UAAC,IAA0B;IACxC,MAAM,CAAC,IAAI,CAAC,KAAK,KAAK,SAAS,GAAG,EAAE,GAAG;QACrC,MAAM,EAAE,EAAE,GAAG,EAAE,IAAI,IAAI,CAAC,IAAI,CAAC,KAAK,CAAC,EAAE;KACtC,CAAC;AACJ,CAAC,CAAC"}

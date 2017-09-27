@@ -1,1 +1,0 @@
-{"version":3,"file":"matchesUntilOption.js","sourceRoot":"","sources":["../../../src/mongoModelsRepo/getStatements/matchesUntilOption.ts"],"names":[],"mappings":";;AAEA,kBAAe,UAAC,IAA0B;IACxC,MAAM,CAAC,IAAI,CAAC,KAAK,KAAK,SAAS,GAAG,EAAE,GAAG;QACrC,MAAM,EAAE,EAAE,IAAI,EAAE,IAAI,IAAI,CAAC,IAAI,CAAC,KAAK,CAAC,EAAE;KACvC,CAAC;AACJ,CAAC,CAAC"}

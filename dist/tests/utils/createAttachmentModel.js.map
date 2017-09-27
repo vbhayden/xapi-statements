@@ -1,1 +1,0 @@
-{"version":3,"file":"createAttachmentModel.js","sourceRoot":"","sources":["../../../src/tests/utils/createAttachmentModel.ts"],"names":[],"mappings":";;AAAA,iDAAmD;AACnD,yCAAoC;AAEpC,kBAAe,UAAC,OAAe,EAAE,WAAkC;IAAlC,4BAAA,EAAA,0BAAkC;IACjE,MAAM,CAAC;QACL,MAAM,EAAE,cAAc,CAAC,OAAO,CAAC;QAC/B,IAAI,EAAE,mBAAS,CAAC,OAAO,CAAC;QACxB,WAAW,aAAA;KACZ,CAAC;AACJ,CAAC,CAAC"}

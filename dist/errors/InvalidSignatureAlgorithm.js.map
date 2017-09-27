@@ -1,1 +1,0 @@
-{"version":3,"file":"InvalidSignatureAlgorithm.js","sourceRoot":"","sources":["../../src/errors/InvalidSignatureAlgorithm.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6DAAwD;AAExD;IAA6B,6BAAS;IACpC,mBAAmB,WAAmB,EAAS,SAAiB;QAAhE,YACE,iBAAO,SACR;QAFkB,iBAAW,GAAX,WAAW,CAAQ;QAAS,eAAS,GAAT,SAAS,CAAQ;;IAEhE,CAAC;IACH,gBAAC;AAAD,CAAC,AAJD,CAA6B,mBAAS,GAIrC"}
