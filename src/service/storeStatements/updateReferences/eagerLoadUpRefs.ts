@@ -9,17 +9,30 @@ export default async (
   models: UnstoredStatementModel[],
   client: ClientModel
 ): Promise<Dictionary<String[]>> => {
+  const idMap = ;
+  
   const statementIds = models.map((model) => {
     return model.statement.id;
   });
+  
+  const emptyGroupedUpRefIds = statementIds.reduce(
+    (result, statementId) => {
+      return {
+        ...result,
+        [statementId]: []
+      };
+    }, 
+    []
+  );
+  
   const eagerLoadedUpRefs = await config.repo.getUpRefsByIds({ targetIds: statementIds, client });
   const groupedUpRefs = groupBy(eagerLoadedUpRefs, (upRef: UpRef) => {
     return upRef.targetId;
   });
-  const groupedUpRefIds = mapValues(groupedUpRefs, (upRefs: UpRef[]): string[] => {
+  const populatedGroupedUpRefIds = mapValues(groupedUpRefs, (upRefs: UpRef[]): string[] => {
     return upRefs.map((upRef: UpRef) => {
       return upRef.sourceId;
     });
   });
-  return groupedUpRefIds;
+  return { ...emptyGroupedUpRefIds, populatedGroupedUpRefIds };
 };
