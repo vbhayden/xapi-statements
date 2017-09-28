@@ -15,12 +15,10 @@ export default async (
 
   const emptyGroupedUpRefIds = statementIds.reduce(
     (result, statementId) => {
-      return {
-        ...result,
-        [statementId]: [],
-      };
+      result[statementId] = false;
+      return result;
     },
-    {}
+    {} as any
   );
 
   const eagerLoadedUpRefs = await config.repo.getUpRefsByIds({ targetIds: statementIds, client });
