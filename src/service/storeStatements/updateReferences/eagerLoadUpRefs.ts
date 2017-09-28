@@ -15,7 +15,7 @@ export default async (
 
   const emptyGroupedUpRefIds = statementIds.reduce(
     (result, statementId) => {
-      result[statementId] = false;
+      result[statementId] = [];
       return result;
     },
     {} as any
