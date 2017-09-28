@@ -9,8 +9,6 @@ export default async (
   models: UnstoredStatementModel[],
   client: ClientModel
 ): Promise<Dictionary<String[]>> => {
-  const idMap = ;
-  
   const statementIds = models.map((model) => {
     return model.statement.id;
   });
