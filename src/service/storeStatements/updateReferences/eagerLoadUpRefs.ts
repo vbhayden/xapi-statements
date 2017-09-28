@@ -32,5 +32,5 @@ export default async (
       return upRef.sourceId;
     });
   });
-  return { ...emptyGroupedUpRefIds, populatedGroupedUpRefIds } as Dictionary<String[]>;
+  return { ...emptyGroupedUpRefIds, ...populatedGroupedUpRefIds } as Dictionary<String[]>;
 };
