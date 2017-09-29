@@ -8,7 +8,9 @@ const TEST_ACTIVITY_ID = 'http://www.example.org/activity';
 const TEST_EXTENSION_KEY = 'http://www.example.org/extension';
 const TEST_EXTENSION_VALUE = 'example';
 const TEST_EXTENSIONS = {
-  [TEST_EXTENSION_KEY]: TEST_EXTENSION_VALUE,
+  [TEST_EXTENSION_KEY]: {
+    [TEST_EXTENSION_KEY]: TEST_EXTENSION_VALUE,
+  },
 };
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_CLIENT = createClientModel();

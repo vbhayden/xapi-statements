@@ -2,13 +2,20 @@ import * as modr from '../../utils/modr';
 import Extensions from '../../models/Extensions';
 import StatementObject from '../../models/StatementObject';
 import SubStatementObject from '../../models/SubStatementObject';
-import { mapKeys } from 'lodash';
+import { mapKeys, mapValues, isPlainObject } from 'lodash';
 
 export const replaceDotsInExtensions = (searchValue: RegExp, replaceValue: string) => {
   return modr.modifyType(Object, (extensions: Extensions) => {
-    return mapKeys(extensions, (_value: any, key: string) => {
+    const encodedRootExtensions: Extensions = mapKeys(extensions, (_value: any, key: string) => {
       return key.replace(searchValue, replaceValue);
     });
+    const encodedExtensions: Extensions = mapValues(encodedRootExtensions, (value: any) => {
+      if (isPlainObject(value)) {
+        return replaceDotsInExtensions(searchValue, replaceValue)(value);
+      }
+      return value;
+    });
+    return encodedExtensions;
   });
 };
 
