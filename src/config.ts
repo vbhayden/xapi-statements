@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 config();
 
 import { S3 } from 'aws-sdk';
+import { defaultTo } from 'lodash';
 import * as os from 'os';
 import getBooleanOption from 'jscommons/dist/config/getBooleanOption';
 import getNumberOption from 'jscommons/dist/config/getNumberOption';
@@ -61,7 +62,10 @@ export default {
     enableVoiding: getBooleanOption(process.env.SERVICE_UPDATE_VOIDS, true),
     enableReferencing: getBooleanOption(process.env.SERVICE_UPDATE_REFS, true),
     enableActivityUpdates: getBooleanOption(process.env.SERVICE_UPDATE_ACTIVITIES, true),
-    awaitUpdates: getBooleanOption(process.env.SERVICE_AWAIT_UODATES, true),
+    awaitUpdates: getBooleanOption(defaultTo<any>(
+      process.env.SERVICE_AWAIT_UPDATES,
+      process.env.SERVICE_AWAIT_UODATES,
+    ), false),
   },
   storage: {
     local: {
