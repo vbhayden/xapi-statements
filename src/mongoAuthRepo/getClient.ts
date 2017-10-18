@@ -1,4 +1,5 @@
 import * as atob from 'atob';
+import { ObjectID } from 'mongodb';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import ClientModel from '../models/ClientModel';
 import GetClientOptions from '../repoFactory/options/GetClientOptions';
@@ -18,7 +19,12 @@ export default (config: Config) => {
       'api.basic_secret': secret,
     });
 
-    if (document === null || document === undefined) {
+    const isMissingClient = (
+      document === null ||
+      document === undefined ||
+      !(document.lrs_id instanceof ObjectID)
+    );
+    if (isMissingClient) {
       throw new NoModel('Client');
     }
 
