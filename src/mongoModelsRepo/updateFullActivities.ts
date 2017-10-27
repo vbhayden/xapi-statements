@@ -6,7 +6,7 @@ import { replaceDotsInExtensions } from './utils/replaceDotsInStatement';
 import { FULL_ACTIVITIES_COLLECTION_NAME } from './utils/constants';
 
 const getPatchUpdate = <T>(patch: Dictionary<T>, parentKeys: string[]) => {
-  return mapKeys<T, string>(patch, (_value, key) => {
+  return mapKeys<T>(patch, (_value, key) => {
     const parentPath = parentKeys.join('.');
     return `${parentPath}.${key}`;
   });
