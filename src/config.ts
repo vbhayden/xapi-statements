@@ -86,10 +86,5 @@ export default {
   },
   mongo: {
     url: getStringOption(process.env.MONGO_URL, 'mongodb://127.0.0.1:27017/xapiserver')
-  },
-  tracker: {
-    newrelic: {
-      enabled: getBooleanOption(process.env.TRACKER_NEWRELIC_ENABLED, false),
-    }
   }
 };
