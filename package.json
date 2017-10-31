@@ -109,6 +109,6 @@
     "travis-cov": "0.2.5",
     "tslint": "5.8.0",
     "tslint-consistent-codestyle": "1.8.0",
-    "typescript": "2.5.3"
+    "typescript": "2.6.1"
   }
 }
