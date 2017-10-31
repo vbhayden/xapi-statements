@@ -1,7 +1,9 @@
 import Repo from '../repoFactory/Repo';
+import { Tracker } from '../tracker';
 
 interface Config {
   repo: Repo;
+  tracker: Promise<Tracker>;
   enableConflictChecks: boolean;
   enableAttachmentValidation: boolean;
   enableVoidingChecks: boolean;
