@@ -14,15 +14,17 @@ import { STATEMENTS_COLLECTION_NAME } from './../utils/constants';
 
 const filterModels = (opts: GetStatementsOptions): Object => {
   return {
-    voided: false,
-    ...matchesCursorOption(opts),
-    ...matchesClientOption(opts.client, true),
-    ...matchesAgentOption(opts),
-    ...matchesVerbOption(opts),
-    ...matchesActivityOption(opts),
-    ...matchesRegistrationOption(opts),
-    ...matchesUntilOption(opts),
-    ...matchesSinceOption(opts),
+    $and: [
+      { voided: false },
+      matchesCursorOption(opts),
+      matchesClientOption(opts.client, true),
+      matchesAgentOption(opts),
+      matchesVerbOption(opts),
+      matchesActivityOption(opts),
+      matchesRegistrationOption(opts),
+      matchesUntilOption(opts),
+      matchesSinceOption(opts),
+    ]
   };
 };
 
