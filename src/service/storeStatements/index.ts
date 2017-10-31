@@ -66,6 +66,10 @@ export default (config: Config) => {
     await awaitUpdates(config, unawaitedUpdates);
     config.repo.emitNewStatements({ ids: statementIds });
 
+    (await config.tracker)('org_id', opts.client.organisation);
+    (await config.tracker)('lrs_id', opts.client.lrs_id);
+    (await config.tracker)('batchSize', unstoredModels.length);
+
     return statementIds;
   };
 };
