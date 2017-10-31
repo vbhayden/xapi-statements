@@ -2,15 +2,12 @@ import setup from '../utils/setup';
 import createClientModel from '../utils/createClientModel';
 import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
-import FilteredStatementsAsserter from './utils/FilteredStatementsAsserter';
 import assertFilteredStatements from './utils/assertFilteredStatements';
 
 const TEST_TARGET_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_MISSING_ID1 = '1c86d8e9-f325-404f-b3d9-24c451035583';
 const TEST_MISSING_ID2 = '1c86d8e9-f325-404f-b3d9-24c451035584';
 const TEST_MISSING_ID3 = '1c86d8e9-f325-404f-b3d9-24c451035585';
-const TEST_MISSING_ID4 = '1c86d8e9-f325-404f-b3d9-24c451035586';
-const TEST_MISSING_ID5 = '1c86d8e9-f325-404f-b3d9-24c451035587';
 const TEST_TARGET_ACTOR = {objectType: 'Agent', mbox: 'mailto:target@example.com'};
 const TEST_MISSING_ACTOR = {objectType: 'Agent', mbox: 'mailto:missing@example.com'};
 const TEST_TARGET_VERB_ID = 'http://www.example.com/object/1';
