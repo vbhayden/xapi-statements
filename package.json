@@ -78,7 +78,7 @@
     "xapi-validation": "^2.1.0"
   },
   "devDependencies": {
-    "@types/bluebird": "3.5.17",
+    "@types/bluebird": "3.5.18",
     "@types/body-parser": "1.16.7",
     "@types/cors": "2.8.1",
     "@types/dotenv": "4.0.2",
