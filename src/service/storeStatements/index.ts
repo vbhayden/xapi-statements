@@ -68,7 +68,9 @@ export default (config: Config) => {
 
     (await config.tracker)('org_id', opts.client.organisation);
     (await config.tracker)('lrs_id', opts.client.lrs_id);
+    (await config.tracker)('client_id', opts.client._id);
     (await config.tracker)('batchSize', unstoredModels.length);
+    (await config.tracker)('sentBatchSize', opts.models.length);
 
     return statementIds;
   };
