@@ -182,6 +182,7 @@ describe('expressPresenter/utils/getParts', () => {
     const stream = new ReadableStream();
     const error = new Error();
     try {
+      stream.push('hello');
       stream.emit('error', error);
     } catch (err) { }
     const promise = getTestParts(stream, TEST_BOUNDARY);
