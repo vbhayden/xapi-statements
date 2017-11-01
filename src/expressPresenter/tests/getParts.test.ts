@@ -185,7 +185,10 @@ describe('expressPresenter/utils/getParts', () => {
       stream.push('hello');
       stream.emit('error', error);
     } catch (err) { }
-    const promise = getTestParts(stream, TEST_BOUNDARY);
-    await assertError(Error, promise);
+    try {
+      await getTestParts(stream, TEST_BOUNDARY);
+      /* istanbul ignore next */
+      assert.fail('Expected error to be thrown.');
+    } catch (err) { }
   });
 });
