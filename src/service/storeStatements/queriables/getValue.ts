@@ -1,13 +1,18 @@
-import { get, isArray, isString } from 'lodash';
+import { get, isArray, isString, union } from 'lodash';
 
-const getValue = (model: any, path: string[]): any => {
+const getValue = (model: any, path: string[], filter: Function = () => { return true; }): any => {
   if (!model) return;
   if (isArray(model)) {
-    return model.map(m => getValue(m, path)).filter(m => {
-      return isArray(m) || isString(m);
+    const values = model.map(m => getValue(m, path)).filter(m => {
+      console.log('array filter', m);
+      return isString(m);
     });
+    return union(values);
   }
-  return get(model, path, undefined);
+  if (filter(model)) {
+    return get(model, path, undefined);
+  }
+  return;
 };
 
 export default getValue;
