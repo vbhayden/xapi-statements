@@ -1,4 +1,5 @@
 import Statement from './Statement';
+import FilterAgent from '../models/FilterAgent';
 
 export type Ref = { statement: Statement };
 
@@ -13,6 +14,12 @@ interface UnstoredStatementModel {
   timestamp: Date;
   stored: Date;
   hash: string;
+  agents: FilterAgent[];
+  relatedAgents: FilterAgent[];
+  verbs: string[];
+  registrations: string[];
+  activities: string[];
+  relatedActivities: string[];
   refs: Ref[];
   statement: Statement;
 }

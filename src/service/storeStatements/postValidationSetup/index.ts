@@ -7,6 +7,8 @@ import setupObjectTypes from './setupObjectTypes';
 import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
 import AttachmentModel from '../../../models/AttachmentModel';
+import getVerbs from '../queriables/getVerbs';
+import getRegistrations from '../queriables/getRegistrations';
 
 export default async (models: any[], attachments: AttachmentModel[], client: ClientModel) => {
   const storedTime = new Date();
@@ -26,6 +28,11 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
     const fullStatementWithID = { ...objectTypesModel, ...preHashStatement };
     const postHashStatement = setupPostHashStatement(fullStatementWithID, storedTimeString, client.authority);
     const timestampTime = new Date(postHashStatement.timestamp);
+    const agents: any = [];
+    const relatedAgents: any[] = [];
+    const activities: string[] = [];
+    const relatedActivities: string[] = [];
+
     return {
       hasGeneratedId: model.id === undefined,
       organisation: client.organisation,
@@ -38,6 +45,12 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
       stored: storedTime,
       refs: [],
       hash: sha1(preHashStatement),
+      agents,
+      relatedAgents,
+      registrations: getRegistrations(model),
+      verbs: getVerbs(model),
+      activities,
+      relatedActivities,
       statement: postHashStatement,
     };
   });
