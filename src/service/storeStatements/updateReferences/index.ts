@@ -69,6 +69,11 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
     const refIds = pull(givenRefIds, id);
     const refs = await getDownRefs(refIds);
     logger.debug('setRefs', shortId(id), shortIds(refIds));
+
+    // updateQueriableAgentsRefs(config, unstoredModels, opts.client),
+    // updateQueriableVerbsRefs(config, unstoredModels, opts.client),
+    // updateQueriableRegistrationsRefs(config, unstoredModels, opts.client),
+    // updateQueriableActivitiesRefs(config, unstoredModels, opts.client),
     return config.repo.setRefs({ id, refs, client });
   };
 

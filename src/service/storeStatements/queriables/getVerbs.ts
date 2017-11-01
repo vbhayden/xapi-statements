@@ -1,4 +1,13 @@
-export default (statement: any, basePath: string = ''): string[] => {
-  const key = `${basePath}statement.verb.id`;
-  return statement[key] ? statement[key] : [];
+import { get, isArray } from 'lodash';
+import getValue from './getValue';
+
+export default (model: any, filter: any = undefined): string[] => {
+  const filteredModel = !filter ? model : get(model, filter, undefined);
+  const verbs = getValue(filteredModel, ['statement', 'verb', 'id']);
+  if (!verbs) return [];
+
+  if (isArray(verbs)) {
+    return verbs;
+  }
+  return [verbs];
 };
