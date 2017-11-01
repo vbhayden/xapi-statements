@@ -66,11 +66,12 @@ export default (config: Config) => {
     await awaitUpdates(config, unawaitedUpdates);
     config.repo.emitNewStatements({ ids: statementIds });
 
-    (await config.tracker)('org_id', opts.client.organisation);
-    (await config.tracker)('lrs_id', opts.client.lrs_id);
-    (await config.tracker)('client_id', opts.client._id);
-    (await config.tracker)('batchSize', unstoredModels.length);
-    (await config.tracker)('sentBatchSize', opts.models.length);
+    const tracker = await config.tracker;
+    tracker('org_id', opts.client.organisation);
+    tracker('lrs_id', opts.client.lrs_id);
+    tracker('client_id', opts.client._id);
+    tracker('batchSize', unstoredModels.length);
+    tracker('sentBatchSize', opts.models.length);
 
     return statementIds;
   };
