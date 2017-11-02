@@ -1,5 +1,5 @@
 import Tracker from 'jscommons/dist/tracker/Tracker';
-import Repo from '../repoFactory/Repo';
+import Repo from '../repo/Repo';
 
 interface Config {
   repo: Repo;

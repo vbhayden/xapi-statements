@@ -64,7 +64,10 @@ export default (config: Config) => {
     ]);
 
     await awaitUpdates(config, unawaitedUpdates);
-    config.repo.emitNewStatements({ ids: statementIds });
+    config.repo.emitNewStatements({ ids: statementIds }).catch((err) => {
+      /* istanbul ignore next */
+      console.error(err); // tslint:disable-line:no-console
+    });
 
     const tracker = await config.tracker;
     tracker('org_id', opts.client.organisation);

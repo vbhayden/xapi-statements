@@ -1,12 +1,10 @@
 import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 
-import repoFactory from './repoFactory';
+import repo from './repo/factory';
 import logger from './logger';
 
-const repoFacade = repoFactory();
-
-repoFacade.rollback().then(() => {
+repo.rollback().then(() => {
   logger.info('Completed rollback');
   process.exit();
 }).catch((err) => {
