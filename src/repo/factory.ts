@@ -1,41 +1,50 @@
-import authRepoFactory from './authRepo/factory';
-import eventsRepoFactory from './eventsRepo/factory';
-import modelsRepoFactory from './modelsRepo/factory';
-import storageRepoFactory from './storageRepo/factory';
+import FullActivityModel from '../models/FullActivityModel';
+import StoredStatementModel from '../models/StoredStatementModel';
+import config from '../config';
+import facade from './facade';
 import Repo from './Repo';
 
-const authRepo = authRepoFactory();
-const eventsRepo = eventsRepoFactory();
-const modelsRepo = modelsRepoFactory();
-const storageRepo = storageRepoFactory();
-
-const repo: Repo = {
-  ...eventsRepo,
-  ...authRepo,
-  ...modelsRepo,
-  ...storageRepo,
-
-  clearRepo: async () => {
-    await Promise.all([
-      eventsRepo.clearRepo(),
-      modelsRepo.clearRepo(),
-      storageRepo.clearRepo(),
-    ]);
+const repo: Repo = facade({
+  auth: {
+    facade: config.repoFactory.authRepoName,
+    fake: {},
+    fetch: {
+      llClientInfoEndpoint: config.llClientInfoEndpoint,
+    },
+    mongo: {
+      url: config.mongo.url,
+    },
   },
-  migrate: async () => {
-    await Promise.all([
-      eventsRepo.migrate(),
-      modelsRepo.migrate(),
-      storageRepo.migrate(),
-    ]);
+  events: {
+    facade: config.repoFactory.eventsRepoName,
+    redis: {
+      prefix: config.redis.prefix,
+      url: config.redis.url,
+    },
   },
-  rollback: async () => {
-    await Promise.all([
-      eventsRepo.rollback(),
-      modelsRepo.rollback(),
-      storageRepo.rollback(),
-    ]);
+  models: {
+    facade: config.repoFactory.modelsRepoName,
+    memory: {
+      state: {
+        fullActivities: [] as FullActivityModel[],
+        statements: [] as StoredStatementModel[],
+      },
+    },
+    mongo: {
+      url: config.mongo.url,
+    }
   },
-};
+  storage: {
+    facade: config.repoFactory.storageRepoName,
+    local: {
+      storageDir: config.storage.local.storageDir,
+    },
+    s3: {
+      awsConfig: config.storage.s3.awsConfig,
+      bucketName: config.storage.s3.bucketName,
+      subFolder: config.storage.s3.subFolder,
+    },
+  },
+});
 
 export default repo;

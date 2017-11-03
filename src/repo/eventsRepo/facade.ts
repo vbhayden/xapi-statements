@@ -1,11 +1,11 @@
 import * as redis from 'redis';
-import config from '../../config';
 import fakeEventsRepo from './utils/fakeEvents/facade';
 import redisEventsRepo from './utils/redisEvents/facade';
 import Repo from './Repo';
+import Config from './Config';
 
-export default (): Repo => {
-  switch (config.repoFactory.eventsRepoName) {
+export default (config: Config): Repo => {
+  switch (config.facade) {
     case 'test':
       return fakeEventsRepo();
     default: case 'redis':
