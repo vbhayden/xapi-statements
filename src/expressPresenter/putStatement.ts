@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import InvalidContentType from '../errors/InvalidContentType';
 import AttachmentModel from '../models/AttachmentModel';
 import catchErrors from './utils/catchErrors';
+import { jsonContentTypePattern, multipartContentTypePattern } from './utils/contentTypePatterns';
 import getClient from './utils/getClient';
 import getMultipartStatements from './utils/getMultipartStatements';
 import storeStatement from './utils/storeStatement';
@@ -16,12 +17,12 @@ export default (config: Config) => {
 
     const queryParams = req.query;
 
-    if (/multipart\/mixed/.test(contentType)) {
+    if (multipartContentTypePattern.test(contentType)) {
       const { body, attachments } = await getMultipartStatements(req);
       return storeStatement({ config, body, attachments, client, queryParams, res });
     }
 
-    if (contentType === 'application/json') {
+    if (jsonContentTypePattern.test(contentType)) {
       const body = req.body;
       const attachments: AttachmentModel[] = [];
       return storeStatement({ config, body, attachments, client, queryParams, res });

@@ -1,14 +1,12 @@
-import repoFactory from '../repoFactory';
+import repo from '../repo/factory';
 import service from '../service';
 import Service from './Service';
 import config from '../config';
 import tracker from '../tracker';
 
 export default (): Service => {
-  const repoFacade = repoFactory();
-
   return service({
-    repo: repoFacade,
+    repo,
     tracker: tracker(),
     ...config.service,
   });

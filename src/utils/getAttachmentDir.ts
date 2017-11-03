@@ -1,6 +1,6 @@
 export interface GetAttachementDirOptions {
-  subfolder: string;
+  subFolder: string;
   lrs_id: string;
 }
 
-export default (opts: GetAttachementDirOptions) => `${opts.subfolder}/${opts.lrs_id}/attachments`;
+export default (opts: GetAttachementDirOptions) => `${opts.subFolder}/${opts.lrs_id}/attachments`;

@@ -27,8 +27,8 @@
     "test-memory": "MODELS_REPO=memory STORAGE_REPO=local npm run test",
     "test-ci": "npm run test-memory && npm run test-mongo",
     "test-all": "npm run test-ci && npm run test-s3",
-    "cover-ci": "nyc --lines 100 --check-coverage --exclude '(dist/testEventsRepo|dist/testAuthRepo|dist/fetchAuthRepo|dist/s3StorageRepo|dist/config.js)' npm run test-ci",
-    "cover-all": "nyc --lines 100 --check-coverage --exclude '(dist/testEventsRepo|dist/testAuthRepo|dist/fetchAuthRepo|dist/config.js)' npm run test-all",
+    "cover-ci": "nyc --lines 100 --check-coverage --exclude '(dist/**/*s3*|dist/**/*fetch*|dist/**/*fake*|dist/config.js|dist/**/factory.js|dist/**/facade.js)' npm run test-ci",
+    "cover-all": "nyc --lines 100 --check-coverage --exclude '(dist/**/*fetch*|dist/**/*fake*|dist/config.js|dist/**/factory.js|dist/**/facade.js)' npm run test-all",
     "clean": "rm -rf dist",
     "lint": "./node_modules/tslint/bin/tslint --project ./tsconfig.json",
     "duplication": "./node_modules/jscpd/bin/jscpd",
@@ -109,6 +109,7 @@
     "travis-cov": "0.2.5",
     "tslint": "5.8.0",
     "tslint-consistent-codestyle": "1.8.0",
+    "tslint-immutable": "4.4.0",
     "typescript": "2.6.1"
   }
 }

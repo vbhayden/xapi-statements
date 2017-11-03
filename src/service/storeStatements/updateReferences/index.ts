@@ -137,5 +137,5 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
       const traversedIds = await traverseDown(modelId, []);
       return union(visitedIds, traversedIds);
     }
-  }, Promise.resolve([]));
+  }, Promise.resolve([]) as Promise<string[]>);
 };

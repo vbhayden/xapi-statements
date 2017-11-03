@@ -14,8 +14,8 @@ export default async (jsonResponse: Object, attachments: AttachmentModel[], res:
   res.write(`Content-Length:${stringResponse.length}${crlf}`);
   res.write(crlf);
   res.write(stringResponse);
-  await reduce(attachments, (_result, attachment) => {
-    return new Promise((resolve, reject) => {
+  await reduce<AttachmentModel, Promise<void>>(attachments, (_result, attachment) => {
+    return new Promise<void>((resolve, reject) => {
       res.write(fullBoundary);
       res.write(`Content-Type:${attachment.contentType}${crlf}`);
       if (attachment.contentLength !== undefined) {

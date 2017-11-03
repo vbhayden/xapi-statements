@@ -5,6 +5,7 @@ import AttachmentModel from '../../models/AttachmentModel';
 import InvalidBoundary from '../../errors/InvalidBoundary';
 import InvalidContentTransferEncoding from '../../errors/InvalidContentTransferEncoding';
 import NoStatements from '../../errors/NoStatements';
+import { jsonContentTypePattern } from '../utils/contentTypePatterns';
 import getParts from '../utils/getParts';
 import parseJson from '../../utils/parseJson';
 
@@ -24,7 +25,7 @@ export default async (req: Request) => {
   const parts = await getParts(req, boundary);
   const hasStatements = (
     parts.length >= 1 &&
-    get(parts[0].headers, 'content-type') === 'application/json'
+    jsonContentTypePattern.test(get<any, string, string>(parts[0].headers, 'content-type', ''))
   );
 
   if (!hasStatements) {

@@ -35,7 +35,7 @@ const cloneAttachments = (attachmentModels: AttachmentModel[]): AttachmentModel[
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
     checkScopes(STATEMENT_WRITE_SCOPES, opts.client.scopes);
-    const preValidatedModels = preValidationSetup(opts.models);
+    const preValidatedModels = preValidationSetup(config, opts.models);
     validateStatements(preValidatedModels);
     const attachments = cloneAttachments(opts.attachments);
     const clonedAttachments = cloneAttachments(opts.attachments);
@@ -64,7 +64,10 @@ export default (config: Config) => {
     ]);
 
     await awaitUpdates(config, unawaitedUpdates);
-    config.repo.emitNewStatements({ ids: statementIds });
+    config.repo.emitNewStatements({ ids: statementIds }).catch((err) => {
+      /* istanbul ignore next */
+      console.error(err); // tslint:disable-line:no-console
+    });
 
     const tracker = await config.tracker;
     tracker('org_id', opts.client.organisation);

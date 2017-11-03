@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { defaultTo } from 'lodash';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
+import { jsonContentTypePattern } from '../utils/contentTypePatterns';
 import getClient from '../utils/getClient';
 import getStatements from '../utils/getStatements';
 import storeStatement from '../utils/storeStatement';
@@ -21,7 +22,7 @@ export interface Options {
 
 const checkContentType = (req: Request) => {
   const contentType = req.body['Content-Type'] || 'application/json';
-  if (contentType !== 'application/json') {
+  if (!jsonContentTypePattern.test(contentType)) {
     throw new InvalidContentType(req.body['Content-Type']);
   }
 };

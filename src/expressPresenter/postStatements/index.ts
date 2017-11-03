@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import InvalidContentType from '../../errors/InvalidContentType';
 import catchErrors from '../utils/catchErrors';
+import {
+  alternateContentTypePattern,
+  jsonContentTypePattern,
+  multipartContentTypePattern,
+} from '../utils/contentTypePatterns';
 import getClient from '../utils/getClient';
 import Config from '../Config';
 import alternateRequest from './alternateRequest';
@@ -14,11 +19,11 @@ export default (config: Config) => {
     const method = req.query.method;
     const contentType = req.header('Content-Type') || '';
 
-    if (method === undefined && /multipart\/mixed/.test(contentType)) {
+    if (method === undefined && multipartContentTypePattern.test(contentType)) {
       return storeWithAttachments({ config, req, res });
     }
 
-    if (method === undefined && contentType === 'application/json') {
+    if (method === undefined && jsonContentTypePattern.test(contentType)) {
       const client = await getClient(config, req.header('Authorization') || '');
       validateVersionHeader(req.header('X-Experience-API-Version'));
 
@@ -27,7 +32,7 @@ export default (config: Config) => {
       return storeStatements({ config, client, body, attachments, res });
     }
 
-    if (method !== undefined &&  /application\/x-www-form-urlencoded/.test(contentType)) {
+    if (method !== undefined &&  alternateContentTypePattern.test(contentType)) {
       return alternateRequest({ config, method, req, res });
     }
 
