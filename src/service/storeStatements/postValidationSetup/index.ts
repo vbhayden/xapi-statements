@@ -7,9 +7,9 @@ import setupObjectTypes from './setupObjectTypes';
 import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
 import AttachmentModel from '../../../models/AttachmentModel';
-import getRegistrations from '../queriables/getRegistrations';
-import getVerbs from '../queriables/getVerbs';
-import getActivities from '../queriables/getActivities';
+import getRegistrationsFromStatement from '../queriables/getRegistrationsFromStatement';
+import getVerbsFromStatement from '../queriables/getVerbsFromStatement';
+import { getActivitiesFromStatement, getRelatedActivitiesStatement } from '../queriables/getActivitiesFromStatement';
 
 export default async (models: any[], attachments: AttachmentModel[], client: ClientModel) => {
   const storedTime = new Date();
@@ -22,6 +22,8 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
     return attachments[0];
   });
 
+  
+
   const unstoredModelPromises = models.map(async (model: any): Promise<UnstoredStatementModel> => {
     const objectTypesModel = setupObjectTypes(model);
     await checkSignedStatements(objectTypesModel, uniqueHashAttachmentDictionary);
@@ -31,8 +33,6 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
     const timestampTime = new Date(postHashStatement.timestamp);
     const agents: any = [];
     const relatedAgents: any[] = [];
-    const activities: string[] = [];
-    const relatedActivities: string[] = [];
 
     return {
       hasGeneratedId: model.id === undefined,
@@ -48,10 +48,10 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
       hash: sha1(preHashStatement),
       agents,
       relatedAgents,
-      registrations: getRegistrations(model),
-      verbs: getVerbs(model),
-      activities: getActivities(model),
-      relatedActivities,
+      registrations: getRegistrationsFromStatement(postHashStatement),
+      verbs: getVerbsFromStatement(postHashStatement),
+      activities: getActivitiesFromStatement(postHashStatement),
+      relatedActivities: getRelatedActivitiesStatement(postHashStatement),
       statement: postHashStatement,
     };
   });
