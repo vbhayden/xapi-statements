@@ -1,4 +1,6 @@
 import * as modr from '../../utils/modr';
+import removeNulls from './removeNulls';
+import Config from '../Config';
 
 const wrapObjectInArray = modr.modifyType(Object, (data) => {
   return [data];
@@ -17,18 +19,21 @@ const modifySubStatement = modr.modifySchema({
   context: modifyContext,
 });
 
-export default (models: any[]): any[] => {
+export default (config: Config, models: any[]): any[] => {
   return models.map((model) => {
-    const setup = modr.modifySchema({
-      context: modifyContext,
-      object: modr.modifyType(Object, (data) => {
-        return (
-          data.objectType === 'SubStatement'
-            ? modifySubStatement(data)
-            : data
-        );
+    const setup = modr.composeModifiers([
+      removeNulls(config),
+      modr.modifySchema({
+        context: modifyContext,
+        object: modr.modifyType(Object, (data) => {
+          return (
+            data.objectType === 'SubStatement'
+              ? modifySubStatement(data)
+              : data
+          );
+        })
       })
-    });
+    ]);
     const setupModel = setup(model);
     return setupModel;
   });

@@ -13,6 +13,7 @@ interface Config {
   enableReferencing: boolean;
   awaitUpdates: boolean;
   enableActivityUpdates: boolean;
+  enableNullRemoval: boolean;
 }
 
 export default Config;

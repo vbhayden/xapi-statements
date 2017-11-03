@@ -60,6 +60,7 @@ export default {
     enableStatementCreation: getBooleanOption(process.env.SERVICE_CREATE_STATEMENTS, true),
     enableAttachmentCreation: getBooleanOption(process.env.SERVICE_CREATE_ATTACHMENTS, true),
     enableVoiding: getBooleanOption(process.env.SERVICE_UPDATE_VOIDS, true),
+    enableNullRemoval: getBooleanOption(process.env.SERVICE_REMOVE_NULLS, false),
     enableReferencing: getBooleanOption(process.env.SERVICE_UPDATE_REFS, true),
     enableActivityUpdates: getBooleanOption(process.env.SERVICE_UPDATE_ACTIVITIES, true),
     awaitUpdates: getBooleanOption(defaultTo<any>(

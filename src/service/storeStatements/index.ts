@@ -35,7 +35,7 @@ const cloneAttachments = (attachmentModels: AttachmentModel[]): AttachmentModel[
 export default (config: Config) => {
   return async (opts: StoreStatementsOptions): Promise<string[]> => {
     checkScopes(STATEMENT_WRITE_SCOPES, opts.client.scopes);
-    const preValidatedModels = preValidationSetup(opts.models);
+    const preValidatedModels = preValidationSetup(config, opts.models);
     validateStatements(preValidatedModels);
     const attachments = cloneAttachments(opts.attachments);
     const clonedAttachments = cloneAttachments(opts.attachments);
