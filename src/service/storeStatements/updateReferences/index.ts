@@ -8,6 +8,18 @@ import Config from '../../Config';
 import logger from '../../../logger';
 import eagerLoadUpRefs from './eagerLoadUpRefs';
 import eagerLoadDownRefs from './eagerLoadDownRefs';
+import {
+  getAgentsFromStatement,
+  getRelatedAgentsFromStatement,
+} from '../queriables/getAgentsFromStatement';
+
+import {
+  getActivitiesFromStatement,
+  getRelatedActivitiesFromStatement,
+} from '../queriables/getActivitiesFromStatement';
+
+import getRegistrationsFromStatement from '../queriables/getRegistrationsFromStatement';
+import getVerbsFromStatement from '../queriables/getVerbsFromStatement';
 
 const shortId = (id: string) => {
   return id[id.length - 1];
@@ -70,10 +82,16 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
     const refs = await getDownRefs(refIds);
     logger.debug('setRefs', shortId(id), shortIds(refIds));
 
-    // updateQueriableAgentsRefs(config, unstoredModels, opts.client),
-    // updateQueriableVerbsRefs(config, unstoredModels, opts.client),
-    // updateQueriableRegistrationsRefs(config, unstoredModels, opts.client),
-    // updateQueriableActivitiesRefs(config, unstoredModels, opts.client),
+    await config.repo.setQueriables({
+      id,
+      client,
+      agents: union(...refs.map(getAgentsFromStatement)),
+      relatedAgents: union(...refs.map(getRelatedAgentsFromStatement)),
+      verbs: union(...refs.map(getVerbsFromStatement)),
+      activities: union(...refs.map(getActivitiesFromStatement)),
+      relatedActivities: union(...refs.map(getRelatedActivitiesFromStatement)),
+      registrations: union(...refs.map(getRegistrationsFromStatement)),
+    });
     return config.repo.setRefs({ id, refs, client });
   };
 
