@@ -5,16 +5,12 @@ import Context from '../../../models/Context';
 import Activity from '../../../models/Activity';
 import StatementObject from '../../../models/StatementObject';
 
-const activityFilter = (model: any): Boolean => {
-  return get(model, ['objectType']) === 'Activity';
-};
-
 const getActivityIdsFromObject = (obj: StatementObject): string[] => {
-  if(obj.objectType === 'Activity') {
+  if (obj.objectType === 'Activity') {
     return [obj.id];
   }
   return [];
-}
+};
 
 const getActivitiesFromContextActivities = (statement: StatementBase, key: string): string[] => {
   const path = ['context', 'contextActivities', key];
@@ -22,9 +18,9 @@ const getActivitiesFromContextActivities = (statement: StatementBase, key: strin
     const activities: Activity[] = get(statement, path);
     return union(...activities.map(getActivityIdsFromObject));
   }
-  
+
   return [];
-}
+};
 
 const getActivitiesFromStatementBase = (statement: StatementBase): string[] => {
   return [
@@ -48,7 +44,7 @@ export const getActivitiesFromStatement = (statement: Statement): string[] => {
   return getActivityIdsFromObject(statement.object);
 };
 
-export const getRelatedActivitiesStatement = (statement: Statement): string[] => {
+export const getRelatedActivitiesFromStatement = (statement: Statement): string[] => {
   return union([
     ...getActivitiesFromStatementBase(statement),
     ...getActivitiesFromSubStatement(statement),

@@ -8,7 +8,7 @@ const model = {
   }
 };
 
-describe.only('create array of queriable registrations', () => {
+describe('create array of queriable registrations', () => {
   it('should return just the registration from the statement', () => {
     const verbs = getRegistrationsFromStatement(model);
     assert.deepEqual(verbs, [REG]);

@@ -14,8 +14,8 @@ interface UnstoredStatementModel {
   timestamp: Date;
   stored: Date;
   hash: string;
-  agents: FilterAgent[];
-  relatedAgents: FilterAgent[];
+  agents: string[];
+  relatedAgents: string[];
   verbs: string[];
   registrations: string[];
   activities: string[];

@@ -1,5 +1,8 @@
 import * as assert from 'assert';
-import { getActivitiesFromStatement, getRelatedActivitiesStatement } from '../../../service/storeStatements/queriables/getActivitiesFromStatement';
+import {
+  getActivitiesFromStatement,
+  getRelatedActivitiesFromStatement
+} from '../../../service/storeStatements/queriables/getActivitiesFromStatement';
 import Statement from '../../../models/Statement';
 import Activity from '../../../models/Activity';
 import Agent from '../../../models/Agent';
@@ -30,7 +33,7 @@ const statementDefaults: Statement = {
   verb: {
     id: 'http://example.org/verb'
   }
-}
+};
 
 const activity2: Activity = {
   objectType: 'Activity',
@@ -88,23 +91,23 @@ const subStatementObjectmodel: Statement = {
 };
 
 describe('create array of queriable activities', () => {
-  it('should return the related activities', () => {
+  it('should return the non related activities', () => {
     const activities = getActivitiesFromStatement(activityObjectmodel);
     assert.deepEqual(activities, [ACTIVITY_ID]);
   });
 
   it('should return the related activities', () => {
-    const activities = getRelatedActivitiesStatement(activityObjectmodel);
+    const activities = getRelatedActivitiesFromStatement(activityObjectmodel);
     assert.deepEqual(activities, [ACTIVITY_ID, ACTIVITY_ID2]);
   });
 
   it('should return the related activities with a substatement', () => {
-    const activities = getRelatedActivitiesStatement(subStatementObjectmodel);
+    const activities = getRelatedActivitiesFromStatement(subStatementObjectmodel);
     assert.deepEqual(activities, [ACTIVITY_ID3, ACTIVITY_ID, ACTIVITY_ID2]);
   });
 
   it('should return no related activities from an agent object statement', () => {
-    const activities = getRelatedActivitiesStatement(agentObjectModel);
+    const activities = getRelatedActivitiesFromStatement(agentObjectModel);
     assert.deepEqual(activities, []);
   });
 });
