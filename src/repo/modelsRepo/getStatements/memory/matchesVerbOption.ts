@@ -1,12 +1,9 @@
-import Statement from '../../../../models/Statement';
+import StoredStatementModel from '../../../../models/StoredStatementModel';
 import { Opts } from '../Signature';
-import matchesModel, { ModelMatcher } from './matchesModel';
 
-const matcher = (statement: Statement, opts: Opts): boolean => {
+export default (model: StoredStatementModel, opts: Opts): boolean => {
   return (
     opts.verb === undefined ? true :
-      statement.verb.id === opts.verb
+      model.verbs.indexOf(opts.verb) > -1
   );
 };
-
-export default matchesModel(matcher) as ModelMatcher;

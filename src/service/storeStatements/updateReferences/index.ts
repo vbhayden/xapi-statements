@@ -82,7 +82,7 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
     const refs = await getDownRefs(refIds);
     logger.debug('setRefs', shortId(id), shortIds(refIds));
 
-    await config.repo.setQueriables({
+    return config.repo.setQueriables({
       id,
       client,
       agents: union(...refs.map(getAgentsFromStatement)),
@@ -92,7 +92,6 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
       relatedActivities: union(...refs.map(getRelatedActivitiesFromStatement)),
       registrations: union(...refs.map(getRegistrationsFromStatement)),
     });
-    return config.repo.setRefs({ id, refs, client });
   };
 
   const traverseDown = async (modelId: string, visitedIds: string[]): Promise<string[]> => {

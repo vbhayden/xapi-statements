@@ -46,7 +46,7 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
       refs: [],
       hash: sha1(preHashStatement),
       agents: getAgentsFromStatement(postHashStatement),
-      relatedAgents: getRelatedActivitiesFromStatement(postHashStatement),
+      relatedAgents: getRelatedAgentsFromStatement(postHashStatement),
       registrations: getRegistrationsFromStatement(postHashStatement),
       verbs: getVerbsFromStatement(postHashStatement),
       activities: getActivitiesFromStatement(postHashStatement),

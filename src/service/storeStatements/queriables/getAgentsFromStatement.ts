@@ -5,19 +5,15 @@ import Actor from '../../../models/Actor';
 import Agent from '../../../models/Agent';
 import Group from '../../../models/Group';
 import StatementObject from '../../../models/StatementObject';
+import getActorIdent from '../../../utils/getActorIdent';
 import { sha1 } from 'object-hash';
 
 export const getActorIdents = (actor: Actor): string[] => {
-  if (actor.mbox !== undefined) {
-    return [actor.mbox];
-  } else if (actor.account !== undefined) {
-    return [`${actor.account.homePage}|${actor.account.name}`];
-  } else if (actor.openid !== undefined) {
-    return [actor.openid];
-  } else if (actor.mbox_sha1sum !== undefined) {
-    return [actor.mbox_sha1sum];
+  try {
+    return [getActorIdent(actor)];
+  } catch (err) {
+    return [];
   }
-  return [];
 };
 
 const getGroupMemberIdents = (group: Group): string[] => {

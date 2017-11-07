@@ -12,6 +12,7 @@ import voidStatements from '../../voidStatements/mongo';
 import getDownRefId from '../../getDownRefId/mongo';
 import getUpRefIds from '../../getUpRefIds/mongo';
 import setRefs from '../../setRefs/mongo';
+import setQueriables from '../../setQueriables/mongo';
 import getStatementsByIds from '../../getStatementsByIds/mongo';
 import getUpRefsByIds from '../../getUpRefsByIds/mongo';
 import updateFullActivities from '../../updateFullActivities/mongo';
@@ -31,6 +32,7 @@ export default (config: Config): Repo => {
     getDownRefId: getDownRefId(config),
     getUpRefIds: getUpRefIds(config),
     setRefs: setRefs(config),
+    setQueriables: setQueriables(config),
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
     updateFullActivities: updateFullActivities(config),
