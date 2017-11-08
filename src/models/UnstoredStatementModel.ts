@@ -20,7 +20,6 @@ interface UnstoredStatementModel {
   registrations: string[];
   activities: string[];
   relatedActivities: string[];
-  refs: Ref[];
   statement: Statement;
 }
 

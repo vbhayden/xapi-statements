@@ -43,7 +43,6 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
       voided: false,
       timestamp: timestampTime,
       stored: storedTime,
-      refs: [],
       hash: sha1(preHashStatement),
       agents: getAgentsFromStatement(postHashStatement),
       relatedAgents: getRelatedAgentsFromStatement(postHashStatement),
