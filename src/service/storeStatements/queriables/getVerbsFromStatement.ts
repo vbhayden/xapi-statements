@@ -1,9 +1,6 @@
 import { get, has } from 'lodash';
+import Statement from '../../../models/Statement';
 
-export default (statement: any): string[] => {
-  if (!has(statement, ['verb', 'id'])) {
-    return [];
-  }
-  const verb = get(statement, ['verb', 'id'], undefined);
-  return [verb];
+export default (statement: Statement): string[] => {
+  return [statement.verb.id];
 };

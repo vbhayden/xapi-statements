@@ -1,9 +1,10 @@
 import { get, has } from 'lodash';
+import Statement from '../../../models/Statement';
 
-export default (statement: any): string[] => {
-  if (!has(statement, ['context', 'registration'])) {
+export default (statement: Statement): string[] => {
+  const registration = get(statement, ['context', 'registration'], undefined);
+  if (registration === undefined) {
     return [];
   }
-  const registration = get(statement, ['context', 'registration'], undefined);
   return [registration];
 };

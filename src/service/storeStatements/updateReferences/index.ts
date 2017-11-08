@@ -77,10 +77,10 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
     return [...loadedDownRefs, ...unloadedDownRefs];
   };
 
-  const setRefs = async (id: string, givenRefIds: string[]): Promise<void> => {
+  const setQueriables = async (id: string, givenRefIds: string[]): Promise<void> => {
     const refIds = pull(givenRefIds, id);
     const refs = await getDownRefs(refIds);
-    logger.debug('setRefs', shortId(id), shortIds(refIds));
+    logger.debug('setQueriables', shortId(id), shortIds(refIds));
 
     return config.repo.setQueriables({
       id,
@@ -120,7 +120,7 @@ export default async (config: Config, models: UnstoredStatementModel[], client: 
   ): Promise<string[]> => {
     logger.silly('traverseUp', shortIds(visitedIds), shortIds(refIds), shortId(modelId));
     if (includes(visitedIds, modelId)) return [];
-    if (refIds.length > 0) await setRefs(modelId, refIds);
+    if (refIds.length > 0) await setQueriables(modelId, refIds);
 
     const newVisitedIds = stack(modelId, visitedIds);
     const newRefIds = stack(modelId, refIds);

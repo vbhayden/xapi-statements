@@ -9,7 +9,6 @@ import GetVoidersByIdsSignature from './getVoidersByIds/Signature';
 import VoidStatementsSignature from './voidStatements/Signature';
 import GetDownRefIdSignature from './getDownRefId/Signature';
 import GetUpRefIdsSignature from './getUpRefIds/Signature';
-import SetRefsSignature from './setRefs/Signature';
 import SetQueriablesSignature from './setQueriables/Signature';
 import GetStatementsByIdsSignature from './getStatementsByIds/Signature';
 import GetUpRefsByIdsSignature from './getUpRefsByIds/Signature';
@@ -27,7 +26,6 @@ interface ModelsRepo extends CommonRepo {
   readonly voidStatements: VoidStatementsSignature;
   readonly getDownRefId: GetDownRefIdSignature;
   readonly getUpRefIds: GetUpRefIdsSignature;
-  readonly setRefs: SetRefsSignature;
   readonly setQueriables: SetQueriablesSignature;
   readonly getStatementsByIds: GetStatementsByIdsSignature;
   readonly getUpRefsByIds: GetUpRefsByIdsSignature;

@@ -11,7 +11,6 @@ import getVoidersByIds from '../../getVoidersByIds/mongo';
 import voidStatements from '../../voidStatements/mongo';
 import getDownRefId from '../../getDownRefId/mongo';
 import getUpRefIds from '../../getUpRefIds/mongo';
-import setRefs from '../../setRefs/mongo';
 import setQueriables from '../../setQueriables/mongo';
 import getStatementsByIds from '../../getStatementsByIds/mongo';
 import getUpRefsByIds from '../../getUpRefsByIds/mongo';
@@ -31,7 +30,6 @@ export default (config: Config): Repo => {
     voidStatements: voidStatements(config),
     getDownRefId: getDownRefId(config),
     getUpRefIds: getUpRefIds(config),
-    setRefs: setRefs(config),
     setQueriables: setQueriables(config),
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
