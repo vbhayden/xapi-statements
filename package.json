@@ -79,14 +79,14 @@
   },
   "devDependencies": {
     "@types/bluebird": "3.5.18",
-    "@types/body-parser": "1.16.7",
-    "@types/cors": "2.8.1",
+    "@types/body-parser": "1.16.8",
+    "@types/cors": "2.8.2",
     "@types/dotenv": "4.0.2",
     "@types/express": "4.0.39",
-    "@types/fs-extra": "4.0.3",
+    "@types/fs-extra": "4.0.4",
     "@types/helmet": "0.0.37",
     "@types/jsonwebtoken": "7.2.3",
-    "@types/lodash": "4.14.82",
+    "@types/lodash": "4.14.84",
     "@types/mime-types": "2.1.0",
     "@types/mocha": "2.2.44",
     "@types/mongodb": "2.2.15",
@@ -108,7 +108,7 @@
     "semantic-release": "9.1.0",
     "travis-cov": "0.2.5",
     "tslint": "5.8.0",
-    "tslint-consistent-codestyle": "1.9.1",
+    "tslint-consistent-codestyle": "1.9.2",
     "tslint-immutable": "4.4.0",
     "typescript": "2.6.1"
   }
