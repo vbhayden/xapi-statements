@@ -1,15 +1,9 @@
-import Statement from '../../../../models/Statement';
+import StoredStatementModel from '../../../../models/StoredStatementModel';
 import { Opts } from '../Signature';
-import matchesModel, { ModelMatcher } from './matchesModel';
 
-const matcher = (statement: Statement, opts: Opts): boolean => {
+export default (model: StoredStatementModel, opts: Opts): boolean => {
   return (
     opts.registration === undefined ? true :
-      (
-        statement.context !== undefined &&
-        statement.context.registration === opts.registration
-      )
+      model.registrations.indexOf(opts.registration) > -1
   );
 };
-
-export default matchesModel(matcher) as ModelMatcher;

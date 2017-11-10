@@ -2,7 +2,7 @@ import LanguageMap from './LanguageMap';
 
 interface Verb {
   id: string;
-  display: LanguageMap;
+  display?: LanguageMap;
 }
 
 export default Verb;

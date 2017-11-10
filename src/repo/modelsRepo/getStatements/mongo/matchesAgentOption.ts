@@ -1,15 +1,14 @@
 import FilterAgent from '../../../../models/FilterAgent';
 import { Opts } from '../Signature';
-import isMatchingRelatedAgent from './isMatchingRelatedAgent';
-import isMatchingUnrelatedAgent from './isMatchingUnrelatedAgent';
+import getActorIdent from '../../../../utils/getActorIdent';
 import matchesModel from './matchesModel';
 
-const matcher = (statementKey: string, agent: FilterAgent, opts: Opts): Object => {
-  return (
-    opts.related_agents === true ?
-      isMatchingRelatedAgent(statementKey, agent) :
-      isMatchingUnrelatedAgent(statementKey, agent)
-  );
+const matcher = (agent: FilterAgent, opts: Opts): Object => {
+  const agentIdent = getActorIdent(agent);
+  if (opts.related_agents) {
+    return { relatedAgents: agentIdent };
+  }
+  return { agents: agentIdent };
 };
 
 export default matchesModel<FilterAgent>(matcher, (opts) => {
