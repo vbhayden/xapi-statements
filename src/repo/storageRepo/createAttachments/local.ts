@@ -17,13 +17,11 @@ export default (config: Config): Signature => {
         });
         const writeStream = fs.createWriteStream(filePath);
         model.stream.pipe(writeStream);
-        model.stream.on('end', () => {
-          resolve(filePath);
+        writeStream.on('finish', () => {
+          resolve();
         });
-        model.stream.on('error', (err: any) => {
-          /* istanbul ignore next */
-          reject(err);
-        });
+        model.stream.on('error', reject);
+        writeStream.on('error', reject);
       });
     });
     await Promise.all(promises);

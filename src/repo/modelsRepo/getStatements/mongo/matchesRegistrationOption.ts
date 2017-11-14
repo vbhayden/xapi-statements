@@ -1,8 +1,8 @@
 import matchesModel, { ModelMatcher } from './matchesModel';
 
-const matcher = (statementKey: string, registration: string): Object => {
+const matcher = (registration: string): Object => {
   return {
-    [`${statementKey}.context.registration`]: registration,
+    registrations: registration,
   };
 };
 

@@ -14,6 +14,7 @@ const filterModels = (models: StoredStatementModel[], opts: Opts) => {
   return models.filter((model: StoredStatementModel) => {
     const statement = model.statement;
     return (
+      model.voided === false &&
       matchesCursorOption(model, opts) &&
       matchesClientOption(model, opts.client, true) &&
       matchesAgentOption(model, opts) &&

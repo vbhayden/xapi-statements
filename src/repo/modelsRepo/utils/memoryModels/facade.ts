@@ -11,7 +11,7 @@ import getVoidersByIds from '../../getVoidersByIds/memory';
 import voidStatements from '../../voidStatements/memory';
 import getDownRefId from '../../getDownRefId/memory';
 import getUpRefIds from '../../getUpRefIds/memory';
-import setRefs from '../../setRefs/memory';
+import setQueriables from '../../setQueriables/memory';
 import getStatementsByIds from '../../getStatementsByIds/memory';
 import getUpRefsByIds from '../../getUpRefsByIds/memory';
 import updateFullActivities from '../../updateFullActivities/memory';
@@ -30,7 +30,7 @@ export default (config: Config): Repo => {
     voidStatements: voidStatements(config),
     getDownRefId: getDownRefId(config),
     getUpRefIds: getUpRefIds(config),
-    setRefs: setRefs(config),
+    setQueriables: setQueriables(config),
     getStatementsByIds: getStatementsByIds(config),
     getUpRefsByIds: getUpRefsByIds(config),
     updateFullActivities: updateFullActivities(config),
