@@ -8,6 +8,7 @@ import createAttachmentStatement from '../utils/createAttachmentStatement';
 import createAttachmentSubStatement from '../utils/createAttachmentSubStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
 
+const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_CONTENT_A = 'A';
 const TEST_CONTENT_B = 'B';
 const TEST_ATTACHMENT_MODEL_A = createAttachmentModel(TEST_CONTENT_A);
@@ -55,5 +56,11 @@ describe('store statements with attachments', () => {
     const testStatement = createAttachmentSubStatement([TEST_ATTACHMENT_A, TEST_ATTACHMENT_B]);
     const promise = storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
     await assertError(MissingAttachments, promise);
+  });
+
+  it('should not error when reinserting a statement with an ID and attachments', async () => {
+    const testStatement = createAttachmentStatement([TEST_ATTACHMENT_A], TEST_ID);
+    await storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
+    await storeStatements([testStatement], [TEST_ATTACHMENT_MODEL_A]);
   });
 });
