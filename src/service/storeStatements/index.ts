@@ -46,7 +46,7 @@ export default (config: Config) => {
     );
     const unstoredModels = await getUnstoredModels(config, postValidatedModels, opts.client);
     const voidedObjectIds = await checkVoiders(config, unstoredModels, opts.client);
-    checkAttachments(config, unstoredModels, attachments);
+    checkAttachments(config, postValidatedModels, attachments);
 
     await createStatements(config, unstoredModels);
 
