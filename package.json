@@ -83,7 +83,7 @@
     "@types/cors": "2.8.3",
     "@types/dotenv": "4.0.2",
     "@types/express": "4.0.39",
-    "@types/fs-extra": "4.0.4",
+    "@types/fs-extra": "4.0.5",
     "@types/helmet": "0.0.37",
     "@types/jsonwebtoken": "7.2.3",
     "@types/lodash": "4.14.85",
