@@ -1,4 +1,5 @@
 import { mapKeys, Dictionary } from 'lodash';
+import { ObjectID } from 'mongodb';
 import Config from '../utils/mongoModels/Config';
 import matchesFullActivity from '../utils/mongoModels/matchesFullActivity';
 import { replaceDotsInExtensions } from '../utils/mongoModels/replaceDotsInStatement';
@@ -15,8 +16,8 @@ const getPatchUpdate = <T>(patch: Dictionary<T>, parentKeys: string[]) => {
 export default (config: Config): Signature => {
   return async ({ client, updates }) => {
     const collection = (await config.db).collection(FULL_ACTIVITIES_COLLECTION_NAME);
-    const lrsId = client.lrs_id;
-    const organisationId = client.organisation;
+    const lrsId = new ObjectID(client.lrs_id);
+    const organisationId = new ObjectID(client.organisation);
     const batch = collection.initializeUnorderedBulkOp();
 
     updates.forEach((update) => {

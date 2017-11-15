@@ -19,7 +19,7 @@ export default (config: Config): Signature => {
         config.state.fullActivities = [
           ...existingModels,
           {
-            id: activityId,
+            activityId,
             lrsId,
             organisationId,
             name: update.name,

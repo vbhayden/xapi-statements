@@ -22,7 +22,7 @@ export default (config: Config): Signature => {
 
     const fullActivity = filteredModels[0];
     return {
-      id: fullActivity.id,
+      id: fullActivity.activityId,
       name: fullActivity.name,
       description: fullActivity.description,
       extensions: fullActivity.extensions,

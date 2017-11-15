@@ -2,7 +2,7 @@ import LanguageMap from './LanguageMap';
 import Extensions from './Extensions';
 
 interface FullActivityModel {
-  readonly id: string;
+  readonly activityId: string;
   readonly name: LanguageMap;
   readonly description: LanguageMap;
   readonly moreInfo?: string;
