@@ -1,8 +1,8 @@
 import matchesModel, { ModelMatcher } from './matchesModel';
 
-const matcher = (statementKey: string, verb: string): Object => {
+const matcher = (verb: string): Object => {
   return {
-    [`${statementKey}.verb.id`]: verb,
+    verbs: verb,
   };
 };
 

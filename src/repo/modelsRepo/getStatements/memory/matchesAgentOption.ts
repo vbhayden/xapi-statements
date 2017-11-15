@@ -1,18 +1,14 @@
-import Statement from '../../../../models/Statement';
+import StoredStatementModel from '../../../../models/StoredStatementModel';
+import getActorIdent from '../../../../utils/getActorIdent';
 import { Opts } from '../Signature';
-import isMatchingRelatedAgent from './isMatchingRelatedAgent';
-import isMatchingUnrelatedAgent from './isMatchingUnrelatedAgent';
-import matchesModel, { ModelMatcher } from './matchesModel';
 
-const matcher = (statement: Statement, opts: Opts): boolean => {
-  return (
-    opts.agent === undefined ? true :
-      (
-        opts.related_agents === true ?
-          isMatchingRelatedAgent(statement, opts.agent) :
-          isMatchingUnrelatedAgent(statement, opts.agent)
-      )
-  );
+export default (model: StoredStatementModel, opts: Opts): boolean => {
+  if (opts.agent === undefined) {
+    return true;
+  }
+  const agentIdent = getActorIdent(opts.agent);
+  if (opts.related_agents) {
+    return model.relatedAgents.indexOf(agentIdent) > -1;
+  }
+  return model.agents.indexOf(agentIdent) > -1;
 };
-
-export default matchesModel(matcher) as ModelMatcher;

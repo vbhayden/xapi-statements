@@ -7,6 +7,12 @@ import setupObjectTypes from './setupObjectTypes';
 import setupPreHashStatement from './setupPreHashStatement';
 import setupPostHashStatement from './setupPostHashStatement';
 import AttachmentModel from '../../../models/AttachmentModel';
+import getRegistrationsFromStatement from '../queriables/getRegistrationsFromStatement';
+import getVerbsFromStatement from '../queriables/getVerbsFromStatement';
+import {
+  getActivitiesFromStatement,
+  getRelatedActivitiesFromStatement } from '../queriables/getActivitiesFromStatement';
+import { getAgentsFromStatement, getRelatedAgentsFromStatement } from '../queriables/getAgentsFromStatement';
 
 export default async (models: any[], attachments: AttachmentModel[], client: ClientModel) => {
   const storedTime = new Date();
@@ -26,6 +32,7 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
     const fullStatementWithID = { ...objectTypesModel, ...preHashStatement };
     const postHashStatement = setupPostHashStatement(fullStatementWithID, storedTimeString, client.authority);
     const timestampTime = new Date(postHashStatement.timestamp);
+
     return {
       hasGeneratedId: model.id === undefined,
       organisation: client.organisation,
@@ -36,8 +43,13 @@ export default async (models: any[], attachments: AttachmentModel[], client: Cli
       voided: false,
       timestamp: timestampTime,
       stored: storedTime,
-      refs: [],
       hash: sha1(preHashStatement),
+      agents: getAgentsFromStatement(postHashStatement),
+      relatedAgents: getRelatedAgentsFromStatement(postHashStatement),
+      registrations: getRegistrationsFromStatement(postHashStatement),
+      verbs: getVerbsFromStatement(postHashStatement),
+      activities: getActivitiesFromStatement(postHashStatement),
+      relatedActivities: getRelatedActivitiesFromStatement(postHashStatement),
       statement: postHashStatement,
     };
   });

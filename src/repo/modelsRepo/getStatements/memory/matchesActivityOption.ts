@@ -1,21 +1,12 @@
-import Statement from '../../../../models/Statement';
+import StoredStatementModel from '../../../../models/StoredStatementModel';
 import { Opts } from '../Signature';
-import isMatchingRelatedActivity from './isMatchingRelatedActivity';
-import isMatchingActivity from './isMatchingActivity';
-import matchesModel, { ModelMatcher } from './matchesModel';
 
-const matcher = (statement: Statement, opts: Opts): boolean => {
-  return (
-    opts.activity === undefined ? true :
-      (
-        opts.related_activities === true ?
-          isMatchingRelatedActivity(statement, opts.activity) :
-          (
-            statement.object.objectType === 'Activity' &&
-            isMatchingActivity(statement.object, opts.activity)
-          )
-      )
-  );
+export default (model: StoredStatementModel, opts: Opts): boolean => {
+  if (opts.activity === undefined) {
+    return true;
+  }
+  if (opts.related_activities) {
+    return model.relatedActivities.indexOf(opts.activity) > -1;
+  }
+  return model.activities.indexOf(opts.activity) > -1;
 };
-
-export default matchesModel(matcher) as ModelMatcher;
