@@ -11,6 +11,6 @@ export default (opts: MatchFullActivityOptions) => {
   return (
     opts.model.organisationId === opts.organisationId &&
     opts.model.lrsId === opts.lrsId &&
-    opts.model.id === opts.activityId
+    opts.model.activityId === opts.activityId
   );
 };
