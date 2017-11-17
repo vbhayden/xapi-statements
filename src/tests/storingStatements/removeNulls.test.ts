@@ -7,6 +7,7 @@ import repo from '../../repo/factory';
 import serviceFacade from '../../service/index';
 import config from '../../config';
 import tracker from '../../tracker';
+import logger from '../../logger';
 
 const TEST_ID = '1c86d8e9-f325-404f-b3d9-24c451035582';
 const TEST_CLIENT = createClientModel();
@@ -91,7 +92,8 @@ describe(__filename, () => {
     ...config.service,
     enableNullRemoval: true,
     repo,
-    tracker: tracker(),
+    tracker,
+    logger,
   });
   const storeStatements = storeStatementsInService(service);
 

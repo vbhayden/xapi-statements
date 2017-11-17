@@ -61,7 +61,10 @@ export default (config: Config) => {
       updateReferences(config, unstoredModels, opts.client),
       updateFullActivities({ config, models: unstoredModels, client: opts.client }),
       config.repo.incrementStoreCount({ client: opts.client, count: unstoredModels.length }),
-    ]);
+    ]).catch((err) => {
+      /* istanbul ignore next */
+      config.logger.error('Error in unawaited updates', err);
+    });
 
     await awaitUpdates(config, unawaitedUpdates);
     config.repo.emitNewStatements({ ids: statementIds }).catch((err) => {
@@ -70,9 +73,6 @@ export default (config: Config) => {
     });
 
     const tracker = await config.tracker;
-    tracker('org_id', opts.client.organisation);
-    tracker('lrs_id', opts.client.lrs_id);
-    tracker('client_id', opts.client._id);
     tracker('batchSize', unstoredModels.length);
     tracker('sentBatchSize', opts.models.length);
 

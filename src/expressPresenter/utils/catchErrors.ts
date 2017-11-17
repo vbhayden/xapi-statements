@@ -7,8 +7,17 @@ import Config from '../Config';
 
 export default (config: Config, handler: CommonHandler) => {
   return (req: Request, res: Response): void => {
-    handler(req, res).catch((err: any | Error | BaseError) => {
+    handler(req, res).catch(async (err: any | Error | BaseError) => {
+      const tracker = await config.tracker;
       const errorId = uuid();
+      tracker('errorId', errorId);
+      config.logger.silly(`${errorId}: xapi-statements request`, {
+        body: req.body,
+        headers: req.headers,
+        query: req.query,
+        method: req.method,
+        url: req.url,
+      });
       return handleError({ config, errorId, res, err });
     });
   };

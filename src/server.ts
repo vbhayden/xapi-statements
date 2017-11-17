@@ -7,6 +7,7 @@ import serviceFactory from './serviceFactory';
 import presenter from './expressPresenter';
 import config from './config';
 import logger from './logger';
+import tracker from './tracker';
 
 const app = express();
 
@@ -19,6 +20,7 @@ const presenterFacade = presenter({
   morganDirectory: config.express.morganDirectory,
   bodyParserLimit: config.express.bodyParserLimit,
   service: serviceFacade,
+  tracker,
   translator,
   logger,
 });
