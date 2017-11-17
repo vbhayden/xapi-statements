@@ -28,145 +28,172 @@ import InvalidX5CChain from '../../errors/InvalidX5CChain';
 import InvalidJws from '../../errors/InvalidJws';
 import InvalidSignedStatement from '../../errors/InvalidSignedStatement';
 import InvalidSignatureAlgorithm from '../../errors/InvalidSignatureAlgorithm';
-import Translator from '../../translatorFactory/Translator';
 import { xapiHeaderVersion } from '../../utils/constants';
+import Config from '../Config';
 
 export interface Options extends CommonOptions {
-  translator: Translator;
+  readonly config: Config;
 }
 
-export default ({ translator, errorId, res, err }: Options): Response => {
+export default ({ config, errorId, res, err }: Options): Response => {
+  const { logger, translator } = config;
+  const logError = (msg: string, meta?: any) => {
+    logger.error(`${errorId}: xapi-statements handled - ${msg}`, meta);
+  };
+
   const timestamp = new Date().toISOString();
   res.setHeader('X-Experience-API-Consistent-Through', timestamp);
   res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
-  if (isNull(err) || isUndefined(null)) {
-    const code = 500;
-    const message = translator.serverError();
+
+  if (err instanceof InvalidSignatureAlgorithm) {
+    const code = 400;
+    const message = translator.invalidSignatureAlgorithmError(err);
+    logError(message);
     return sendMessage({ res, code, errorId, message });
   }
-
-  switch (err.constructor) {
-    case InvalidSignatureAlgorithm: {
-      const code = 400;
-      const message = translator.invalidSignatureAlgorithmError(err as InvalidSignatureAlgorithm);
-      return sendMessage({ res, code, errorId, message });
-    } case InvalidX5CType: {
-      const code = 400;
-      const message = translator.invalidX5CTypeError(err as InvalidX5CType);
-      return sendMessage({ res, code, errorId, message });
-    } case InvalidX5CChain: {
-      const code = 400;
-      const message = translator.invalidX5CChainError(err as InvalidX5CChain);
-      return sendMessage({ res, code, errorId, message });
-    } case InvalidJws: {
-      const code = 400;
-      const message = translator.invalidJwsError(err as InvalidJws);
-      return sendMessage({ res, code, errorId, message });
-    } case InvalidSignedStatement: {
-      const code = 400;
-      const message = translator.invalidSignedStatementError(err as InvalidSignedStatement);
-      return sendMessage({ res, code, errorId, message });
-    } case JsonSyntaxError: {
-      const code = 400;
-      const message = translator.jsonSyntaxError(err as JsonSyntaxError);
-      return sendMessage({ res, code, errorId, message });
-    } case ChangedStatementRef: {
-      const code = 500;
-      const message = translator.changedStatementRefError(err as ChangedStatementRef);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case Conflict: {
-      const code = 409;
-      const message = translator.conflictError(err as Conflict);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case DataBeforeFirstBoundary: {
-      const code = 400;
-      const message = translator.dataBeforeFirstBoundaryError(err as DataBeforeFirstBoundary);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case DataBeyondFinalBoundary: {
-      const code = 400;
-      const message = translator.dataBeyondFinalBoundaryError(err as DataBeyondFinalBoundary);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case DuplicateId: {
-      const code = 400;
-      const message = translator.duplicateIdError(err as DuplicateId);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case ExtraAttachments: {
-      const code = 400;
-      const message = translator.extraAttachmentsError(err as ExtraAttachments);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case InvalidBoundary: {
-      const code = 400;
-      const message = translator.invalidBoundaryError(err as InvalidBoundary);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case InvalidContentType: {
-      const code = 400;
-      const message = translator.invalidContentTypeError(err as InvalidContentType);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case InvalidContentTransferEncoding: {
-      const code = 400;
-      const message = translator.invalidContentTransferEncodingError(err as InvalidContentTransferEncoding);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case InvalidMethod: {
-      const code = 400;
-      const message = translator.invalidMethodError(err as InvalidMethod);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case InvalidVoidType: {
-      const code = 400;
-      const message = translator.invalidVoidTypeError(err as InvalidVoidType);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case MissingAttachments: {
-      const code = 400;
-      const message = translator.missingAttachmentsError(err as MissingAttachments);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case MissingLoadedId: {
-      const code = 500;
-      const message = translator.missingLoadedIdError(err as MissingLoadedId);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case MissingStatementId: {
-      const code = 400;
-      const message = translator.missingStatementIdError(err as MissingStatementId);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case NoStatements: {
-      const code = 400;
-      const message = translator.noStatementsError(err as NoStatements);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case QueryIds: {
-      const code = 400;
-      const message = translator.queryIdsError(err as QueryIds);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case UnknownParams: {
-      const code = 400;
-      const message = translator.unknownParamsError(err as UnknownParams);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case UnequalStatementId: {
-      const code = 400;
-      const message = translator.unequalStatementIdError(err as UnequalStatementId);
-      return sendMessage({ res, code, errorId, message });
-    }
-    case VoidingError: {
-      const code = 400;
-      const message = translator.voidingErrorError(err as VoidingError);
-      return sendMessage({ res, code, errorId, message });
-    }
-    default: {
-      return commonErrorHandler({ translator, errorId, res, err });
-    }
+  if (err instanceof InvalidX5CType) {
+    const code = 400;
+    const message = translator.invalidX5CTypeError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
   }
+  if (err instanceof InvalidX5CChain) {
+    const code = 400;
+    const message = translator.invalidX5CChainError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidJws) {
+    const code = 400;
+    const message = translator.invalidJwsError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidSignedStatement) {
+    const code = 400;
+    const message = translator.invalidSignedStatementError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof JsonSyntaxError) {
+    const code = 400;
+    const message = translator.jsonSyntaxError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof ChangedStatementRef) {
+    const code = 500;
+    const message = translator.changedStatementRefError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof Conflict) {
+    const code = 409;
+    const message = translator.conflictError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof DataBeforeFirstBoundary) {
+    const code = 400;
+    const message = translator.dataBeforeFirstBoundaryError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof DataBeyondFinalBoundary) {
+    const code = 400;
+    const message = translator.dataBeyondFinalBoundaryError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof DuplicateId) {
+    const code = 400;
+    const message = translator.duplicateIdError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof ExtraAttachments) {
+    const code = 400;
+    const message = translator.extraAttachmentsError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidBoundary) {
+    const code = 400;
+    const message = translator.invalidBoundaryError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidContentType) {
+    const code = 400;
+    const message = translator.invalidContentTypeError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidContentTransferEncoding) {
+    const code = 400;
+    const message = translator.invalidContentTransferEncodingError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidMethod) {
+    const code = 400;
+    const message = translator.invalidMethodError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof InvalidVoidType) {
+    const code = 400;
+    const message = translator.invalidVoidTypeError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof MissingAttachments) {
+    const code = 400;
+    const message = translator.missingAttachmentsError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof MissingLoadedId) {
+    const code = 500;
+    const message = translator.missingLoadedIdError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof MissingStatementId) {
+    const code = 400;
+    const message = translator.missingStatementIdError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof NoStatements) {
+    const code = 400;
+    const message = translator.noStatementsError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof QueryIds) {
+    const code = 400;
+    const message = translator.queryIdsError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof UnknownParams) {
+    const code = 400;
+    const message = translator.unknownParamsError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof UnequalStatementId) {
+    const code = 400;
+    const message = translator.unequalStatementIdError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof VoidingError) {
+    const code = 400;
+    const message = translator.voidingErrorError(err);
+    logError(message);
+    return sendMessage({ res, code, errorId, message });
+  }
+  return commonErrorHandler({ config, errorId, res, err });
 };

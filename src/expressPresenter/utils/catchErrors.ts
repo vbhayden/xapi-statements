@@ -6,14 +6,10 @@ import handleError from '../utils/handleError';
 import Config from '../Config';
 
 export default (config: Config, handler: CommonHandler) => {
-  const logger = config.logger;
-  const translator = config.translator;
-
   return (req: Request, res: Response): void => {
     handler(req, res).catch((err: any | Error | BaseError) => {
       const errorId = uuid();
-      logger.error(errorId, err);
-      return handleError({ translator, errorId, res, err });
+      return handleError({ config, errorId, res, err });
     });
   };
 };
