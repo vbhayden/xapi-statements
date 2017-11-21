@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
+import * as streamToString from 'stream-to-string';
 import InvalidContentType from '../../errors/InvalidContentType';
+import parseJson from '../../utils/parseJson';
 import catchErrors from '../utils/catchErrors';
 import {
   alternateContentTypePattern,
@@ -27,7 +29,7 @@ export default (config: Config) => {
       const client = await getClient(config, req.header('Authorization') || '');
       validateVersionHeader(req.header('X-Experience-API-Version'));
 
-      const body = req.body;
+      const body = parseJson(await streamToString(req), ['body']);
       const attachments: any[] = [];
       return storeStatements({ config, client, body, attachments, res });
     }

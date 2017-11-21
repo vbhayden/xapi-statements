@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import * as streamToString from 'stream-to-string';
 import InvalidContentType from '../errors/InvalidContentType';
 import AttachmentModel from '../models/AttachmentModel';
+import parseJson from '../utils/parseJson';
 import catchErrors from './utils/catchErrors';
 import { jsonContentTypePattern, multipartContentTypePattern } from './utils/contentTypePatterns';
 import getClient from './utils/getClient';
@@ -23,7 +25,7 @@ export default (config: Config) => {
     }
 
     if (jsonContentTypePattern.test(contentType)) {
-      const body = req.body;
+      const body = parseJson(await streamToString(req), ['body']);
       const attachments: AttachmentModel[] = [];
       return storeStatement({ config, body, attachments, client, queryParams, res });
     }

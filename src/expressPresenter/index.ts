@@ -1,5 +1,8 @@
-import commonExpressPresenter from 'jscommons/dist/expressPresenter';
 import { Router } from 'express';
+import mixinCors from 'jscommons/dist/expressPresenter/mixins/cors';
+import mixinHelmet from 'jscommons/dist/expressPresenter/mixins/helmet';
+import mixinMorgan from 'jscommons/dist/expressPresenter/mixins/morgan';
+import mixinUrlEncoding from 'jscommons/dist/expressPresenter/mixins/urlEncoding';
 import getAbout from './getAbout';
 import getFullActivity from './getFullActivity';
 import getStatements from './getStatements';
@@ -7,14 +10,32 @@ import postStatements from './postStatements';
 import putStatement from './putStatement';
 import Config from './Config';
 
-export default (config: Config) => {
-  const aboutRouter = commonExpressPresenter(config);
+export interface Result {
+  readonly aboutRouter: Router;
+  readonly fullActivitiesRouter: Router;
+  readonly statementsRouter: Router;
+}
+
+export default (config: Config): Result => {
+  const aboutRouter = Router();
+  aboutRouter.use(mixinCors());
+  aboutRouter.use(mixinUrlEncoding(config.bodyParserLimit));
+  aboutRouter.use(mixinHelmet());
+  aboutRouter.use(mixinMorgan(config.morganDirectory));
   aboutRouter.get('', getAbout(config));
 
-  const fullActivitiesRouter = commonExpressPresenter(config);
+  const fullActivitiesRouter = Router();
+  fullActivitiesRouter.use(mixinCors());
+  fullActivitiesRouter.use(mixinUrlEncoding(config.bodyParserLimit));
+  fullActivitiesRouter.use(mixinHelmet());
+  fullActivitiesRouter.use(mixinMorgan(config.morganDirectory));
   fullActivitiesRouter.get('', getFullActivity(config));
 
-  const statementsRouter = commonExpressPresenter(config);
+  const statementsRouter = Router();
+  statementsRouter.use(mixinCors());
+  statementsRouter.use(mixinUrlEncoding(config.bodyParserLimit));
+  statementsRouter.use(mixinHelmet());
+  statementsRouter.use(mixinMorgan(config.morganDirectory));
   statementsRouter.get('', getStatements(config));
   statementsRouter.put('', putStatement(config));
   statementsRouter.post('', postStatements(config));
