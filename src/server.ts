@@ -6,6 +6,7 @@ import translatorFactory from './translatorFactory';
 import serviceFactory from './serviceFactory';
 import presenter from './expressPresenter';
 import config from './config';
+import { aboutRoute, fullActivitiesRoute, statementsRoute } from './utils/constants';
 import logger from './logger';
 import tracker from './tracker';
 
@@ -33,7 +34,9 @@ const handleExit = (event: string) => {
   };
 };
 
-app.use(presenterFacade);
+app.use(aboutRoute, presenterFacade.aboutRouter);
+app.use(fullActivitiesRoute, presenterFacade.fullActivitiesRouter);
+app.use(statementsRoute, presenterFacade.statementsRouter);
 
 app.listen(config.express.port, () => {
   logger.info(`Listening on port ${config.express.port}`);
