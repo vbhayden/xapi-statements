@@ -19,21 +19,18 @@ export interface Result {
 export default (config: Config): Result => {
   const aboutRouter = Router();
   aboutRouter.use(mixinCors());
-  aboutRouter.use(mixinUrlEncoding(config.bodyParserLimit));
   aboutRouter.use(mixinHelmet());
   aboutRouter.use(mixinMorgan(config.morganDirectory));
   aboutRouter.get('', getAbout(config));
 
   const fullActivitiesRouter = Router();
   fullActivitiesRouter.use(mixinCors());
-  fullActivitiesRouter.use(mixinUrlEncoding(config.bodyParserLimit));
   fullActivitiesRouter.use(mixinHelmet());
   fullActivitiesRouter.use(mixinMorgan(config.morganDirectory));
   fullActivitiesRouter.get('', getFullActivity(config));
 
   const statementsRouter = Router();
   statementsRouter.use(mixinCors());
-  statementsRouter.use(mixinUrlEncoding(config.bodyParserLimit));
   statementsRouter.use(mixinHelmet());
   statementsRouter.use(mixinMorgan(config.morganDirectory));
   statementsRouter.get('', getStatements(config));

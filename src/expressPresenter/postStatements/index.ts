@@ -34,7 +34,7 @@ export default (config: Config) => {
       return storeStatements({ config, client, body, attachments, res });
     }
 
-    if (alternateContentTypePattern.test(contentType)) {
+    if (method !== undefined || alternateContentTypePattern.test(contentType)) {
       return alternateRequest({ config, method, req, res });
     }
 
