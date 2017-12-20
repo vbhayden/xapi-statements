@@ -86,7 +86,7 @@
     "@types/body-parser": "1.16.8",
     "@types/cors": "2.8.3",
     "@types/dotenv": "4.0.2",
-    "@types/express": "4.0.39",
+    "@types/express": "4.11.0",
     "@types/fs-extra": "5.0.0",
     "@types/helmet": "0.0.37",
     "@types/jsonwebtoken": "7.2.5",
