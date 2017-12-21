@@ -17,7 +17,11 @@ export default (opts: MoreLinkOptions) => {
   }
 
   const moreLinkOpts = pickDefined({
-    agent: opts.statementsOpts.agent,
+    agent: (
+      opts.statementsOpts.agent !== undefined
+        ? encodeURIComponent(JSON.stringify(opts.statementsOpts.agent))
+        : undefined
+    ),
     activity: opts.statementsOpts.activity,
     verb: opts.statementsOpts.verb,
     related_agents: opts.statementsOpts.related_agents,
