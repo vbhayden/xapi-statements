@@ -11,6 +11,7 @@ jobs:
       - image: redis:3.2.7
     environment:
       - DOCKER_REPO_SLUG: learninglocker/xapi-statements
+      - DOCKER_EMAIL: 0ryansmith1994@gmail.com
       - DOCKER_USERNAME: ryansmith94
       - NPM_CONFIG_LOGLEVEL: warn
       - WINSTON_CONSOLE_LEVEL: none
@@ -61,7 +62,7 @@ jobs:
           command: docker build -t "$DOCKER_REPO_SLUG:$DOCKER_TAG" .
       - deploy:
           name: Semantic Release
-          command: npm run semantic-release || true
+          command: npm run semantic-release
       - deploy:
           name: Docker Push
           command: |

@@ -1,6 +1,5 @@
 # xAPI Statements
 
-[![NPM Package Version](https://badge.fury.io/js/xapi-statements.svg)](https://www.npmjs.com/package/xapi-statements)
 [![Build Status](https://circleci.com/gh/LearningLocker/xapi-statements/tree/master.svg?style=shield)](https://circleci.com/gh/LearningLocker/xapi-statements)
 [![Renovate badge](https://img.shields.io/badge/Renovate-enabled-brightgreen.svg)](https://renovateapp.com/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
