@@ -25,9 +25,6 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
       - run:
-          name: Calculating Docker Tag
-          command: echo 'export DOCKER_TAG=$(echo $CIRCLE_BRANCH | sed -e "s/\//-/g")' >> $BASH_ENV
-      - run:
           name: Installing Dependencies
           command: npm install
       - run:
@@ -59,7 +56,7 @@ jobs:
             mv /tmp/docker/* /usr/bin
       - run:
           name: Docker Build
-          command: docker build -t "$DOCKER_REPO_SLUG:$DOCKER_TAG" .
+          command: docker build -t "$DOCKER_REPO_SLUG" .
       - deploy:
           name: Semantic Release
           command: npm run semantic-release
@@ -67,4 +64,5 @@ jobs:
           name: Docker Push
           command: |
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push $DOCKER_REPO_SLUG:$DOCKER_TAG
+            docker tag "$DOCKER_REPO_SLUG:latest" "$DOCKER_REPO_SLUG:${CIRCLE_BRANCH//\//-}"
+            docker push "$DOCKER_REPO_SLUG:${CIRCLE_BRANCH//\//-}"
