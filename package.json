@@ -44,7 +44,7 @@
     "npm": "3 - 5"
   },
   "dependencies": {
-    "@learninglocker/xapi-validation": "^2.1.6",
+    "@learninglocker/xapi-validation": "^2.1.9",
     "accept-language-parser": "^1.4.1",
     "atob": "^2.0.3",
     "aws-sdk": "^2.97.0",
