@@ -52,6 +52,7 @@ export default {
     customRouteText: getStringOption(process.env.EXPRESS_CUSTOM_ROUTE_TEXT, 'ok'),
     morganDirectory: getStringOption(process.env.EXPRESS_MORGAN_DIRECTORY, `${storageDir}/accessLogs`),
     bodyParserLimit: getStringOption(process.env.EXPRESS_BODY_PARSER_LIMIT, '5mb'),
+    allowUndefinedMethod: getBooleanOption(process.env.EXPRESS_ALLOW_UNDEFINED_METHOD, false),
   },
   service: {
     enableConflictChecks: getBooleanOption(process.env.SERVICE_CHECK_CONFLICTS, true),

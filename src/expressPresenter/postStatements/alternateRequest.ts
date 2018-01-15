@@ -48,41 +48,40 @@ const getBodyParams = async (stream: NodeJS.ReadableStream) => {
 export default async ({ config, method, req, res }: Options) => {
   checkUnknownParams(req.query, ['method']);
 
-  switch (method) {
-    case 'POST': {
-      const bodyParams = await getBodyParams(req);
-      checkContentType(bodyParams);
-      const auth = getHeader(bodyParams, req, 'Authorization');
-      const client = await getClient(config, auth);
-      const version = getHeader(bodyParams, req, 'X-Experience-API-Version');
-      validateVersionHeader(version);
-      const body = getBodyContent(bodyParams);
-      return storeStatements({ config, client, body, attachments: [], res });
-    }
-    case 'GET': {
-      const bodyParams = await getBodyParams(req);
-      const urlPath = getUrlPath(req);
-      const auth = getHeader(bodyParams, req, 'Authorization');
-      const client = await getClient(config, auth);
-      const version = getHeader(bodyParams, req, 'X-Experience-API-Version');
-      validateVersionHeader(version);
-      const acceptedLangs = defaultTo<string>(req.header('Accept-Language'), '');
-      const queryParams = bodyParams;
-      return getStatements({ config, res, client, queryParams, urlPath, acceptedLangs });
-    }
-    case 'PUT': {
-      const bodyParams = await getBodyParams(req);
-      checkContentType(bodyParams);
-      const auth = getHeader(bodyParams, req, 'Authorization');
-      const client = await getClient(config, auth);
-      const version = getHeader(bodyParams, req, 'X-Experience-API-Version');
-      validateVersionHeader(version);
-      const body = getBodyContent(bodyParams);
-      const queryParams = bodyParams;
-      return storeStatement({ config, client, body, attachments: [], queryParams, res });
-    }
-    default: {
-      throw new InvalidMethod(method);
-    }
+  if (method === 'POST' || (method === undefined && config.allowUndefinedMethod)) {
+    const bodyParams = await getBodyParams(req);
+    checkContentType(bodyParams);
+    const auth = getHeader(bodyParams, req, 'Authorization');
+    const client = await getClient(config, auth);
+    const version = getHeader(bodyParams, req, 'X-Experience-API-Version');
+    validateVersionHeader(version);
+    const body = getBodyContent(bodyParams);
+    return storeStatements({ config, client, body, attachments: [], res });
   }
+
+  if (method === 'GET') {
+    const bodyParams = await getBodyParams(req);
+    const urlPath = getUrlPath(req);
+    const auth = getHeader(bodyParams, req, 'Authorization');
+    const client = await getClient(config, auth);
+    const version = getHeader(bodyParams, req, 'X-Experience-API-Version');
+    validateVersionHeader(version);
+    const acceptedLangs = defaultTo<string>(req.header('Accept-Language'), '');
+    const queryParams = bodyParams;
+    return getStatements({ config, res, client, queryParams, urlPath, acceptedLangs });
+  }
+
+  if (method === 'PUT') {
+    const bodyParams = await getBodyParams(req);
+    checkContentType(bodyParams);
+    const auth = getHeader(bodyParams, req, 'Authorization');
+    const client = await getClient(config, auth);
+    const version = getHeader(bodyParams, req, 'X-Experience-API-Version');
+    validateVersionHeader(version);
+    const body = getBodyContent(bodyParams);
+    const queryParams = bodyParams;
+    return storeStatement({ config, client, body, attachments: [], queryParams, res });
+  }
+
+  throw new InvalidMethod(method);
 };
