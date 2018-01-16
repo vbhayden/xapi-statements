@@ -1,4 +1,4 @@
-import repo from '../repo/factory';
+import repo from '../repo';
 import service from '../service';
 import Service from './Service';
 import config from '../config';

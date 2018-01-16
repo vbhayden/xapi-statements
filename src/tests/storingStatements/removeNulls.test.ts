@@ -3,7 +3,7 @@ import * as assert from 'assert';
 import createClientModel from '../utils/createClientModel';
 import createStatement from '../utils/createStatement';
 import storeStatementsInService from '../utils/storeStatementsInService';
-import repo from '../../repo/factory';
+import repo from '../../repo';
 import serviceFacade from '../../service/index';
 import config from '../../config';
 import tracker from '../../tracker';

@@ -8,6 +8,7 @@ import getBooleanOption from 'jscommons/dist/config/getBooleanOption';
 import getNumberOption from 'jscommons/dist/config/getNumberOption';
 import getStringOption from 'jscommons/dist/config/getStringOption';
 const storageDir = `${process.cwd()}/storage`;
+const googleKeyFileName = `${process.cwd()}/google.keyfile.json`;
 const expressPort = getNumberOption(process.env.EXPRESS_PORT, 80);
 
 export default {
@@ -85,6 +86,12 @@ export default {
         signatureVersion: 'v4',
       } as S3.ClientConfiguration,
     },
+    google: {
+      bucketName: getStringOption(process.env.FS_GOOGLE_CLOUD_BUCKET, 'xapi-server'),
+      keyFileName: getStringOption(process.env.FS_GOOGLE_CLOUD_KEY_FILENAME, googleKeyFileName),
+      projectId: getStringOption(process.env.FS_GOOGLE_CLOUD_PROJECT_ID, 'll'),
+      subFolder: getStringOption(process.env.FS_GOOGLE_CLOUD_BUCKET_SUBFOLDER, 'storage'),
+    }
   },
   mongo: {
     url: getStringOption(process.env.MONGO_URL, 'mongodb://127.0.0.1:27017/xapiserver')

@@ -1,9 +1,9 @@
 import Signature, { Opts } from './Signature';
-import Config from '../utils/s3Storage/Config';
+import FacadeConfig from '../utils/s3Storage/FacadeConfig';
 import getAttachmentDir from '../../../utils/getAttachmentDir';
 import getAttachmentPath from '../../../utils/getAttachmentPath';
 
-export default (config: Config): Signature => {
+export default (config: FacadeConfig): Signature => {
   return async ({ lrs_id, models }) => {
     const dir = getAttachmentDir({ subFolder: config.subFolder, lrs_id });
     const promises = models.map((model) => {
