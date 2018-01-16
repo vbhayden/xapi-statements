@@ -58,7 +58,7 @@
     "file-stream-rotator": "^0.2.0",
     "fs-extra": "^5.0.0",
     "helmet": "^3.5.0",
-    "jscommons": "^2.1.0",
+    "jscommons": "^2.1.5",
     "jsonwebtoken": "^8.0.1",
     "lodash": "^4.17.4",
     "mime-types": "^2.1.17",
@@ -80,6 +80,7 @@
   },
   "devDependencies": {
     "@ht2-labs/semantic-release": "1.0.21",
+    "@ht2-labs/typescript-project": "1.0.4",
     "@types/bluebird": "3.5.19",
     "@types/body-parser": "1.16.8",
     "@types/cors": "2.8.3",
