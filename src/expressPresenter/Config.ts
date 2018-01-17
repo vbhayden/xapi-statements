@@ -9,6 +9,7 @@ interface Config extends CommonExpressConfig {
   translator: Translator;
   tracker: Promise<Tracker>;
   allowUndefinedMethod: boolean;
+  allowFormBody: boolean;
 }
 
 export default Config;
