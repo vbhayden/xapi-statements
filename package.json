@@ -83,7 +83,7 @@
   "devDependencies": {
     "@ht2-labs/semantic-release": "1.0.26",
     "@ht2-labs/typescript-project": "1.0.6",
-    "@types/bluebird": "3.5.19",
+    "@types/bluebird": "3.5.20",
     "@types/body-parser": "1.16.8",
     "@types/cors": "2.8.3",
     "@types/dotenv": "4.0.2",
