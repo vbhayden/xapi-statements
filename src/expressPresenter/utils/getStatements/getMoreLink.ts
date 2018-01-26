@@ -11,6 +11,10 @@ export interface MoreLinkOptions {
   urlPath: string;
 }
 
+const encodeOpt = (opt: any) => {
+  return opt !== undefined ? encodeURIComponent(opt.toString()) : undefined;
+};
+
 export default (opts: MoreLinkOptions) => {
   if (opts.results.cursor === undefined) {
     return '';
@@ -22,8 +26,8 @@ export default (opts: MoreLinkOptions) => {
         ? encodeURIComponent(JSON.stringify(opts.statementsOpts.agent))
         : undefined
     ),
-    activity: opts.statementsOpts.activity,
-    verb: opts.statementsOpts.verb,
+    activity: encodeOpt(opts.statementsOpts.activity),
+    verb: encodeOpt(opts.statementsOpts.verb),
     related_agents: opts.statementsOpts.related_agents,
     related_activities: opts.statementsOpts.related_activities,
     registration: opts.statementsOpts.registration,
