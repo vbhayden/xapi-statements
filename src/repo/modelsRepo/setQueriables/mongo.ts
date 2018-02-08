@@ -1,9 +1,9 @@
 import matchesClientOption from '../utils/mongoModels/matchesClientOption';
-import Config from '../utils/mongoModels/Config';
+import FacadeConfig from '../utils/mongoModels/FacadeConfig';
 import { STATEMENTS_COLLECTION_NAME } from '../utils/mongoModels/constants';
 import Signature, { Opts } from './Signature';
 
-export default (config: Config): Signature => {
+export default (config: FacadeConfig): Signature => {
   return async ({
     id,
     client,
@@ -14,7 +14,7 @@ export default (config: Config): Signature => {
     relatedActivities,
     registrations
   }) => {
-    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
+    const collection = (await config.db()).collection(STATEMENTS_COLLECTION_NAME);
 
     const query = {
       'statement.id': id,

@@ -1,10 +1,21 @@
 import FullActivityModel from '../models/FullActivityModel';
 import StoredStatementModel from '../models/StoredStatementModel';
 import config from '../config';
-import facade from './facade';
+import logger from '../logger';
+import factory from './factory';
 import Repo from './Repo';
+import { once } from 'lodash';
+import { Db, MongoClient } from 'mongodb';
+import { delay } from 'bluebird';
+import connectToDb from 'jscommons/dist/mongoRepo/utils/connectToDb';
 
-const repo: Repo = facade({
+const mongoDb = connectToDb({
+  logger,
+  url: config.mongo.url,
+  dbName: config.mongo.dbName,
+});
+
+const repo: Repo = factory({
   auth: {
     facade: config.repoFactory.authRepoName,
     fake: {},
@@ -12,7 +23,7 @@ const repo: Repo = facade({
       llClientInfoEndpoint: config.llClientInfoEndpoint,
     },
     mongo: {
-      url: config.mongo.url,
+      db: mongoDb,
     },
   },
   events: {
@@ -31,8 +42,8 @@ const repo: Repo = facade({
       },
     },
     mongo: {
-      url: config.mongo.url,
-    }
+      db: mongoDb,
+    },
   },
   storage: {
     facade: config.repoFactory.storageRepoName,

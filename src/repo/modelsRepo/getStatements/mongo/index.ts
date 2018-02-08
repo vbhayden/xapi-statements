@@ -3,7 +3,7 @@ import Signature, { Opts } from '../Signature';
 import matchesClientOption from '../../utils/mongoModels/matchesClientOption';
 import { decodeDotsInStatement } from '../../utils/mongoModels/replaceDotsInStatement';
 import { STATEMENTS_COLLECTION_NAME } from '../../utils/mongoModels/constants';
-import Config from '../../utils/mongoModels/Config';
+import FacadeConfig from '../../utils/mongoModels/FacadeConfig';
 import matchesAgentOption from './matchesAgentOption';
 import matchesCursorOption from './matchesCursorOption';
 import matchesVerbOption from './matchesVerbOption';
@@ -35,9 +35,9 @@ const sortModels = (ascending: boolean) => {
   };
 };
 
-export default (config: Config): Signature => {
+export default (config: FacadeConfig): Signature => {
   return async (opts) => {
-    const collection = (await config.db).collection(STATEMENTS_COLLECTION_NAME);
+    const collection = (await config.db()).collection(STATEMENTS_COLLECTION_NAME);
     const query = filterModels(opts);
     const sort = sortModels(opts.ascending);
     const skip = opts.skip || 0;

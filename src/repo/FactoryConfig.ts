@@ -1,6 +1,6 @@
-import AuthFactoryConfig from './authRepo/Config';
-import EventsFactoryConfig from './eventsRepo/Config';
-import ModelsFactoryConfig from './modelsRepo/Config';
+import AuthFactoryConfig from './authRepo/FactoryConfig';
+import EventsFactoryConfig from './eventsRepo/FactoryConfig';
+import ModelsFactoryConfig from './modelsRepo/FactoryConfig';
 import StorageFactoryConfig from './storageRepo/FactoryConfig';
 
 export default interface Config {

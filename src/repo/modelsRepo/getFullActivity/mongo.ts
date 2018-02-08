@@ -1,15 +1,15 @@
 import { ObjectID } from 'mongodb';
 import Signature, { Opts, Result } from './Signature';
-import Config from '../utils/mongoModels/Config';
+import FacadeConfig from '../utils/mongoModels/FacadeConfig';
 import matchesFullActivity from '../utils/mongoModels/matchesFullActivity';
 import { replaceDotsInExtensions } from '../utils/mongoModels/replaceDotsInStatement';
 import { FULL_ACTIVITIES_COLLECTION_NAME } from '../utils/mongoModels/constants';
 
-export default (config: Config): Signature => {
+export default (config: FacadeConfig): Signature => {
   return async ({ activityId, client }) => {
     const lrsId = new ObjectID(client.lrs_id);
     const organisationId = new ObjectID(client.organisation);
-    const collection = (await config.db).collection(FULL_ACTIVITIES_COLLECTION_NAME);
+    const collection = (await config.db()).collection(FULL_ACTIVITIES_COLLECTION_NAME);
     const query = matchesFullActivity({ activityId, lrsId, organisationId });
     const fields = {
       _id: 0,
