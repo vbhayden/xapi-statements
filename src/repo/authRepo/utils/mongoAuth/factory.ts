@@ -7,17 +7,14 @@ import Facade from '../../Facade';
 import FactoryConfig from './FactoryConfig';
 import getClient from '../../getClient/mongo';
 import FacadeConfig from './FacadeConfig';
+import connectToMongoDb from '../../../utils/connectToMongoDb';
 
-const defaultConfig = {
-  db: connectToDb({
-    logger,
-    dbName: 'xapi-statements',
-    url: 'mongodb://localhost:27017',
-  })
-};
-
-export default (factoryConfig: FactoryConfig = defaultConfig): Facade => {
-  const facadeConfig: FacadeConfig = factoryConfig;
+export default (factoryConfig?: FactoryConfig): Facade => {
+  const facadeConfig: FacadeConfig = (
+    factoryConfig !== undefined
+      ? factoryConfig
+      : { db: connectToMongoDb() }
+  );
   return {
     getClient: getClient(facadeConfig),
   };

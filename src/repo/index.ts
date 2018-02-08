@@ -7,13 +7,7 @@ import Repo from './Repo';
 import { once } from 'lodash';
 import { Db, MongoClient } from 'mongodb';
 import { delay } from 'bluebird';
-import connectToDb from 'jscommons/dist/mongoRepo/utils/connectToDb';
-
-const mongoDb = connectToDb({
-  logger,
-  url: config.mongo.url,
-  dbName: config.mongo.dbName,
-});
+import connectToMongoDb from './utils/connectToMongoDb';
 
 const repo: Repo = factory({
   auth: {
@@ -23,7 +17,7 @@ const repo: Repo = factory({
       llClientInfoEndpoint: config.llClientInfoEndpoint,
     },
     mongo: {
-      db: mongoDb,
+      db: connectToMongoDb(),
     },
   },
   events: {
@@ -42,7 +36,7 @@ const repo: Repo = factory({
       },
     },
     mongo: {
-      db: mongoDb,
+      db: connectToMongoDb(),
     },
   },
   storage: {

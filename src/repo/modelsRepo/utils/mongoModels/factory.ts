@@ -22,17 +22,14 @@ import getUpRefsByIds from '../../getUpRefsByIds/mongo';
 import updateFullActivities from '../../updateFullActivities/mongo';
 import incrementStoreCount from '../../incrementStoreCount/mongo';
 import FactoryConfig from './FactoryConfig';
+import connectToMongoDb from '../../../utils/connectToMongoDb';
 
-const defaultConfig = {
-  db: connectToDb({
-    logger,
-    dbName: 'xapi-statements',
-    url: 'mongodb://localhost:27017',
-  })
-};
-
-export default (factoryConfig: FactoryConfig = defaultConfig): Facade => {
-  const facadeConfig: FacadeConfig = factoryConfig;
+export default (factoryConfig?: FactoryConfig): Facade => {
+  const facadeConfig: FacadeConfig = (
+    factoryConfig !== undefined
+      ? factoryConfig
+      : { db: connectToMongoDb() }
+  );
   return {
     clearRepo: async () => {
       await (await facadeConfig.db()).dropDatabase();

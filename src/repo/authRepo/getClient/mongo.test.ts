@@ -10,6 +10,7 @@ import config from '../../../config';
 import logger from '../../../logger';
 import mongoFactory from '../utils/mongoAuth/factory';
 import createClientModel from '../../../tests/utils/createClientModel';
+import connectToMongoDb from '../../utils/connectToMongoDb';
 
 const TEST_CLIENT_MODEL = createClientModel({
   _id: '5988f0f00000000000000123',
@@ -19,11 +20,7 @@ const TEST_BASIC_SECRET = 'abc';
 const TEST_TOKEN = `Basic ${btoa(`${TEST_BASIC_KEY}:${TEST_BASIC_SECRET}`)}`;
 
 describe(__filename, () => {
-  const db = connectToDb({
-    logger,
-    dbName: config.mongo.dbName,
-    url: config.mongo.url,
-  });
+  const db = connectToMongoDb();
   const authRepo = mongoFactory({ db });
 
   it('should return a client from the db', async () => {
