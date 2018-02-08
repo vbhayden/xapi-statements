@@ -99,7 +99,7 @@
     "@types/morgan": "1.7.35",
     "@types/node": "9.4.3",
     "@types/node-fetch": "1.6.7",
-    "@types/object-hash": "1.1.0",
+    "@types/object-hash": "1.2.0",
     "@types/query-string": "5.0.1",
     "@types/redis": "2.8.5",
     "@types/source-map-support": "0.4.0",
