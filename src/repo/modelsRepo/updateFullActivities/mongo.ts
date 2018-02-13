@@ -32,6 +32,7 @@ export default (config: FacadeConfig): Signature => {
         ...(update.type !== undefined ? { type: update.type } : {}),
       };
       if (Object.keys(mongoSet).length === 0) {
+        /* istanbul ignore next */
         return;
       }
       const mongoUpdate = { $set: mongoSet };
