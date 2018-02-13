@@ -24,15 +24,17 @@ export default (config: FacadeConfig): Signature => {
       const activityId = update.activityId;
       const extensions = replaceDotsInExtensions(/\./g, '&46;')(update.extensions);
       const mongoQuery = matchesFullActivity({ activityId, lrsId, organisationId });
-      const mongoUpdate = {
-        $set: {
-          ...getPatchUpdate(update.name, ['name']),
-          ...getPatchUpdate(update.description, ['description']),
-          ...getPatchUpdate(extensions, ['extensions']),
-          ...(update.moreInfo !== undefined ? { moreInfo: update.moreInfo } : {}),
-          ...(update.type !== undefined ? { type: update.type } : {}),
-        },
+      const mongoSet = {
+        ...getPatchUpdate(update.name, ['name']),
+        ...getPatchUpdate(update.description, ['description']),
+        ...getPatchUpdate(extensions, ['extensions']),
+        ...(update.moreInfo !== undefined ? { moreInfo: update.moreInfo } : {}),
+        ...(update.type !== undefined ? { type: update.type } : {}),
       };
+      if (Object.keys(mongoSet).length === 0) {
+        return;
+      }
+      const mongoUpdate = { $set: mongoSet };
 
       batch.find(mongoQuery).upsert().updateOne(mongoUpdate);
     });
