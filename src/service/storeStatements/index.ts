@@ -67,10 +67,12 @@ export default (config: Config) => {
     });
 
     await awaitUpdates(config, unawaitedUpdates);
-    config.repo.emitNewStatements({ ids: statementIds }).catch((err) => {
-      /* istanbul ignore next */
-      console.error(err); // tslint:disable-line:no-console
-    });
+    if (statementIds.length !== 0) {
+      config.repo.emitNewStatements({ ids: statementIds }).catch((err) => {
+        /* istanbul ignore next */
+        console.error(err); // tslint:disable-line:no-console
+      });
+    }
 
     const tracker = await config.tracker;
     tracker('batchSize', unstoredModels.length);

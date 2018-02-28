@@ -1,6 +1,6 @@
-import * as redis from 'redis';
+import { Redis } from 'ioredis';
 
 export default interface FactoryConfig {
-  readonly url?: string;
+  readonly client?: () => Promise<Redis>;
   readonly prefix?: string;
 }

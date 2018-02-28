@@ -8,6 +8,8 @@ import { once } from 'lodash';
 import { Db, MongoClient } from 'mongodb';
 import { delay } from 'bluebird';
 import connectToMongoDb from './utils/connectToMongoDb';
+import connectToRedis from './utils/connectToRedis';
+import connectToSentinel from './utils/connectToSentinel';
 
 const repo: Repo = factory({
   auth: {
@@ -23,9 +25,13 @@ const repo: Repo = factory({
   events: {
     facade: config.repoFactory.eventsRepoName,
     redis: {
+      client: connectToRedis(),
       prefix: config.redis.prefix,
-      url: config.redis.url,
     },
+    sentinel: {
+      client: connectToSentinel(),
+      prefix: config.sentinel.prefix,
+    }
   },
   models: {
     facade: config.repoFactory.modelsRepoName,

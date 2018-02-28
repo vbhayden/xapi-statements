@@ -3,8 +3,8 @@ import * as redis from 'redis';
 import clearRepo from '../../clearRepo/redis';
 import emitNewStatements from '../../emitNewStatements/redis';
 import Facade from '../../Facade';
-import FactoryConfig from './FactoryConfig';
-import FacadeConfig from './FacadeConfig';
+import FactoryConfig from '../redisEvents/FactoryConfig';
+import FacadeConfig from '../redisEvents/FacadeConfig';
 import connectToRedis from '../../../utils/connectToRedis';
 
 export default (factoryConfig: FactoryConfig = {}): Facade => {

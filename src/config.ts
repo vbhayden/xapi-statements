@@ -27,6 +27,17 @@ export default {
     prefix: getStringOption(process.env.REDIS_PREFIX, 'xapistatements'),
   },
 
+  sentinel: {
+    sentinels: (
+      getStringOption(process.env.SENTINEL_CONNECTIONS, '127.0.0.1:6379').split(' ').map((conn) => {
+        const [host, port] = conn.split(':');
+        return { host, port: getNumberOption(port, 6379) };
+      })
+    ),
+    name: getStringOption(process.env.SENTINEL_NAME, 'mymaster'),
+    prefix: getStringOption(process.env.SENTINEL_PREFIX, 'xapistatements'),
+  },
+
   repoFactory: {
     eventsRepoName: getStringOption(process.env.EVENTS_REPO, 'redis'),
     authRepoName: getStringOption(process.env.AUTH_REPO, 'mongo'),

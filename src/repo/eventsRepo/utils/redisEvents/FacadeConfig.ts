@@ -1,6 +1,6 @@
-import * as redis from 'redis';
+import { Redis } from 'ioredis';
 
 export default interface FacadeConfig {
-  readonly client: redis.RedisClient;
+  readonly client: () => Promise<Redis>;
   readonly prefix: string;
 }
