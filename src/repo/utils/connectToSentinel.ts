@@ -7,8 +7,10 @@ export default once((): () => Promise<Ioredis.Redis> => {
   return once(async () => {
     logger.info('Creating sentinel connection');
     return new Ioredis({
-      sentinels: config.sentinel.sentinels,
+      db: config.sentinel.db,
       name: config.sentinel.name,
+      password: config.sentinel.password,
+      sentinels: config.sentinel.sentinels,
     });
   });
 });
