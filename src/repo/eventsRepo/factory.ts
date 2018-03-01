@@ -1,4 +1,3 @@
-import * as redis from 'redis';
 import fakeFactory from './utils/fakeEvents/factory';
 import redisFactory from './utils/redisEvents/factory';
 import sentinelFactory from './utils/sentinel/factory';

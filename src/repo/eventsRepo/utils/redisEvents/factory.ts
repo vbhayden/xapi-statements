@@ -1,5 +1,4 @@
 import { defaultTo } from 'lodash';
-import * as redis from 'redis';
 import clearRepo from '../../clearRepo/redis';
 import emitNewStatements from '../../emitNewStatements/redis';
 import Facade from '../../Facade';
