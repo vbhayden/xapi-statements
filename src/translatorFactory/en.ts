@@ -8,6 +8,7 @@ const translator: Translator = {
   dataBeforeFirstBoundaryError: () => 'There was data before the first boundary',
   dataBeyondFinalBoundaryError: () => 'There was data beyond the final boundary',
   duplicateIdError: (err) => `${err.statementId} is duplicated in the current batch`,
+  expiredClientError: () => `Your organisation has expired`,
   invalidBoundaryError: (err) => `Content-Type (${err.contentType}) contains an invalid boundary`,
   jsonSyntaxError: (err) => {
     const path = stringPath(err.path);

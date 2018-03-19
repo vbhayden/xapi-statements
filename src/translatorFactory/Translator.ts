@@ -24,6 +24,7 @@ import InvalidX5CChain from '../errors/InvalidX5CChain';
 import InvalidJws from '../errors/InvalidJws';
 import InvalidSignedStatement from '../errors/InvalidSignedStatement';
 import InvalidSignatureAlgorithm from '../errors/InvalidSignatureAlgorithm';
+import ExpiredClientError from '../errors/ExpiredClientError';
 
 interface Translator extends CommonTranslator {
   readonly changedStatementRefError: (err: ChangedStatementRef) => string;
@@ -31,6 +32,7 @@ interface Translator extends CommonTranslator {
   readonly dataBeforeFirstBoundaryError: (err: DataBeforeFirstBoundary) => string;
   readonly dataBeyondFinalBoundaryError: (err: DataBeyondFinalBoundary) => string;
   readonly duplicateIdError: (err: DuplicateId) => string;
+  readonly expiredClientError: (err: ExpiredClientError) => string;
   readonly invalidBoundaryError: (err: InvalidBoundary) => string;
   readonly invalidContentTypeError: (err: InvalidContentType) => string;
   readonly invalidContentTransferEncodingError: (err: InvalidContentTransferEncoding) => string;
