@@ -33,16 +33,22 @@ const translator: Translator = {
     const voiders = err.voidedStatementIds.join(', ');
     return `Voider cannot void another voider (${voiders})`;
   },
-  invalidX5CTypeError: (err) =>
-    `X5C header should be an array for '${err.statementId}'`,
-  invalidX5CChainError: (err) =>
-    `X5C header should have at least one element for '${err.statementId}'`,
-  invalidJwsError: (err) =>
-    `Invalid JWS for '${err.statementId}'`,
-  invalidSignedStatementError: (err) =>
-    `Signed statement should match original statement for '${err.statementId}'`,
-  invalidSignatureAlgorithmError: (err) =>
-    `Invalid JWS algorithm for '${err.statementId}'`,
+  invalidX5CTypeError: (err) => {
+    return `X5C header should be an array for '${err.statementId}'`;
+  },
+  invalidX5CChainError: (err) => {
+    return `X5C header should have at least one element for '${err.statementId}'`;
+  },
+  invalidJwsError: (err) => {
+    return `Invalid JWS for '${err.statementId}'`;
+  },
+  invalidSignedStatementError: (err) => {
+    return `Signed statement should match original statement for '${err.statementId}'`;
+  },
+  invalidSignatureAlgorithmError: (err) => {
+    return `Invalid JWS algorithm for '${err.statementId}'`;
+  },
+  untrustedClientError: () => 'Your client has been disabled',
   ...commonTranslator,
 };
 

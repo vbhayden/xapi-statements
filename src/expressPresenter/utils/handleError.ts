@@ -32,6 +32,7 @@ import InvalidSignatureAlgorithm from '../../errors/InvalidSignatureAlgorithm';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
 import ExpiredClientError from '../../errors/ExpiredClientError';
+import UntrustedClientError from '../../errors/UntrustedClientError';
 
 export interface Options extends CommonOptions {
   readonly config: Config;
@@ -200,6 +201,11 @@ export default ({ config, errorId, res, err }: Options): Response => {
   if (err instanceof ExpiredClientError) {
     const code = FORBIDDEN;
     const message = translator.expiredClientError(err);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof UntrustedClientError) {
+    const code = FORBIDDEN;
+    const message = translator.untrustedClientError(err);
     return sendMessage({ res, code, errorId, message });
   }
   return commonErrorHandler({ config, errorId, res, err });

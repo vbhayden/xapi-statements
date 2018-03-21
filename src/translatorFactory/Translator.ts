@@ -25,6 +25,7 @@ import InvalidJws from '../errors/InvalidJws';
 import InvalidSignedStatement from '../errors/InvalidSignedStatement';
 import InvalidSignatureAlgorithm from '../errors/InvalidSignatureAlgorithm';
 import ExpiredClientError from '../errors/ExpiredClientError';
+import UntrustedClientError from '../errors/UntrustedClientError';
 
 interface Translator extends CommonTranslator {
   readonly changedStatementRefError: (err: ChangedStatementRef) => string;
@@ -33,26 +34,27 @@ interface Translator extends CommonTranslator {
   readonly dataBeyondFinalBoundaryError: (err: DataBeyondFinalBoundary) => string;
   readonly duplicateIdError: (err: DuplicateId) => string;
   readonly expiredClientError: (err: ExpiredClientError) => string;
-  readonly invalidBoundaryError: (err: InvalidBoundary) => string;
-  readonly invalidContentTypeError: (err: InvalidContentType) => string;
-  readonly invalidContentTransferEncodingError: (err: InvalidContentTransferEncoding) => string;
-  readonly invalidMethodError: (err: InvalidMethod) => string;
-  readonly jsonSyntaxError: (err: JsonSyntaxError) => string;
-  readonly invalidVoidTypeError: (err: InvalidVoidType) => string;
-  readonly missingAttachmentsError: (err: MissingAttachments) => string;
   readonly extraAttachmentsError: (err: ExtraAttachments) => string;
+  readonly invalidBoundaryError: (err: InvalidBoundary) => string;
+  readonly invalidContentTransferEncodingError: (err: InvalidContentTransferEncoding) => string;
+  readonly invalidContentTypeError: (err: InvalidContentType) => string;
+  readonly invalidJwsError: (err: InvalidJws) => string;
+  readonly invalidMethodError: (err: InvalidMethod) => string;
+  readonly invalidSignatureAlgorithmError: (err: InvalidSignatureAlgorithm) => string;
+  readonly invalidSignedStatementError: (err: InvalidSignedStatement) => string;
+  readonly invalidVoidTypeError: (err: InvalidVoidType) => string;
+  readonly invalidX5CChainError: (err: InvalidX5CChain) => string;
+  readonly invalidX5CTypeError: (err: InvalidX5CType) => string;
+  readonly jsonSyntaxError: (err: JsonSyntaxError) => string;
+  readonly missingAttachmentsError: (err: MissingAttachments) => string;
   readonly missingLoadedIdError: (err: MissingLoadedId) => string;
   readonly missingStatementIdError: (err: MissingStatementId) => string;
   readonly noStatementsError: (err: NoStatements) => string;
-  readonly unequalStatementIdError: (err: UnequalStatementId) => string;
-  readonly voidingErrorError: (err: VoidingError) => string;
   readonly queryIdsError: (err: QueryIds) => string;
+  readonly unequalStatementIdError: (err: UnequalStatementId) => string;
   readonly unknownParamsError: (err: UnknownParams) => string;
-  readonly invalidX5CTypeError: (err: InvalidX5CType) => string;
-  readonly invalidX5CChainError: (err: InvalidX5CChain) => string;
-  readonly invalidJwsError: (err: InvalidJws) => string;
-  readonly invalidSignedStatementError: (err: InvalidSignedStatement) => string;
-  readonly invalidSignatureAlgorithmError: (err: InvalidSignatureAlgorithm) => string;
+  readonly untrustedClientError: (err: UntrustedClientError) => string;
+  readonly voidingErrorError: (err: VoidingError) => string;
 }
 
 export default Translator;

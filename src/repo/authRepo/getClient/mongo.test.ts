@@ -12,6 +12,7 @@ import mongoFactory from '../utils/mongoAuth/factory';
 import createClientModel from '../../../tests/utils/createClientModel';
 import connectToMongoDb from '../../utils/connectToMongoDb';
 import ExpiredClientError from '../../../errors/ExpiredClientError';
+import UntrustedClientError from '../../../errors/UntrustedClientError';
 
 const TEST_CLIENT_MODEL = createClientModel({
   _id: '5988f0f00000000000000123',
@@ -50,6 +51,11 @@ describe(__filename, () => {
   const connection = connectToMongoDb();
   const authRepo = mongoFactory({ db: connection });
 
+  beforeEach(async () => {
+    const db = await connection();
+    await db.dropDatabase();
+  });
+
   it('should return a client from the db', async () => {
     const db = await connection();
     await db.collection('organisation').insert(TEST_ORG);
@@ -62,6 +68,16 @@ describe(__filename, () => {
   it('should error when getting without any clients in the DB', async () => {
     const promise = authRepo.getClient({ authToken: TEST_TOKEN });
     await assertError(NoModel, promise);
+  });
+
+  it('should error when getting a untrusted client', async () => {
+    const db = await connection();
+    await db.collection('client').insert({
+      ...TEST_CLIENT,
+      isTrusted: false,
+    });
+    const promise = authRepo.getClient({ authToken: TEST_TOKEN });
+    await assertError(UntrustedClientError, promise);
   });
 
   it('should error when getting a client with a missing store', async () => {
@@ -90,12 +106,5 @@ describe(__filename, () => {
     await db.collection('client').insert(TEST_CLIENT);
     const promise = authRepo.getClient({ authToken: TEST_TOKEN });
     await assertError(ExpiredClientError, promise);
-  });
-
-  afterEach(async () => {
-    const db = await connection();
-    await db.collection('client').remove({});
-    await db.collection('lrs').remove({});
-    await db.collection('organisation').remove({});
   });
 });

@@ -7,6 +7,7 @@ import Actor from '../../../models/Actor';
 import FacadeConfig from '../utils/mongoAuth/FacadeConfig';
 import parseJson from '../../../utils/parseJson';
 import ExpiredClientError from '../../../errors/ExpiredClientError';
+import UntrustedClientError from '../../../errors/UntrustedClientError';
 
 export default (config: FacadeConfig): Signature => {
   return async ({ authToken }) => {
@@ -22,6 +23,10 @@ export default (config: FacadeConfig): Signature => {
 
     if (clientDoc === null || clientDoc === undefined) {
       throw new NoModel('Client');
+    }
+
+    if (clientDoc.isTrusted === false) {
+      throw new UntrustedClientError();
     }
 
     const [orgDoc, lrsDoc] = await Promise.all([
