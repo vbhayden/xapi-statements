@@ -58,7 +58,7 @@ describe(__filename, () => {
 
   it('should return a client from the db', async () => {
     const db = await connection();
-    await db.collection('organisation').insert(TEST_ORG);
+    await db.collection('organisations').insert(TEST_ORG);
     await db.collection('lrs').insert(TEST_STORE);
     await db.collection('client').insert(TEST_CLIENT);
     const result = await authRepo.getClient({ authToken: TEST_TOKEN });
@@ -82,7 +82,7 @@ describe(__filename, () => {
 
   it('should error when getting a client with a missing store', async () => {
     const db = await connection();
-    await db.collection('organisation').insert(TEST_ORG);
+    await db.collection('organisations').insert(TEST_ORG);
     await db.collection('client').insert(TEST_CLIENT);
     const promise = authRepo.getClient({ authToken: TEST_TOKEN });
     await assertError(NoModel, promise);
@@ -98,7 +98,7 @@ describe(__filename, () => {
 
   it('should error when getting a client with an expired org', async () => {
     const db = await connection();
-    await db.collection('organisation').insert({
+    await db.collection('organisations').insert({
       ...TEST_ORG,
       expiration: new Date(),
     });
