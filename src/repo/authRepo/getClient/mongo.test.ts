@@ -107,4 +107,15 @@ describe(__filename, () => {
     const promise = authRepo.getClient({ authToken: TEST_TOKEN });
     await assertError(ExpiredClientError, promise);
   });
+
+  it('should not error when getting a client with an renewed org', async () => {
+    const db = await connection();
+    await db.collection('organisations').insert({
+      ...TEST_ORG,
+      expiration: null,
+    });
+    await db.collection('lrs').insert(TEST_STORE);
+    await db.collection('client').insert(TEST_CLIENT);
+    await authRepo.getClient({ authToken: TEST_TOKEN });
+  });
 });

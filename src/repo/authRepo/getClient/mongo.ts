@@ -42,7 +42,7 @@ export default (config: FacadeConfig): Signature => {
       throw new NoModel('Client');
     }
 
-    if (orgDoc.expiration < new Date()) {
+    if (orgDoc.expiration !== null && orgDoc.expiration < new Date()) {
       throw new ExpiredClientError();
     }
 
@@ -53,7 +53,7 @@ export default (config: FacadeConfig): Signature => {
       isTrusted: clientDoc.isTrusted as boolean,
       lrs_id: clientDoc.lrs_id.toString() as string,
       organisation: clientDoc.organisation.toString() as string,
-      scopes: clientDoc.scopes as string[],
+      scopes: clientDoc.scopes as string[]
     };
 
     return { client };
