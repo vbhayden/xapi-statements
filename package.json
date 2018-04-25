@@ -86,7 +86,7 @@
     "@ht2-labs/semantic-release": "1.0.31",
     "@ht2-labs/typescript-project": "1.0.10",
     "@types/bluebird": "3.5.20",
-    "@types/body-parser": "1.16.8",
+    "@types/body-parser": "1.17.0",
     "@types/cors": "2.8.4",
     "@types/dotenv": "4.0.3",
     "@types/express": "4.11.1",
