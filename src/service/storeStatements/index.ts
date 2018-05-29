@@ -53,7 +53,7 @@ export default (config: Config) => {
     const statementIds = postValidatedModels.map((postValidatedModel) => {
       return postValidatedModel.statement.id;
     });
-    
+
     const unstoredStatementIds = unstoredModels.map((unstoredModel) => {
       return unstoredModel.statement.id;
     });
