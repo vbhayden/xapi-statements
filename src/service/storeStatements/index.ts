@@ -53,6 +53,10 @@ export default (config: Config) => {
     const statementIds = postValidatedModels.map((postValidatedModel) => {
       return postValidatedModel.statement.id;
     });
+    
+    const unstoredStatementIds = unstoredModels.map((unstoredModel) => {
+      return unstoredModel.statement.id;
+    });
 
     // Completes actions that do not need to be awaited.
     const unawaitedUpdates: Promise<any> = Promise.all([
@@ -68,7 +72,7 @@ export default (config: Config) => {
 
     await awaitUpdates(config, unawaitedUpdates);
     if (statementIds.length !== 0) {
-      config.repo.emitNewStatements({ ids: statementIds }).catch((err) => {
+      config.repo.emitNewStatements({ ids: unstoredStatementIds }).catch((err) => {
         /* istanbul ignore next */
         console.error(err); // tslint:disable-line:no-console
       });
