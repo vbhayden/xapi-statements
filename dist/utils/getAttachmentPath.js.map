@@ -1,0 +1,1 @@
+{"version":3,"file":"getAttachmentPath.js","sourceRoot":"","sources":["../../src/utils/getAttachmentPath.ts"],"names":[],"mappings":";;AAAA,iEAA4D;AAQ5D,mBAAe,UAAC,IAA+B;IAC7C,IAAM,QAAQ,GAAG,+BAAqB,CAAC,IAAI,CAAC,CAAC;IAC7C,OAAU,IAAI,CAAC,GAAG,SAAI,QAAU,CAAC;AACnC,CAAC,EAAC"}

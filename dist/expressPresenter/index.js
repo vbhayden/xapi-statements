@@ -1,0 +1,32 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var cors_1 = require("jscommons/dist/expressPresenter/mixins/cors");
+var helmet_1 = require("jscommons/dist/expressPresenter/mixins/helmet");
+var morgan_1 = require("jscommons/dist/expressPresenter/mixins/morgan");
+var getAbout_1 = require("./getAbout");
+var getFullActivity_1 = require("./getFullActivity");
+var getStatements_1 = require("./getStatements");
+var postStatements_1 = require("./postStatements");
+var putStatement_1 = require("./putStatement");
+exports.default = (function (config) {
+    var aboutRouter = express_1.Router();
+    aboutRouter.use(cors_1.default());
+    aboutRouter.use(helmet_1.default());
+    aboutRouter.use(morgan_1.default(config.morganDirectory));
+    aboutRouter.get('', getAbout_1.default(config));
+    var fullActivitiesRouter = express_1.Router();
+    fullActivitiesRouter.use(cors_1.default());
+    fullActivitiesRouter.use(helmet_1.default());
+    fullActivitiesRouter.use(morgan_1.default(config.morganDirectory));
+    fullActivitiesRouter.get('', getFullActivity_1.default(config));
+    var statementsRouter = express_1.Router();
+    statementsRouter.use(cors_1.default());
+    statementsRouter.use(helmet_1.default());
+    statementsRouter.use(morgan_1.default(config.morganDirectory));
+    statementsRouter.get('', getStatements_1.default(config));
+    statementsRouter.put('', putStatement_1.default(config));
+    statementsRouter.post('', postStatements_1.default(config));
+    return { aboutRouter: aboutRouter, fullActivitiesRouter: fullActivitiesRouter, statementsRouter: statementsRouter };
+});
+//# sourceMappingURL=index.js.map

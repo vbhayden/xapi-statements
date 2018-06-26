@@ -1,0 +1,1 @@
+{"version":3,"file":"statementObject.js","sourceRoot":"","sources":["../../../../src/service/utils/idsFormat/statementObject.ts"],"names":[],"mappings":";;AAWA,+CAAgD;AAChD,2DAA4D;AAE5D,mBAAe,UAAC,eAAgC;IAC9C,QAAQ,eAAe,CAAC,UAAU,EAAE;QAClC,KAAK,cAAc;YACjB,OAAO,sBAAkB,CAAC,eAAe,CAAC,CAAC;QAC7C;YACE,OAAO,4BAAwB,CAAC,eAAe,CAAC,CAAC;KACpD;AACH,CAAC,EAAC"}

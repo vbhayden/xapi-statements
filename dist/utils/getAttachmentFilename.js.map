@@ -1,0 +1,1 @@
+{"version":3,"file":"getAttachmentFilename.js","sourceRoot":"","sources":["../../src/utils/getAttachmentFilename.ts"],"names":[],"mappings":";;AAAA,uDAAkD;AAOlD,mBAAe,UAAC,IAAmC;IACjD,IAAM,GAAG,GAAG,0BAAgB,CAAC,IAAI,CAAC,WAAW,CAAC,CAAC;IAC/C,OAAU,IAAI,CAAC,IAAI,SAAI,GAAK,CAAC;AAC/B,CAAC,EAAC"}
